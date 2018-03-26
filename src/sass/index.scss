@@ -1,5 +1,13 @@
 // Base loader for SASS files
 
 @import '~breakpoint-sass/stylesheets/breakpoint';
-
 @import 'variables';
+@import url('https://fonts.googleapis.com/css?family=Didact+Gothic'); // font-family: 'Didact Gothic', sans-serif;
+
+
+html, body {
+  background: $background-color;
+  color: $foreground-color;
+  font-family: 'Didact Gothic', sans-serif;
+  font-size: 24px;
+}

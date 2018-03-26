@@ -1,5 +1,5 @@
 // *** COMMON CONFIG OPTIONS *** //
-var siteTitle = 'Nik Nak Studio\'s React Starter Kit';
+var siteTitle = 'BOUNCEBACK';
 var faviconPath = './src/img/favicon.png';
 
 // In webpack.config.js
