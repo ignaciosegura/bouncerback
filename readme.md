@@ -1,6 +1,9 @@
-NIK NAK STUDIO REACT STARTER KIT
+BOUNCEBACK
 --------------------------------
 
+Bounceback, a JS game built on React and PhaserJS 3.
+
+This game is built using Nik Nak Studio React + Webpack Starter Kit as starting point.
 This is a ready-to-use starter kit for ES2015 + React projects, built by Ignacio Segura for Nik Nak Studio (www.niknak.es).
 
 

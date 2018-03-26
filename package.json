@@ -1,7 +1,7 @@
 {
-  "name": "niknakstudio_react",
+  "name": "bounceback",
   "version": "1.0.0",
-  "description": "Nik Nak Studio's React Starter Kit",
+  "description": "Bounceback, a JS game built on React and Phaser.JS",
   "main": "index.js",
   "scripts": {
     "build-production": "NODE_ENV=production webpack",
@@ -11,6 +11,7 @@
   "author": "Nik Nak Studio www.niknak.es",
   "license": "ISC",
   "dependencies": {
+    "phaser": "^3.3.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^4.1.1",
