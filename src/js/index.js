@@ -6,6 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Scoreboard from './scoreboard.js';
 import Dummy from './dummy.js';
+import Store from './store.js';
+import {Provider} from 'mobx-react';
 
 class Index extends React.Component {
 
@@ -18,7 +20,10 @@ class Index extends React.Component {
   }
 }
 
+let myStore = new Store();
+myStore.addBounce();
+console.log(myStore.report);
 ReactDOM.render(
-  <Index />,
+  <Provider store={myStore}><Index /></Provider>,
   document.getElementById('content')
 );

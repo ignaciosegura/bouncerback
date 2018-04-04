@@ -6,7 +6,7 @@ import React from 'react';
 
 class Dummy extends React.Component {
   clickedMe(e) {
-    console.log("you clicked me, motherfucker");
+    console.log('you clicked me, motherfucker');
   }
 
   render() {
