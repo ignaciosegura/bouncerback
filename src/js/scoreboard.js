@@ -4,14 +4,15 @@
 require('../sass/_scoreboard.scss');
 
 import React from 'react';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 
-@observer
+@inject('store') @observer
 class Scoreboard extends React.Component {
   
   render() {
+    let score = this.props.store[this.props.type];
     return <div className={`scoreboard ${this.props.type}`}>
-      14 {this.props.type}
+      {score} {this.props.type}
     </div>
   }
 }

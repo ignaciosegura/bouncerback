@@ -13721,6 +13721,8 @@ module.exports = getIteratorFn;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = __webpack_require__(32);
 
 var _react2 = _interopRequireDefault(_react);
@@ -13755,7 +13757,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(90); // Required by Webpack to read SASS folder and generate a CSS file
 
-var Index = function (_React$Component) {
+var Index = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = function (_React$Component) {
   _inherits(Index, _React$Component);
 
   function Index() {
@@ -13778,11 +13780,10 @@ var Index = function (_React$Component) {
   }]);
 
   return Index;
-}(_react2.default.Component);
+}(_react2.default.Component)) || _class);
+
 
 var myStore = new _store2.default();
-myStore.addBounce();
-console.log(myStore.report);
 _reactDom2.default.render(_react2.default.createElement(
   _mobxReact.Provider,
   { store: myStore },
@@ -13802,9 +13803,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class; /* global require */
+// Dummy element. We need something we can click during development
+
+
 var _react = __webpack_require__(32);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _mobxReact = __webpack_require__(105);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13812,25 +13819,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* global require */
-// Dummy element. We need something we can click during development
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-
-var Dummy = function (_React$Component) {
+var Dummy = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = function (_React$Component) {
   _inherits(Dummy, _React$Component);
 
   function Dummy() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Dummy);
 
-    return _possibleConstructorReturn(this, (Dummy.__proto__ || Object.getPrototypeOf(Dummy)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dummy.__proto__ || Object.getPrototypeOf(Dummy)).call.apply(_ref, [this].concat(args))), _this), _this.clickedMe = function (e) {
+      console.log('you clicked me, motherfucker');
+      _this.props.store.addBounce();
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Dummy, [{
-    key: 'clickedMe',
-    value: function clickedMe(e) {
-      console.log('you clicked me, motherfucker');
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -13842,8 +13853,7 @@ var Dummy = function (_React$Component) {
   }]);
 
   return Dummy;
-}(_react2.default.Component);
-
+}(_react2.default.Component)) || _class);
 exports.default = Dummy;
 
 /***/ }),
@@ -13859,7 +13869,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class;
+var _dec, _class;
 
 var _react = __webpack_require__(32);
 
@@ -13880,7 +13890,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(89);
 
-var Scoreboard = (0, _mobxReact.observer)(_class = function (_React$Component) {
+var Scoreboard = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(Scoreboard, _React$Component);
 
   function Scoreboard() {
@@ -13892,18 +13902,19 @@ var Scoreboard = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _createClass(Scoreboard, [{
     key: 'render',
     value: function render() {
+      var score = this.props.store[this.props.type];
       return _react2.default.createElement(
         'div',
         { className: 'scoreboard ' + this.props.type },
-        '14 ',
+        score,
+        ' ',
         this.props.type
       );
     }
   }]);
 
   return Scoreboard;
-}(_react2.default.Component)) || _class;
-
+}(_react2.default.Component)) || _class) || _class);
 exports.default = Scoreboard;
 
 /***/ }),
