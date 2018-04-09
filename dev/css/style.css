@@ -1,12 +1,26 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);#gamesurface {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.puck {
+  width: 50px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  .puck rect {
+    width: 50px;
+    height: 20px;
+    fill: white;
+    stroke: none; }
+#gamesurface {
   width: 100%;
   background: green; }
 
 svg#the-zone {
+  box-sizing: content-box;
   width: 600px;
   height: 600px;
+  padding: 10px;
   margin: 0 auto;
   display: block;
+  position: relative;
   stroke: white;
   stroke-width: 2;
   fill: transparent; }

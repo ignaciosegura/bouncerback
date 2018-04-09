@@ -27760,11 +27760,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game engine class
+
+var _puck = __webpack_require__(203);
+
+var _puck2 = _interopRequireDefault(_puck);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Game engine class
 
 var GameEngine = function () {
   function GameEngine(bpm, time, song) {
@@ -27775,10 +27779,55 @@ var GameEngine = function () {
     this.framesPerTime = time * this.framesPerBeat;
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
+    var puck = new _puck2.default(1);
+    this.pucks = document.getElementsByClassName('puck');
+    this.gameSurfaceCenter = this.findGameSurfaceCenter();
+    this.mouseVector;
+
+    this.trackMousePosition();
     setInterval(this.gameLoop, 5000);
   }
 
   _createClass(GameEngine, [{
+    key: 'findGameSurfaceCenter',
+    value: function findGameSurfaceCenter() {
+      var theZone = document.getElementById('the-zone');
+      var coords = theZone.getBoundingClientRect();
+      return {
+        centerX: (coords.left + coords.right) / 2,
+        centerY: (coords.top + coords.bottom) / 2
+      };
+    }
+  }, {
+    key: 'bindMouseTrackToPucks',
+    value: function bindMouseTrackToPucks() {}
+  }, {
+    key: 'trackMousePosition',
+    value: function trackMousePosition() {
+      var _this = this;
+
+      var mousePos = void 0;
+      document.onmousemove = function (e) {
+        mousePos = {
+          x: e.clientX,
+          y: e.clientY
+        };
+        _this.mouseVector = _this._getMouseVector(mousePos);
+        console.log(_this.mouseVector);
+        return _this.mouseVector;
+      };
+    }
+  }, {
+    key: '_getMouseVector',
+    value: function _getMouseVector(mousePos) {
+      var x = mousePos.x - this.gameSurfaceCenter.centerX;
+      var y = this.gameSurfaceCenter.centerY - mousePos.y;
+      return {
+        angleRadians: Math.atan2(y, x),
+        angleDeg: Math.atan2(y, x) * 180 / Math.PI
+      };
+    }
+  }, {
     key: 'gameLoop',
     value: function gameLoop() {
       this.clock++;
@@ -27790,6 +27839,54 @@ var GameEngine = function () {
 }();
 
 exports.default = GameEngine;
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*global require*/
+// Puck class
+
+__webpack_require__(204);
+
+var Puck = function () {
+  function Puck(index) {
+    _classCallCheck(this, Puck);
+
+    this.puck = '<svg class="puck" index=' + index + '>\n      <rect cx="0" cy="0" />\n    </svg>';
+    var theZone = document.getElementById('the-zone');
+    theZone.innerHTML += this.puck;
+  }
+
+  _createClass(Puck, [{
+    key: 'place',
+    value: function place(HTMLpuck) {}
+  }, {
+    key: 'getMousePosition',
+    value: function getMousePosition() {}
+  }]);
+
+  return Puck;
+}();
+
+exports.default = Puck;
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

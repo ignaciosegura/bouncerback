@@ -1,0 +1,18 @@
+// Puck
+
+.puck {
+    width: 50px;
+    height: 20px;
+    position: absolute;
+  
+    top: 0;
+    left: 0;
+  
+    rect {
+      width: 50px;
+      height: 20px;
+      fill: white;
+      stroke: none;
+    }
+  }
+  
