@@ -14971,7 +14971,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = functio
         _react2.default.createElement(
           'svg',
           { id: 'the-zone', onClick: this.bootGameEngine },
-          _react2.default.createElement('circle', { cx: '300', cy: '300', r: '299' })
+          _react2.default.createElement('circle', { id: 'the-circle', cx: '300', cy: '300', r: '299' })
         )
       );
     }
@@ -27779,54 +27779,67 @@ var GameEngine = function () {
     this.framesPerTime = time * this.framesPerBeat;
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
-    var puck = new _puck2.default(1);
-    this.pucks = document.getElementsByClassName('puck');
-    this.gameSurfaceCenter = this.findGameSurfaceCenter();
-    this.mouseVector;
+    this.gameSurfaceCoords = this.findGameSurfaceCoords();
+    this.pucks;
 
-    this.trackMousePosition();
+    var puck = new _puck2.default(1);
+    this.pucks = Array.from(document.getElementsByClassName('puck'));
+
+    this.movePucksOnMouse();
     setInterval(this.gameLoop, 5000);
   }
 
   _createClass(GameEngine, [{
-    key: 'findGameSurfaceCenter',
-    value: function findGameSurfaceCenter() {
-      var theZone = document.getElementById('the-zone');
-      var coords = theZone.getBoundingClientRect();
+    key: 'findGameSurfaceCoords',
+    value: function findGameSurfaceCoords() {
+      var theCircle = document.getElementById('the-circle');
+      var coords = theCircle.getBoundingClientRect();
       return {
         centerX: (coords.left + coords.right) / 2,
-        centerY: (coords.top + coords.bottom) / 2
+        centerY: (coords.top + coords.bottom) / 2,
+        radius: parseInt(theCircle.getAttribute('cx'))
       };
     }
   }, {
-    key: 'bindMouseTrackToPucks',
-    value: function bindMouseTrackToPucks() {}
-  }, {
-    key: 'trackMousePosition',
-    value: function trackMousePosition() {
+    key: 'movePucksOnMouse',
+    value: function movePucksOnMouse() {
       var _this = this;
 
       var mousePos = void 0;
+      var mouseVector = void 0;
+
       document.onmousemove = function (e) {
         mousePos = {
           x: e.clientX,
           y: e.clientY
         };
-        _this.mouseVector = _this._getMouseVector(mousePos);
-        console.log(_this.mouseVector);
-        return _this.mouseVector;
+        mouseVector = _this._getMouseVector(mousePos);
+        _this._movePucks(mouseVector);
       };
     }
   }, {
     key: '_getMouseVector',
     value: function _getMouseVector(mousePos) {
-      var x = mousePos.x - this.gameSurfaceCenter.centerX;
-      var y = this.gameSurfaceCenter.centerY - mousePos.y;
+      var x = mousePos.x - this.gameSurfaceCoords.centerX;
+      var y = mousePos.y - this.gameSurfaceCoords.centerY;
       var atan2 = Math.atan2(y, x);
       return {
         angleRadians: atan2,
         angleDeg: atan2 * 180 / Math.PI
       };
+    }
+  }, {
+    key: '_movePucks',
+    value: function _movePucks(vector) {
+      var _this2 = this;
+
+      this.pucks.forEach(function (p) {
+        var surface = _this2.gameSurfaceCoords;
+        var x = Math.cos(vector.angleRadians) * surface.radius;
+        var y = Math.sin(vector.angleRadians) * surface.radius;
+        p.setAttribute('x', surface.radius + x);
+        p.setAttribute('y', surface.radius + y);
+      });
     }
   }, {
     key: 'gameLoop',
@@ -27865,7 +27878,7 @@ var Puck = function () {
   function Puck(index) {
     _classCallCheck(this, Puck);
 
-    this.puck = '<svg class="puck" index=' + index + '>\n      <rect cx="0" cy="0" />\n    </svg>';
+    this.puck = '<rect class="puck" index=' + index + ' x="0" y="0" />';
     var theZone = document.getElementById('the-zone');
     theZone.innerHTML += this.puck;
   }

@@ -5,9 +5,7 @@ require('../sass/_puck.scss');
 
 class Puck {
   constructor(index) {
-    this.puck = `<svg class="puck" index=${index}>
-      <rect cx="0" cy="0" />
-    </svg>`;
+    this.puck = `<rect class="puck" index=${index} x="0" y="0" />`;
     let theZone = document.getElementById('the-zone');
     theZone.innerHTML += this.puck;
   }
@@ -17,7 +15,7 @@ class Puck {
   }
 
   getMousePosition() {
-    
+
   }
 
 }
