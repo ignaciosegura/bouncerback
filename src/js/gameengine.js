@@ -48,9 +48,10 @@ class GameEngine {
   _getMouseVector(mousePos) {
     let x = mousePos.x - this.gameSurfaceCenter.centerX;
     let y = this.gameSurfaceCenter.centerY - mousePos.y;
+    let atan2 = Math.atan2(y, x);
     return {
-      angleRadians: Math.atan2(y, x),
-      angleDeg: Math.atan2(y, x) * 180 / Math.PI
+      angleRadians: atan2,
+      angleDeg: atan2 * 180 / Math.PI
     }
   }
 

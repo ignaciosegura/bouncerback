@@ -27822,9 +27822,10 @@ var GameEngine = function () {
     value: function _getMouseVector(mousePos) {
       var x = mousePos.x - this.gameSurfaceCenter.centerX;
       var y = this.gameSurfaceCenter.centerY - mousePos.y;
+      var atan2 = Math.atan2(y, x);
       return {
-        angleRadians: Math.atan2(y, x),
-        angleDeg: Math.atan2(y, x) * 180 / Math.PI
+        angleRadians: atan2,
+        angleDeg: atan2 * 180 / Math.PI
       };
     }
   }, {
