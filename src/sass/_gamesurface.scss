@@ -1,0 +1,15 @@
+#gamesurface {
+  width: 100%;
+  background: green;
+}
+
+svg#the-zone {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  display: block;
+
+  stroke: white;
+  stroke-width: 2;
+  fill: transparent;
+}

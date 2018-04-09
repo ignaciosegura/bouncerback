@@ -1,7 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);html, body {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);#gamesurface {
+  width: 100%;
+  background: green; }
+
+svg#the-zone {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  display: block;
+  stroke: white;
+  stroke-width: 2;
+  fill: transparent; }
+html, body {
   background: black;
   color: white;
   font-family: 'Didact Gothic', sans-serif;
-  font-size: 24px; }
+  font-size: 24px;
+  margin: 0;
+  padding: 0; }
 
 /*# sourceMappingURL=style.css.map*/

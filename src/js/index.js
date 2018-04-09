@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Scoreboard from './scoreboard.js';
 import Dummy from './dummy.js';
+import GameSurface from './gamesurface.js';
 import Store from './store.js';
 import {Provider, inject} from 'mobx-react';
 
@@ -16,7 +17,9 @@ class Index extends React.Component {
     return <div id="container">
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
+      <Scoreboard type="times" />
       <Dummy />
+      <GameSurface />
     </div>
   }
 }
