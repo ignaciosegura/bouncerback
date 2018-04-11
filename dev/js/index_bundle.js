@@ -27766,6 +27766,10 @@ var _puck = __webpack_require__(203);
 
 var _puck2 = _interopRequireDefault(_puck);
 
+var _gamecontroller = __webpack_require__(206);
+
+var _gamecontroller2 = _interopRequireDefault(_gamecontroller);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27787,7 +27791,9 @@ var GameEngine = function () {
     this.pucks = Array.from(document.getElementsByClassName('puck'));
     this.pucks[0].instance = puck;
 
-    this.movePucksOnMouse();
+    var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
+    gameController.movePucksOnMouse();
+
     setInterval(this.gameLoop, 5000);
   }
 
@@ -27801,54 +27807,6 @@ var GameEngine = function () {
         centerY: (coords.top + coords.bottom) / 2,
         radius: parseInt(theCircle.getAttribute('cx'))
       };
-    }
-  }, {
-    key: 'movePucksOnMouse',
-    value: function movePucksOnMouse() {
-      var _this = this;
-
-      var mousePos = void 0;
-      var mouseVector = void 0;
-
-      document.onmousemove = function (e) {
-        mousePos = {
-          x: e.clientX,
-          y: e.clientY
-        };
-        mouseVector = _this._getMouseVector(mousePos);
-        _this._movePucks(mouseVector);
-      };
-    }
-  }, {
-    key: '_getMouseVector',
-    value: function _getMouseVector(mousePos) {
-      var x = mousePos.x - this.gameSurfaceCoords.centerX;
-      var y = mousePos.y - this.gameSurfaceCoords.centerY;
-      var angle = Math.atan2(y, x);
-      return {
-        rads: angle,
-        degrees: angle * 180 / Math.PI
-      };
-    }
-  }, {
-    key: '_movePucks',
-    value: function _movePucks(vector) {
-      var _this2 = this;
-
-      this.pucks.forEach(function (p) {
-        var surface = _this2.gameSurfaceCoords;
-        var x = Math.cos(vector.rads) * surface.radius;
-        var y = Math.sin(vector.rads) * surface.radius;
-        var perpendicularInDegs = vector.degrees + 90;
-        var rotationCoords = {
-          x: x - p.instance.translateCoords.x,
-          y: y - p.instance.translateCoords.y
-        };
-
-        p.setAttribute('x', surface.radius + x);
-        p.setAttribute('y', surface.radius + y);
-        p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
-      });
     }
   }, {
     key: 'gameLoop',
@@ -27920,6 +27878,87 @@ exports.default = Puck;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 205 */,
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Game Controller class
+
+var GameController = function () {
+  function GameController(gameSurfaceCoords, pucks) {
+    _classCallCheck(this, GameController);
+
+    this.gameSurfaceCoords = gameSurfaceCoords;
+    this.pucks = pucks;
+  }
+
+  _createClass(GameController, [{
+    key: 'movePucksOnMouse',
+    value: function movePucksOnMouse() {
+      var _this = this;
+
+      var mousePos = void 0;
+      var mouseVector = void 0;
+
+      document.onmousemove = function (e) {
+        mousePos = {
+          x: e.clientX,
+          y: e.clientY
+        };
+        mouseVector = _this._getMouseVector(mousePos);
+        _this._movePucks(mouseVector);
+      };
+    }
+  }, {
+    key: '_getMouseVector',
+    value: function _getMouseVector(mousePos) {
+      var x = mousePos.x - this.gameSurfaceCoords.centerX;
+      var y = mousePos.y - this.gameSurfaceCoords.centerY;
+      var angle = Math.atan2(y, x);
+      return {
+        rads: angle,
+        degrees: angle * 180 / Math.PI
+      };
+    }
+  }, {
+    key: '_movePucks',
+    value: function _movePucks(vector) {
+      var _this2 = this;
+
+      this.pucks.forEach(function (p) {
+        var surface = _this2.gameSurfaceCoords;
+        var x = Math.cos(vector.rads) * surface.radius;
+        var y = Math.sin(vector.rads) * surface.radius;
+        var perpendicularInDegs = vector.degrees + 90;
+        var rotationCoords = {
+          x: x - p.instance.translateCoords.x,
+          y: y - p.instance.translateCoords.y
+        };
+
+        p.setAttribute('x', surface.radius + x);
+        p.setAttribute('y', surface.radius + y);
+        p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
+      });
+    }
+  }]);
+
+  return GameController;
+}();
+
+exports.default = GameController;
 
 /***/ })
 /******/ ]);
