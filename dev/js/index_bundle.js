@@ -27770,12 +27770,22 @@ var _gamecontroller = __webpack_require__(206);
 
 var _gamecontroller2 = _interopRequireDefault(_gamecontroller);
 
+var _atom = __webpack_require__(208);
+
+var _atom2 = _interopRequireDefault(_atom);
+
+var _helpers = __webpack_require__(207);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GameEngine = function () {
-  function GameEngine(bpm, time, song) {
+  function GameEngine(bpm, time) {
+    var song = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
     _classCallCheck(this, GameEngine);
 
     this.frameRate = 60;
@@ -27783,13 +27793,18 @@ var GameEngine = function () {
     this.framesPerTime = time * this.framesPerBeat;
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
-    this.gameSurfaceCoords = this.findGameSurfaceCoords();
-    this.pucks;
+    this.gameSurfaceCoords = (0, _helpers2.default)();
+    this.pucks = [];
 
     var puck = new _puck2.default(0);
     puck.place();
     this.pucks = Array.from(document.getElementsByClassName('puck'));
     this.pucks[0].instance = puck;
+
+    var atom = new _atom2.default(0, 5, this.gameSurfaceCoords);
+    atom.createAtom();
+    this.atoms = Array.from(document.getElementsByClassName('atom'));
+    this.atoms[0].instance = atom;
 
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
@@ -27798,17 +27813,6 @@ var GameEngine = function () {
   }
 
   _createClass(GameEngine, [{
-    key: 'findGameSurfaceCoords',
-    value: function findGameSurfaceCoords() {
-      var theCircle = document.getElementById('the-circle');
-      var coords = theCircle.getBoundingClientRect();
-      return {
-        centerX: (coords.left + coords.right) / 2,
-        centerY: (coords.top + coords.bottom) / 2,
-        radius: parseInt(theCircle.getAttribute('cx'))
-      };
-    }
-  }, {
     key: 'gameLoop',
     value: function gameLoop() {
       this.clock++;
@@ -27845,6 +27849,7 @@ var Puck = function () {
   function Puck(index) {
     _classCallCheck(this, Puck);
 
+    this.index = index;
     this.size = {
       width: 80,
       height: 25
@@ -27854,18 +27859,15 @@ var Puck = function () {
       y: this.size.height / -2
     };
     this.translation = 'translate(' + this.translateCoords.x + ', ' + this.translateCoords.y + ')';
-    this.puck = '<rect class="puck" index="' + index + '" x="0" y="0" width="' + this.size.width + '" height="' + this.size.height + '" transform="' + this.translation + '" transform-origin="center center" />';
   }
 
   _createClass(Puck, [{
     key: 'place',
     value: function place() {
+      var puck = '<rect\n      class="puck"\n      index="' + this.index + '"\n      x="0"\n      y="0"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n      transform="' + this.translation + '"\n      transform-origin="center center"\n      />';
       var theZone = document.getElementById('the-zone');
-      theZone.innerHTML += this.puck;
+      theZone.insertAdjacentHTML('beforeend', puck);
     }
-  }, {
-    key: 'getMousePosition',
-    value: function getMousePosition() {}
   }]);
 
   return Puck;
@@ -27939,17 +27941,17 @@ var GameController = function () {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
-        var surface = _this2.gameSurfaceCoords;
-        var x = Math.cos(vector.rads) * surface.radius;
-        var y = Math.sin(vector.rads) * surface.radius;
+        var radius = _this2.gameSurfaceCoords.radius;
+        var x = Math.cos(vector.rads) * radius;
+        var y = Math.sin(vector.rads) * radius;
         var perpendicularInDegs = vector.degrees + 90;
         var rotationCoords = {
           x: x - p.instance.translateCoords.x,
           y: y - p.instance.translateCoords.y
         };
 
-        p.setAttribute('x', surface.radius + x);
-        p.setAttribute('y', surface.radius + y);
+        p.setAttribute('x', radius + x);
+        p.setAttribute('y', radius + y);
         p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
       });
     }
@@ -27959,6 +27961,88 @@ var GameController = function () {
 }();
 
 exports.default = GameController;
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+// Helper functions
+
+function findGameSurfaceCoords() {
+  var theCircle = document.getElementById('the-circle');
+  var coords = theCircle.getBoundingClientRect();
+  return {
+    centerX: (coords.left + coords.right) / 2,
+    centerY: (coords.top + coords.bottom) / 2,
+    radius: parseInt(theCircle.getAttribute('cx'))
+  };
+}
+
+exports.default = findGameSurfaceCoords;
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*global require*/
+// Atom class
+
+__webpack_require__(209);
+
+var Atom = function () {
+  function Atom(index, speed, gameSurfaceCoords) {
+    var collisionSound = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+    var destructionSound = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
+
+    _classCallCheck(this, Atom);
+
+    this.index = index;
+    this.speed = speed; // Speed is measured in px per frame
+    this.gameSurfaceCoords = gameSurfaceCoords;
+    this.vector = Math.random() * 2 * Math.PI - Math.PI;
+    this.radius = 10;
+    this.sounds = {
+      collision: collisionSound,
+      destruction: destructionSound
+    };
+  }
+
+  _createClass(Atom, [{
+    key: 'createAtom',
+    value: function createAtom() {
+      var atom = '<circle\n      cx="' + this.gameSurfaceCoords.radius + '"\n      cy="' + this.gameSurfaceCoords.radius + '"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
+      var theZone = document.getElementById('the-zone');
+      theZone.insertAdjacentHTML('beforeend', atom);
+    }
+  }]);
+
+  return Atom;
+}();
+
+exports.default = Atom;
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

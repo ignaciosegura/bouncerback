@@ -5,6 +5,7 @@ require('../sass/_puck.scss');
 
 class Puck {
   constructor(index) {
+    this.index = index;
     this.size = {
       width: 80,
       height: 25
@@ -14,18 +15,22 @@ class Puck {
       y: this.size.height / -2
     }
     this.translation = 'translate(' + this.translateCoords.x + ', ' + this.translateCoords.y + ')';
-    this.puck = `<rect class="puck" index="${index}" x="0" y="0" width="${this.size.width}" height="${this.size.height}" transform="${this.translation}" transform-origin="center center" />`;
   }
 
   place() {
+    let puck = `<rect
+      class="puck"
+      index="${this.index}"
+      x="0"
+      y="0"
+      width="${this.size.width}"
+      height="${this.size.height}"
+      transform="${this.translation}"
+      transform-origin="center center"
+      />`;
     let theZone = document.getElementById('the-zone');
-    theZone.innerHTML += this.puck;
+    theZone.insertAdjacentHTML('beforeend', puck);
   }
-
-  getMousePosition() {
-
-  }
-
 }
 
 export default Puck;

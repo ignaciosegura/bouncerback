@@ -1,6 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.puck {
   fill: white;
   stroke: none; }
+.atom {
+  fill: white;
+  stroke: none; }
 #gamesurface {
   width: 100%;
   background: green; }

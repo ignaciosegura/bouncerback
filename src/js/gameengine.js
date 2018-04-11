@@ -2,6 +2,7 @@
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
+import Atom from './atom.js';
 import findGameSurfaceCoords from './helpers.js';
 
 class GameEngine {
@@ -13,12 +14,17 @@ class GameEngine {
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
     this.gameSurfaceCoords = findGameSurfaceCoords();
-    this.pucks;
+    this.pucks = [];
 
     let puck = new Puck(0);
     puck.place();
     this.pucks = Array.from(document.getElementsByClassName('puck'));
     this.pucks[0].instance = puck;
+
+    let atom = new Atom(0, 5, this.gameSurfaceCoords);
+    atom.createAtom();
+    this.atoms = Array.from(document.getElementsByClassName('atom'));
+    this.atoms[0].instance = atom;
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();

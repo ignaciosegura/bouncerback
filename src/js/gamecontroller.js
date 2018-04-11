@@ -32,17 +32,17 @@ class GameController {
 
   _movePucks(vector) {
     this.pucks.forEach( p => {
-      let surface = this.gameSurfaceCoords;
-      let x = Math.cos(vector.rads) * surface.radius;
-      let y = Math.sin(vector.rads) * surface.radius;
+      let radius = this.gameSurfaceCoords.radius;
+      let x = Math.cos(vector.rads) * radius;
+      let y = Math.sin(vector.rads) * radius;
       let perpendicularInDegs = vector.degrees + 90;
       let rotationCoords = {
         x: x - p.instance.translateCoords.x,
         y: y - p.instance.translateCoords.y
       }
 
-      p.setAttribute('x', surface.radius + x);
-      p.setAttribute('y', surface.radius + y);
+      p.setAttribute('x', radius + x);
+      p.setAttribute('y', radius + y);
       p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
     });
   }
