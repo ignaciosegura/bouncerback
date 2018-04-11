@@ -2,16 +2,17 @@
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
+import findGameSurfaceCoords from './helpers.js';
 
 class GameEngine {
 
-  constructor(bpm, time, song) {
+  constructor(bpm, time, song = '') {
     this.frameRate = 60;
     this.framesPerBeat = (60 / bpm) * this.frameRate;
     this.framesPerTime = time * this.framesPerBeat;
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
-    this.gameSurfaceCoords = this.findGameSurfaceCoords();
+    this.gameSurfaceCoords = findGameSurfaceCoords();
     this.pucks;
 
     let puck = new Puck(0);
@@ -23,16 +24,6 @@ class GameEngine {
     gameController.movePucksOnMouse();
 
     setInterval(this.gameLoop, 5000);
-  }
-
-  findGameSurfaceCoords() {
-    let theCircle = document.getElementById('the-circle');
-    let coords = theCircle.getBoundingClientRect();
-    return {
-      centerX: (coords.left + coords.right) / 2,
-      centerY: (coords.top + coords.bottom) / 2,
-      radius: parseInt(theCircle.getAttribute('cx'))
-    };
   }
 
   gameLoop() {
