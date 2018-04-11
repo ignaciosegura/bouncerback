@@ -27782,8 +27782,10 @@ var GameEngine = function () {
     this.gameSurfaceCoords = this.findGameSurfaceCoords();
     this.pucks;
 
-    var puck = new _puck2.default(1);
+    var puck = new _puck2.default(0);
+    puck.place();
     this.pucks = Array.from(document.getElementsByClassName('puck'));
+    this.pucks[0].instance = puck;
 
     this.movePucksOnMouse();
     setInterval(this.gameLoop, 5000);
@@ -27822,10 +27824,10 @@ var GameEngine = function () {
     value: function _getMouseVector(mousePos) {
       var x = mousePos.x - this.gameSurfaceCoords.centerX;
       var y = mousePos.y - this.gameSurfaceCoords.centerY;
-      var atan2 = Math.atan2(y, x);
+      var angle = Math.atan2(y, x);
       return {
-        angleRadians: atan2,
-        angleDeg: atan2 * 180 / Math.PI
+        rads: angle,
+        degrees: angle * 180 / Math.PI
       };
     }
   }, {
@@ -27835,10 +27837,17 @@ var GameEngine = function () {
 
       this.pucks.forEach(function (p) {
         var surface = _this2.gameSurfaceCoords;
-        var x = Math.cos(vector.angleRadians) * surface.radius;
-        var y = Math.sin(vector.angleRadians) * surface.radius;
+        var x = Math.cos(vector.rads) * surface.radius;
+        var y = Math.sin(vector.rads) * surface.radius;
+        var perpendicularInDegs = vector.degrees + 90;
+        var rotationCoords = {
+          x: x - p.instance.translateCoords.x,
+          y: y - p.instance.translateCoords.y
+        };
+
         p.setAttribute('x', surface.radius + x);
         p.setAttribute('y', surface.radius + y);
+        p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
       });
     }
   }, {
@@ -27878,14 +27887,24 @@ var Puck = function () {
   function Puck(index) {
     _classCallCheck(this, Puck);
 
-    this.puck = '<rect class="puck" index=' + index + ' x="0" y="0" />';
-    var theZone = document.getElementById('the-zone');
-    theZone.innerHTML += this.puck;
+    this.size = {
+      width: 80,
+      height: 25
+    };
+    this.translateCoords = {
+      x: this.size.width / -2,
+      y: this.size.height / -2
+    };
+    this.translation = 'translate(' + this.translateCoords.x + ', ' + this.translateCoords.y + ')';
+    this.puck = '<rect class="puck" index="' + index + '" x="0" y="0" width="' + this.size.width + '" height="' + this.size.height + '" transform="' + this.translation + '" transform-origin="center center" />';
   }
 
   _createClass(Puck, [{
     key: 'place',
-    value: function place(HTMLpuck) {}
+    value: function place() {
+      var theZone = document.getElementById('the-zone');
+      theZone.innerHTML += this.puck;
+    }
   }, {
     key: 'getMousePosition',
     value: function getMousePosition() {}

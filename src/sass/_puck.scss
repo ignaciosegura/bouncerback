@@ -1,15 +1,8 @@
 // Puck
-$puck-width: 80px;
-$puck-height: 25px;
+
 
 .puck {
-    width: $puck-width;
-    height: $puck-height;
-    position: absolute;
-
     fill: white;
     stroke: none;
-
-    transform: translate(-$puck-width / 2, -$puck-height / 2);
   }
   
