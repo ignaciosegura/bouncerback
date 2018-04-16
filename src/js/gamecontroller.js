@@ -1,9 +1,14 @@
 // Game Controller class
 
+import {getVectorFromXY} from './helpers.js';
+
 class GameController {
   constructor(gameSurfaceCoords, pucks) {
+    let vector = getVectorFromXY(0, -1);
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
+
+    this.movePucks(vector);
   }
 
   movePucksOnMouse() {
@@ -16,21 +21,17 @@ class GameController {
         y: e.clientY
       };
       mouseVector = this._getMouseVector(mousePos);
-      this._movePucks(mouseVector);
+      this.movePucks(mouseVector);
     };
   }
 
   _getMouseVector(mousePos) {
     let x = mousePos.x - this.gameSurfaceCoords.centerX;
     let y = mousePos.y - this.gameSurfaceCoords.centerY;
-    let angle = Math.atan2(y, x);
-    return {
-      rads: angle,
-      degrees: angle * 180 / Math.PI
-    }
+    return getVectorFromXY(x, y);
   }
 
-  _movePucks(vector) {
+  movePucks(vector) {
     this.pucks.forEach( p => {
       let radius = this.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;

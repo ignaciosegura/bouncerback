@@ -26,7 +26,7 @@ class GameSurface extends React.Component {
   render() {
     return <div id="gamesurface">
       <svg id="the-zone" onClick={this.bootGameEngine}>
-        <circle id="the-circle" cx="300" cy="300" r="299" />
+        <circle id="the-circle" cx="300" cy="300" r="300" />
       </svg>
     </div>
   }

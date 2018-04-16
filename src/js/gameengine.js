@@ -3,7 +3,7 @@
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import findGameSurfaceCoords from './helpers.js';
+import {findGameSurfaceCoords} from './helpers.js';
 
 class GameEngine {
 

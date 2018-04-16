@@ -14971,7 +14971,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = functio
         _react2.default.createElement(
           'svg',
           { id: 'the-zone', onClick: this.bootGameEngine },
-          _react2.default.createElement('circle', { id: 'the-circle', cx: '300', cy: '300', r: '299' })
+          _react2.default.createElement('circle', { id: 'the-circle', cx: '300', cy: '300', r: '300' })
         )
       );
     }
@@ -27776,8 +27776,6 @@ var _atom2 = _interopRequireDefault(_atom);
 
 var _helpers = __webpack_require__(207);
 
-var _helpers2 = _interopRequireDefault(_helpers);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27793,7 +27791,7 @@ var GameEngine = function () {
     this.framesPerTime = time * this.framesPerBeat;
     this.clock = 0;
     this.interval = 1000 / this.frameRate;
-    this.gameSurfaceCoords = (0, _helpers2.default)();
+    this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
     this.pucks = [];
 
     var puck = new _puck2.default(0);
@@ -27893,18 +27891,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game Controller class
+
+var _helpers = __webpack_require__(207);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Game Controller class
 
 var GameController = function () {
   function GameController(gameSurfaceCoords, pucks) {
     _classCallCheck(this, GameController);
 
+    var vector = (0, _helpers.getVectorFromXY)(0, -1);
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
+
+    this.movePucks(vector);
   }
 
   _createClass(GameController, [{
@@ -27921,7 +27922,7 @@ var GameController = function () {
           y: e.clientY
         };
         mouseVector = _this._getMouseVector(mousePos);
-        _this._movePucks(mouseVector);
+        _this.movePucks(mouseVector);
       };
     }
   }, {
@@ -27929,15 +27930,11 @@ var GameController = function () {
     value: function _getMouseVector(mousePos) {
       var x = mousePos.x - this.gameSurfaceCoords.centerX;
       var y = mousePos.y - this.gameSurfaceCoords.centerY;
-      var angle = Math.atan2(y, x);
-      return {
-        rads: angle,
-        degrees: angle * 180 / Math.PI
-      };
+      return (0, _helpers.getVectorFromXY)(x, y);
     }
   }, {
-    key: '_movePucks',
-    value: function _movePucks(vector) {
+    key: 'movePucks',
+    value: function movePucks(vector) {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
@@ -27984,7 +27981,16 @@ function findGameSurfaceCoords() {
   };
 }
 
-exports.default = findGameSurfaceCoords;
+function getVectorFromXY(x, y) {
+  var angle = Math.atan2(y, x);
+  return {
+    rads: angle,
+    degrees: angle * 180 / Math.PI
+  };
+}
+
+exports.findGameSurfaceCoords = findGameSurfaceCoords;
+exports.getVectorFromXY = getVectorFromXY;
 
 /***/ }),
 /* 208 */

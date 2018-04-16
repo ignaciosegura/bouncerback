@@ -10,4 +10,12 @@ function findGameSurfaceCoords() {
   };
 }
 
-export default findGameSurfaceCoords;
+function getVectorFromXY(x, y) {
+  let angle = Math.atan2(y, x);
+  return {
+    rads: angle,
+    degrees: angle * 180 / Math.PI
+  }
+}
+
+export {findGameSurfaceCoords, getVectorFromXY};
