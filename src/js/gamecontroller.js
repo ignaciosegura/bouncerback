@@ -1,9 +1,14 @@
 // Game Controller class
 
+import {getVectorFromXY} from './helpers.js';
+
 class GameController {
   constructor(gameSurfaceCoords, pucks) {
+    let vector = getVectorFromXY(0, -1);
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
+
+    this.movePucks(vector);
   }
 
   movePucksOnMouse() {
@@ -16,33 +21,29 @@ class GameController {
         y: e.clientY
       };
       mouseVector = this._getMouseVector(mousePos);
-      this._movePucks(mouseVector);
+      this.movePucks(mouseVector);
     };
   }
 
   _getMouseVector(mousePos) {
     let x = mousePos.x - this.gameSurfaceCoords.centerX;
     let y = mousePos.y - this.gameSurfaceCoords.centerY;
-    let angle = Math.atan2(y, x);
-    return {
-      rads: angle,
-      degrees: angle * 180 / Math.PI
-    }
+    return getVectorFromXY(x, y);
   }
 
-  _movePucks(vector) {
+  movePucks(vector) {
     this.pucks.forEach( p => {
-      let surface = this.gameSurfaceCoords;
-      let x = Math.cos(vector.rads) * surface.radius;
-      let y = Math.sin(vector.rads) * surface.radius;
+      let radius = this.gameSurfaceCoords.radius;
+      let x = Math.cos(vector.rads) * radius;
+      let y = Math.sin(vector.rads) * radius;
       let perpendicularInDegs = vector.degrees + 90;
       let rotationCoords = {
         x: x - p.instance.translateCoords.x,
         y: y - p.instance.translateCoords.y
       }
 
-      p.setAttribute('x', surface.radius + x);
-      p.setAttribute('y', surface.radius + y);
+      p.setAttribute('x', radius + x);
+      p.setAttribute('y', radius + y);
       p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
     });
   }
