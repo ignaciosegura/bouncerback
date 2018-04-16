@@ -27786,35 +27786,36 @@ var GameEngine = function () {
 
     _classCallCheck(this, GameEngine);
 
-    this.frameRate = 60;
-    this.framesPerBeat = 60 / bpm * this.frameRate;
-    this.framesPerTime = time * this.framesPerBeat;
-    this.clock = 0;
-    this.interval = 1000 / this.frameRate;
+    this.time = (0, _helpers.setupTimeUnits)(bpm, time);
+
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
     this.pucks = [];
+    this.atoms = [];
+    this.gameLoop = this.gameLoop.bind(this);
 
     var puck = new _puck2.default(0);
     puck.place();
     this.pucks = Array.from(document.getElementsByClassName('puck'));
     this.pucks[0].instance = puck;
 
-    var atom = new _atom2.default(0, 5, this.gameSurfaceCoords);
+    var atom = new _atom2.default(0, 100, this.gameSurfaceCoords);
     atom.createAtom();
-    this.atoms = Array.from(document.getElementsByClassName('atom'));
-    this.atoms[0].instance = atom;
+    this.atoms.push(atom);
+    this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
 
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
 
-    setInterval(this.gameLoop, 5000);
+    setInterval(this.gameLoop, this.time.millisecondsPerFrame);
   }
 
   _createClass(GameEngine, [{
     key: 'gameLoop',
     value: function gameLoop() {
-      this.clock++;
-      console.log('fire');
+      this.time.clock++;
+      this.atoms.forEach(function (a) {
+        a.moveAtom();
+      });
     }
   }]);
 
@@ -27989,8 +27990,27 @@ function getVectorFromXY(x, y) {
   };
 }
 
+function getXYFromVector(vector, displacement) {
+  return {
+    x: Math.cos(vector) * displacement,
+    y: Math.sin(vector) * displacement
+  };
+}
+
+function setupTimeUnits(bpm, time) {
+  var frameRate = 60;
+  var framesPerBeat = 60 / bpm * frameRate;
+  var framesPerTime = time * framesPerBeat;
+  var clock = 0;
+  var millisecondsPerFrame = 1000 / frameRate;
+
+  return { frameRate: frameRate, framesPerBeat: framesPerBeat, framesPerTime: framesPerTime, clock: clock, millisecondsPerFrame: millisecondsPerFrame };
+}
+
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
 exports.getVectorFromXY = getVectorFromXY;
+exports.getXYFromVector = getXYFromVector;
+exports.setupTimeUnits = setupTimeUnits;
 
 /***/ }),
 /* 208 */
@@ -28004,6 +28024,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _helpers = __webpack_require__(207);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28020,7 +28042,7 @@ var Atom = function () {
     _classCallCheck(this, Atom);
 
     this.index = index;
-    this.speed = speed; // Speed is measured in px per frame
+    this.speed = speed / 60; // Speed is measured in px per second
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
@@ -28028,6 +28050,7 @@ var Atom = function () {
       collision: collisionSound,
       destruction: destructionSound
     };
+    this.domElement;
   }
 
   _createClass(Atom, [{
@@ -28036,6 +28059,23 @@ var Atom = function () {
       var atom = '<circle\n      cx="' + this.gameSurfaceCoords.radius + '"\n      cy="' + this.gameSurfaceCoords.radius + '"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
       var theZone = document.getElementById('the-zone');
       theZone.insertAdjacentHTML('beforeend', atom);
+    }
+  }, {
+    key: 'moveAtom',
+    value: function moveAtom() {
+      console.log('moving atom');
+      var atomPosition = this.atomPosition;
+      var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed);
+      this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
+      this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
+    }
+  }, {
+    key: 'atomPosition',
+    get: function get() {
+      return {
+        cx: this.domElement.cx.baseVal.value,
+        cy: this.domElement.cy.baseVal.value
+      };
     }
   }]);
 
