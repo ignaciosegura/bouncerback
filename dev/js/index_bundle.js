@@ -28063,7 +28063,6 @@ var Atom = function () {
   }, {
     key: 'moveAtom',
     value: function moveAtom() {
-      console.log('moving atom');
       var atomPosition = this.atomPosition;
       var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed);
       this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;

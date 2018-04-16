@@ -39,7 +39,6 @@ class Atom {
   }
 
   moveAtom() {
-    console.log('moving atom');
     let atomPosition = this.atomPosition;
     let displacement = getXYFromVector(this.vector, this.speed);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
