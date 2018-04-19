@@ -3,7 +3,7 @@
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import {findGameSurfaceCoords, setupTimeUnits} from './helpers.js';
+import { findGameSurfaceCoords, setupTimeUnits } from './helpers.js';
 
 class GameEngine {
 
@@ -17,7 +17,7 @@ class GameEngine {
 
     let puck = new Puck(0);
     puck.place();
-    this.pucks = Array.from(document.getElementsByClassName('puck'));
+    this.pucks[0] = document.querySelector('.puck rect');
     this.pucks[0].instance = puck;
 
     let atom = new Atom(0, 100, this.gameSurfaceCoords);

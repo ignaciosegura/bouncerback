@@ -1,6 +1,6 @@
 // Game Controller class
 
-import {getVectorFromXY} from './helpers.js';
+import { getVectorFromXY } from './helpers.js';
 
 class GameController {
   constructor(gameSurfaceCoords, pucks) {
@@ -32,19 +32,13 @@ class GameController {
   }
 
   movePucks(vector) {
-    this.pucks.forEach( p => {
+    this.pucks.forEach(p => {
       let radius = this.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;
       let y = Math.sin(vector.rads) * radius;
       let perpendicularInDegs = vector.degrees + 90;
-      let rotationCoords = {
-        x: x - p.instance.translateCoords.x,
-        y: y - p.instance.translateCoords.y
-      }
 
-      p.setAttribute('x', radius + x);
-      p.setAttribute('y', radius + y);
-      p.setAttribute('transform', p.instance.translation + ' rotate(' + perpendicularInDegs + ' ' + rotationCoords.x + ' ' + rotationCoords.y + ')');
+      p.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
     });
   }
 }
