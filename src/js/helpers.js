@@ -29,6 +29,10 @@ function getVectorFromXY(x, y) {
   }
 }
 
+function getDistanceFromXY(x, y) {
+  return Math.sqrt((x ** 2) + (y ** 2));
+}
+
 function getXYFromVector(vector, displacement) {
   return {
     x: Math.cos(vector) * displacement,
@@ -46,4 +50,4 @@ function setupTimeUnits(bpm, time) {
   return {frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame};
 }
 
-export {findGameSurfaceCoords, findCollisionInterval, getVectorFromXY, getXYFromVector, setupTimeUnits};
+export {findGameSurfaceCoords, findCollisionInterval, getVectorFromXY, getDistanceFromXY, getXYFromVector, setupTimeUnits};

@@ -6,10 +6,9 @@ require('../sass/_atom.scss');
 import {getXYFromVector} from './helpers.js';
 
 class Atom {
-  constructor(index, speed, gameSurfaceCoords, collisionSound = '', destructionSound = '') {
+  constructor(index, speed, collisionSound = '', destructionSound = '') {
     this.index = index;
     this.speed = speed / 60; // Speed is measured in px per second
-    this.gameSurfaceCoords = gameSurfaceCoords;
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {

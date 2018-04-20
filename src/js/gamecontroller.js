@@ -33,7 +33,7 @@ class GameController {
 
   movePucks(vector) {
     this.pucks.forEach(p => {
-      p.vector = vector;
+      p.vector = vector.rads;
       let radius = this.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;
       let y = Math.sin(vector.rads) * radius;

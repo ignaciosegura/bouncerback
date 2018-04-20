@@ -5680,7 +5680,7 @@ module.exports = canDefineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setupTimeUnits = exports.getXYFromVector = exports.getVectorFromXY = exports.findCollisionInterval = exports.findGameSurfaceCoords = undefined;
+exports.setupTimeUnits = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findCollisionInterval = exports.findGameSurfaceCoords = undefined;
 
 var _puck = __webpack_require__(52);
 
@@ -5715,6 +5715,10 @@ function getVectorFromXY(x, y) {
   };
 }
 
+function getDistanceFromXY(x, y) {
+  return Math.sqrt(x ** 2 + y ** 2);
+}
+
 function getXYFromVector(vector, displacement) {
   return {
     x: Math.cos(vector) * displacement,
@@ -5735,6 +5739,7 @@ function setupTimeUnits(bpm, time) {
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
 exports.findCollisionInterval = findCollisionInterval;
 exports.getVectorFromXY = getVectorFromXY;
+exports.getDistanceFromXY = getDistanceFromXY;
 exports.getXYFromVector = getXYFromVector;
 exports.setupTimeUnits = setupTimeUnits;
 
@@ -14983,15 +14988,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 __webpack_require__(96);
 
 var Atom = function () {
-  function Atom(index, speed, gameSurfaceCoords) {
-    var collisionSound = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-    var destructionSound = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
+  function Atom(index, speed) {
+    var collisionSound = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var destructionSound = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
     _classCallCheck(this, Atom);
 
     this.index = index;
     this.speed = speed / 60; // Speed is measured in px per second
-    this.gameSurfaceCoords = gameSurfaceCoords;
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -15154,7 +15158,7 @@ var GameController = function () {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
-        p.vector = vector;
+        p.vector = vector.rads;
         var radius = _this2.gameSurfaceCoords.radius;
         var x = Math.cos(vector.rads) * radius;
         var y = Math.sin(vector.rads) * radius;
@@ -15227,7 +15231,7 @@ var GameEngine = function () {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    var atom = new _atom2.default(0, 100, this.gameSurfaceCoords);
+    var atom = new _atom2.default(0, 100);
     atom.createAtom();
     this.atoms.push(atom);
     this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
@@ -15261,7 +15265,14 @@ var GameEngine = function () {
       var pucks = this.pucks;
       var collisionInterval = this.collisionInterval;
 
-      atoms.forEach(function (a) {});
+      atoms.forEach(function (a) {
+        var atomPosition = a.atomPosition;
+        var distance = (0, _helpers.getDistanceFromXY)(atomPosition.cx, atomPosition.cy);
+
+        if (distance > collisionInterval.from && distance < collisionInterval.to) {
+          console.log("Collision needs to be checked for Atom " + a.index);
+        }
+      }, this);
     }
   }]);
 

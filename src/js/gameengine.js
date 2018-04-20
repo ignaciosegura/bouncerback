@@ -6,7 +6,7 @@ require('../sass/_game_props.scss');
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import {findGameSurfaceCoords, findCollisionInterval, setupTimeUnits} from './helpers.js';
+import {findGameSurfaceCoords, findCollisionInterval, getDistanceFromXY, setupTimeUnits} from './helpers.js';
 
 class GameEngine {
 
@@ -26,7 +26,7 @@ class GameEngine {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    let atom = new Atom(0, 100, this.gameSurfaceCoords);
+    let atom = new Atom(0, 100);
     atom.createAtom();
     this.atoms.push(atom);
     this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
@@ -57,8 +57,13 @@ class GameEngine {
     let collisionInterval = this.collisionInterval;
 
     atoms.forEach(a => {
+      let atomPosition = a.atomPosition;
+      let distance = getDistanceFromXY(atomPosition.cx, atomPosition.cy);
 
-    })
+      if (distance > collisionInterval.from && distance < collisionInterval.to) {
+        console.log("Collision needs to be checked for Atom " + a.index);
+      }
+    }, this);
   }
 }
 
