@@ -1,4 +1,7 @@
+/*global require*/
 // Game engine class
+
+require('../sass/_game_props.scss');
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
@@ -16,11 +19,12 @@ class GameEngine {
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
 
-    Puck.placeContainer('the-zone');
+    this.createPointZero('#the-zone');
+
     let puck = new Puck(0);
     puck.placePuck();
     this.pucks.push(puck);
-    this.pucks[0].domElement = document.querySelector('.puck rect');
+    this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
     let atom = new Atom(0, 100, this.gameSurfaceCoords);
     atom.createAtom();
@@ -31,6 +35,12 @@ class GameEngine {
     gameController.movePucksOnMouse();
 
     setInterval(this.gameLoop, this.time.millisecondsPerFrame);
+  }
+
+  createPointZero(place) {
+    let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
+    let theZone = document.querySelector(place);
+    theZone.insertAdjacentHTML('beforeend', puckContainer);   
   }
 
   gameLoop() {
@@ -46,6 +56,9 @@ class GameEngine {
     let pucks = this.pucks;
     let collisionInterval = this.collisionInterval;
 
+    atoms.forEach(a => {
+
+    })
   }
 }
 

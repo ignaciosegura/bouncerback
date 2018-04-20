@@ -1,7 +1,4 @@
-/*global require*/
 // Puck class
-
-require('../sass/_puck.scss');
 
 class Puck {
   constructor(index = 0) {
@@ -21,12 +18,6 @@ class Puck {
     return this.size;
   }
 
-  static placeContainer(placeId) {
-    let puckContainer = '<svg class="puck" x="50%" y="50%"></svg>';
-    let theZone = document.getElementById(placeId);
-    theZone.insertAdjacentHTML('beforeend', puckContainer);   
-  }
-
   placePuck() {
     let puck = `<rect
       index="${this.index}"
@@ -35,7 +26,7 @@ class Puck {
       width="${this.size.width}"
       height="${this.size.height}"
     />`;
-    let putContainer = document.querySelector('svg.puck');
+    let putContainer = document.getElementById('point-zero');
     putContainer.insertAdjacentHTML('beforeend', puck);
   }
 }

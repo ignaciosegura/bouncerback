@@ -1,13 +1,13 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.puck {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.atom {
+  fill: white;
+  stroke: none; }
+#point-zero {
   width: 0;
   height: 0;
   overflow: visible; }
-  .puck rect {
+  #point-zero rect {
     fill: white;
     stroke: none; }
-.atom {
-  fill: white;
-  stroke: none; }
 #gamesurface {
   width: 100%;
   background: green; }

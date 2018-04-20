@@ -7603,10 +7603,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*global require*/
 // Puck class
-
-__webpack_require__(98);
 
 var Puck = function () {
   function Puck() {
@@ -7630,20 +7627,13 @@ var Puck = function () {
     key: 'placePuck',
     value: function placePuck() {
       var puck = '<rect\n      index="' + this.index + '"\n      x="' + this.translateCoords.x + '"\n      y="' + this.translateCoords.y + '"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n    />';
-      var putContainer = document.querySelector('svg.puck');
+      var putContainer = document.getElementById('point-zero');
       putContainer.insertAdjacentHTML('beforeend', puck);
     }
   }], [{
     key: 'getSize',
     value: function getSize() {
       return this.size;
-    }
-  }, {
-    key: 'placeContainer',
-    value: function placeContainer(placeId) {
-      var puckContainer = '<svg class="puck" x="50%" y="50%"></svg>';
-      var theZone = document.getElementById(placeId);
-      theZone.insertAdjacentHTML('beforeend', puckContainer);
     }
   }]);
 
@@ -15014,8 +15004,8 @@ var Atom = function () {
   _createClass(Atom, [{
     key: 'createAtom',
     value: function createAtom() {
-      var atom = '<circle\n      cx="' + this.gameSurfaceCoords.radius + '"\n      cy="' + this.gameSurfaceCoords.radius + '"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
-      var theZone = document.getElementById('the-zone');
+      var atom = '<circle\n      cx="0"\n      cy="0"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
+      var theZone = document.getElementById('point-zero');
       theZone.insertAdjacentHTML('beforeend', atom);
     }
   }, {
@@ -15191,7 +15181,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game engine class
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _puck = __webpack_require__(52);
 
@@ -15211,6 +15201,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/*global require*/
+// Game engine class
+
+__webpack_require__(211);
+
 var GameEngine = function () {
   function GameEngine(bpm, time) {
     var song = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
@@ -15225,11 +15220,12 @@ var GameEngine = function () {
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
 
-    _puck2.default.placeContainer('the-zone');
+    this.createPointZero('#the-zone');
+
     var puck = new _puck2.default(0);
     puck.placePuck();
     this.pucks.push(puck);
-    this.pucks[0].domElement = document.querySelector('.puck rect');
+    this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
     var atom = new _atom2.default(0, 100, this.gameSurfaceCoords);
     atom.createAtom();
@@ -15243,6 +15239,13 @@ var GameEngine = function () {
   }
 
   _createClass(GameEngine, [{
+    key: 'createPointZero',
+    value: function createPointZero(place) {
+      var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
+      var theZone = document.querySelector(place);
+      theZone.insertAdjacentHTML('beforeend', puckContainer);
+    }
+  }, {
     key: 'gameLoop',
     value: function gameLoop() {
       this.time.clock++;
@@ -15257,6 +15260,8 @@ var GameEngine = function () {
       var atoms = this.atoms;
       var pucks = this.pucks;
       var collisionInterval = this.collisionInterval;
+
+      atoms.forEach(function (a) {});
     }
   }]);
 
@@ -16461,12 +16466,7 @@ module.exports = factory;
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 98 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 98 */,
 /* 99 */
 /***/ (function(module, exports) {
 
@@ -28116,6 +28116,20 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(87);
 
+
+/***/ }),
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

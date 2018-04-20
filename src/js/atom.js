@@ -21,13 +21,13 @@ class Atom {
 
   createAtom() {
     let atom = `<circle
-      cx="${this.gameSurfaceCoords.radius}"
-      cy="${this.gameSurfaceCoords.radius}"
+      cx="0"
+      cy="0"
       r="${this.radius}"
       index="${this.index}"
       class="atom"
       />`;
-    let theZone = document.getElementById('the-zone');
+    let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
   }
 
