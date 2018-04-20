@@ -8039,7 +8039,7 @@ function createAction(actionName, fn) {
     if (process.env.NODE_ENV !== "production") {
         invariant(typeof fn === "function", "`action` can only be invoked on functions");
         if (typeof actionName !== "string" || !actionName)
-            fail("actions should have valid names, got: '" + actionName + "'");
+            fail$1("actions should have valid names, got: '" + actionName + "'");
     }
     var res = function () {
         return executeAction(actionName, fn, this, arguments);
@@ -8126,7 +8126,7 @@ function namedActionDecorator(name) {
                 return {
                     value: createAction(name, descriptor.value),
                     enumerable: false,
-                    configurable: false,
+                    configurable: true,
                     writable: true // for typescript, this must be writable, otherwise it cannot inherit :/ (see inheritable actions test)
                 };
             }
@@ -8134,8 +8134,8 @@ function namedActionDecorator(name) {
             var initializer_1 = descriptor.initializer;
             return {
                 enumerable: false,
-                configurable: false,
-                writable: process.env.NODE_ENV !== "production",
+                configurable: true,
+                writable: true,
                 initializer: function () {
                     // N.B: we can't immediately invoke initializer; this would be wrong
                     return createAction(name, initializer_1.call(this));
@@ -8619,11 +8619,15 @@ var ComputedValue = /** @class */ (function () {
         var oldValue = this.value;
         var wasSuspended = 
         /* see #1208 */ this.dependenciesState === IDerivationState.NOT_TRACKING;
-        var newValue = (this.value = this.computeValue(true));
-        return (wasSuspended ||
+        var newValue = this.computeValue(true);
+        var changed = wasSuspended ||
             isCaughtException(oldValue) ||
             isCaughtException(newValue) ||
-            !this.equals(oldValue, newValue));
+            !this.equals(oldValue, newValue);
+        if (changed) {
+            this.value = newValue;
+        }
+        return changed;
     };
     ComputedValue.prototype.computeValue = function (track) {
         this.isComputing = true;
@@ -10389,6 +10393,25 @@ Object.defineProperty(ObservableArray.prototype, "length", {
         this.$mobx.setArrayLength(newLength);
     }
 });
+if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
+    addHiddenProp(ObservableArray.prototype, typeof Symbol !== "undefined" ? Symbol.toStringTag : "@@toStringTag", "Array");
+}
+// Internet Explorer on desktop doesn't support this.....
+// So, let's don't do this to avoid different semantics
+// See #1395
+// addHiddenProp(
+//     ObservableArray.prototype,
+//     typeof Symbol !== "undefined" ? Symbol.isConcatSpreadable as any : "@@isConcatSpreadable",
+//     {
+//         enumerable: false,
+//         configurable: true,
+//         value: true
+//     }
+// )
+/**
+ * Wrap function from prototype
+ */
+
 [
     "every",
     "filter",
@@ -11083,7 +11106,7 @@ function checkIfStateModificationsAreAllowed(atom) {
         fail$1(process.env.NODE_ENV !== "production" &&
             "Computed values are not allowed to cause side effects by changing observables that are already being observed. Tried to modify: " + atom.name);
     // Should not be possible to change observed state outside strict mode, except during initialization, see #563
-    if (!globalState.allowStateChanges && hasObservers$$1)
+    if (!globalState.allowStateChanges && (hasObservers$$1 || globalState.enforceActions === "strict"))
         fail$1(process.env.NODE_ENV !== "production" &&
             (globalState.enforceActions
                 ? "Since strict-mode is enabled, changing observed observable values outside actions is not allowed. Please wrap the code in an `action` if this change is intended. Tried to modify: "
@@ -11285,13 +11308,18 @@ var Reaction = /** @class */ (function () {
             this._isScheduled = false;
             if (shouldCompute(this)) {
                 this._isTrackPending = true;
-                this.onInvalidate();
-                if (this._isTrackPending && isSpyEnabled()) {
-                    // onInvalidate didn't trigger track right away..
-                    spyReport({
-                        name: this.name,
-                        type: "scheduled-reaction"
-                    });
+                try {
+                    this.onInvalidate();
+                    if (this._isTrackPending && isSpyEnabled()) {
+                        // onInvalidate didn't trigger track right away..
+                        spyReport({
+                            name: this.name,
+                            type: "scheduled-reaction"
+                        });
+                    }
+                }
+                catch (e) {
+                    this.reportExceptionInDerivation(e);
                 }
             }
             endBatch();
@@ -11331,6 +11359,8 @@ var Reaction = /** @class */ (function () {
             this.errorHandler(error, this);
             return;
         }
+        if (globalState.disableErrorBoundaries)
+            throw error;
         var message = "[mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: '" + this;
         console.error(message, error);
         /** If debugging brought you here, please, read the above message :-). Tnx! */
@@ -11623,33 +11653,37 @@ function decorate(thing, decorators) {
 }
 
 function configure(options) {
-    if (options.enforceActions !== undefined) {
-        globalState.enforceActions = !!options.enforceActions;
-        globalState.allowStateChanges = !options.enforceActions;
+    var enforceActions = options.enforceActions, computedRequiresReaction = options.computedRequiresReaction, disableErrorBoundaries = options.disableErrorBoundaries, arrayBuffer = options.arrayBuffer, reactionScheduler = options.reactionScheduler;
+    if (enforceActions !== undefined) {
+        if (typeof enforceActions !== "boolean" && enforceActions !== "strict")
+            return fail("Invalid configuration for 'enforceActions': " + enforceActions);
+        globalState.enforceActions = enforceActions;
+        globalState.allowStateChanges =
+            enforceActions === true || enforceActions === "strict" ? false : true;
     }
-    if (options.computedRequiresReaction !== undefined) {
-        globalState.computedRequiresReaction = !!options.computedRequiresReaction;
+    if (computedRequiresReaction !== undefined) {
+        globalState.computedRequiresReaction = !!computedRequiresReaction;
     }
     if (options.isolateGlobalState === true) {
         isolateGlobalState();
     }
-    if (options.disableErrorBoundaries !== undefined) {
-        if (options.disableErrorBoundaries === true)
+    if (disableErrorBoundaries !== undefined) {
+        if (disableErrorBoundaries === true)
             console.warn("WARNING: Debug feature only. MobX will NOT recover from errors if this is on.");
-        globalState.disableErrorBoundaries = !!options.disableErrorBoundaries;
+        globalState.disableErrorBoundaries = !!disableErrorBoundaries;
     }
-    if (typeof options.arrayBuffer === "number") {
-        reserveArrayBuffer(options.arrayBuffer);
+    if (typeof arrayBuffer === "number") {
+        reserveArrayBuffer(arrayBuffer);
     }
-    if (options.reactionScheduler) {
-        setReactionScheduler(options.reactionScheduler);
+    if (reactionScheduler) {
+        setReactionScheduler(reactionScheduler);
     }
 }
 
 var generatorId = 0;
 function flow(generator) {
     if (arguments.length !== 1)
-        fail(process.env.NODE_ENV && "Flow expects one 1 argument and cannot be used as decorator");
+        fail$1(process.env.NODE_ENV && "Flow expects one 1 argument and cannot be used as decorator");
     var name = generator.name || "<unnamed flow>";
     // Implementation based on https://github.com/tj/co/blob/master/index.js
     return function () {
@@ -11878,7 +11912,6 @@ if (process.env.NODE_ENV !== "production" &&
         "extras",
         "Atom",
         "BaseAtom",
-        "ObservableMap",
         "asFlat",
         "asMap",
         "asReference",
@@ -15002,15 +15035,55 @@ var Atom = function () {
       collision: collisionSound,
       destruction: destructionSound
     };
+    this.destructionTime = 2000; // in milliseconds
+    this.statusList = ['alive', 'dying', 'dead'];
+    this.status = this.statusList[0]; // Possible values are "alive", "dying", "dead"
     this.domElement;
   }
 
   _createClass(Atom, [{
-    key: 'createAtom',
-    value: function createAtom() {
+    key: 'create',
+    value: function create() {
       var atom = '<circle\n      cx="0"\n      cy="0"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
       var theZone = document.getElementById('point-zero');
       theZone.insertAdjacentHTML('beforeend', atom);
+    }
+  }, {
+    key: 'tagForRemoval',
+    value: function tagForRemoval() {
+      var _this = this;
+
+      this.setStatus('dying');
+      setTimeout(function () {
+        _this.setStatus('dead');
+      }, this.destructionTime);
+    }
+  }, {
+    key: 'setStatus',
+    value: function setStatus(newStatus) {
+      try {
+        if (!this.statusList.includes(newStatus)) {
+          throw 'Bummer! Trying to set an status that does not exist!';
+        }
+        this.domElement.classList.remove(this.status);
+        this.status = newStatus;
+        this.domElement.classList.add(newStatus);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, {
+    key: 'checkAtom',
+    value: function checkAtom(collisionDistance) {
+      var pos = this.atomPosition;
+      var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
+
+      if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
+        console.log("Collision needs to be checked for Atom " + this.index);
+      } else if (distance > collisionDistance.to && this.status == 'alive') {
+        console.log("destroy atom");
+        this.tagForRemoval();
+      }
     }
   }, {
     key: 'moveAtom',
@@ -15027,6 +15100,20 @@ var Atom = function () {
         cx: this.domElement.cx.baseVal.value,
         cy: this.domElement.cy.baseVal.value
       };
+    }
+  }], [{
+    key: 'destroyAtoms',
+    value: function destroyAtoms(atoms) {
+      var i = 0;
+
+      while (i < atoms.length) {
+        if (atoms[i].status == 'dead') {
+          atoms[i].domElement.remove();
+          atoms.splice(i, 1);
+          continue;
+        }
+        i++;
+      }
     }
   }]);
 
@@ -15208,7 +15295,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /*global require*/
 // Game engine class
 
-__webpack_require__(211);
+__webpack_require__(97);
 
 var GameEngine = function () {
   function GameEngine(bpm, time) {
@@ -15231,9 +15318,8 @@ var GameEngine = function () {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    var atom = new _atom2.default(0, 100);
-    atom.createAtom();
-    this.atoms.push(atom);
+    this.atoms.push(new _atom2.default(0, 100));
+    this.atoms[0].create();
     this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
 
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
@@ -15252,25 +15338,14 @@ var GameEngine = function () {
   }, {
     key: 'gameLoop',
     value: function gameLoop() {
+      var _this = this;
+
       this.time.clock++;
       this.atoms.forEach(function (a) {
         a.moveAtom();
+        a.checkAtom(_this.collisionDistance);
       });
-      this.checkCollisions();
-    }
-  }, {
-    key: 'checkCollisions',
-    value: function checkCollisions() {
-      var _this = this;
-
-      this.atoms.forEach(function (a) {
-        var atomPosition = a.atomPosition;
-        var distance = (0, _helpers.getDistanceFromXY)(atomPosition.cx, atomPosition.cy);
-
-        if (distance > _this.collisionDistance.from && distance < _this.collisionDistance.to) {
-          console.log("Collision needs to be checked for Atom " + a.index);
-        }
-      }, this);
+      _atom2.default.destroyAtoms(this.atoms);
     }
   }]);
 
@@ -15317,7 +15392,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // Game container and touch surface
 
 
-__webpack_require__(97);
+__webpack_require__(98);
 
 var GameSurface = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = function (_React$Component) {
   _inherits(GameSurface, _React$Component);
@@ -16475,7 +16550,12 @@ module.exports = factory;
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 98 */,
+/* 98 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 99 */
 /***/ (function(module, exports) {
 
@@ -28125,20 +28205,6 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(87);
 
-
-/***/ }),
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
