@@ -12,7 +12,7 @@ function findGameSurfaceCoords() {
   };
 }
 
-function findCollisionInterval() {
+function findcollisionDistance() {
   let dummyPuck = new Puck();
   let gameSurfaceCoords = findGameSurfaceCoords();
   return {
@@ -50,4 +50,4 @@ function setupTimeUnits(bpm, time) {
   return {frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame};
 }
 
-export {findGameSurfaceCoords, findCollisionInterval, getVectorFromXY, getDistanceFromXY, getXYFromVector, setupTimeUnits};
+export {findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, setupTimeUnits};

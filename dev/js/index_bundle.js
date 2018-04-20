@@ -5680,7 +5680,7 @@ module.exports = canDefineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setupTimeUnits = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findCollisionInterval = exports.findGameSurfaceCoords = undefined;
+exports.setupTimeUnits = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findcollisionDistance = exports.findGameSurfaceCoords = undefined;
 
 var _puck = __webpack_require__(52);
 
@@ -5698,7 +5698,7 @@ function findGameSurfaceCoords() {
   };
 } // Helper functions
 
-function findCollisionInterval() {
+function findcollisionDistance() {
   var dummyPuck = new _puck2.default();
   var gameSurfaceCoords = findGameSurfaceCoords();
   return {
@@ -5737,7 +5737,7 @@ function setupTimeUnits(bpm, time) {
 }
 
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
-exports.findCollisionInterval = findCollisionInterval;
+exports.findcollisionDistance = findcollisionDistance;
 exports.getVectorFromXY = getVectorFromXY;
 exports.getDistanceFromXY = getDistanceFromXY;
 exports.getXYFromVector = getXYFromVector;
@@ -15219,7 +15219,7 @@ var GameEngine = function () {
     this.time = (0, _helpers.setupTimeUnits)(bpm, time);
 
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
-    this.collisionInterval = (0, _helpers.findCollisionInterval)();
+    this.collisionDistance = (0, _helpers.findcollisionDistance)();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -15261,15 +15261,13 @@ var GameEngine = function () {
   }, {
     key: 'checkCollisions',
     value: function checkCollisions() {
-      var atoms = this.atoms;
-      var pucks = this.pucks;
-      var collisionInterval = this.collisionInterval;
+      var _this = this;
 
-      atoms.forEach(function (a) {
+      this.atoms.forEach(function (a) {
         var atomPosition = a.atomPosition;
         var distance = (0, _helpers.getDistanceFromXY)(atomPosition.cx, atomPosition.cy);
 
-        if (distance > collisionInterval.from && distance < collisionInterval.to) {
+        if (distance > _this.collisionDistance.from && distance < _this.collisionDistance.to) {
           console.log("Collision needs to be checked for Atom " + a.index);
         }
       }, this);
