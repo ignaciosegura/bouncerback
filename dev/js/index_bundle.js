@@ -7623,7 +7623,7 @@ var Puck = function () {
       x: this.size.width / -2,
       y: this.size.height / -2
     };
-    this.vector = 0;
+    this.vector;
   }
 
   _createClass(Puck, [{
