@@ -1,6 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.puck {
-  fill: white;
-  stroke: none; }
+  width: 0;
+  height: 0;
+  overflow: visible; }
+  .puck rect {
+    fill: white;
+    stroke: none; }
 .atom {
   fill: white;
   stroke: none; }
@@ -16,6 +20,7 @@ svg#the-zone {
   margin: 0 auto;
   display: block;
   position: relative;
+  overflow: visible;
   stroke: white;
   stroke-width: 2;
   fill: transparent; }
