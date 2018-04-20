@@ -4,7 +4,7 @@
 require('../sass/_puck.scss');
 
 class Puck {
-  constructor(index) {
+  constructor(index = 0) {
     this.index = index;
     this.size = {
       width: 80,
@@ -15,6 +15,10 @@ class Puck {
       y: this.size.height / -2
     }
     this.translation = 'translate(' + this.translateCoords.x + ', ' + this.translateCoords.y + ')';
+  }
+
+  static getSize() {
+    return this.size;
   }
 
   place() {

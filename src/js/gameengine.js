@@ -3,7 +3,7 @@
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import {findGameSurfaceCoords, setupTimeUnits} from './helpers.js';
+import {findGameSurfaceCoords, findCollisionInterval, setupTimeUnits} from './helpers.js';
 
 class GameEngine {
 
@@ -11,6 +11,7 @@ class GameEngine {
     this.time = setupTimeUnits(bpm, time);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
+    this.collisionInterval = findCollisionInterval();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -36,6 +37,14 @@ class GameEngine {
     this.atoms.forEach(a => {
       a.moveAtom();
     });
+    this.checkCollisions();
+  }
+  
+  checkCollisions() {
+    let atoms = this.atoms;
+    let pucks = this.pucks;
+    let collisionInterval = this.collisionInterval;
+
   }
 }
 

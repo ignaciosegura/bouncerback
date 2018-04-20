@@ -1,5 +1,7 @@
 // Helper functions
 
+import Puck from './puck.js';
+
 function findGameSurfaceCoords() {
   let theCircle = document.getElementById('the-circle');
   let coords = theCircle.getBoundingClientRect();
@@ -8,6 +10,15 @@ function findGameSurfaceCoords() {
     centerY: (coords.top + coords.bottom) / 2,
     radius: parseInt(theCircle.getAttribute('cx'))
   };
+}
+
+function findCollisionInterval() {
+  let dummyPuck = new Puck();
+  let gameSurfaceCoords = findGameSurfaceCoords();
+  return {
+    from: gameSurfaceCoords.radius - dummyPuck.size.height,
+    to: gameSurfaceCoords.radius
+  }
 }
 
 function getVectorFromXY(x, y) {
@@ -35,4 +46,4 @@ function setupTimeUnits(bpm, time) {
   return {frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame};
 }
 
-export {findGameSurfaceCoords, getVectorFromXY, getXYFromVector, setupTimeUnits};
+export {findGameSurfaceCoords, findCollisionInterval, getVectorFromXY, getXYFromVector, setupTimeUnits};

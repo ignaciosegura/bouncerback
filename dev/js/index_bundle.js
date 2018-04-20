@@ -27789,6 +27789,7 @@ var GameEngine = function () {
     this.time = (0, _helpers.setupTimeUnits)(bpm, time);
 
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
+    this.collisionInterval = (0, _helpers.findCollisionInterval)();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -27816,6 +27817,14 @@ var GameEngine = function () {
       this.atoms.forEach(function (a) {
         a.moveAtom();
       });
+      this.checkCollisions();
+    }
+  }, {
+    key: 'checkCollisions',
+    value: function checkCollisions() {
+      var atoms = this.atoms;
+      var pucks = this.pucks;
+      var collisionInterval = this.collisionInterval;
     }
   }]);
 
@@ -27845,7 +27854,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 __webpack_require__(204);
 
 var Puck = function () {
-  function Puck(index) {
+  function Puck() {
+    var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
     _classCallCheck(this, Puck);
 
     this.index = index;
@@ -27866,6 +27877,11 @@ var Puck = function () {
       var puck = '<rect\n      class="puck"\n      index="' + this.index + '"\n      x="0"\n      y="0"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n      transform="' + this.translation + '"\n      transform-origin="center center"\n      />';
       var theZone = document.getElementById('the-zone');
       theZone.insertAdjacentHTML('beforeend', puck);
+    }
+  }], [{
+    key: 'getSize',
+    value: function getSize() {
+      return this.size;
     }
   }]);
 
@@ -27970,7 +27986,13 @@ exports.default = GameController;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// Helper functions
+exports.setupTimeUnits = exports.getXYFromVector = exports.getVectorFromXY = exports.findCollisionInterval = exports.findGameSurfaceCoords = undefined;
+
+var _puck = __webpack_require__(203);
+
+var _puck2 = _interopRequireDefault(_puck);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function findGameSurfaceCoords() {
   var theCircle = document.getElementById('the-circle');
@@ -27979,6 +28001,15 @@ function findGameSurfaceCoords() {
     centerX: (coords.left + coords.right) / 2,
     centerY: (coords.top + coords.bottom) / 2,
     radius: parseInt(theCircle.getAttribute('cx'))
+  };
+} // Helper functions
+
+function findCollisionInterval() {
+  var dummyPuck = new _puck2.default();
+  var gameSurfaceCoords = findGameSurfaceCoords();
+  return {
+    from: gameSurfaceCoords.radius - dummyPuck.size.height,
+    to: gameSurfaceCoords.radius
   };
 }
 
@@ -28008,6 +28039,7 @@ function setupTimeUnits(bpm, time) {
 }
 
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
+exports.findCollisionInterval = findCollisionInterval;
 exports.getVectorFromXY = getVectorFromXY;
 exports.getXYFromVector = getXYFromVector;
 exports.setupTimeUnits = setupTimeUnits;
