@@ -16,10 +16,11 @@ class GameEngine {
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
 
+    Puck.placeContainer('the-zone');
     let puck = new Puck(0);
-    puck.place();
-    this.pucks[0] = document.querySelector('.puck rect');
-    this.pucks[0].instance = puck;
+    puck.placePuck();
+    this.pucks.push(puck);
+    this.pucks[0].domElement = document.querySelector('.puck rect');
 
     let atom = new Atom(0, 100, this.gameSurfaceCoords);
     atom.createAtom();

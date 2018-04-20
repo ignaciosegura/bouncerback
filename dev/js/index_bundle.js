@@ -7623,19 +7623,27 @@ var Puck = function () {
       x: this.size.width / -2,
       y: this.size.height / -2
     };
+    this.vector = 0;
   }
 
   _createClass(Puck, [{
-    key: 'place',
-    value: function place() {
-      var puck = '<svg class="puck" x="50%" y="50%">\n      <rect\n        index="' + this.index + '"\n        x="' + this.translateCoords.x + '"\n        y="' + this.translateCoords.y + '"\n        width="' + this.size.width + '"\n        height="' + this.size.height + '"\n      />\n    </svg>';
-      var theZone = document.getElementById('the-zone');
-      theZone.insertAdjacentHTML('beforeend', puck);
+    key: 'placePuck',
+    value: function placePuck() {
+      var puck = '<rect\n      index="' + this.index + '"\n      x="' + this.translateCoords.x + '"\n      y="' + this.translateCoords.y + '"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n    />';
+      var putContainer = document.querySelector('svg.puck');
+      putContainer.insertAdjacentHTML('beforeend', puck);
     }
   }], [{
     key: 'getSize',
     value: function getSize() {
       return this.size;
+    }
+  }, {
+    key: 'placeContainer',
+    value: function placeContainer(placeId) {
+      var puckContainer = '<svg class="puck" x="50%" y="50%"></svg>';
+      var theZone = document.getElementById(placeId);
+      theZone.insertAdjacentHTML('beforeend', puckContainer);
     }
   }]);
 
@@ -15156,12 +15164,13 @@ var GameController = function () {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
+        p.vector = vector;
         var radius = _this2.gameSurfaceCoords.radius;
         var x = Math.cos(vector.rads) * radius;
         var y = Math.sin(vector.rads) * radius;
         var perpendicularInDegs = vector.degrees + 90;
 
-        p.setAttribute('transform', 'translate(' + x + ', ' + y + '), rotate(' + perpendicularInDegs + ')');
+        p.domElement.setAttribute('transform', 'translate(' + x + ', ' + y + '), rotate(' + perpendicularInDegs + ')');
       });
     }
   }]);
@@ -15216,10 +15225,11 @@ var GameEngine = function () {
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
 
+    _puck2.default.placeContainer('the-zone');
     var puck = new _puck2.default(0);
-    puck.place();
-    this.pucks[0] = document.querySelector('.puck rect');
-    this.pucks[0].instance = puck;
+    puck.placePuck();
+    this.pucks.push(puck);
+    this.pucks[0].domElement = document.querySelector('.puck rect');
 
     var atom = new _atom2.default(0, 100, this.gameSurfaceCoords);
     atom.createAtom();

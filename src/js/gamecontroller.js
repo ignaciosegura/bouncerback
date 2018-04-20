@@ -33,12 +33,13 @@ class GameController {
 
   movePucks(vector) {
     this.pucks.forEach(p => {
+      p.vector = vector;
       let radius = this.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;
       let y = Math.sin(vector.rads) * radius;
       let perpendicularInDegs = vector.degrees + 90;
 
-      p.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
+      p.domElement.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
     });
   }
 }
