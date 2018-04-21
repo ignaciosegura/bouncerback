@@ -53,9 +53,7 @@ class GameEngine {
   }
 
   checkGameOver() {
-    let gameOver = (this.atoms.length == 0)
-      ? true
-      : false;
+    if (this.atoms.length > 0) return false;
   }
 }
 
