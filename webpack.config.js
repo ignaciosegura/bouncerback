@@ -81,7 +81,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader", // Options are in a .babelrc file
+        loader: 'babel-loader', // Options are in a .babelrc file
       },
       {
         test: /\.scss$/,
@@ -101,10 +101,20 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'url-loader?limit=100000'
       },
+      {
+        test: /\.mp3$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: './sound/[name].[ext]',
+          }
+        }
+      },
     ]
   },
   output: {
-    filename: "./js/index_bundle.js",
+    filename: './js/index_bundle.js',
     path: __dirname + config.outputDir,
   },
   devtool: config.devTool,

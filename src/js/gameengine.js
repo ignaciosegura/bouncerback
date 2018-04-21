@@ -3,6 +3,8 @@
 
 require('../sass/_game_props.scss');
 
+var bounceSoundPath = require('../sound/bounce_dry.mp3');
+
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
@@ -26,14 +28,14 @@ class GameEngine {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    this.atoms.push(new Atom(0, 100));
+    this.atoms.push(new Atom(0, 100, bounceSoundPath));
     this.atoms[0].create();
     this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
 
-    setInterval(this.gameLoop, this.time.millisecondsPerFrame);
+    this.gameLoopInterval = setInterval(this.gameLoop, this.time.millisecondsPerFrame);
   }
 
   createPointZero(place) {
@@ -55,6 +57,7 @@ class GameEngine {
 
   checkGameOver() {
     if (this.atoms.length > 0) return false;
+    clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
   }
 }

@@ -2,11 +2,11 @@
 
 class SoundFX {
   constructor(sound = null) {
-    this.sound = sound;
+    this.sound = new Audio(sound);
   }
 
   play() {
-    console.log('playing one shot sound');
+    this.sound.play();
   }
 }
 
