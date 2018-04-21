@@ -15030,7 +15030,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _soundfx = __webpack_require__(212);
+
+var _soundfx2 = _interopRequireDefault(_soundfx);
+
 var _helpers = __webpack_require__(34);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15051,8 +15057,8 @@ var Atom = function () {
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
-      collision: collisionSound,
-      destruction: destructionSound
+      collision: new _soundfx2.default(collisionSound),
+      destruction: new _soundfx2.default(destructionSound)
     };
     this.destructionTime = 2000; // in milliseconds
     this.statusList = ['alive', 'collide', 'dying', 'dead'];
@@ -15084,11 +15090,17 @@ var Atom = function () {
   }, {
     key: 'tagForRemoval',
     value: function tagForRemoval() {
-      var _this = this;
-
+      var a = this;
       setTimeout(function () {
-        _this.setStatus('dead');
+        a.setStatus('dead');
       }, this.destructionTime);
+    }
+  }, {
+    key: 'executeCollision',
+    value: function executeCollision() {
+      this.reverseAtomDirection();
+      this.status = 'alive';
+      this.sounds.collision.play();
     }
   }, {
     key: 'checkAtom',
@@ -15098,8 +15110,9 @@ var Atom = function () {
 
       if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
         this.setStatus('collide');
-      } else if (distance > collisionDistance.to && this.status != 'dying') {
+      } else if (distance > collisionDistance.to && this.status == 'collide') {
         this.setStatus('dying');
+        this.sounds.destruction.play();
         this.tagForRemoval();
       }
     }
@@ -15110,6 +15123,11 @@ var Atom = function () {
       var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed);
       this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
       this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
+    }
+  }, {
+    key: 'reverseAtomDirection',
+    value: function reverseAtomDirection() {
+      this.vector = this.vector > 0 ? this.vector - Math.PI : this.vector + Math.PI;
     }
   }, {
     key: 'atomPosition',
@@ -15144,7 +15162,7 @@ var Atom = function () {
         pucks.forEach(function (p) {
           var result = (0, _helpers.compareVectorsForCollision)(a.vector, p.vector, p.angle);
 
-          console.log(result ? 'collide' : '');
+          if (result) a.executeCollision();
         });
       });
     }
@@ -15386,6 +15404,7 @@ var GameEngine = function () {
     key: 'checkGameOver',
     value: function checkGameOver() {
       if (this.atoms.length > 0) return false;
+      console.log('Game Over!');
     }
   }]);
 
@@ -28245,6 +28264,53 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(87);
 
+
+/***/ }),
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Sound engine
+
+var SoundFX = function () {
+  function SoundFX() {
+    var sound = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    _classCallCheck(this, SoundFX);
+
+    this.sound = sound;
+  }
+
+  _createClass(SoundFX, [{
+    key: 'play',
+    value: function play() {
+      console.log('playing one shot sound');
+    }
+  }]);
+
+  return SoundFX;
+}();
+
+exports.default = SoundFX;
 
 /***/ })
 /******/ ]);

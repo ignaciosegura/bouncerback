@@ -55,6 +55,7 @@ class GameEngine {
 
   checkGameOver() {
     if (this.atoms.length > 0) return false;
+    console.log('Game Over!');
   }
 }
 

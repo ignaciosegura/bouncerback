@@ -3,6 +3,7 @@
 
 require('../sass/_atom.scss');
 
+import SoundFX from './soundfx.js';
 import { getXYFromVector, getDistanceFromXY, compareVectorsForCollision } from './helpers.js';
 
 class Atom {
@@ -12,8 +13,8 @@ class Atom {
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
-      collision: collisionSound,
-      destruction: destructionSound
+      collision: new SoundFX(collisionSound),
+      destruction: new SoundFX(destructionSound)
     }
     this.destructionTime = 2000; // in milliseconds
     this.statusList = ['alive', 'collide', 'dying', 'dead'];
@@ -54,9 +55,16 @@ class Atom {
   }
 
   tagForRemoval() {
+    let a = this;
     setTimeout(() => {
-      this.setStatus('dead');
+      a.setStatus('dead');
     }, this.destructionTime);
+  }
+
+  executeCollision() {
+    this.reverseAtomDirection();
+    this.status = 'alive';
+    this.sounds.collision.play();
   }
 
   checkAtom(collisionDistance) {
@@ -65,8 +73,9 @@ class Atom {
 
     if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
       this.setStatus('collide');
-    } else if (distance > collisionDistance.to && this.status != 'dying') {
+    } else if (distance > collisionDistance.to && this.status == 'collide') {
       this.setStatus('dying');
+      this.sounds.destruction.play();
       this.tagForRemoval();
     }
   }
@@ -76,6 +85,12 @@ class Atom {
     let displacement = getXYFromVector(this.vector, this.speed);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
     this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
+  }
+
+  reverseAtomDirection() {
+    this.vector = (this.vector > 0)
+      ? this.vector - Math.PI
+      : this.vector + Math.PI;
   }
 
   static destroyAtoms(atoms) {
@@ -98,7 +113,7 @@ class Atom {
       pucks.forEach(p => {
         let result = compareVectorsForCollision(a.vector, p.vector, p.angle);
 
-        console.log(result ? 'collide' : '');
+        if (result) a.executeCollision();
       })
     });
   }
