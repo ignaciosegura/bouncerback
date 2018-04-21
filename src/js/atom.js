@@ -3,7 +3,7 @@
 
 require('../sass/_atom.scss');
 
-import { getXYFromVector, getDistanceFromXY } from './helpers.js';
+import { getXYFromVector, getDistanceFromXY, compareVectorsForCollision } from './helpers.js';
 
 class Atom {
   constructor(index, speed, collisionSound = '', destructionSound = '') {
@@ -16,7 +16,7 @@ class Atom {
       destruction: destructionSound
     }
     this.destructionTime = 2000; // in milliseconds
-    this.statusList = ['alive', 'dying', 'dead'];
+    this.statusList = ['alive', 'collide', 'dying', 'dead'];
     this.status = this.statusList[0]; // Possible values are "alive", "dying", "dead"
     this.domElement;
   }
@@ -33,11 +33,11 @@ class Atom {
     theZone.insertAdjacentHTML('beforeend', atom);
   }
 
-  tagForRemoval() {
-    this.setStatus('dying');
-    setTimeout(() => {
-      this.setStatus('dead');
-    }, this.destructionTime);
+  get atomPosition() {
+    return ({
+      cx: this.domElement.cx.baseVal.value,
+      cy: this.domElement.cy.baseVal.value
+    })
   }
 
   setStatus(newStatus) {
@@ -53,11 +53,10 @@ class Atom {
     }
   }
 
-  get atomPosition() {
-    return ({
-      cx: this.domElement.cx.baseVal.value,
-      cy: this.domElement.cy.baseVal.value
-    })
+  tagForRemoval() {
+    setTimeout(() => {
+      this.setStatus('dead');
+    }, this.destructionTime);
   }
 
   checkAtom(collisionDistance) {
@@ -65,9 +64,9 @@ class Atom {
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
     if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
-      console.log("Collision needs to be checked for Atom " + this.index);
-    } else if (distance > collisionDistance.to && this.status == 'alive') {
-      console.log("destroy atom");
+      this.setStatus('collide');
+    } else if (distance > collisionDistance.to && this.status != 'dying') {
+      this.setStatus('dying');
       this.tagForRemoval();
     }
   }
@@ -90,6 +89,18 @@ class Atom {
       }
       i++;
     }
+  }
+
+  static collideAtoms(atoms, pucks) {
+    let colliders = atoms.filter(a => a.status == 'collide');
+
+    colliders.forEach(a => {
+      pucks.forEach(p => {
+        let result = compareVectorsForCollision(a.vector, p.vector, p.angle);
+
+        console.log(result ? 'collide' : '');
+      })
+    });
   }
 }
 

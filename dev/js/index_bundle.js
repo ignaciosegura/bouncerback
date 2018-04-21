@@ -5680,7 +5680,7 @@ module.exports = canDefineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setupTimeUnits = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findcollisionDistance = exports.findGameSurfaceCoords = undefined;
+exports.setupTimeUnits = exports.compareVectorsForCollision = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findcollisionDistance = exports.findGameSurfaceCoords = undefined;
 
 var _puck = __webpack_require__(52);
 
@@ -5726,6 +5726,22 @@ function getXYFromVector(vector, displacement) {
   };
 }
 
+function compareVectorsForCollision(angle1, angle2, range) {
+  angle1 = makeAnglePositive(angle1);
+  angle2 = makeAnglePositive(angle2);
+  range = range / 2;
+  var bracket = {
+    from: angle2 - range,
+    to: angle2 + range
+  };
+
+  return angle1 > bracket.from && angle1 < bracket.to ? true : false;
+}
+
+function makeAnglePositive(angle) {
+  return angle < 0 ? angle + 2 * Math.PI : angle;
+}
+
 function setupTimeUnits(bpm, time) {
   var frameRate = 60;
   var framesPerBeat = 60 / bpm * frameRate;
@@ -5741,6 +5757,7 @@ exports.findcollisionDistance = findcollisionDistance;
 exports.getVectorFromXY = getVectorFromXY;
 exports.getDistanceFromXY = getDistanceFromXY;
 exports.getXYFromVector = getXYFromVector;
+exports.compareVectorsForCollision = compareVectorsForCollision;
 exports.setupTimeUnits = setupTimeUnits;
 
 /***/ }),
@@ -7613,6 +7630,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Puck = function () {
   function Puck() {
     var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var angle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
 
     _classCallCheck(this, Puck);
 
@@ -7625,6 +7643,7 @@ var Puck = function () {
       x: this.size.width / -2,
       y: this.size.height / -2
     };
+    this.angle = angle * Math.PI / 180;
     this.vector;
   }
 
@@ -15036,7 +15055,7 @@ var Atom = function () {
       destruction: destructionSound
     };
     this.destructionTime = 2000; // in milliseconds
-    this.statusList = ['alive', 'dying', 'dead'];
+    this.statusList = ['alive', 'collide', 'dying', 'dead'];
     this.status = this.statusList[0]; // Possible values are "alive", "dying", "dead"
     this.domElement;
   }
@@ -15047,16 +15066,6 @@ var Atom = function () {
       var atom = '<circle\n      cx="0"\n      cy="0"\n      r="' + this.radius + '"\n      index="' + this.index + '"\n      class="atom"\n      />';
       var theZone = document.getElementById('point-zero');
       theZone.insertAdjacentHTML('beforeend', atom);
-    }
-  }, {
-    key: 'tagForRemoval',
-    value: function tagForRemoval() {
-      var _this = this;
-
-      this.setStatus('dying');
-      setTimeout(function () {
-        _this.setStatus('dead');
-      }, this.destructionTime);
     }
   }, {
     key: 'setStatus',
@@ -15073,15 +15082,24 @@ var Atom = function () {
       }
     }
   }, {
+    key: 'tagForRemoval',
+    value: function tagForRemoval() {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.setStatus('dead');
+      }, this.destructionTime);
+    }
+  }, {
     key: 'checkAtom',
     value: function checkAtom(collisionDistance) {
       var pos = this.atomPosition;
       var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
 
       if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
-        console.log("Collision needs to be checked for Atom " + this.index);
-      } else if (distance > collisionDistance.to && this.status == 'alive') {
-        console.log("destroy atom");
+        this.setStatus('collide');
+      } else if (distance > collisionDistance.to && this.status != 'dying') {
+        this.setStatus('dying');
         this.tagForRemoval();
       }
     }
@@ -15114,6 +15132,21 @@ var Atom = function () {
         }
         i++;
       }
+    }
+  }, {
+    key: 'collideAtoms',
+    value: function collideAtoms(atoms, pucks) {
+      var colliders = atoms.filter(function (a) {
+        return a.status == 'collide';
+      });
+
+      colliders.forEach(function (a) {
+        pucks.forEach(function (p) {
+          var result = (0, _helpers.compareVectorsForCollision)(a.vector, p.vector, p.angle);
+
+          console.log(result ? 'collide' : '');
+        });
+      });
     }
   }]);
 
@@ -15346,6 +15379,13 @@ var GameEngine = function () {
         a.checkAtom(_this.collisionDistance);
       });
       _atom2.default.destroyAtoms(this.atoms);
+      _atom2.default.collideAtoms(this.atoms, this.pucks);
+      this.checkGameOver();
+    }
+  }, {
+    key: 'checkGameOver',
+    value: function checkGameOver() {
+      if (this.atoms.length > 0) return false;
     }
   }]);
 

@@ -1,7 +1,7 @@
 // Puck class
 
 class Puck {
-  constructor(index = 0) {
+  constructor(index = 0, angle = 10) {
     this.index = index;
     this.size = {
       width: 80,
@@ -11,6 +11,7 @@ class Puck {
       x: this.size.width / -2,
       y: this.size.height / -2
     }
+    this.angle = angle * Math.PI / 180;
     this.vector;
   }
 

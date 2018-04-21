@@ -40,6 +40,26 @@ function getXYFromVector(vector, displacement) {
   }
 }
 
+function compareVectorsForCollision(angle1, angle2, range) {
+  angle1 = makeAnglePositive(angle1);
+  angle2 = makeAnglePositive(angle2);
+  range = range / 2;
+  let bracket = {
+    from: angle2 - range,
+    to: angle2 + range
+  }
+
+  return (angle1 > bracket.from && angle1 < bracket.to)
+    ? true
+    : false;
+}
+
+function makeAnglePositive(angle) {
+  return (angle < 0)
+    ? angle + 2 * Math.PI
+    : angle;
+}
+
 function setupTimeUnits(bpm, time) {
   let frameRate = 60;
   let framesPerBeat = (60 / bpm) * frameRate;
@@ -47,7 +67,7 @@ function setupTimeUnits(bpm, time) {
   let clock = 0;
   let millisecondsPerFrame = 1000 / frameRate;
 
-  return {frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame};
+  return { frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame };
 }
 
-export {findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, setupTimeUnits};
+export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForCollision, setupTimeUnits };

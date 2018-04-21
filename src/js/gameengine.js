@@ -49,6 +49,7 @@ class GameEngine {
       a.checkAtom(this.collisionDistance);
     });
     Atom.destroyAtoms(this.atoms);
+    Atom.collideAtoms(this.atoms, this.pucks);
     this.checkGameOver();
   }
 
