@@ -1,5 +1,5 @@
 // *** COMMON CONFIG OPTIONS *** //
-var siteTitle = 'Nik Nak Studio\'s React Starter Kit';
+var siteTitle = 'BOUNCEBACK';
 var faviconPath = './src/img/favicon.png';
 
 // In webpack.config.js
@@ -55,10 +55,6 @@ if (fs.existsSync(faviconPath)) {
   webpackCommonPlugins = webpackCommonPlugins.concat(FaviconsWebpackPlugin);
 }
 
-// Loaders custom config
-var BabelLoaderQuery = {
-  presets: ['es2015', 'react']
-};
 
 // *** PRODUCTION / DEVELOPMENT SWITCH OBJECT
 var environment = process.env.npm_lifecycle_event ? process.env.npm_lifecycle_event : 'command-line-development';
@@ -85,8 +81,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
-        options: BabelLoaderQuery
+        loader: "babel-loader", // Options are in a .babelrc file
       },
       {
         test: /\.scss$/,

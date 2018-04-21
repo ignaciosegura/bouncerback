@@ -4,19 +4,19 @@ BOUNCEBACK
 Bounceback, a JS game built on React and PhaserJS 3.
 
 This game is built using Nik Nak Studio React + Webpack Starter Kit as starting point.
-This is a ready-to-use starter kit for ES2015 + React projects, built by Ignacio Segura for Nik Nak Studio (www.niknak.es).
+https://github.com/ignaciosegura/niknak_react_webpack
 
 
 THINGS IT DOES
 
-· Includes React.
-· Transpiles JS ES6 and JSX.
-· Processes Compass SASS.
-· Process SVG images. It includes it as base64 CSS if smaller than 10.000 bytes.
-· Process fonts. It includes it as base64 CSS if smaller than 100.000 bytes.
-· It creates source maps.
-· Includes .htaccess file on both /dev and /prod folder to map all requests to index.html.
-· Creates and adds META code for many different versions of favicon using a favicon PNG image in /src/img as reference.
+* Includes React.
+* Transpiles JS ES6 and JSX.
+* Processes Compass SASS.
+* Process SVG images. It includes it as base64 CSS if smaller than 10.000 bytes.
+* Process fonts. It includes it as base64 CSS if smaller than 100.000 bytes.
+* It creates source maps.
+* Includes .htaccess file on both /dev and /prod folder to map all requests to index.html.
+* Creates and adds META code for many different versions of favicon using a favicon PNG image in /src/img as reference.
 
 REQUIRES
 

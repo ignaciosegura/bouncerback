@@ -1,3 +1,7 @@
 node_modules
 node_modules/*
 package-lock.json
+
+dev/*
+dev/js/index_bundle.js
+dev/js/index_bundle.js.map

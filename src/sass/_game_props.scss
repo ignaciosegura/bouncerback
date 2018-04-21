@@ -1,0 +1,23 @@
+// Puck
+
+
+#point-zero {
+  width: 0;
+  height: 0;
+  overflow: visible;
+
+  * {
+    transition: fill linear 1s, filter linear 2s, opacity linear 2s;
+  }
+
+  rect {
+    fill: white;
+    stroke: none;
+  }
+}
+  
+.dying {
+  fill: #900;
+  filter: drop-shadow(0 0 25px #900);
+  opacity: 0;
+}
