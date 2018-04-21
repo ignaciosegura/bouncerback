@@ -49,6 +49,13 @@ class GameEngine {
       a.checkAtom(this.collisionDistance);
     });
     Atom.destroyAtoms(this.atoms);
+    this.checkGameOver();
+  }
+
+  checkGameOver() {
+    let gameOver = (this.atoms.length == 0)
+      ? true
+      : false;
   }
 }
 
