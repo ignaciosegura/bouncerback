@@ -7,12 +7,13 @@ import SoundFX from './soundfx.js';
 import { getXYFromVector, getDistanceFromXY, compareVectorsForCollision } from './helpers.js';
 
 class Atom {
-  constructor(index, speed, collisionSound = '', destructionSound = '') {
+  constructor(index, speed, launchSound = '', collisionSound = '', destructionSound = '') {
     this.index = index;
     this.speed = speed / 60; // Speed is measured in px per second
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
+      launch: new SoundFX(launchSound),
       collision: new SoundFX(collisionSound),
       destruction: new SoundFX(destructionSound)
     }
@@ -32,6 +33,7 @@ class Atom {
       />`;
     let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
+    this.sounds.launch.play();
   }
 
   get atomPosition() {
@@ -98,6 +100,7 @@ class Atom {
 
     while (i < atoms.length) {
       if (atoms[i].status == 'dead') {
+        atoms[i].sounds.destruction.play();
         atoms[i].domElement.remove();
         atoms.splice(i, 1);
         continue;

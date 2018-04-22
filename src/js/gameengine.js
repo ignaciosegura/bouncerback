@@ -4,6 +4,8 @@
 require('../sass/_game_props.scss');
 
 var bounceSoundPath = require('../sound/bounce_dry.mp3');
+var launchSoundPath = require('../sound/launch.mp3');
+var destroySoundPath = require('../sound/destroy.mp3');
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
@@ -28,7 +30,7 @@ class GameEngine {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    this.atoms.push(new Atom(0, 100, bounceSoundPath));
+    this.atoms.push(new Atom(0, 100, launchSoundPath, bounceSoundPath, destroySoundPath));
     this.atoms[0].create();
     this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
 
