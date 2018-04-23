@@ -8,16 +8,17 @@ var launchSoundPath = require('../sound/launch.mp3');
 var destroySoundPath = require('../sound/destroy.mp3');
 
 import ScoreShop from './stores/scoreshop.js';
+import TimeShop from './stores/timeshop.js';
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import { findGameSurfaceCoords, findcollisionDistance, setupTimeUnits } from './helpers.js';
+import { findGameSurfaceCoords, findcollisionDistance } from './helpers.js';
 
 class GameEngine {
 
   constructor(bpm, time, song = '') {
-    this.time = setupTimeUnits(bpm, time);
+    TimeShop.setup(120, 4);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
     this.collisionDistance = findcollisionDistance();
@@ -39,7 +40,7 @@ class GameEngine {
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
 
-    this.gameLoopInterval = setInterval(this.gameLoop, this.time.millisecondsPerFrame);
+    this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
   }
 
   createPointZero(place) {
@@ -51,7 +52,7 @@ class GameEngine {
   gameLoop() {
     let collisions;
 
-    this.time.clock++;
+    TimeShop.nextTick();
     this.atoms.forEach((a) => {
       a.moveAtom();
       a.checkAtom(this.collisionDistance);

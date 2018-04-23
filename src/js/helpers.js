@@ -60,14 +60,4 @@ function makeAnglePositive(angle) {
     : angle;
 }
 
-function setupTimeUnits(bpm, time) {
-  let frameRate = 60;
-  let framesPerBeat = (60 / bpm) * frameRate;
-  let framesPerTime = time * framesPerBeat;
-  let clock = 0;
-  let millisecondsPerFrame = 1000 / frameRate;
-
-  return { frameRate, framesPerBeat, framesPerTime, clock, millisecondsPerFrame };
-}
-
-export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForCollision, setupTimeUnits };
+export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForCollision };

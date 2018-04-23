@@ -5680,7 +5680,7 @@ module.exports = canDefineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setupTimeUnits = exports.compareVectorsForCollision = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findcollisionDistance = exports.findGameSurfaceCoords = undefined;
+exports.compareVectorsForCollision = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findcollisionDistance = exports.findGameSurfaceCoords = undefined;
 
 var _puck = __webpack_require__(52);
 
@@ -5742,23 +5742,12 @@ function makeAnglePositive(angle) {
   return angle < 0 ? angle + 2 * Math.PI : angle;
 }
 
-function setupTimeUnits(bpm, time) {
-  var frameRate = 60;
-  var framesPerBeat = 60 / bpm * frameRate;
-  var framesPerTime = time * framesPerBeat;
-  var clock = 0;
-  var millisecondsPerFrame = 1000 / frameRate;
-
-  return { frameRate: frameRate, framesPerBeat: framesPerBeat, framesPerTime: framesPerTime, clock: clock, millisecondsPerFrame: millisecondsPerFrame };
-}
-
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
 exports.findcollisionDistance = findcollisionDistance;
 exports.getVectorFromXY = getVectorFromXY;
 exports.getDistanceFromXY = getDistanceFromXY;
 exports.getXYFromVector = getXYFromVector;
 exports.compareVectorsForCollision = compareVectorsForCollision;
-exports.setupTimeUnits = setupTimeUnits;
 
 /***/ }),
 /* 35 */
@@ -15302,6 +15291,10 @@ var _scoreshop = __webpack_require__(217);
 
 var _scoreshop2 = _interopRequireDefault(_scoreshop);
 
+var _timeshop = __webpack_require__(218);
+
+var _timeshop2 = _interopRequireDefault(_timeshop);
+
 var _puck = __webpack_require__(52);
 
 var _puck2 = _interopRequireDefault(_puck);
@@ -15335,7 +15328,7 @@ var GameEngine = function () {
 
     _classCallCheck(this, GameEngine);
 
-    this.time = (0, _helpers.setupTimeUnits)(bpm, time);
+    _timeshop2.default.setup(120, 4);
 
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
     this.collisionDistance = (0, _helpers.findcollisionDistance)();
@@ -15357,7 +15350,7 @@ var GameEngine = function () {
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
 
-    this.gameLoopInterval = setInterval(this.gameLoop, this.time.millisecondsPerFrame);
+    this.gameLoopInterval = setInterval(this.gameLoop, _timeshop2.default.millisecondsPerFrame);
   }
 
   _createClass(GameEngine, [{
@@ -15374,7 +15367,7 @@ var GameEngine = function () {
 
       var collisions = void 0;
 
-      this.time.clock++;
+      _timeshop2.default.nextTick();
       this.atoms.forEach(function (a) {
         a.moveAtom();
         a.checkAtom(_this.collisionDistance);
@@ -28291,7 +28284,7 @@ var Score = (_class = function () {
   }, {
     key: 'report',
     get: function get() {
-      return 'Bounces: ' + this.bounces + ' / Level: ' + this.level;
+      console.log('Bounces: ' + this.bounces + ' / Level: ' + this.level);
     }
   }]);
 
@@ -28312,6 +28305,132 @@ var Score = (_class = function () {
 var ScoreShop = new Score();
 
 exports.default = ScoreShop;
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3; /* global  */
+// TimeShop
+
+var _mobx = __webpack_require__(56);
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+function _initializerWarningHelper(descriptor, context) {
+  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+}
+
+var Time = (_class = function () {
+  function Time() {
+    _classCallCheck(this, Time);
+
+    this.frameRate = 60;
+    this.millisecondsPerFrame = 1000 / this.frameRate;
+
+    _initDefineProp(this, 'tick', _descriptor, this);
+
+    _initDefineProp(this, 'beat', _descriptor2, this);
+
+    _initDefineProp(this, 'time', _descriptor3, this);
+  }
+
+  _createClass(Time, [{
+    key: 'setup',
+    value: function setup(bpm, timeSignature) {
+      this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
+      this.framesPerTime = timeSignature * this.framesPerBeat;
+    }
+  }, {
+    key: 'updateTimeUnits',
+    value: function updateTimeUnits() {
+      this.beat = this.getRoundedTimeUnit(this.beat, this.framesPerBeat);
+      this.time = this.getRoundedTimeUnit(this.time, this.framesPerTime);
+    }
+  }, {
+    key: 'getRoundedTimeUnit',
+    value: function getRoundedTimeUnit(current, framesPerUnit) {
+      var tickToUnit = this.tick / framesPerUnit;
+      return tickToUnit === Math.floor(tickToUnit) ? tickToUnit : current;
+    }
+  }, {
+    key: 'nextTick',
+    value: function nextTick() {
+      this.tick++;
+      this.updateTimeUnits();
+    }
+  }]);
+
+  return Time;
+}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'tick', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'beat', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'time', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+})), _class);
+
+
+var TimeShop = new Time();
+
+exports.default = TimeShop;
 
 /***/ })
 /******/ ]);

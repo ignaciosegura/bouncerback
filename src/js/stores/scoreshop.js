@@ -8,7 +8,7 @@ class Score {
   @observable level = 1;
 
   @computed get report() {
-    return `Bounces: ${this.bounces} / Level: ${this.level}`;
+    console.log(`Bounces: ${this.bounces} / Level: ${this.level}`);
   }
 
   addBounce(b = 1) {
