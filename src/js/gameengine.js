@@ -7,6 +7,8 @@ var bounceSoundPath = require('../sound/bounce_dry.mp3');
 var launchSoundPath = require('../sound/launch.mp3');
 var destroySoundPath = require('../sound/destroy.mp3');
 
+var levelList = require('../gameData/levelList.json');
+
 import ScoreShop from './stores/scoreshop.js';
 import TimeShop from './stores/timeshop.js';
 
@@ -17,8 +19,9 @@ import { findGameSurfaceCoords, findcollisionDistance } from './helpers.js';
 
 class GameEngine {
 
-  constructor(bpm, time, song = '') {
-    TimeShop.setup(120, 4);
+  constructor(level) {
+    this.level = levelList[level];
+    TimeShop.setup(this.level.time.bpm, this.level.time.signature);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
     this.collisionDistance = findcollisionDistance();

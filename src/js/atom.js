@@ -7,14 +7,14 @@ import SoundFX from './soundfx.js';
 import { getXYFromVector, getDistanceFromXY, compareVectorsForCollision } from './helpers.js';
 
 class Atom {
-  constructor(index, speed, launchSound = '', collisionSound = '', destructionSound = '') {
+  constructor(index, speed, launchSound = '', bounceSound = '', destructionSound = '') {
     this.index = index;
     this.speed = speed / 60; // Speed is measured in px per second
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
       launch: new SoundFX(launchSound),
-      collision: new SoundFX(collisionSound),
+      collision: new SoundFX(bounceSound),
       destruction: new SoundFX(destructionSound)
     }
     this.destructionTime = 2000; // in milliseconds

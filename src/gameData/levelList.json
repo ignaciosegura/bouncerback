@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Tutorial",
+    "levelType": "tutorial",
+    "levelLength": 24,
+    "levelPassAction": "next",
+    "gameOverAction": "gameover",
+    "time": {
+      "bpm": 120,
+      "signature": 4
+    },
+    "sound": {
+      "launch": "",
+      "bounce": "",
+      "destruction": "",
+      "song": ""
+    },
+    "atoms": []
+  }
+]

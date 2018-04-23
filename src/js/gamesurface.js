@@ -20,7 +20,7 @@ class GameSurface extends React.Component {
 
   bootGameEngine(e) {
     if (this.engine !== false) return;
-    this.engine = new GameEngine(130, 4, '');  
+    this.engine = new GameEngine(0);  
   }
 
   render() {
