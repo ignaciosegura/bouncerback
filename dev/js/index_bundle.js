@@ -14931,9 +14931,9 @@ var _gamesurface = __webpack_require__(92);
 
 var _gamesurface2 = _interopRequireDefault(_gamesurface);
 
-var _scorehouse = __webpack_require__(216);
+var _scoreshop = __webpack_require__(217);
 
-var _scorehouse2 = _interopRequireDefault(_scorehouse);
+var _scoreshop2 = _interopRequireDefault(_scoreshop);
 
 var _mobxReact = __webpack_require__(26);
 
@@ -14949,7 +14949,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(101); // Required by Webpack to read SASS folder and generate a CSS file
 
-var Index = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function (_React$Component) {
+var Index = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
   _inherits(Index, _React$Component);
 
   function Index() {
@@ -14967,7 +14967,6 @@ var Index = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function
         _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'times' }),
-        _react2.default.createElement(_dummy2.default, null),
         _react2.default.createElement(_gamesurface2.default, null)
       );
     }
@@ -14977,10 +14976,9 @@ var Index = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function
 }(_react2.default.Component)) || _class);
 
 
-var myScoreHouse = new _scorehouse2.default();
 _reactDom2.default.render(_react2.default.createElement(
   _mobxReact.Provider,
-  { ScoreHouse: myScoreHouse },
+  { ScoreShop: _scoreshop2.default },
   _react2.default.createElement(Index, null)
 ), document.getElementById('content'));
 
@@ -15128,14 +15126,19 @@ var Atom = function () {
       var colliders = atoms.filter(function (a) {
         return a.status == 'collide';
       });
+      var collisionsCount = 0;
 
       colliders.forEach(function (a) {
         pucks.forEach(function (p) {
           var result = (0, _helpers.compareVectorsForCollision)(a.vector, p.vector, p.angle);
 
-          if (result) a.executeCollision();
+          if (result) {
+            a.executeCollision();
+            collisionsCount++;
+          }
         });
       });
+      return collisionsCount;
     }
   }]);
 
@@ -15175,7 +15178,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Dummy = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function (_React$Component) {
+var Dummy = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
   _inherits(Dummy, _React$Component);
 
   function Dummy() {
@@ -15190,7 +15193,7 @@ var Dummy = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dummy.__proto__ || Object.getPrototypeOf(Dummy)).call.apply(_ref, [this].concat(args))), _this), _this.clickedMe = function (e) {
-      _this.props.ScoreHouse.addBounce();
+      _this.props.ScoreShop.addBounce();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -15296,6 +15299,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _scoreshop = __webpack_require__(217);
+
+var _scoreshop2 = _interopRequireDefault(_scoreshop);
+
 var _puck = __webpack_require__(52);
 
 var _puck2 = _interopRequireDefault(_puck);
@@ -15366,13 +15373,18 @@ var GameEngine = function () {
     value: function gameLoop() {
       var _this = this;
 
+      var collisions = void 0;
+
       this.time.clock++;
       this.atoms.forEach(function (a) {
         a.moveAtom();
         a.checkAtom(_this.collisionDistance);
       });
       _atom2.default.destroyAtoms(this.atoms);
-      _atom2.default.collideAtoms(this.atoms, this.pucks);
+      collisions = _atom2.default.collideAtoms(this.atoms, this.pucks);
+
+      if (collisions > 0) _scoreshop2.default.addBounce(collisions);
+
       this.checkGameOver();
     }
   }, {
@@ -15429,7 +15441,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(99);
 
-var GameSurface = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = function (_React$Component) {
+var GameSurface = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
   _inherits(GameSurface, _React$Component);
 
   function GameSurface(props) {
@@ -15501,7 +15513,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(100);
 
-var Scoreboard = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
+var Scoreboard = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(Scoreboard, _React$Component);
 
   function Scoreboard() {
@@ -15513,7 +15525,7 @@ var Scoreboard = (_dec = (0, _mobxReact.inject)('ScoreHouse'), _dec(_class = (0,
   _createClass(Scoreboard, [{
     key: 'render',
     value: function render() {
-      var score = this.props.ScoreHouse[this.props.type];
+      var score = this.props.ScoreShop[this.props.type];
       return _react2.default.createElement(
         'div',
         { className: 'scoreboard ' + this.props.type },
@@ -28198,7 +28210,8 @@ module.exports = __webpack_require__(87);
 /* 213 */,
 /* 214 */,
 /* 215 */,
-/* 216 */
+/* 216 */,
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28210,8 +28223,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3; /* global  */
-// ScoreHouse
+var _desc, _value, _class, _descriptor, _descriptor2; /* global  */
+// ScoreShop
 
 var _mobx = __webpack_require__(56);
 
@@ -28260,26 +28273,21 @@ function _initializerWarningHelper(descriptor, context) {
   throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var ScoreHouse = (_class = function () {
-  function ScoreHouse() {
-    _classCallCheck(this, ScoreHouse);
+var Score = (_class = function () {
+  function Score() {
+    _classCallCheck(this, Score);
 
     _initDefineProp(this, 'bounces', _descriptor, this);
 
     _initDefineProp(this, 'level', _descriptor2, this);
-
-    _initDefineProp(this, 'times', _descriptor3, this);
   }
 
-  _createClass(ScoreHouse, [{
+  _createClass(Score, [{
     key: 'addBounce',
     value: function addBounce() {
-      ++this.bounces;
-    }
-  }, {
-    key: 'addTime',
-    value: function addTime() {
-      ++this.times;
+      var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      this.bounces += b;
     }
   }, {
     key: 'report',
@@ -28288,7 +28296,7 @@ var ScoreHouse = (_class = function () {
     }
   }]);
 
-  return ScoreHouse;
+  return Score;
 }(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'bounces', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
@@ -28299,13 +28307,12 @@ var ScoreHouse = (_class = function () {
   initializer: function initializer() {
     return 1;
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'times', [_mobx.observable], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 0;
-  }
 }), _applyDecoratedDescriptor(_class.prototype, 'report', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'report'), _class.prototype)), _class);
-exports.default = ScoreHouse;
+
+
+var ScoreShop = new Score();
+
+exports.default = ScoreShop;
 
 /***/ })
 /******/ ]);
