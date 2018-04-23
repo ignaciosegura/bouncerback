@@ -111,14 +111,19 @@ class Atom {
 
   static collideAtoms(atoms, pucks) {
     let colliders = atoms.filter(a => a.status == 'collide');
+    let collisionsCount = 0;
 
     colliders.forEach(a => {
       pucks.forEach(p => {
         let result = compareVectorsForCollision(a.vector, p.vector, p.angle);
 
-        if (result) a.executeCollision();
+        if (result) {
+          a.executeCollision();
+          collisionsCount++;
+        }
       })
     });
+    return collisionsCount;
   }
 }
 

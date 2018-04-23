@@ -10,7 +10,7 @@ import {observer, inject} from 'mobx-react';
 
 import GameEngine from './gameengine.js';
 
-@inject('store')
+@inject('ScoreShop')
 class GameSurface extends React.Component {
   constructor(props) {
     super();

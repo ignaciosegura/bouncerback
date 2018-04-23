@@ -7,6 +7,8 @@ var bounceSoundPath = require('../sound/bounce_dry.mp3');
 var launchSoundPath = require('../sound/launch.mp3');
 var destroySoundPath = require('../sound/destroy.mp3');
 
+import ScoreShop from './stores/scoreshop.js';
+
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
@@ -47,13 +49,18 @@ class GameEngine {
   }
 
   gameLoop() {
+    let collisions;
+
     this.time.clock++;
     this.atoms.forEach((a) => {
       a.moveAtom();
       a.checkAtom(this.collisionDistance);
     });
     Atom.destroyAtoms(this.atoms);
-    Atom.collideAtoms(this.atoms, this.pucks);
+    collisions = Atom.collideAtoms(this.atoms, this.pucks);
+
+    if (collisions > 0) ScoreShop.addBounce(collisions);
+
     this.checkGameOver();
   }
 
