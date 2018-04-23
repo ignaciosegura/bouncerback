@@ -5,11 +5,11 @@
 import React from 'react';
 import {inject} from 'mobx-react';
 
-@inject('store')
+@inject('ScoreHouse')
 class Dummy extends React.Component {
 
   clickedMe = (e) => {
-    this.props.store.addBounce();
+    this.props.ScoreHouse.addBounce();
   }
 
   render() {

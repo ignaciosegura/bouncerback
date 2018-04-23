@@ -1,9 +1,9 @@
 /* global  */
-// Store
+// ScoreHouse
 
 import {observable, computed} from 'mobx';
 
-class Store {
+class ScoreHouse {
   @observable bounces = 0;
   @observable level = 1;
   @observable times = 0;
@@ -22,4 +22,4 @@ class Store {
 }
 
 
-export default Store; 
+export default ScoreHouse; 
