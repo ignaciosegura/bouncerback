@@ -17,7 +17,6 @@ class Index extends React.Component {
     return <div id="container">
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
-      <Scoreboard type="times" />
       <GameSurface />
     </div>
   }

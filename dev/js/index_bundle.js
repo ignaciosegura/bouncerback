@@ -14966,7 +14966,6 @@ var Index = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function 
         { id: 'container' },
         _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
-        _react2.default.createElement(_scoreboard2.default, { type: 'times' }),
         _react2.default.createElement(_gamesurface2.default, null)
       );
     }
