@@ -40,7 +40,7 @@ function getXYFromVector(vector, displacement) {
   }
 }
 
-function compareVectorsForCollision(angle1, angle2, range) {
+function compareVectorsForBounce(angle1, angle2, range) {
   angle1 = makeAnglePositive(angle1);
   angle2 = makeAnglePositive(angle2);
   range = range / 2;
@@ -60,4 +60,4 @@ function makeAnglePositive(angle) {
     : angle;
 }
 
-export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForCollision };
+export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForBounce };

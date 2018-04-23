@@ -4,18 +4,18 @@
 require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
-import { getXYFromVector, getDistanceFromXY, compareVectorsForCollision } from './helpers.js';
+import { getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
 
 class Atom {
-  constructor(index, speed, launchSound = '', bounceSound = '', destructionSound = '') {
+  constructor(index, level) {
     this.index = index;
-    this.speed = speed / 60; // Speed is measured in px per second
+    this.speed = level.atomSpeed / 60; // Speed is measured in px per second
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
-      launch: new SoundFX(launchSound),
-      collision: new SoundFX(bounceSound),
-      destruction: new SoundFX(destructionSound)
+      launch: new SoundFX(level.sound.launch),
+      bounce: new SoundFX(level.sound.bounce),
+      destroy: new SoundFX(level.sound.destroy)
     }
     this.destructionTime = 2000; // in milliseconds
     this.statusList = ['alive', 'collide', 'dying', 'dead'];
@@ -23,13 +23,13 @@ class Atom {
     this.domElement;
   }
 
-  create() {
+  createDOMElement() {
     let atom = `<circle
       cx="0"
       cy="0"
       r="${this.radius}"
       index="${this.index}"
-      class="atom"
+      class="atom ${this.status}"
       />`;
     let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
@@ -63,21 +63,21 @@ class Atom {
     }, this.destructionTime);
   }
 
-  executeCollision() {
+  executeBounce() {
     this.reverseAtomDirection();
-    this.status = 'alive';
-    this.sounds.collision.play();
+    this.setStatus('alive');
+    this.sounds.bounce.play();
   }
 
-  checkAtom(collisionDistance) {
+  checkAtom(bounceDistance) {
     const pos = this.atomPosition;
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
-    if (distance >= collisionDistance.from && distance <= collisionDistance.to) {
+    if (distance >= bounceDistance.from && distance <= bounceDistance.to) {
       this.setStatus('collide');
-    } else if (distance > collisionDistance.to && this.status == 'collide') {
+    } else if (distance > bounceDistance.to && this.status == 'collide') {
       this.setStatus('dying');
-      this.sounds.destruction.play();
+      this.sounds.destroy.play();
       this.tagForRemoval();
     }
   }
@@ -100,7 +100,7 @@ class Atom {
 
     while (i < atoms.length) {
       if (atoms[i].status == 'dead') {
-        atoms[i].sounds.destruction.play();
+        atoms[i].sounds.destroy.play();
         atoms[i].domElement.remove();
         atoms.splice(i, 1);
         continue;
@@ -109,21 +109,28 @@ class Atom {
     }
   }
 
-  static collideAtoms(atoms, pucks) {
+  static bounceAtoms(atoms, pucks) {
     let colliders = atoms.filter(a => a.status == 'collide');
-    let collisionsCount = 0;
+    let bouncesCount = 0;
 
     colliders.forEach(a => {
       pucks.forEach(p => {
-        let result = compareVectorsForCollision(a.vector, p.vector, p.angle);
+        let result = compareVectorsForBounce(a.vector, p.vector, p.angle);
 
         if (result) {
-          a.executeCollision();
-          collisionsCount++;
+          a.executeBounce();
+          bouncesCount++;
         }
       })
     });
-    return collisionsCount;
+    return bouncesCount;
+  }
+
+  static create(index, level) {
+    let newAtom = new Atom(index, level);
+    newAtom.createDOMElement();
+    newAtom.domElement = Array.from(document.getElementsByClassName('atom'))[index];
+    return newAtom;
   }
 }
 

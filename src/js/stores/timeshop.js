@@ -1,7 +1,7 @@
 /* global  */
 // TimeShop
 
-import {observable, computed} from 'mobx';
+import { observable, computed } from 'mobx';
 
 class Time {
   frameRate = 60;
@@ -13,12 +13,14 @@ class Time {
   framesPerTime;
 
   setup(bpm, timeSignature) {
+    this.bpm = bpm;
+    this.timeSignature = timeSignature;
     this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
     this.framesPerTime = timeSignature * this.framesPerBeat;
   }
 
   updateTimeUnits() {
-    this.beat = this.getRoundedTimeUnit(this.beat, this.framesPerBeat); 
+    this.beat = this.getRoundedTimeUnit(this.beat, this.framesPerBeat) % this.timeSignature;
     this.time = this.getRoundedTimeUnit(this.time, this.framesPerTime);
   }
 
@@ -32,6 +34,10 @@ class Time {
   nextTick() {
     this.tick++;
     this.updateTimeUnits();
+  }
+
+  @computed get newBeat() {
+    return (this.tick % this.framesPerBeat == 0) ? true : false;
   }
 }
 
