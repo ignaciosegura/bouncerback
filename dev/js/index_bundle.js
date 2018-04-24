@@ -15266,7 +15266,7 @@ var Atom = function () {
     value: function create(index, level) {
       var newAtom = new Atom(index, level);
       newAtom.createDOMElement();
-      newAtom.domElement = Array.from(document.getElementsByClassName('atom'))[index];
+      newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
       return newAtom;
     }
   }]);
@@ -15523,7 +15523,8 @@ var GameEngine = function () {
   }, {
     key: 'checkGameOver',
     value: function checkGameOver() {
-      if (this.atoms.length > 0) return false;
+      if (!this.level.areThereMoreAtoms() || this.atoms.length > 0) return false;
+
       clearInterval(this.gameLoopInterval);
       console.log('Game Over!');
     }
@@ -15531,7 +15532,7 @@ var GameEngine = function () {
     key: 'checkAtomList',
     value: function checkAtomList() {
       if (!_timeshop2.default.newBeat) return;
-      if (this.level.atomList.length == this.nextAtom) return;
+      if (this.level.areThereMoreAtoms()) return;
 
       var nextAtom = this.level.nextAtom;
 
@@ -28585,6 +28586,11 @@ var Level = function () {
     key: "isLevelOver",
     value: function isLevelOver(times) {
       return times >= this.levelLength;
+    }
+  }, {
+    key: "areThereMoreAtoms",
+    value: function areThereMoreAtoms() {
+      return this.nextAtom >= this.atomList.length;
     }
   }]);
 
