@@ -3,21 +3,22 @@
 
 require('../sass/_game_props.scss');
 
-var bounceSoundPath = require('../sound/bounce_dry.mp3');
-var launchSoundPath = require('../sound/launch.mp3');
-var destroySoundPath = require('../sound/destroy.mp3');
+import levelList from '../gameData/levelList.js';
 
 import ScoreShop from './stores/scoreshop.js';
+import TimeShop from './stores/timeshop.js';
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
-import { findGameSurfaceCoords, findcollisionDistance, setupTimeUnits } from './helpers.js';
+import Level from './level.js';
+import { findGameSurfaceCoords, findcollisionDistance } from './helpers.js';
 
 class GameEngine {
 
-  constructor(bpm, time, song = '') {
-    this.time = setupTimeUnits(bpm, time);
+  constructor(level) {
+    this.level = new Level(levelList[level]);
+    TimeShop.setup(this.level.time.bpm, this.level.time.signature);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
     this.collisionDistance = findcollisionDistance();
@@ -32,14 +33,10 @@ class GameEngine {
     this.pucks.push(puck);
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
-    this.atoms.push(new Atom(0, 100, launchSoundPath, bounceSoundPath, destroySoundPath));
-    this.atoms[0].create();
-    this.atoms[0].domElement = Array.from(document.getElementsByClassName('atom'))[0];
-
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
     gameController.movePucksOnMouse();
 
-    this.gameLoopInterval = setInterval(this.gameLoop, this.time.millisecondsPerFrame);
+    this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
   }
 
   createPointZero(place) {
@@ -49,18 +46,19 @@ class GameEngine {
   }
 
   gameLoop() {
-    let collisions;
+    let bounces;
 
-    this.time.clock++;
     this.atoms.forEach((a) => {
       a.moveAtom();
       a.checkAtom(this.collisionDistance);
     });
     Atom.destroyAtoms(this.atoms);
-    collisions = Atom.collideAtoms(this.atoms, this.pucks);
+    bounces = Atom.bounceAtoms(this.atoms, this.pucks);
 
-    if (collisions > 0) ScoreShop.addBounce(collisions);
+    if (bounces > 0) ScoreShop.addBounce(bounces);
 
+    this.checkAtomList();
+    TimeShop.nextTick();
     this.checkGameOver();
   }
 
@@ -68,6 +66,25 @@ class GameEngine {
     if (this.atoms.length > 0) return false;
     clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
+  }
+
+  checkAtomList() {
+    if (!TimeShop.newBeat) return;
+    if (this.level.atomList.length == this.nextAtom) return;
+
+    let nextAtom = this.level.nextAtom;
+
+    let timeMatch = (TimeShop.time === this.level.atomList[nextAtom].t) ? true : false;
+    let beatMatch = (TimeShop.beat === this.level.atomList[nextAtom].b) ? true : false;
+
+    if (timeMatch && beatMatch) {
+      this.addAtomToGameSurface();
+    }
+  }
+
+  addAtomToGameSurface() {
+    this.atoms.push(Atom.create(this.level.nextAtom, this.level));
+    this.level.nextAtom++;
   }
 }
 
