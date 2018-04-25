@@ -44,16 +44,9 @@ class Atom {
   }
 
   setStatus(newStatus) {
-    try {
-      if (!this.statusList.includes(newStatus)) {
-        throw 'Bummer! Trying to set an status that does not exist!';
-      }
-      this.domElement.classList.remove(this.status);
-      this.status = newStatus;
-      this.domElement.classList.add(newStatus);
-    } catch (e) {
-      console.log(e);
-    }
+    this.domElement.classList.remove(this.status);
+    this.status = newStatus;
+    this.domElement.classList.add(newStatus);
   }
 
   tagForRemoval() {
