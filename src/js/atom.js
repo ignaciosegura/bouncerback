@@ -126,7 +126,7 @@ class Atom {
   static create(index, level) {
     let newAtom = new Atom(index, level);
     newAtom.createDOMElement();
-    newAtom.domElement = Array.from(document.getElementsByClassName('atom'))[index];
+    newAtom.domElement = document.querySelector('.atom[index="' + index + '"');
     return newAtom;
   }
 }

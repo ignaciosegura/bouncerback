@@ -68,7 +68,7 @@ class GameEngine {
 
   checkAtomList() {
     if (!TimeShop.newBeat) return;
-    if (this.level.atomList.length == this.nextAtom) return;
+    if (this.level.atomList.length == this.level.nextAtom) return;
 
     let nextAtom = this.level.nextAtom;
 

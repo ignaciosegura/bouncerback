@@ -15293,7 +15293,7 @@ var Atom = function () {
     value: function create(index, level) {
       var newAtom = new Atom(index, level);
       newAtom.createDOMElement();
-      newAtom.domElement = Array.from(document.getElementsByClassName('atom'))[index];
+      newAtom.domElement = document.querySelector('.atom[index="' + index + '"');
       return newAtom;
     }
   }]);
@@ -15554,7 +15554,7 @@ var GameEngine = function () {
     key: 'checkAtomList',
     value: function checkAtomList() {
       if (!_timeshop2.default.newBeat) return;
-      if (this.level.atomList.length == this.nextAtom) return;
+      if (this.level.atomList.length == this.level.nextAtom) return;
 
       var nextAtom = this.level.nextAtom;
 
