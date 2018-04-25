@@ -12,7 +12,7 @@ function findGameSurfaceCoords() {
   };
 }
 
-function findcollisionDistance() {
+function findBounceDistance() {
   let dummyPuck = new Puck();
   let gameSurfaceCoords = findGameSurfaceCoords();
   return {
@@ -60,4 +60,4 @@ function makeAnglePositive(angle) {
     : angle;
 }
 
-export { findGameSurfaceCoords, findcollisionDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForBounce };
+export { findGameSurfaceCoords, findBounceDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForBounce };

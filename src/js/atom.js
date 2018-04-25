@@ -18,8 +18,7 @@ class Atom {
       destroy: new SoundFX(level.sound.destroy)
     }
     this.destructionTime = 2000; // in milliseconds
-    this.statusList = ['alive', 'collide', 'dying', 'dead'];
-    this.status = this.statusList[0]; // Possible values are "alive", "dying", "dead"
+    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
     this.domElement;
   }
 
@@ -89,16 +88,13 @@ class Atom {
   }
 
   static destroyAtoms(atoms) {
-    let i = 0;
+    let i;
 
-    while (i < atoms.length) {
-      if (atoms[i].status == 'dead') {
-        atoms[i].sounds.destroy.play();
-        atoms[i].domElement.remove();
-        atoms.splice(i, 1);
-        continue;
-      }
-      i++;
+    for (i in atoms) {
+      if (atoms[i].status !== 'dead') continue;
+ 
+      atoms[i].domElement.remove();
+      atoms.splice(i, 1);
     }
   }
 
@@ -117,6 +113,14 @@ class Atom {
       })
     });
     return bouncesCount;
+  }
+
+  static moveAtoms(atoms) {
+    atoms.forEach(a => a.moveAtom());
+  }
+
+  static checkAtomsStatus(atoms, bounceDistance) {
+    atoms.forEach(a => a.checkAtom(bounceDistance));
   }
 
   static create(index, level) {
