@@ -15485,6 +15485,10 @@ var _level = __webpack_require__(95);
 
 var _level2 = _interopRequireDefault(_level);
 
+var _vortex = __webpack_require__(218);
+
+var _vortex2 = _interopRequireDefault(_vortex);
+
 var _helpers = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28552,6 +28556,35 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(88);
 
+
+/***/ }),
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Vortex class
+
+var Vortex = function Vortex() {
+  _classCallCheck(this, Vortex);
+};
+
+exports.default = Vortex;
 
 /***/ })
 /******/ ]);

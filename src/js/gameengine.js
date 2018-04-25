@@ -14,6 +14,7 @@ import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
+import Vortex from './vortex.js';
 import { findGameSurfaceCoords, findBounceDistance } from './helpers.js';
 
 class GameEngine {
