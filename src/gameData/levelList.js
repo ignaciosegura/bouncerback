@@ -5,7 +5,7 @@
 {
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
-  levelLength: , // measured in times.
+  duration: , // measured in times.
   levelPassAction: 'next', // Possible values are "next"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
@@ -28,7 +28,7 @@ const levelList = [
   {
     name: 'Tutorial',
     levelType: 'tutorial',
-    levelLength: 24,
+    duration: 2,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {

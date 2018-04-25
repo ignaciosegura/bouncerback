@@ -15091,7 +15091,7 @@ Object.defineProperty(exports, "__esModule", {
 {
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
-  levelLength: , // measured in times.
+  duration: , // measured in times.
   levelPassAction: 'next', // Possible values are "next"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
@@ -15112,7 +15112,7 @@ Object.defineProperty(exports, "__esModule", {
 var levelList = [{
   name: 'Tutorial',
   levelType: 'tutorial',
-  levelLength: 24,
+  duration: 2,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
   time: {
@@ -15455,6 +15455,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _mobx = __webpack_require__(36);
+
 var _levelList = __webpack_require__(89);
 
 var _levelList2 = _interopRequireDefault(_levelList);
@@ -15499,7 +15501,7 @@ var GameEngine = function () {
     _classCallCheck(this, GameEngine);
 
     this.level = new _level2.default(_levelList2.default[level]);
-    _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature);
+    _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
     this.bounceDistance = (0, _helpers.findBounceDistance)();
@@ -15518,9 +15520,18 @@ var GameEngine = function () {
     gameController.movePucksOnMouse();
 
     this.gameLoopInterval = setInterval(this.gameLoop, _timeshop2.default.millisecondsPerFrame);
+
+    this.setupAutoruns();
   }
 
   _createClass(GameEngine, [{
+    key: 'setupAutoruns',
+    value: function setupAutoruns() {
+      var autoLevelEnding = (0, _mobx.autorun)(function () {
+        console.log("level is over: " + _timeshop2.default.levelIsOver);
+      });
+    }
+  }, {
     key: 'createPointZero',
     value: function createPointZero(place) {
       var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
@@ -15667,33 +15678,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Class storing level data. Every instance of this class will be a level.
 // setup object to be delivered on instantiation:
 
-var Level = function () {
-  function Level(setup) {
-    _classCallCheck(this, Level);
+var Level = function Level(setup) {
+  _classCallCheck(this, Level);
 
-    for (var k in setup) {
-      this[k] = setup[k];
-    }
-    this.levelIsOver = false;
-    this.nextAtom = 0;
+  for (var k in setup) {
+    this[k] = setup[k];
   }
-
-  _createClass(Level, [{
-    key: "isLevelOver",
-    value: function isLevelOver(times) {
-      return times >= this.levelLength;
-    }
-  }]);
-
-  return Level;
-}();
+  this.nextAtom = 0;
+};
 
 exports.default = Level;
 
@@ -15875,11 +15872,12 @@ var Time = (_class = function () {
 
   _createClass(Time, [{
     key: 'setup',
-    value: function setup(bpm, timeSignature) {
+    value: function setup(bpm, timeSignature, duration) {
       this.bpm = bpm;
       this.timeSignature = timeSignature;
       this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
       this.framesPerTime = timeSignature * this.framesPerBeat;
+      this.levelDuration = duration;
     }
   }, {
     key: 'updateTimeUnits',
@@ -15904,6 +15902,11 @@ var Time = (_class = function () {
     get: function get() {
       return this.tick % this.framesPerBeat == 0 ? true : false;
     }
+  }, {
+    key: 'levelIsOver',
+    get: function get() {
+      return this.time >= this.levelDuration;
+    }
   }]);
 
   return Time;
@@ -15922,7 +15925,7 @@ var Time = (_class = function () {
   initializer: function initializer() {
     return 0;
   }
-}), _applyDecoratedDescriptor(_class.prototype, 'newBeat', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'newBeat'), _class.prototype)), _class);
+}), _applyDecoratedDescriptor(_class.prototype, 'newBeat', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'newBeat'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'levelIsOver', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'levelIsOver'), _class.prototype)), _class);
 
 
 var TimeShop = new Time();

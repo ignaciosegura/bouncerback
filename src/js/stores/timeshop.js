@@ -11,12 +11,14 @@ class Time {
   @observable time = 0;
   framesPerBeat;
   framesPerTime;
+  levelDuration;
 
-  setup(bpm, timeSignature) {
+  setup(bpm, timeSignature, duration) {
     this.bpm = bpm;
     this.timeSignature = timeSignature;
     this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
     this.framesPerTime = timeSignature * this.framesPerBeat;
+    this.levelDuration = duration;
   }
 
   updateTimeUnits() {
@@ -38,6 +40,10 @@ class Time {
 
   @computed get newBeat() {
     return (this.tick % this.framesPerBeat == 0) ? true : false;
+  }
+
+  @computed get levelIsOver() {
+    return (this.time >= this.levelDuration);
   }
 }
 

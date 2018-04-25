@@ -3,6 +3,8 @@
 
 require('../sass/_game_props.scss');
 
+import {autorun} from 'mobx';
+
 import levelList from '../gameData/levelList.js';
 
 import ScoreShop from './stores/scoreshop.js';
@@ -18,7 +20,7 @@ class GameEngine {
 
   constructor(level) {
     this.level = new Level(levelList[level]);
-    TimeShop.setup(this.level.time.bpm, this.level.time.signature);
+    TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
     this.bounceDistance = findBounceDistance();
@@ -37,6 +39,14 @@ class GameEngine {
     gameController.movePucksOnMouse();
 
     this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
+
+    this.setupAutoruns();
+  }
+
+  setupAutoruns() {
+    let autoLevelEnding = autorun(() => {
+      console.log("level is over: " + TimeShop.levelIsOver);
+    })
   }
 
   createPointZero(place) {
