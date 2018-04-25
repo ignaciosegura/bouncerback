@@ -13,7 +13,7 @@ https://github.com/ignaciosegura/niknak_react_webpack
 
 REQUIRES
 
-Node.js should be installed in your system.
+Node.js should be installed in your system for compilation. If you just want to play, DEV folder always contains latest DEV build. Just throw index.html file into your browser.
 
 ENVIRONMENTS
 
@@ -32,12 +32,3 @@ In watch mode: npm run watch-development
 Building for development (/dev folder): npm run build-development
 
 Build for production (/prod folder): npm run build-production
-
-UPDATING THIS KIT
-This kit is updated using NPM Check Updates. Use with caution, as updating too much stuff at once tends to break things.
-
-ncu -> show dependencies
-
-ncu -u -> update and update package.json
-
-https://www.npmjs.com/package/npm-check-updates
