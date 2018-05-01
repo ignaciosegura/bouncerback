@@ -42,13 +42,13 @@ const levelList = [
       destroy: require('../sound/destroy.mp3'),
       song: ''
     },
-    atomSpeed: 1,
+    atomSpeed: 3,
     atomList: [
       { t: 0, b: 0 },
-      { t: 2, b: 3.5 },
-      { t: 7, b: 0.5 },
-      { t: 6, b: 3.5 },
-      { t: 11, b: 0.5 }
+      { t: 1, b: 0 },
+      { t: 2, b: 0 },
+      { t: 3, b: 0 },
+      { t: 4, b: 0 }
     ]
   }
 ];
