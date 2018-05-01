@@ -4,12 +4,13 @@
 require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
-import { getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
+import TimeShop from './stores/timeshop.js';
+import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
 
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = level.atomSpeed / 60; // Speed is measured in px per second
+    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in px per time
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -40,6 +41,15 @@ class Atom {
       cx: this.domElement.cx.baseVal.value,
       cy: this.domElement.cy.baseVal.value
     })
+  }
+
+
+  convertTimesPerTripIntoPixelsPerSecond(speed) {
+    let framesPerTrip = speed * TimeShop.framesPerTime;
+    let gameSurfaceCoords = findGameSurfaceCoords();
+    let tripLength = gameSurfaceCoords.radius * 2;
+
+    return tripLength / framesPerTrip;
   }
 
   setStatus(newStatus) {
@@ -92,7 +102,7 @@ class Atom {
 
     for (i in atoms) {
       if (atoms[i].status !== 'dead') continue;
- 
+
       atoms[i].domElement.remove();
       atoms.splice(i, 1);
     }
@@ -126,7 +136,7 @@ class Atom {
   static create(index, level) {
     let newAtom = new Atom(index, level);
     newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"');
+    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
     return newAtom;
   }
 }

@@ -13,6 +13,10 @@ class Level {
   isLevelOver(times) {
     return (times >= this.levelLength);
   }
+
+  areThereMoreAtoms() {
+    return (this.nextAtom >= this.atomList.length);
+  }
 }
 
 export default Level;

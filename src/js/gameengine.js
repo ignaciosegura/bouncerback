@@ -61,14 +61,15 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (this.atoms.length > 0) return false;
+    if (!this.level.areThereMoreAtoms() || this.atoms.length > 0) return false;
+
     clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
   }
 
   checkAtomList() {
     if (!TimeShop.newBeat) return;
-    if (this.level.atomList.length == this.level.nextAtom) return;
+    if (this.level.areThereMoreAtoms()) return;
 
     let nextAtom = this.level.nextAtom;
 
