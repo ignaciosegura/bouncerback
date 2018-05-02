@@ -20,6 +20,8 @@ class Atom {
     }
     this.destructionTime = 2000; // in milliseconds
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.creationTick = TimeShop.tick;
+    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.domElement;
   }
 
@@ -45,11 +47,23 @@ class Atom {
 
 
   convertTimesPerTripIntoPixelsPerSecond(speed) {
-    let framesPerTrip = speed * TimeShop.framesPerTime;
+    let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
     let gameSurfaceCoords = findGameSurfaceCoords();
     let tripLength = gameSurfaceCoords.radius * 2;
 
     return tripLength / framesPerTrip;
+  }
+
+  convertTimesPerTripIntoFramesPerRebound(speed) {
+    return speed * TimeShop.framesPerTime;
+  }
+
+  AtomIsOnReboundArea() {
+    let ticksSinceCreation = TimeShop.tick - this.creationTick;
+    let timeFactor = ticksSinceCreation / this.framesPerRebound;
+    let isOnRebound = (timeFactor - Math.floor(timeFactor) == 0.5);
+
+    return isOnRebound;
   }
 
   setStatus(newStatus) {
@@ -75,7 +89,7 @@ class Atom {
     const pos = this.atomPosition;
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
-    if (distance >= bounceDistance.from && distance <= bounceDistance.to) {
+    if (this.AtomIsOnReboundArea()) {
       this.setStatus('collide');
     } else if (distance > bounceDistance.to && this.status == 'collide') {
       this.setStatus('dying');

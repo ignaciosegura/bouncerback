@@ -15345,6 +15345,8 @@ var Atom = function () {
     };
     this.destructionTime = 2000; // in milliseconds
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.creationTick = _timeshop2.default.tick;
+    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.domElement;
   }
 
@@ -15359,11 +15361,25 @@ var Atom = function () {
   }, {
     key: 'convertTimesPerTripIntoPixelsPerSecond',
     value: function convertTimesPerTripIntoPixelsPerSecond(speed) {
-      var framesPerTrip = speed * _timeshop2.default.framesPerTime;
+      var framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
       var gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
       var tripLength = gameSurfaceCoords.radius * 2;
 
       return tripLength / framesPerTrip;
+    }
+  }, {
+    key: 'convertTimesPerTripIntoFramesPerRebound',
+    value: function convertTimesPerTripIntoFramesPerRebound(speed) {
+      return speed * _timeshop2.default.framesPerTime;
+    }
+  }, {
+    key: 'AtomIsOnReboundArea',
+    value: function AtomIsOnReboundArea() {
+      var ticksSinceCreation = _timeshop2.default.tick - this.creationTick;
+      var timeFactor = ticksSinceCreation / this.framesPerRebound;
+      var isOnRebound = timeFactor - Math.floor(timeFactor) == 0.5;
+
+      return isOnRebound;
     }
   }, {
     key: 'setStatus',
@@ -15393,7 +15409,7 @@ var Atom = function () {
       var pos = this.atomPosition;
       var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
 
-      if (distance >= bounceDistance.from && distance <= bounceDistance.to) {
+      if (this.AtomIsOnReboundArea()) {
         this.setStatus('collide');
       } else if (distance > bounceDistance.to && this.status == 'collide') {
         this.setStatus('dying');
