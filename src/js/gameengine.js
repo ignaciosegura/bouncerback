@@ -12,7 +12,7 @@ import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
-import { findGameSurfaceCoords, findBounceDistance } from './helpers.js';
+import { findGameSurfaceCoords } from './helpers.js';
 
 class GameEngine {
 
@@ -21,7 +21,6 @@ class GameEngine {
     TimeShop.setup(this.level.time.bpm, this.level.time.signature);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
-    this.bounceDistance = findBounceDistance();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -49,7 +48,7 @@ class GameEngine {
 
     Atom.destroyAtoms(this.atoms);
     Atom.moveAtoms(this.atoms);
-    Atom.checkAtomsStatus(this.atoms, this.bounceDistance);
+    Atom.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
     bounces = Atom.bounceAtoms(this.atoms, this.pucks);
 
     if (bounces > 0) ScoreShop.addBounce(bounces);

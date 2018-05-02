@@ -5680,13 +5680,7 @@ module.exports = canDefineProperty;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.compareVectorsForBounce = exports.getXYFromVector = exports.getDistanceFromXY = exports.getVectorFromXY = exports.findBounceDistance = exports.findGameSurfaceCoords = undefined;
-
-var _puck = __webpack_require__(53);
-
-var _puck2 = _interopRequireDefault(_puck);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// Helper functions
 
 function findGameSurfaceCoords() {
   var theCircle = document.getElementById('the-circle');
@@ -5695,15 +5689,6 @@ function findGameSurfaceCoords() {
     centerX: (coords.left + coords.right) / 2,
     centerY: (coords.top + coords.bottom) / 2,
     radius: parseInt(theCircle.getAttribute('cx'))
-  };
-} // Helper functions
-
-function findBounceDistance() {
-  var dummyPuck = new _puck2.default();
-  var gameSurfaceCoords = findGameSurfaceCoords();
-  return {
-    from: gameSurfaceCoords.radius - dummyPuck.size.height,
-    to: gameSurfaceCoords.radius
   };
 }
 
@@ -5743,7 +5728,6 @@ function makeAnglePositive(angle) {
 }
 
 exports.findGameSurfaceCoords = findGameSurfaceCoords;
-exports.findBounceDistance = findBounceDistance;
 exports.getVectorFromXY = getVectorFromXY;
 exports.getDistanceFromXY = getDistanceFromXY;
 exports.getXYFromVector = getXYFromVector;
@@ -11765,7 +11749,7 @@ var Puck = function () {
     this.index = index;
     this.size = {
       width: 80,
-      height: 25
+      height: 10
     };
     this.translateCoords = {
       x: this.size.width / -2,
@@ -15405,13 +15389,13 @@ var Atom = function () {
     }
   }, {
     key: 'checkAtom',
-    value: function checkAtom(bounceDistance) {
+    value: function checkAtom(radius) {
       var pos = this.atomPosition;
       var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
 
       if (this.AtomIsOnReboundArea()) {
         this.setStatus('collide');
-      } else if (distance > bounceDistance.to && this.status == 'collide') {
+      } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();
         this.tagForRemoval();
@@ -15479,9 +15463,9 @@ var Atom = function () {
     }
   }, {
     key: 'checkAtomsStatus',
-    value: function checkAtomsStatus(atoms, bounceDistance) {
+    value: function checkAtomsStatus(atoms, radius) {
       atoms.forEach(function (a) {
-        return a.checkAtom(bounceDistance);
+        return a.checkAtom(radius);
       });
     }
   }, {
@@ -15699,7 +15683,6 @@ var GameEngine = function () {
     _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature);
 
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
-    this.bounceDistance = (0, _helpers.findBounceDistance)();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -15730,7 +15713,7 @@ var GameEngine = function () {
 
       _atom2.default.destroyAtoms(this.atoms);
       _atom2.default.moveAtoms(this.atoms);
-      _atom2.default.checkAtomsStatus(this.atoms, this.bounceDistance);
+      _atom2.default.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
       bounces = _atom2.default.bounceAtoms(this.atoms, this.pucks);
 
       if (bounces > 0) _scoreshop2.default.addBounce(bounces);
