@@ -9,6 +9,7 @@ class GameController {
     this.pucks = pucks;
 
     this.movePucks(vector);
+    this.movePucksOnMouse();
   }
 
   movePucksOnMouse() {

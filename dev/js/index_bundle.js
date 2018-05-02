@@ -15574,6 +15574,7 @@ var GameController = function () {
     this.pucks = pucks;
 
     this.movePucks(vector);
+    this.movePucksOnMouse();
   }
 
   _createClass(GameController, [{
@@ -15695,7 +15696,6 @@ var GameEngine = function () {
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
-    gameController.movePucksOnMouse();
 
     this.gameLoopInterval = setInterval(this.gameLoop, _timeshop2.default.millisecondsPerFrame);
   }
@@ -15864,6 +15864,7 @@ var Level = function () {
     }
     this.levelIsOver = false;
     this.nextAtom = 0;
+    this.atoms = [];
   }
 
   _createClass(Level, [{

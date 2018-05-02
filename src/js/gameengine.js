@@ -34,7 +34,6 @@ class GameEngine {
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
-    gameController.movePucksOnMouse();
 
     this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
   }

@@ -8,6 +8,7 @@ class Level {
     }
     this.levelIsOver = false;
     this.nextAtom = 0;
+    this.atoms = [];
   }
 
   isLevelOver(times) {
