@@ -22,6 +22,7 @@ class Atom {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
     this.creationTick = TimeShop.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.nextRebound = this.calculateNextRebould();
     this.domElement;
   }
 
@@ -59,11 +60,15 @@ class Atom {
   }
 
   AtomIsOnReboundArea() {
-    let ticksSinceCreation = TimeShop.tick - this.creationTick;
-    let timeFactor = ticksSinceCreation / this.framesPerRebound;
-    let isOnRebound = (timeFactor - Math.floor(timeFactor) == 0.5);
+    return (TimeShop.tick == this.nextRebound);
+  }
 
-    return isOnRebound;
+  calculateNextRebould() {
+    let ticksSinceCreation = TimeShop.tick - this.creationTick;
+    let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
+    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
+
+    return nextTime;
   }
 
   setStatus(newStatus) {
@@ -91,6 +96,7 @@ class Atom {
 
     if (this.AtomIsOnReboundArea()) {
       this.setStatus('collide');
+      this.nextRebound = this.calculateNextRebould();
     } else if (distance > radius && this.status == 'collide') {
       this.setStatus('dying');
       this.sounds.destroy.play();

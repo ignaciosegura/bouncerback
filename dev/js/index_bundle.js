@@ -11947,7 +11947,7 @@ var Time = (_class = function () {
     value: function setup(bpm, timeSignature) {
       this.bpm = bpm;
       this.timeSignature = timeSignature;
-      this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
+      this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
       this.framesPerTime = timeSignature * this.framesPerBeat;
     }
   }, {
@@ -11959,8 +11959,7 @@ var Time = (_class = function () {
   }, {
     key: 'getRoundedTimeUnit',
     value: function getRoundedTimeUnit(current, framesPerUnit) {
-      var tickToUnit = this.tick / framesPerUnit;
-      return tickToUnit === Math.floor(tickToUnit) ? tickToUnit : current;
+      return Math.floor(this.tick / framesPerUnit);
     }
   }, {
     key: 'nextTick',
@@ -15260,7 +15259,7 @@ var levelList = [{
     song: __webpack_require__(122)
   },
   atomSpeed: 4,
-  atomList: [{ t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
 }];
 
 exports.default = levelList;
@@ -15314,6 +15313,7 @@ var Atom = function () {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
     this.creationTick = _timeshop2.default.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.nextRebound = this.calculateNextRebould();
     this.domElement;
   }
 
@@ -15342,11 +15342,16 @@ var Atom = function () {
   }, {
     key: 'AtomIsOnReboundArea',
     value: function AtomIsOnReboundArea() {
+      return _timeshop2.default.tick == this.nextRebound;
+    }
+  }, {
+    key: 'calculateNextRebould',
+    value: function calculateNextRebould() {
       var ticksSinceCreation = _timeshop2.default.tick - this.creationTick;
-      var timeFactor = ticksSinceCreation / this.framesPerRebound;
-      var isOnRebound = timeFactor - Math.floor(timeFactor) == 0.5;
+      var timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
+      var nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
 
-      return isOnRebound;
+      return nextTime;
     }
   }, {
     key: 'setStatus',
@@ -15378,6 +15383,7 @@ var Atom = function () {
 
       if (this.AtomIsOnReboundArea()) {
         this.setStatus('collide');
+        this.nextRebound = this.calculateNextRebould();
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();

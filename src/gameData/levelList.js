@@ -44,6 +44,7 @@ const levelList = [
     },
     atomSpeed: 4,
     atomList: [
+      { t: 0, b: 0 },
       { t: 4, b: 0 },
       { t: 6, b: 1.5 },
       { t: 8, b: 3.5 },
