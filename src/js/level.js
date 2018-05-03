@@ -26,7 +26,7 @@ class Level {
   }
 
   areThereMoreAtoms() {
-    return (this.nextAtom >= this.atomList.length);
+    return (this.nextAtom.order >= this.atomList.length);
   }
 }
 

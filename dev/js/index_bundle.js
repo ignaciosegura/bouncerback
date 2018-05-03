@@ -15221,7 +15221,7 @@ var levelList = [{
     song: __webpack_require__(218)
   },
   atomSpeed: 4,
-  atomList: [{ t: 0, b: 0 }, { t: 1, b: 1.5 }, { t: 3, b: 2.75 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }]
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
 }];
 
 exports.default = levelList;
@@ -15833,7 +15833,7 @@ var Level = function () {
   }, {
     key: 'areThereMoreAtoms',
     value: function areThereMoreAtoms() {
-      return this.nextAtom >= this.atomList.length;
+      return this.nextAtom.order >= this.atomList.length;
     }
   }]);
 
