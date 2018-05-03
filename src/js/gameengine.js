@@ -66,22 +66,26 @@ class GameEngine {
   }
 
   checkAtomList() {
-    if (!TimeShop.newBeat) return;
     if (this.level.areThereMoreAtoms()) return;
+    if (Math.round(this.level.nextAtom.tick) !== TimeShop.tick) return;
 
-    let nextAtom = this.level.nextAtom;
+    this.addAtomToGameSurface();
+    this.scheduleNextAtom();
 
-    let timeMatch = (TimeShop.time === this.level.atomList[nextAtom].t) ? true : false;
-    let beatMatch = (TimeShop.beat === this.level.atomList[nextAtom].b) ? true : false;
-
-    if (timeMatch && beatMatch) {
-      this.addAtomToGameSurface();
-    }
   }
 
   addAtomToGameSurface() {
-    this.atoms.push(Atom.create(this.level.nextAtom, this.level));
-    this.level.nextAtom++;
+    this.atoms.push(Atom.create(this.level.nextAtom.order, this.level));
+  }
+
+
+  scheduleNextAtom() {
+    this.level.nextAtom.order++;
+
+    let nextAtom = this.level.nextAtom.order;
+    let atomTime = this.level.atomList[nextAtom];
+
+    this.level.nextAtom.tick = atomTime.b * TimeShop.framesPerBeat + atomTime.t * TimeShop.framesPerTime;
   }
 }
 

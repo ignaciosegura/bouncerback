@@ -1,6 +1,8 @@
 // Class storing level data. Every instance of this class will be a level.
 // setup object to be delivered on instantiation:
 
+import { observable, computed } from 'mobx';
+
 import SoundFX from './soundfx.js';
 
 class Level {
@@ -9,7 +11,10 @@ class Level {
       this[k] = setup[k];
     }
     this.levelIsOver = false;
-    this.nextAtom = 0;
+    this.nextAtom = {
+      order: 0,
+      tick: 0
+    }
     this.atoms = [];
 
     this.soundtrack = new SoundFX(setup.sound.song);

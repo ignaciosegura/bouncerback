@@ -15221,7 +15221,7 @@ var levelList = [{
     song: __webpack_require__(218)
   },
   atomSpeed: 4,
-  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 1, b: 1.5 }, { t: 3, b: 2.75 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }]
+  atomList: [{ t: 0, b: 0 }, { t: 1, b: 1.5 }, { t: 3, b: 2.75 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }]
 }];
 
 exports.default = levelList;
@@ -15677,23 +15677,26 @@ var GameEngine = function () {
   }, {
     key: 'checkAtomList',
     value: function checkAtomList() {
-      if (!_timeshop2.default.newBeat) return;
       if (this.level.areThereMoreAtoms()) return;
+      if (Math.round(this.level.nextAtom.tick) !== _timeshop2.default.tick) return;
 
-      var nextAtom = this.level.nextAtom;
-
-      var timeMatch = _timeshop2.default.time === this.level.atomList[nextAtom].t ? true : false;
-      var beatMatch = _timeshop2.default.beat === this.level.atomList[nextAtom].b ? true : false;
-
-      if (timeMatch && beatMatch) {
-        this.addAtomToGameSurface();
-      }
+      this.addAtomToGameSurface();
+      this.scheduleNextAtom();
     }
   }, {
     key: 'addAtomToGameSurface',
     value: function addAtomToGameSurface() {
-      this.atoms.push(_atom2.default.create(this.level.nextAtom, this.level));
-      this.level.nextAtom++;
+      this.atoms.push(_atom2.default.create(this.level.nextAtom.order, this.level));
+    }
+  }, {
+    key: 'scheduleNextAtom',
+    value: function scheduleNextAtom() {
+      this.level.nextAtom.order++;
+
+      var nextAtom = this.level.nextAtom.order;
+      var atomTime = this.level.atomList[nextAtom];
+
+      this.level.nextAtom.tick = atomTime.b * _timeshop2.default.framesPerBeat + atomTime.t * _timeshop2.default.framesPerTime;
     }
   }]);
 
@@ -15794,6 +15797,8 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Class storing level data. Every instance of this class will be a level.
 // setup object to be delivered on instantiation:
 
+var _mobx = __webpack_require__(36);
+
 var _soundfx = __webpack_require__(98);
 
 var _soundfx2 = _interopRequireDefault(_soundfx);
@@ -15810,7 +15815,10 @@ var Level = function () {
       this[k] = setup[k];
     }
     this.levelIsOver = false;
-    this.nextAtom = 0;
+    this.nextAtom = {
+      order: 0,
+      tick: 0
+    };
     this.atoms = [];
 
     this.soundtrack = new _soundfx2.default(setup.sound.song);
