@@ -59,14 +59,14 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (!this.level.areThereMoreAtoms() || this.atoms.length > 0) return false;
+    if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
 
     clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
   }
 
   checkAtomList() {
-    if (this.level.areThereMoreAtoms()) return;
+    if (this.level.areAllAtomsOut()) return;
     if (Math.round(this.level.nextAtom.tick) !== TimeShop.tick) return;
 
     this.addAtomToGameSurface();
@@ -81,6 +81,7 @@ class GameEngine {
 
   scheduleNextAtom() {
     this.level.nextAtom.order++;
+    if (this.level.areAllAtomsOut()) return;
 
     let nextAtom = this.level.nextAtom.order;
     let atomTime = this.level.atomList[nextAtom];

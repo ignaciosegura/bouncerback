@@ -23,7 +23,7 @@ class Level {
     return (times >= this.levelLength);
   }
 
-  areThereMoreAtoms() {
+  areAllAtomsOut() {
     return (this.nextAtom.order >= this.atomList.length);
   }
 }

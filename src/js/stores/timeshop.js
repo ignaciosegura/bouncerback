@@ -15,7 +15,7 @@ class Time {
   setup(bpm, timeSignature) {
     this.bpm = bpm;
     this.timeSignature = timeSignature;
-    this.framesPerBeat = Math.floor(Math.pow(this.frameRate, 2) / bpm);
+    this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
     this.framesPerTime = timeSignature * this.framesPerBeat;
   }
 
@@ -25,10 +25,7 @@ class Time {
   }
 
   getRoundedTimeUnit(current, framesPerUnit) {
-    let tickToUnit = this.tick / framesPerUnit;
-    return (tickToUnit === Math.floor(tickToUnit))
-      ? tickToUnit
-      : current;
+    return Math.floor(this.tick / framesPerUnit);
   }
 
   nextTick() {
