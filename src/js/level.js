@@ -1,6 +1,8 @@
 // Class storing level data. Every instance of this class will be a level.
 // setup object to be delivered on instantiation:
 
+import SoundFX from './soundfx.js';
+
 class Level {
   constructor(setup) {
     for (let k in setup) {
@@ -9,6 +11,9 @@ class Level {
     this.levelIsOver = false;
     this.nextAtom = 0;
     this.atoms = [];
+
+    this.soundtrack = new SoundFX(setup.sound.song);
+    this.soundtrack.play();
   }
 
   isLevelOver(times) {

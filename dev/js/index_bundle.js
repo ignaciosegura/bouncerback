@@ -15211,17 +15211,17 @@ var levelList = [{
   levelPassAction: 'next',
   gameOverAction: 'gameover',
   time: {
-    bpm: 140,
+    bpm: 115,
     signature: 4
   },
   sound: {
     launch: __webpack_require__(121),
     bounce: __webpack_require__(119),
     destroy: __webpack_require__(120),
-    song: ''
+    song: __webpack_require__(218)
   },
-  atomSpeed: 3,
-  atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }, { t: 2, b: 0 }, { t: 3, b: 0 }, { t: 4, b: 0 }]
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 1, b: 1.5 }, { t: 3, b: 2.75 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }]
 }];
 
 exports.default = levelList;
@@ -15791,12 +15791,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Class storing level data. Every instance of this class will be a level.
+// setup object to be delivered on instantiation:
+
+var _soundfx = __webpack_require__(98);
+
+var _soundfx2 = _interopRequireDefault(_soundfx);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Class storing level data. Every instance of this class will be a level.
-// setup object to be delivered on instantiation:
 
 var Level = function () {
   function Level(setup) {
@@ -15808,15 +15812,18 @@ var Level = function () {
     this.levelIsOver = false;
     this.nextAtom = 0;
     this.atoms = [];
+
+    this.soundtrack = new _soundfx2.default(setup.sound.song);
+    this.soundtrack.play();
   }
 
   _createClass(Level, [{
-    key: "isLevelOver",
+    key: 'isLevelOver',
     value: function isLevelOver(times) {
       return times >= this.levelLength;
     }
   }, {
-    key: "areThereMoreAtoms",
+    key: 'areThereMoreAtoms',
     value: function areThereMoreAtoms() {
       return this.nextAtom >= this.atomList.length;
     }
@@ -28602,6 +28609,20 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(88);
 
+
+/***/ }),
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./sound/level1.mp3";
 
 /***/ })
 /******/ ]);

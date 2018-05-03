@@ -33,22 +33,24 @@ const levelList = [
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
-      bpm: 140,
+      bpm: 115,
       signature: 4
     },
     sound: {
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: ''
+      song: require('../sound/tracks/level1.mp3')
     },
-    atomSpeed: 3,
+    atomSpeed: 4,
     atomList: [
       { t: 0, b: 0 },
-      { t: 1, b: 0 },
-      { t: 2, b: 0 },
-      { t: 3, b: 0 },
-      { t: 4, b: 0 }
+      { t: 4, b: 0 },
+      { t: 1, b: 1.5 },
+      { t: 3, b: 2.75 },
+      { t: 4, b: 0 },
+      { t: 6, b: 1.5 },
+      { t: 8, b: 3.5 }
     ]
   }
 ];
