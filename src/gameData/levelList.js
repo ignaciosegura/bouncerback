@@ -6,7 +6,7 @@
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
   levelLength: , // measured in times.
-  levelPassAction: 'next', // Possible values are "next"
+  levelPassAction: 'next', // Possible values are "implode", "vortex"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
     bpm: 120,
@@ -30,7 +30,7 @@ const levelList = [
     name: 'Tutorial',
     levelType: 'tutorial',
     levelLength: 24,
-    levelPassAction: 'next',
+    levelPassAction: 'implode',
     gameOverAction: 'gameover',
     time: {
       bpm: 115,
