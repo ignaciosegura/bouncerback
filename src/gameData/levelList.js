@@ -17,8 +17,9 @@
     bounce: '',
     destruction: '',
     song: ''
-  }
-  atoms: [] // Array of moments where a new atom should be created
+  },
+  atomSpeed: 1, // Beats to make a round trip
+  atomList: [] // Array of moments where a new atom should be created
 }
 
 */
@@ -32,22 +33,23 @@ const levelList = [
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
-      bpm: 120,
+      bpm: 115,
       signature: 4
     },
     sound: {
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: ''
+      song: require('../sound/tracks/level1.mp3')
     },
-    atomSpeed: 100,
+    atomSpeed: 4,
     atomList: [
       { t: 0, b: 0 },
-      { t: 2, b: 1 },
-      { t: 4, b: 2 },
-      { t: 6, b: 3 },
-      { t: 9, b: 0 }
+      { t: 4, b: 0 },
+      { t: 6, b: 1.5 },
+      { t: 8, b: 3.5 },
+      { t: 9, b: 1.5 },
+      { t: 11, b: 2.75 },
     ]
   }
 ];

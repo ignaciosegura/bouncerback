@@ -14,8 +14,7 @@ import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
-import Vortex from './vortex.js';
-import { findGameSurfaceCoords, findBounceDistance } from './helpers.js';
+import { findGameSurfaceCoords } from './helpers.js';
 
 class GameEngine {
 
@@ -24,7 +23,6 @@ class GameEngine {
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = findGameSurfaceCoords();
-    this.bounceDistance = findBounceDistance();
     this.pucks = [];
     this.atoms = [];
     this.gameLoop = this.gameLoop.bind(this);
@@ -37,7 +35,6 @@ class GameEngine {
     this.pucks[0].domElement = document.querySelector('#point-zero rect');
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
-    gameController.movePucksOnMouse();
 
     this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
 
@@ -61,7 +58,7 @@ class GameEngine {
 
     Atom.destroyAtoms(this.atoms);
     Atom.moveAtoms(this.atoms);
-    Atom.checkAtomsStatus(this.atoms, this.bounceDistance);
+    Atom.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
     bounces = Atom.bounceAtoms(this.atoms, this.pucks);
 
     if (bounces > 0) ScoreShop.addBounce(bounces);
@@ -72,28 +69,34 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (this.atoms.length > 0) return false;
+    if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
+
     clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
   }
 
   checkAtomList() {
-    if (!TimeShop.newBeat) return;
-    if (this.level.atomList.length == this.level.nextAtom) return;
+    if (this.level.areAllAtomsOut()) return;
+    if (Math.round(this.level.nextAtom.tick) !== TimeShop.tick) return;
 
-    let nextAtom = this.level.nextAtom;
+    this.addAtomToGameSurface();
+    this.scheduleNextAtom();
 
-    let timeMatch = (TimeShop.time === this.level.atomList[nextAtom].t) ? true : false;
-    let beatMatch = (TimeShop.beat === this.level.atomList[nextAtom].b) ? true : false;
-
-    if (timeMatch && beatMatch) {
-      this.addAtomToGameSurface();
-    }
   }
 
   addAtomToGameSurface() {
-    this.atoms.push(Atom.create(this.level.nextAtom, this.level));
-    this.level.nextAtom++;
+    this.atoms.push(Atom.create(this.level.nextAtom.order, this.level));
+  }
+
+
+  scheduleNextAtom() {
+    this.level.nextAtom.order++;
+    if (this.level.areAllAtomsOut()) return;
+
+    let nextAtom = this.level.nextAtom.order;
+    let atomTime = this.level.atomList[nextAtom];
+
+    this.level.nextAtom.tick = atomTime.b * TimeShop.framesPerBeat + atomTime.t * TimeShop.framesPerTime;
   }
 }
 

@@ -5,7 +5,7 @@ class Puck {
     this.index = index;
     this.size = {
       width: 80,
-      height: 25
+      height: 10
     }
     this.translateCoords = {
       x: this.size.width / -2,

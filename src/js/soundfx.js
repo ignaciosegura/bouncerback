@@ -3,6 +3,7 @@
 class SoundFX {
   constructor(sound = null) {
     this.sound = new Audio(sound);
+    this.sound.load();
   }
 
   play() {

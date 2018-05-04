@@ -1,7 +1,5 @@
 // Helper functions
 
-import Puck from './puck.js';
-
 function findGameSurfaceCoords() {
   let theCircle = document.getElementById('the-circle');
   let coords = theCircle.getBoundingClientRect();
@@ -12,14 +10,6 @@ function findGameSurfaceCoords() {
   };
 }
 
-function findBounceDistance() {
-  let dummyPuck = new Puck();
-  let gameSurfaceCoords = findGameSurfaceCoords();
-  return {
-    from: gameSurfaceCoords.radius - dummyPuck.size.height,
-    to: gameSurfaceCoords.radius
-  }
-}
 
 function getVectorFromXY(x, y) {
   let angle = Math.atan2(y, x);
@@ -60,4 +50,4 @@ function makeAnglePositive(angle) {
     : angle;
 }
 
-export { findGameSurfaceCoords, findBounceDistance, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForBounce };
+export { findGameSurfaceCoords, getVectorFromXY, getDistanceFromXY, getXYFromVector, compareVectorsForBounce };

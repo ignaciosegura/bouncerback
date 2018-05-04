@@ -4,12 +4,13 @@
 require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
-import { getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
+import TimeShop from './stores/timeshop.js';
+import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
 
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = level.atomSpeed / 60; // Speed is measured in px per second
+    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in px per time
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -19,6 +20,9 @@ class Atom {
     }
     this.destructionTime = 2000; // in milliseconds
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.creationTick = TimeShop.tick;
+    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.nextRebound = this.calculateNextRebould();
     this.domElement;
   }
 
@@ -42,6 +46,31 @@ class Atom {
     })
   }
 
+
+  convertTimesPerTripIntoPixelsPerSecond(speed) {
+    let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
+    let gameSurfaceCoords = findGameSurfaceCoords();
+    let tripLength = gameSurfaceCoords.radius * 2;
+
+    return tripLength / framesPerTrip;
+  }
+
+  convertTimesPerTripIntoFramesPerRebound(speed) {
+    return speed * TimeShop.framesPerTime;
+  }
+
+  AtomIsOnReboundArea() {
+    return (TimeShop.tick == this.nextRebound);
+  }
+
+  calculateNextRebould() {
+    let ticksSinceCreation = TimeShop.tick - this.creationTick;
+    let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
+    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
+
+    return nextTime;
+  }
+
   setStatus(newStatus) {
     this.domElement.classList.remove(this.status);
     this.status = newStatus;
@@ -61,13 +90,14 @@ class Atom {
     this.sounds.bounce.play();
   }
 
-  checkAtom(bounceDistance) {
+  checkAtom(radius) {
     const pos = this.atomPosition;
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
-    if (distance >= bounceDistance.from && distance <= bounceDistance.to) {
+    if (this.AtomIsOnReboundArea()) {
       this.setStatus('collide');
-    } else if (distance > bounceDistance.to && this.status == 'collide') {
+      this.nextRebound = this.calculateNextRebould();
+    } else if (distance > radius && this.status == 'collide') {
       this.setStatus('dying');
       this.sounds.destroy.play();
       this.tagForRemoval();
@@ -92,7 +122,7 @@ class Atom {
 
     for (i in atoms) {
       if (atoms[i].status !== 'dead') continue;
- 
+
       atoms[i].domElement.remove();
       atoms.splice(i, 1);
     }
@@ -119,14 +149,14 @@ class Atom {
     atoms.forEach(a => a.moveAtom());
   }
 
-  static checkAtomsStatus(atoms, bounceDistance) {
-    atoms.forEach(a => a.checkAtom(bounceDistance));
+  static checkAtomsStatus(atoms, radius) {
+    atoms.forEach(a => a.checkAtom(radius));
   }
 
   static create(index, level) {
     let newAtom = new Atom(index, level);
     newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"');
+    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
     return newAtom;
   }
 }
