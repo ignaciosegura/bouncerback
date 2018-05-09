@@ -15554,7 +15554,7 @@ var GameEngine = function () {
       var _this = this;
 
       var autoLevelEnding = (0, _mobx.autorun)(function () {
-        if (!_timeshop2.default.levelIsOver) return;
+        if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next') return;
 
         var vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
       });
