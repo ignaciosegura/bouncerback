@@ -1,6 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.atom {
   fill: white;
   stroke: none; }
+#vortex {
+  position: relative;
+  z-index: 100;
+  fill: white;
+  stroke: none;
+  r: 5%;
+  animation: creation normal 2.1s ease-in-out 0s 1 running; }
+
+@keyframes creation {
+  from {
+    fill: #88ffff00;
+    r: 0%; }
+  92% {
+    fill: #88ffff30;
+    r: 50%; }
+  to {
+    r: 5%;
+    fill: white; } }
 #point-zero {
   width: 0;
   height: 0;
@@ -17,7 +35,13 @@
   opacity: 0; }
 #gamesurface {
   width: 100%;
-  background: none; }
+  background: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1; }
 
 svg#the-zone {
   box-sizing: content-box;
@@ -26,7 +50,10 @@ svg#the-zone {
   padding: 20px;
   margin: 0 auto;
   display: block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   overflow: visible;
   stroke: white;
   stroke-width: 2;

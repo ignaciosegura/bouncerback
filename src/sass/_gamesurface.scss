@@ -1,6 +1,12 @@
 #gamesurface {
   width: 100%;
   background: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
 }
 
 svg#the-zone {
@@ -10,7 +16,10 @@ svg#the-zone {
   padding: 20px;
   margin: 0 auto;
   display: block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   overflow: visible;
 
   stroke: white;

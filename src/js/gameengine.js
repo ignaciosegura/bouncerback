@@ -14,6 +14,7 @@ import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
+import Vortex from './vortex.js';
 import { findGameSurfaceCoords } from './helpers.js';
 
 class GameEngine {
@@ -43,7 +44,10 @@ class GameEngine {
 
   setupAutoruns() {
     let autoLevelEnding = autorun(() => {
+      if (!TimeShop.levelIsOver) return;
       console.log("level is over: " + TimeShop.levelIsOver);
+
+      let vortex = new Vortex(this.gameSurfaceCoords.radius);
     })
   }
 

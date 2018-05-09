@@ -1,0 +1,27 @@
+#vortex {
+  position: relative;
+  z-index: 100;
+
+  fill: white;
+  stroke: none;
+  r: 5%;
+
+  animation: creation normal 2.1s ease-in-out 0s 1 running;
+}
+
+@keyframes creation {
+  from {
+    fill: #88ffff00;
+    r: 0%;
+  }
+
+  92% {
+    fill: #88ffff30;
+    r: 50%;    
+  }
+
+  to {
+    r: 5%;
+    fill: white;
+  }
+}

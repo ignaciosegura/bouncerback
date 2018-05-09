@@ -29,7 +29,7 @@ const levelList = [
   {
     name: 'Tutorial',
     levelType: 'tutorial',
-    duration: 2,
+    duration: 1,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
