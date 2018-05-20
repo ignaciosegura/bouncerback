@@ -47,6 +47,12 @@ class AtomService {
     });
     return bouncesCount;
   }
+
+  static setAtomsToVortex(atoms) {
+    atoms.forEach( a => {
+      a.setStatus('vortex');
+    });
+  }
 }
 
 export default AtomService;

@@ -45,10 +45,11 @@ class GameEngine {
   }
 
   setupAutoruns() {
-    let autoLevelEnding = autorun(() => {
+    autorun(() => {
       if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next') return;
 
-      let vortex = new Vortex(this.gameSurfaceCoords.radius);
+      new Vortex(this.gameSurfaceCoords.radius);
+      AtomService.setAtomsToVortex(this.atoms);
     })
   }
 

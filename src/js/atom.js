@@ -19,7 +19,7 @@ class Atom {
       destroy: new SoundFX(level.sound.destroy)
     }
     this.destructionTime = 2000; // in milliseconds
-    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = TimeShop.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.nextRebound = this.calculateNextRebould();

@@ -11774,7 +11774,7 @@ var Atom = function () {
       destroy: new _soundfx2.default(level.sound.destroy)
     };
     this.destructionTime = 2000; // in milliseconds
-    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = _timeshop2.default.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.nextRebound = this.calculateNextRebould();
@@ -15372,7 +15372,7 @@ Object.defineProperty(exports, "__esModule", {
 var levelList = [{
   name: 'Tutorial',
   levelType: 'tutorial',
-  duration: 1,
+  duration: 5,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
   time: {
@@ -15624,10 +15624,11 @@ var GameEngine = function () {
     value: function setupAutoruns() {
       var _this = this;
 
-      var autoLevelEnding = (0, _mobx.autorun)(function () {
+      (0, _mobx.autorun)(function () {
         if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next') return;
 
-        var vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
+        new _vortex2.default(_this.gameSurfaceCoords.radius);
+        _atomservice2.default.setAtomsToVortex(_this.atoms);
       });
     }
   }, {
@@ -28732,6 +28733,13 @@ var AtomService = function () {
         });
       });
       return bouncesCount;
+    }
+  }, {
+    key: 'setAtomsToVortex',
+    value: function setAtomsToVortex(atoms) {
+      atoms.forEach(function (a) {
+        a.setStatus('vortex');
+      });
     }
   }]);
 
