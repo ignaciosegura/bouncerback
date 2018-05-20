@@ -5,7 +5,7 @@ require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
-import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
+import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY } from './helpers.js';
 
 class Atom {
   constructor(index, level) {
@@ -115,49 +115,6 @@ class Atom {
     this.vector = (this.vector > 0)
       ? this.vector - Math.PI
       : this.vector + Math.PI;
-  }
-
-  static destroyAtoms(atoms) {
-    let i;
-
-    for (i in atoms) {
-      if (atoms[i].status !== 'dead') continue;
-
-      atoms[i].domElement.remove();
-      atoms.splice(i, 1);
-    }
-  }
-
-  static bounceAtoms(atoms, pucks) {
-    let colliders = atoms.filter(a => a.status == 'collide');
-    let bouncesCount = 0;
-
-    colliders.forEach(a => {
-      pucks.forEach(p => {
-        let result = compareVectorsForBounce(a.vector, p.vector, p.angle);
-
-        if (result) {
-          a.executeBounce();
-          bouncesCount++;
-        }
-      })
-    });
-    return bouncesCount;
-  }
-
-  static moveAtoms(atoms) {
-    atoms.forEach(a => a.moveAtom());
-  }
-
-  static checkAtomsStatus(atoms, radius) {
-    atoms.forEach(a => a.checkAtom(radius));
-  }
-
-  static create(index, level) {
-    let newAtom = new Atom(index, level);
-    newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
-    return newAtom;
   }
 }
 

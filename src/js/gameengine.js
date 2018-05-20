@@ -15,6 +15,8 @@ import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
 import Vortex from './vortex.js';
+
+import AtomService from './services/atomservice.js';
 import { findGameSurfaceCoords } from './helpers.js';
 
 class GameEngine {
@@ -59,10 +61,10 @@ class GameEngine {
   gameLoop() {
     let bounces;
 
-    Atom.destroyAtoms(this.atoms);
-    Atom.moveAtoms(this.atoms);
-    Atom.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
-    bounces = Atom.bounceAtoms(this.atoms, this.pucks);
+    AtomService.destroyAtoms(this.atoms);
+    AtomService.moveAtoms(this.atoms);
+    AtomService.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
+    bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
 
     if (bounces > 0) ScoreShop.addBounce(bounces);
 
@@ -88,7 +90,7 @@ class GameEngine {
   }
 
   addAtomToGameSurface() {
-    this.atoms.push(Atom.create(this.level.nextAtom.order, this.level));
+    this.atoms.push(AtomService.createAtom(this.level.nextAtom.order, this.level));
   }
 
 
