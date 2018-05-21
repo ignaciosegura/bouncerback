@@ -10,7 +10,10 @@ import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY } from './hel
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed); // Pixels per seconds. Level Speed is measured in times per full trip
+    this.speed = {
+      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed)
+    }
+    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -110,25 +113,27 @@ class Atom {
       this.sounds.destroy.play();
       this.tagForRemoval();
     } else if (this.status === 'vortex') {
-      this.setVortexSpeed();
+      this.speed.current = this.setVortexSpeed();
     }
   }
 
   setVortexSpeed() {
-    // Necesito una función que desacelere y acelere el átomo para llegar al vortex en el momento preprogramado.
-    let distanceInTicks = this.next.center - TimeShop.tick;
-    let speedFactor = 1 - (1 / distanceInTicks);
-    let speedVariation = this.speed * speedFactor;
+    let currentTick = TimeShop.tick;
+    let isMovingAway = (this.next.rebound < this.next.center);
+    let speedFactor;
 
-    if (this.next.rebound < this.next.center) {
-      this.speed = this.speed - speedVariation;
-      console.log('new speed is ' + this.speed);
+    if (isMovingAway) {
+      speedFactor = 1 / (this.next.rebound - currentTick);
+      return this.speed.current - (this.speed.original * speedFactor);
+    } else {
+      speedFactor = 1 / (this.next.center - currentTick);
+      return this.speed.current + speedFactor;
     }
   }
 
   moveAtom() {
     let atomPosition = this.atomPosition;
-    let displacement = getXYFromVector(this.vector, this.speed);
+    let displacement = getXYFromVector(this.vector, this.speed.current);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
     this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
   }

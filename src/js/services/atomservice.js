@@ -48,10 +48,10 @@ class AtomService {
     return bouncesCount;
   }
 
-  static setAtomsToVortex(atoms) {
-    atoms.forEach( a => {
-      a.setAtomToVortex();
-    });
+  static setAtomsToVortex(atoms, timeToEffect) {
+    setTimeout(function() {
+      atoms.forEach( a => a.setAtomToVortex(timeToEffect) );
+    }, timeToEffect);
   }
 }
 

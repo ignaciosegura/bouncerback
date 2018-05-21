@@ -11765,7 +11765,10 @@ var Atom = function () {
     _classCallCheck(this, Atom);
 
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed); // Pixels per seconds. Level Speed is measured in times per full trip
+    this.speed = {
+      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed)
+    };
+    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -11858,27 +11861,29 @@ var Atom = function () {
         this.sounds.destroy.play();
         this.tagForRemoval();
       } else if (this.status === 'vortex') {
-        this.setVortexSpeed();
+        this.speed.current = this.setVortexSpeed();
       }
     }
   }, {
     key: 'setVortexSpeed',
     value: function setVortexSpeed() {
-      // Necesito una función que desacelere y acelere el átomo para llegar al vortex en el momento preprogramado.
-      var distanceInTicks = this.next.center - _timeshop2.default.tick;
-      var speedFactor = 1 - 1 / distanceInTicks;
-      var speedVariation = this.speed * speedFactor;
+      var currentTick = _timeshop2.default.tick;
+      var isMovingAway = this.next.rebound < this.next.center;
+      var speedFactor = void 0;
 
-      if (this.next.rebound < this.next.center) {
-        this.speed = this.speed - speedVariation;
-        console.log('new speed is ' + this.speed);
+      if (isMovingAway) {
+        speedFactor = 1 / (this.next.rebound - currentTick);
+        return this.speed.current - this.speed.original * speedFactor;
+      } else {
+        speedFactor = 1 / (this.next.center - currentTick);
+        return this.speed.current + speedFactor;
       }
     }
   }, {
     key: 'moveAtom',
     value: function moveAtom() {
       var atomPosition = this.atomPosition;
-      var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed);
+      var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed.current);
       this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
       this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
     }
@@ -15673,7 +15678,7 @@ var GameEngine = function () {
         if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next' || _this.vortex !== null) return;
 
         _this.vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
-        _atomservice2.default.setAtomsToVortex(_this.atoms);
+        _atomservice2.default.setAtomsToVortex(_this.atoms, _this.vortex.timeToEffect);
       });
     }
   }, {
@@ -16025,6 +16030,7 @@ var Vortex = function () {
   function Vortex(radius) {
     _classCallCheck(this, Vortex);
 
+    this.timeToEffect = 3000;
     this.sounds = {
       creation: new _soundfx2.default(__webpack_require__(125))
     };
@@ -16035,7 +16041,7 @@ var Vortex = function () {
     key: 'createVortex',
     value: function createVortex(radius) {
       this.sounds.creation.play();
-      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" />';
+      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" style="animation-duration: ' + this.timeToEffect + '" />';
       var pointZero = document.getElementById('point-zero');
       pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
@@ -28781,10 +28787,12 @@ var AtomService = function () {
     }
   }, {
     key: 'setAtomsToVortex',
-    value: function setAtomsToVortex(atoms) {
-      atoms.forEach(function (a) {
-        a.setAtomToVortex();
-      });
+    value: function setAtomsToVortex(atoms, timeToEffect) {
+      setTimeout(function () {
+        atoms.forEach(function (a) {
+          return a.setAtomToVortex(timeToEffect);
+        });
+      }, timeToEffect);
     }
   }]);
 

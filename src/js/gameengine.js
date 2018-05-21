@@ -50,7 +50,7 @@ class GameEngine {
       if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
-      AtomService.setAtomsToVortex(this.atoms);
+      AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
     })
   }
 

@@ -7,7 +7,8 @@
   fill: white;
   stroke: none;
   r: 5%;
-  animation: creation normal 2.1s ease-in-out 0s 1 running; }
+  animation: creation normal ease-in-out 0s 1 running;
+  animation-duration: 2.1s; }
 
 @keyframes creation {
   from {

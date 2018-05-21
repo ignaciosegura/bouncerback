@@ -7,6 +7,7 @@ import SoundFX from './soundfx.js';
 
 class Vortex {
   constructor(radius) {  
+    this.timeToEffect = 3000;
     this.sounds = {
       creation: new SoundFX(require('../sound/vortex_creation.mp3')),
     }
@@ -15,7 +16,7 @@ class Vortex {
 
   createVortex(radius) {
     this.sounds.creation.play();
-    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${radius}" />`;
+    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${radius}" style="animation-duration: ${this.timeToEffect}" />`;
     let pointZero = document.getElementById('point-zero');
     pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
