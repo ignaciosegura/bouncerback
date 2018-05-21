@@ -10,7 +10,7 @@ import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY } from './hel
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in times per full trip
+    this.speed = this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed); // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -50,7 +50,7 @@ class Atom {
   }
 
 
-  convertTimesPerTripIntoPixelsPerSecond(speed) {
+  convertTimesPerTripIntoPixelsPerFrame(speed) {
     let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
     let gameSurfaceCoords = findGameSurfaceCoords();
     let tripLength = gameSurfaceCoords.radius * 2;
@@ -101,11 +101,10 @@ class Atom {
     const pos = this.atomPosition;
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
-    // TODO: Write Vortex logic here
-
-    if (this.AtomIsOnReboundArea() && this.status == 'alive') {
-      this.setStatus('collide');
+    if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent();
+      if (this.status == 'alive')
+        this.setStatus('collide');
     } else if (distance > radius && this.status == 'collide') {
       this.setStatus('dying');
       this.sounds.destroy.play();
@@ -116,7 +115,15 @@ class Atom {
   }
 
   setVortexSpeed() {
-    // Necesito una función que 
+    // Necesito una función que desacelere y acelere el átomo para llegar al vortex en el momento preprogramado.
+    let distanceInTicks = this.next.center - TimeShop.tick;
+    let speedFactor = 1 - (1 / distanceInTicks);
+    let speedVariation = this.speed * speedFactor;
+
+    if (this.next.rebound < this.next.center) {
+      this.speed = this.speed - speedVariation;
+      console.log('new speed is ' + this.speed);
+    }
   }
 
   moveAtom() {
@@ -134,7 +141,7 @@ class Atom {
 
   setAtomToVortex() {
     this.setStatus('vortex');
-    this.calculateNextEvent('center');
+    this.next.center = this.calculateNextEvent('center');
   }
 }
 

@@ -11765,7 +11765,7 @@ var Atom = function () {
     _classCallCheck(this, Atom);
 
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in times per full trip
+    this.speed = this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed); // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -11793,8 +11793,8 @@ var Atom = function () {
       this.sounds.launch.play();
     }
   }, {
-    key: 'convertTimesPerTripIntoPixelsPerSecond',
-    value: function convertTimesPerTripIntoPixelsPerSecond(speed) {
+    key: 'convertTimesPerTripIntoPixelsPerFrame',
+    value: function convertTimesPerTripIntoPixelsPerFrame(speed) {
       var framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
       var gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
       var tripLength = gameSurfaceCoords.radius * 2;
@@ -11850,11 +11850,9 @@ var Atom = function () {
       var pos = this.atomPosition;
       var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
 
-      // TODO: Write Vortex logic here
-
-      if (this.AtomIsOnReboundArea() && this.status == 'alive') {
-        this.setStatus('collide');
+      if (this.AtomIsOnReboundArea()) {
         this.next.rebound = this.calculateNextEvent();
+        if (this.status == 'alive') this.setStatus('collide');
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();
@@ -11866,7 +11864,15 @@ var Atom = function () {
   }, {
     key: 'setVortexSpeed',
     value: function setVortexSpeed() {
-      // Necesito una función que 
+      // Necesito una función que desacelere y acelere el átomo para llegar al vortex en el momento preprogramado.
+      var distanceInTicks = this.next.center - _timeshop2.default.tick;
+      var speedFactor = 1 - 1 / distanceInTicks;
+      var speedVariation = this.speed * speedFactor;
+
+      if (this.next.rebound < this.next.center) {
+        this.speed = this.speed - speedVariation;
+        console.log('new speed is ' + this.speed);
+      }
     }
   }, {
     key: 'moveAtom',
@@ -11885,7 +11891,7 @@ var Atom = function () {
     key: 'setAtomToVortex',
     value: function setAtomToVortex() {
       this.setStatus('vortex');
-      this.calculateNextEvent('center');
+      this.next.center = this.calculateNextEvent('center');
     }
   }, {
     key: 'atomPosition',
