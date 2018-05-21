@@ -11765,7 +11765,7 @@ var Atom = function () {
     _classCallCheck(this, Atom);
 
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in px per time
+    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -11777,7 +11777,10 @@ var Atom = function () {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = _timeshop2.default.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
-    this.nextRebound = this.calculateNextRebould();
+    this.next = {
+      rebound: this.calculateNextEvent('rebound'),
+      center: 0
+    };
     this.domElement;
   }
 
@@ -11806,14 +11809,16 @@ var Atom = function () {
   }, {
     key: 'AtomIsOnReboundArea',
     value: function AtomIsOnReboundArea() {
-      return _timeshop2.default.tick == this.nextRebound;
+      return _timeshop2.default.tick == this.next.rebound;
     }
   }, {
-    key: 'calculateNextRebould',
-    value: function calculateNextRebould() {
+    key: 'calculateNextEvent',
+    value: function calculateNextEvent(eventType) {
+      var eventOffset = eventType === 'rebound' ? this.framesPerRebound / 2 : 0;
+
       var ticksSinceCreation = _timeshop2.default.tick - this.creationTick;
       var timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
-      var nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
+      var nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + eventOffset);
 
       return nextTime;
     }
@@ -11845,14 +11850,23 @@ var Atom = function () {
       var pos = this.atomPosition;
       var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
 
-      if (this.AtomIsOnReboundArea()) {
+      // TODO: Write Vortex logic here
+
+      if (this.AtomIsOnReboundArea() && this.status == 'alive') {
         this.setStatus('collide');
-        this.nextRebound = this.calculateNextRebould();
+        this.next.rebound = this.calculateNextEvent();
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();
         this.tagForRemoval();
+      } else if (this.status === 'vortex') {
+        this.setVortexSpeed();
       }
+    }
+  }, {
+    key: 'setVortexSpeed',
+    value: function setVortexSpeed() {
+      // Necesito una función que 
     }
   }, {
     key: 'moveAtom',
@@ -11866,6 +11880,12 @@ var Atom = function () {
     key: 'reverseAtomDirection',
     value: function reverseAtomDirection() {
       this.vector = this.vector > 0 ? this.vector - Math.PI : this.vector + Math.PI;
+    }
+  }, {
+    key: 'setAtomToVortex',
+    value: function setAtomToVortex() {
+      this.setStatus('vortex');
+      this.calculateNextEvent('center');
     }
   }, {
     key: 'atomPosition',
@@ -15372,6 +15392,24 @@ Object.defineProperty(exports, "__esModule", {
 var levelList = [{
   name: 'Tutorial',
   levelType: 'tutorial',
+  duration: 2,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 115,
+    signature: 4
+  },
+  sound: {
+    launch: __webpack_require__(123),
+    bounce: __webpack_require__(121),
+    destroy: __webpack_require__(122),
+    song: __webpack_require__(124)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }]
+}, {
+  name: 'Lave Diso Riedquat',
+  levelType: 'tutorial',
   duration: 5,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
@@ -15603,6 +15641,7 @@ var GameEngine = function () {
     this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
     this.pucks = [];
     this.atoms = [];
+    this.vortex = null;
     this.gameLoop = this.gameLoop.bind(this);
 
     this.createPointZero('#the-zone');
@@ -15625,9 +15664,9 @@ var GameEngine = function () {
       var _this = this;
 
       (0, _mobx.autorun)(function () {
-        if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next') return;
+        if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next' || _this.vortex !== null) return;
 
-        new _vortex2.default(_this.gameSurfaceCoords.radius);
+        _this.vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
         _atomservice2.default.setAtomsToVortex(_this.atoms);
       });
     }
@@ -15644,8 +15683,8 @@ var GameEngine = function () {
       var bounces = void 0;
 
       _atomservice2.default.destroyAtoms(this.atoms);
-      _atomservice2.default.moveAtoms(this.atoms);
       _atomservice2.default.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
+      _atomservice2.default.moveAtoms(this.atoms);
       bounces = _atomservice2.default.bounceAtoms(this.atoms, this.pucks);
 
       if (bounces > 0) _scoreshop2.default.addBounce(bounces);
@@ -28738,7 +28777,7 @@ var AtomService = function () {
     key: 'setAtomsToVortex',
     value: function setAtomsToVortex(atoms) {
       atoms.forEach(function (a) {
-        a.setStatus('vortex');
+        a.setAtomToVortex();
       });
     }
   }]);

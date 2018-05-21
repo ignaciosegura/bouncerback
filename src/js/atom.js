@@ -10,7 +10,7 @@ import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY } from './hel
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in px per time
+    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -22,7 +22,10 @@ class Atom {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = TimeShop.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
-    this.nextRebound = this.calculateNextRebould();
+    this.next = {
+      rebound: this.calculateNextEvent('rebound'),
+      center: 0,
+    };
     this.domElement;
   }
 
@@ -60,13 +63,17 @@ class Atom {
   }
 
   AtomIsOnReboundArea() {
-    return (TimeShop.tick == this.nextRebound);
+    return (TimeShop.tick == this.next.rebound);
   }
 
-  calculateNextRebould() {
+  calculateNextEvent(eventType) {
+    let eventOffset = (eventType === 'rebound')
+      ? this.framesPerRebound / 2
+      : 0;
+
     let ticksSinceCreation = TimeShop.tick - this.creationTick;
     let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
-    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
+    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + eventOffset);
 
     return nextTime;
   }
@@ -94,14 +101,22 @@ class Atom {
     const pos = this.atomPosition;
     const distance = getDistanceFromXY(pos.cx, pos.cy);
 
-    if (this.AtomIsOnReboundArea()) {
+    // TODO: Write Vortex logic here
+
+    if (this.AtomIsOnReboundArea() && this.status == 'alive') {
       this.setStatus('collide');
-      this.nextRebound = this.calculateNextRebould();
+      this.next.rebound = this.calculateNextEvent();
     } else if (distance > radius && this.status == 'collide') {
       this.setStatus('dying');
       this.sounds.destroy.play();
       this.tagForRemoval();
+    } else if (this.status === 'vortex') {
+      this.setVortexSpeed();
     }
+  }
+
+  setVortexSpeed() {
+    // Necesito una función que 
   }
 
   moveAtom() {
@@ -115,6 +130,11 @@ class Atom {
     this.vector = (this.vector > 0)
       ? this.vector - Math.PI
       : this.vector + Math.PI;
+  }
+
+  setAtomToVortex() {
+    this.setStatus('vortex');
+    this.calculateNextEvent('center');
   }
 }
 

@@ -50,7 +50,7 @@ class AtomService {
 
   static setAtomsToVortex(atoms) {
     atoms.forEach( a => {
-      a.setStatus('vortex');
+      a.setAtomToVortex();
     });
   }
 }

@@ -28,6 +28,7 @@ class GameEngine {
     this.gameSurfaceCoords = findGameSurfaceCoords();
     this.pucks = [];
     this.atoms = [];
+    this.vortex = null;
     this.gameLoop = this.gameLoop.bind(this);
 
     this.createPointZero('#the-zone');
@@ -46,9 +47,9 @@ class GameEngine {
 
   setupAutoruns() {
     autorun(() => {
-      if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next') return;
+      if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
 
-      new Vortex(this.gameSurfaceCoords.radius);
+      this.vortex = new Vortex(this.gameSurfaceCoords.radius);
       AtomService.setAtomsToVortex(this.atoms);
     })
   }
@@ -63,8 +64,8 @@ class GameEngine {
     let bounces;
 
     AtomService.destroyAtoms(this.atoms);
-    AtomService.moveAtoms(this.atoms);
     AtomService.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
+    AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
 
     if (bounces > 0) ScoreShop.addBounce(bounces);
