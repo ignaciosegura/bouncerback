@@ -15224,7 +15224,7 @@ Object.defineProperty(exports, "__esModule", {
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
   levelLength: , // measured in times.
-  levelPassAction: 'next', // Possible values are "next"
+  levelPassAction: 'next', // Possible values are "implode", "vortex"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
     bpm: 120,
@@ -15246,7 +15246,7 @@ var levelList = [{
   name: 'Tutorial',
   levelType: 'tutorial',
   levelLength: 24,
-  levelPassAction: 'next',
+  levelPassAction: 'implode',
   gameOverAction: 'gameover',
   time: {
     bpm: 115,
@@ -15313,7 +15313,7 @@ var Atom = function () {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
     this.creationTick = _timeshop2.default.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
-    this.nextRebound = this.calculateNextRebould();
+    this.nextRebound = this.calculateNextRebound();
     this.domElement;
   }
 
@@ -15345,8 +15345,8 @@ var Atom = function () {
       return _timeshop2.default.tick == this.nextRebound;
     }
   }, {
-    key: 'calculateNextRebould',
-    value: function calculateNextRebould() {
+    key: 'calculateNextRebound',
+    value: function calculateNextRebound() {
       var ticksSinceCreation = _timeshop2.default.tick - this.creationTick;
       var timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
       var nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
@@ -15383,7 +15383,7 @@ var Atom = function () {
 
       if (this.AtomIsOnReboundArea()) {
         this.setStatus('collide');
-        this.nextRebound = this.calculateNextRebould();
+        this.nextRebound = this.calculateNextRebound();
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();
@@ -15653,6 +15653,10 @@ var _level = __webpack_require__(96);
 
 var _level2 = _interopRequireDefault(_level);
 
+var _text = __webpack_require__(219);
+
+var _text2 = _interopRequireDefault(_text);
+
 var _helpers = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15678,6 +15682,8 @@ var GameEngine = function () {
 
     this.createPointZero('#the-zone');
 
+    this.renderLevelName();
+
     var puck = new _puck2.default(0);
     puck.placePuck();
     this.pucks.push(puck);
@@ -15694,6 +15700,11 @@ var GameEngine = function () {
       var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
       var theZone = document.querySelector(place);
       theZone.insertAdjacentHTML('beforeend', puckContainer);
+    }
+  }, {
+    key: 'renderLevelName',
+    value: function renderLevelName() {
+      new _text2.default(this.level.name, 'title');
     }
   }, {
     key: 'gameLoop',
@@ -28629,6 +28640,77 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(89);
 
+
+/***/ }),
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*global require */
+
+// Text field
+
+__webpack_require__(220);
+
+var Text = function () {
+  function Text(text) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'plain';
+
+    _classCallCheck(this, Text);
+
+    this.text = text;
+    this.type = type;
+    this.timeForRemoval = 5000;
+
+    this.render();
+  }
+
+  _createClass(Text, [{
+    key: 'render',
+    value: function render() {
+      var gameSurface = document.getElementById('gamesurface');
+      var textToRender = '<div class="text ' + this.type + '">' + this.text + '</div>';
+      gameSurface.insertAdjacentHTML('beforeend', textToRender);
+      this.scheduleRemoval();
+    }
+  }, {
+    key: 'scheduleRemoval',
+    value: function scheduleRemoval() {
+      var textToRemove = document.querySelector('#gamesurface > .text');
+      setTimeout(function () {
+        return textToRemove.remove();
+      }, this.timeForRemoval);
+    }
+  }]);
+
+  return Text;
+}();
+
+exports.default = Text;
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
