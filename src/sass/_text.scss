@@ -1,0 +1,17 @@
+// Text in-game
+
+.text {
+  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+
+  transform: translate(-50%);
+
+  &.title {
+    font-size: 24px;
+  }
+}

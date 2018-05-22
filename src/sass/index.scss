@@ -2,8 +2,7 @@
 
 @import '~breakpoint-sass/stylesheets/breakpoint';
 @import '_variables.scss';
-@import url('https://fonts.googleapis.com/css?family=Didact+Gothic'); // font-family: 'Didact Gothic', sans-serif;
-
+@import '_fonts.scss';
 
 html, body {
   background: $background-color;

@@ -15224,7 +15224,7 @@ Object.defineProperty(exports, "__esModule", {
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
   levelLength: , // measured in times.
-  levelPassAction: 'next', // Possible values are "next"
+  levelPassAction: 'next', // Possible values are "implode", "vortex"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
     bpm: 120,
@@ -15246,7 +15246,7 @@ var levelList = [{
   name: 'Tutorial',
   levelType: 'tutorial',
   levelLength: 24,
-  levelPassAction: 'next',
+  levelPassAction: 'implode',
   gameOverAction: 'gameover',
   time: {
     bpm: 115,
@@ -15313,7 +15313,7 @@ var Atom = function () {
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
     this.creationTick = _timeshop2.default.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
-    this.nextRebound = this.calculateNextRebould();
+    this.nextRebound = this.calculateNextRebound();
     this.domElement;
   }
 
@@ -15345,8 +15345,8 @@ var Atom = function () {
       return _timeshop2.default.tick == this.nextRebound;
     }
   }, {
-    key: 'calculateNextRebould',
-    value: function calculateNextRebould() {
+    key: 'calculateNextRebound',
+    value: function calculateNextRebound() {
       var ticksSinceCreation = _timeshop2.default.tick - this.creationTick;
       var timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
       var nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
@@ -15383,7 +15383,7 @@ var Atom = function () {
 
       if (this.AtomIsOnReboundArea()) {
         this.setStatus('collide');
-        this.nextRebound = this.calculateNextRebould();
+        this.nextRebound = this.calculateNextRebound();
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');
         this.sounds.destroy.play();
