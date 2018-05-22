@@ -12,6 +12,7 @@ import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Atom from './atom.js';
 import Level from './level.js';
+import Text from './text.js';
 import { findGameSurfaceCoords } from './helpers.js';
 
 class GameEngine {
@@ -27,6 +28,8 @@ class GameEngine {
 
     this.createPointZero('#the-zone');
 
+    this.renderLevelName();
+
     let puck = new Puck(0);
     puck.placePuck();
     this.pucks.push(puck);
@@ -41,6 +44,10 @@ class GameEngine {
     let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
     let theZone = document.querySelector(place);
     theZone.insertAdjacentHTML('beforeend', puckContainer);
+  }
+
+  renderLevelName() {
+    new Text(this.level.name, 'title');
   }
 
   gameLoop() {

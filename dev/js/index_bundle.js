@@ -15653,6 +15653,10 @@ var _level = __webpack_require__(96);
 
 var _level2 = _interopRequireDefault(_level);
 
+var _text = __webpack_require__(219);
+
+var _text2 = _interopRequireDefault(_text);
+
 var _helpers = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15678,6 +15682,8 @@ var GameEngine = function () {
 
     this.createPointZero('#the-zone');
 
+    this.renderLevelName();
+
     var puck = new _puck2.default(0);
     puck.placePuck();
     this.pucks.push(puck);
@@ -15694,6 +15700,11 @@ var GameEngine = function () {
       var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
       var theZone = document.querySelector(place);
       theZone.insertAdjacentHTML('beforeend', puckContainer);
+    }
+  }, {
+    key: 'renderLevelName',
+    value: function renderLevelName() {
+      new _text2.default(this.level.name, 'title');
     }
   }, {
     key: 'gameLoop',
@@ -28629,6 +28640,77 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(89);
 
+
+/***/ }),
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*global require */
+
+// Text field
+
+__webpack_require__(220);
+
+var Text = function () {
+  function Text(text) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'plain';
+
+    _classCallCheck(this, Text);
+
+    this.text = text;
+    this.type = type;
+    this.timeForRemoval = 5000;
+
+    this.render();
+  }
+
+  _createClass(Text, [{
+    key: 'render',
+    value: function render() {
+      var gameSurface = document.getElementById('gamesurface');
+      var textToRender = '<div class="text ' + this.type + '">' + this.text + '</div>';
+      gameSurface.insertAdjacentHTML('beforeend', textToRender);
+      this.scheduleRemoval();
+    }
+  }, {
+    key: 'scheduleRemoval',
+    value: function scheduleRemoval() {
+      var textToRemove = document.querySelector('#gamesurface > .text');
+      setTimeout(function () {
+        return textToRemove.remove();
+      }, this.timeForRemoval);
+    }
+  }]);
+
+  return Text;
+}();
+
+exports.default = Text;
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
