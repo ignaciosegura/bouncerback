@@ -148,6 +148,14 @@ class Atom {
     this.setStatus('vortex');
     this.next.center = this.calculateNextEvent('center');
   }
+
+  checkVortex(vortexActiveRadius) {
+    let distanceToCenter = CoordsService.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
+    if (distanceToCenter > vortexActiveRadius)
+      return;
+
+    this.setStatus('captured');
+  }
 }
 
 export default Atom;

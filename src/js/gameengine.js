@@ -69,9 +69,11 @@ class GameEngine {
 
     if (bounces > 0) ScoreShop.addBounce(bounces);
 
+    this.checkVortex();
     this.checkAtomList();
-    TimeShop.nextTick();
     this.checkGameOver();
+
+    TimeShop.nextTick();
   }
 
   checkGameOver() {
@@ -79,6 +81,13 @@ class GameEngine {
 
     clearInterval(this.gameLoopInterval);
     console.log('Game Over!');
+  }
+
+  checkVortex() {
+    if (this.vortex === null || this.vortex.active === false)
+      return;
+
+    AtomService.checkVortex(this.atoms, this.vortex);
   }
 
   checkAtomList() {

@@ -11868,6 +11868,14 @@ var Atom = function () {
       this.next.center = this.calculateNextEvent('center');
     }
   }, {
+    key: 'checkVortex',
+    value: function checkVortex(vortexActiveRadius) {
+      var distanceToCenter = _coordsservice2.default.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
+      if (distanceToCenter > vortexActiveRadius) return;
+
+      this.setStatus('captured');
+    }
+  }, {
     key: 'atomPosition',
     get: function get() {
       return {
@@ -15671,9 +15679,11 @@ var GameEngine = function () {
 
       if (bounces > 0) _scoreshop2.default.addBounce(bounces);
 
+      this.checkVortex();
       this.checkAtomList();
-      _timeshop2.default.nextTick();
       this.checkGameOver();
+
+      _timeshop2.default.nextTick();
     }
   }, {
     key: 'checkGameOver',
@@ -15682,6 +15692,13 @@ var GameEngine = function () {
 
       clearInterval(this.gameLoopInterval);
       console.log('Game Over!');
+    }
+  }, {
+    key: 'checkVortex',
+    value: function checkVortex() {
+      if (this.vortex === null || this.vortex.active === false) return;
+
+      _atomservice2.default.checkVortex(this.atoms, this.vortex);
     }
   }, {
     key: 'checkAtomList',
@@ -16001,10 +16018,14 @@ var Vortex = function () {
   function Vortex(radius) {
     _classCallCheck(this, Vortex);
 
+    this.timeToEffect = 3000;
+    this.active = false;
+    this.activeRadius = 0;
     this.sounds = {
       creation: new _soundfx2.default(__webpack_require__(125))
     };
     this.domElement = this.createVortex(radius);
+    this.activateVortex();
   }
 
   _createClass(Vortex, [{
@@ -16016,6 +16037,16 @@ var Vortex = function () {
       pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
       return document.getElementById('vortex');
+    }
+  }, {
+    key: 'activateVortex',
+    value: function activateVortex() {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.active = true;
+        _this.activeRadius = _this.domElement.getBoundingClientRect().width / 2;
+      }, this.timeToEffect);
     }
   }]);
 
@@ -28692,6 +28723,10 @@ var _atom2 = _interopRequireDefault(_atom);
 
 var _helpers = __webpack_require__(35);
 
+var _coordsservice = __webpack_require__(224);
+
+var _coordsservice2 = _interopRequireDefault(_coordsservice);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28763,6 +28798,14 @@ var AtomService = function () {
           return a.setAtomToVortex(timeToEffect);
         });
       }, timeToEffect);
+    }
+  }, {
+    key: 'checkVortex',
+    value: function checkVortex(atoms, vortex) {
+      var vortexActiveRadius = vortex.activeRadius;
+      atoms.forEach(function (a) {
+        return a.checkVortex(vortexActiveRadius);
+      });
     }
   }]);
 

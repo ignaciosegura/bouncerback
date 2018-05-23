@@ -3,6 +3,7 @@
 
 import Atom from '../atom.js';
 import {compareVectorsForBounce} from '../helpers.js';
+import CoordsService from './coordsservice.js';
 
 class AtomService {
   static moveAtoms(atoms) {
@@ -52,6 +53,11 @@ class AtomService {
     setTimeout(function() {
       atoms.forEach( a => a.setAtomToVortex(timeToEffect) );
     }, timeToEffect);
+  }
+
+  static checkVortex(atoms, vortex) {
+    let vortexActiveRadius = vortex.activeRadius;
+    atoms.forEach( a => a.checkVortex(vortexActiveRadius) );
   }
 }
 
