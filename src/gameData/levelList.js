@@ -5,8 +5,8 @@
 {
   name: '',
   levelType: '', // Possible values are "tutorial" / "real"
-  levelLength: , // measured in times.
-  levelPassAction: 'next', // Possible values are "implode", "vortex"
+  duration: , // measured in times.
+  levelPassAction: 'next', // Possible values are "next"
   gameOverAction: 'gameover' // possible values are "gameover" and "restart"
   time = {
     bpm: 120,
@@ -29,8 +29,30 @@ const levelList = [
   {
     name: 'Tutorial',
     levelType: 'tutorial',
-    levelLength: 24,
-    levelPassAction: 'implode',
+    duration: 2,
+    levelPassAction: 'next',
+    gameOverAction: 'gameover',
+    time: {
+      bpm: 115,
+      signature: 4
+    },
+    sound: {
+      launch: require('../sound/launch.mp3'),
+      bounce: require('../sound/bounce_dry.mp3'),
+      destroy: require('../sound/destroy.mp3'),
+      song: require('../sound/tracks/level1.mp3')
+    },
+    atomSpeed: 4,
+    atomList: [
+      { t: 0, b: 0 },
+      { t: 1, b: 0 },
+    ]
+  },
+  {
+    name: 'Lave Diso Riedquat',
+    levelType: 'tutorial',
+    duration: 5,
+    levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
       bpm: 115,

@@ -2,8 +2,10 @@
 // setup object to be delivered on instantiation:
 
 import SoundFX from './soundfx.js';
+import Atom from './atom.js';
 
 class Level {
+
   constructor(setup) {
     for (let k in setup) {
       this[k] = setup[k];

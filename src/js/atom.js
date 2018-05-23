@@ -5,12 +5,15 @@ require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
-import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY, compareVectorsForBounce } from './helpers.js';
+import CoordsService from './services/coordsservice.js';
 
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = this.convertTimesPerTripIntoPixelsPerSecond(level.atomSpeed); // Speed is measured in px per time
+    this.speed = {
+      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed)
+    }
+    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 10;
     this.sounds = {
@@ -19,10 +22,13 @@ class Atom {
       destroy: new SoundFX(level.sound.destroy)
     }
     this.destructionTime = 2000; // in milliseconds
-    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead"
+    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = TimeShop.tick;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
-    this.nextRebound = this.calculateNextRebound();
+    this.next = {
+      rebound: this.calculateNextEvent('rebound'),
+      center: 0,
+    };
     this.domElement;
   }
 
@@ -47,9 +53,9 @@ class Atom {
   }
 
 
-  convertTimesPerTripIntoPixelsPerSecond(speed) {
+  convertTimesPerTripIntoPixelsPerFrame(speed) {
     let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-    let gameSurfaceCoords = findGameSurfaceCoords();
+    let gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     let tripLength = gameSurfaceCoords.radius * 2;
 
     return tripLength / framesPerTrip;
@@ -60,13 +66,17 @@ class Atom {
   }
 
   AtomIsOnReboundArea() {
-    return (TimeShop.tick == this.nextRebound);
+    return (TimeShop.tick == this.next.rebound);
   }
 
-  calculateNextRebound() {
+  calculateNextEvent(eventType) {
+    let eventOffset = (eventType === 'rebound')
+      ? this.framesPerRebound / 2
+      : 0;
+
     let ticksSinceCreation = TimeShop.tick - this.creationTick;
     let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
-    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + this.framesPerRebound / 2);
+    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + eventOffset);
 
     return nextTime;
   }
@@ -92,21 +102,38 @@ class Atom {
 
   checkAtom(radius) {
     const pos = this.atomPosition;
-    const distance = getDistanceFromXY(pos.cx, pos.cy);
+    const distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
 
     if (this.AtomIsOnReboundArea()) {
-      this.setStatus('collide');
-      this.nextRebound = this.calculateNextRebound();
+      this.next.rebound = this.calculateNextEvent();
+      if (this.status == 'alive')
+        this.setStatus('collide');
     } else if (distance > radius && this.status == 'collide') {
       this.setStatus('dying');
       this.sounds.destroy.play();
       this.tagForRemoval();
+    } else if (this.status === 'vortex') {
+      this.speed.current = this.setVortexSpeed();
+    }
+  }
+
+  setVortexSpeed() {
+    let currentTick = TimeShop.tick;
+    let isMovingAway = (this.next.rebound < this.next.center);
+    let speedFactor;
+
+    if (isMovingAway) {
+      speedFactor = 1 / (this.next.rebound - currentTick);
+      return this.speed.current - (this.speed.original * speedFactor);
+    } else {
+      speedFactor = 1 / (this.next.center - currentTick);
+      return this.speed.current + speedFactor;
     }
   }
 
   moveAtom() {
     let atomPosition = this.atomPosition;
-    let displacement = getXYFromVector(this.vector, this.speed);
+    let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
     this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
   }
@@ -117,47 +144,17 @@ class Atom {
       : this.vector + Math.PI;
   }
 
-  static destroyAtoms(atoms) {
-    let i;
-
-    for (i in atoms) {
-      if (atoms[i].status !== 'dead') continue;
-
-      atoms[i].domElement.remove();
-      atoms.splice(i, 1);
-    }
+  setAtomToVortex() {
+    this.setStatus('vortex');
+    this.next.center = this.calculateNextEvent('center');
   }
 
-  static bounceAtoms(atoms, pucks) {
-    let colliders = atoms.filter(a => a.status == 'collide');
-    let bouncesCount = 0;
+  checkVortex(vortexActiveRadius) {
+    let distanceToCenter = CoordsService.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
+    if (distanceToCenter > vortexActiveRadius)
+      return;
 
-    colliders.forEach(a => {
-      pucks.forEach(p => {
-        let result = compareVectorsForBounce(a.vector, p.vector, p.angle);
-
-        if (result) {
-          a.executeBounce();
-          bouncesCount++;
-        }
-      })
-    });
-    return bouncesCount;
-  }
-
-  static moveAtoms(atoms) {
-    atoms.forEach(a => a.moveAtom());
-  }
-
-  static checkAtomsStatus(atoms, radius) {
-    atoms.forEach(a => a.checkAtom(radius));
-  }
-
-  static create(index, level) {
-    let newAtom = new Atom(index, level);
-    newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
-    return newAtom;
+    this.setStatus('captured');
   }
 }
 

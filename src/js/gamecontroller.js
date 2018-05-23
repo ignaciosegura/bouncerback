@@ -1,10 +1,10 @@
 // Game Controller class
 
-import { getVectorFromXY } from './helpers.js';
+import CoordsService from './services/coordsservice.js';
 
 class GameController {
   constructor(gameSurfaceCoords, pucks) {
-    let vector = getVectorFromXY(0, -1);
+    let vector = CoordsService.getVectorFromXY(0, -1);
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
@@ -29,7 +29,7 @@ class GameController {
   _getMouseVector(mousePos) {
     let x = mousePos.x - this.gameSurfaceCoords.centerX;
     let y = mousePos.y - this.gameSurfaceCoords.centerY;
-    return getVectorFromXY(x, y);
+    return CoordsService.getVectorFromXY(x, y);
   }
 
   movePucks(vector) {

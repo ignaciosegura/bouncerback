@@ -1,29 +1,35 @@
 @import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.atom {
   fill: white;
   stroke: none; }
-.text {
-  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  color: white;
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  width: 80vw;
-  text-align: center;
-  transform: translate(-50%, 0);
-  animation: text-removal 1.5s normal ease-in-out 3.5s 1 running; }
-  .text.title {
-    font-size: 32px; }
+  .atom.dying {
+    fill: #900;
+    filter: drop-shadow(0 0 25px #900);
+    opacity: 0; }
+  .atom.vortex {
+    fill: #990; }
+  .atom.captured {
+    fill: #88ffff;
+    transform: scale(0);
+    filter: drop-shadow(0 0 25px #88ffff); }
+#vortex {
+  position: relative;
+  z-index: 100;
+  fill: white;
+  stroke: none;
+  transform: scale(0.1);
+  animation: creation normal ease-in-out 0s 1 running;
+  animation-duration: 2.1s; }
 
-@keyframes text-removal {
+@keyframes creation {
   from {
-    color: white;
-    opacity: 1; }
-  40% {
-    color: #a00; }
+    fill: #88ffff00;
+    transform: scale(0); }
+  92% {
+    fill: #88ffff30;
+    transform: scale(1); }
   to {
-    color: #ba0;
-    opacity: 0; } }
+    fill: white;
+    transform: scale(0.1); } }
 #point-zero {
   width: 0;
   height: 0;
@@ -33,15 +39,15 @@
   #point-zero rect {
     fill: white;
     stroke: none; }
-
-.dying {
-  fill: #900;
-  filter: drop-shadow(0 0 25px #900);
-  opacity: 0; }
 #gamesurface {
   width: 100%;
   background: none;
-  position: relative; }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1; }
 
 svg#the-zone {
   box-sizing: content-box;
@@ -50,7 +56,10 @@ svg#the-zone {
   padding: 20px;
   margin: 0 auto;
   display: block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   overflow: visible;
   stroke: white;
   stroke-width: 2;

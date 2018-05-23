@@ -5,4 +5,21 @@
 .atom {
   fill: white;
   stroke: none;
+
+  &.dying {
+    fill: $dying-red;
+    filter: drop-shadow(0 0 25px $dying-red);
+    opacity: 0;
+  }
+
+  &.vortex {
+    fill: $lost-yellow;
+  }
+
+  &.captured {
+    fill: $blind-blue;
+    transform: scale(0);
+    filter: drop-shadow(0 0 25px $blind-blue);
+  }
+  
 }
