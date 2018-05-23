@@ -5,7 +5,7 @@ require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
-import { findGameSurfaceCoords, getXYFromVector, getDistanceFromXY } from './helpers.js';
+import CoordsService from './services/coordsservice.js';
 
 class Atom {
   constructor(index, level) {
@@ -55,7 +55,7 @@ class Atom {
 
   convertTimesPerTripIntoPixelsPerFrame(speed) {
     let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-    let gameSurfaceCoords = findGameSurfaceCoords();
+    let gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     let tripLength = gameSurfaceCoords.radius * 2;
 
     return tripLength / framesPerTrip;
@@ -102,7 +102,7 @@ class Atom {
 
   checkAtom(radius) {
     const pos = this.atomPosition;
-    const distance = getDistanceFromXY(pos.cx, pos.cy);
+    const distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
 
     if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent();
@@ -133,7 +133,7 @@ class Atom {
 
   moveAtom() {
     let atomPosition = this.atomPosition;
-    let displacement = getXYFromVector(this.vector, this.speed.current);
+    let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
     this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
   }

@@ -12,12 +12,11 @@ import TimeShop from './stores/timeshop.js';
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
-import Atom from './atom.js';
 import Level from './level.js';
 import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';
-import { findGameSurfaceCoords } from './helpers.js';
+import CoordsService from './services/coordsservice.js';
 
 class GameEngine {
 
@@ -25,7 +24,7 @@ class GameEngine {
     this.level = new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
-    this.gameSurfaceCoords = findGameSurfaceCoords();
+    this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks = [];
     this.atoms = [];
     this.vortex = null;

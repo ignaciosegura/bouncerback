@@ -9788,35 +9788,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 // Helper functions
 
-function findGameSurfaceCoords() {
-  var theCircle = document.getElementById('the-circle');
-  var coords = theCircle.getBoundingClientRect();
-  return {
-    centerX: (coords.left + coords.right) / 2,
-    centerY: (coords.top + coords.bottom) / 2,
-    radius: parseInt(theCircle.getAttribute('cx'))
-  };
-}
-
-function getVectorFromXY(x, y) {
-  var angle = Math.atan2(y, x);
-  return {
-    rads: angle,
-    degrees: angle * 180 / Math.PI
-  };
-}
-
-function getDistanceFromXY(x, y) {
-  return Math.sqrt(x ** 2 + y ** 2);
-}
-
-function getXYFromVector(vector, displacement) {
-  return {
-    x: Math.cos(vector) * displacement,
-    y: Math.sin(vector) * displacement
-  };
-}
-
 function compareVectorsForBounce(angleAtom, anglePuck, range) {
   angleAtom = makeAnglePositive(angleAtom);
   anglePuck = makeAnglePositive(anglePuck);
@@ -9833,10 +9804,6 @@ function makeAnglePositive(angle) {
   return angle < 0 ? angle + 2 * Math.PI : angle;
 }
 
-exports.findGameSurfaceCoords = findGameSurfaceCoords;
-exports.getVectorFromXY = getVectorFromXY;
-exports.getDistanceFromXY = getDistanceFromXY;
-exports.getXYFromVector = getXYFromVector;
 exports.compareVectorsForBounce = compareVectorsForBounce;
 
 /***/ }),
@@ -11749,7 +11716,9 @@ var _timeshop = __webpack_require__(56);
 
 var _timeshop2 = _interopRequireDefault(_timeshop);
 
-var _helpers = __webpack_require__(35);
+var _coordsservice = __webpack_require__(224);
+
+var _coordsservice2 = _interopRequireDefault(_coordsservice);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11799,7 +11768,7 @@ var Atom = function () {
     key: 'convertTimesPerTripIntoPixelsPerFrame',
     value: function convertTimesPerTripIntoPixelsPerFrame(speed) {
       var framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-      var gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
+      var gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
       var tripLength = gameSurfaceCoords.radius * 2;
 
       return tripLength / framesPerTrip;
@@ -11851,7 +11820,7 @@ var Atom = function () {
     key: 'checkAtom',
     value: function checkAtom(radius) {
       var pos = this.atomPosition;
-      var distance = (0, _helpers.getDistanceFromXY)(pos.cx, pos.cy);
+      var distance = _coordsservice2.default.getDistanceFromXY(pos.cx, pos.cy);
 
       if (this.AtomIsOnReboundArea()) {
         this.next.rebound = this.calculateNextEvent();
@@ -11883,7 +11852,7 @@ var Atom = function () {
     key: 'moveAtom',
     value: function moveAtom() {
       var atomPosition = this.atomPosition;
-      var displacement = (0, _helpers.getXYFromVector)(this.vector, this.speed.current);
+      var displacement = _coordsservice2.default.getXYFromVector(this.vector, this.speed.current);
       this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
       this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
     }
@@ -15518,7 +15487,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game Controller class
 
-var _helpers = __webpack_require__(35);
+var _coordsservice = __webpack_require__(224);
+
+var _coordsservice2 = _interopRequireDefault(_coordsservice);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15526,7 +15499,7 @@ var GameController = function () {
   function GameController(gameSurfaceCoords, pucks) {
     _classCallCheck(this, GameController);
 
-    var vector = (0, _helpers.getVectorFromXY)(0, -1);
+    var vector = _coordsservice2.default.getVectorFromXY(0, -1);
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
@@ -15556,7 +15529,7 @@ var GameController = function () {
     value: function _getMouseVector(mousePos) {
       var x = mousePos.x - this.gameSurfaceCoords.centerX;
       var y = mousePos.y - this.gameSurfaceCoords.centerY;
-      return (0, _helpers.getVectorFromXY)(x, y);
+      return _coordsservice2.default.getVectorFromXY(x, y);
     }
   }, {
     key: 'movePucks',
@@ -15615,10 +15588,6 @@ var _gamecontroller = __webpack_require__(93);
 
 var _gamecontroller2 = _interopRequireDefault(_gamecontroller);
 
-var _atom = __webpack_require__(54);
-
-var _atom2 = _interopRequireDefault(_atom);
-
 var _level = __webpack_require__(96);
 
 var _level2 = _interopRequireDefault(_level);
@@ -15631,7 +15600,9 @@ var _atomservice = __webpack_require__(223);
 
 var _atomservice2 = _interopRequireDefault(_atomservice);
 
-var _helpers = __webpack_require__(35);
+var _coordsservice = __webpack_require__(224);
+
+var _coordsservice2 = _interopRequireDefault(_coordsservice);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15649,7 +15620,7 @@ var GameEngine = function () {
     this.level = new _level2.default(_levelList2.default[level]);
     _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
-    this.gameSurfaceCoords = (0, _helpers.findGameSurfaceCoords)();
+    this.gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
     this.pucks = [];
     this.atoms = [];
     this.vortex = null;
@@ -28799,6 +28770,68 @@ var AtomService = function () {
 }();
 
 exports.default = AtomService;
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Coordinates service
+
+var CoordsService = function () {
+  function CoordsService() {
+    _classCallCheck(this, CoordsService);
+  }
+
+  _createClass(CoordsService, null, [{
+    key: 'findGameSurfaceCoords',
+    value: function findGameSurfaceCoords() {
+      var theCircle = document.getElementById('the-circle');
+      var coords = theCircle.getBoundingClientRect();
+      return {
+        centerX: (coords.left + coords.right) / 2,
+        centerY: (coords.top + coords.bottom) / 2,
+        radius: parseInt(theCircle.getAttribute('cx'))
+      };
+    }
+  }, {
+    key: 'getVectorFromXY',
+    value: function getVectorFromXY(x, y) {
+      var angle = Math.atan2(y, x);
+      return {
+        rads: angle,
+        degrees: angle * 180 / Math.PI
+      };
+    }
+  }, {
+    key: 'getDistanceFromXY',
+    value: function getDistanceFromXY(x, y) {
+      return Math.sqrt(x ** 2 + y ** 2);
+    }
+  }, {
+    key: 'getXYFromVector',
+    value: function getXYFromVector(vector, displacement) {
+      return {
+        x: Math.cos(vector) * displacement,
+        y: Math.sin(vector) * displacement
+      };
+    }
+  }]);
+
+  return CoordsService;
+}();
+
+exports.default = CoordsService;
 
 /***/ })
 /******/ ]);
