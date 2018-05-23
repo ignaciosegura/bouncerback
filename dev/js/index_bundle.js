@@ -15375,9 +15375,79 @@ _reactDom2.default.render(_react2.default.createElement(
 
 /***/ }),
 /* 91 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token (37:0)\n\n\u001b[0m \u001b[90m 35 | \u001b[39m    name\u001b[33m:\u001b[39m \u001b[32m'Tutorial'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 36 | \u001b[39m    levelType\u001b[33m:\u001b[39m \u001b[32m'tutorial'\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 37 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 38 | \u001b[39m    levelLength\u001b[33m:\u001b[39m \u001b[35m24\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 39 | \u001b[39m    levelPassAction\u001b[33m:\u001b[39m \u001b[32m'implode'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 40 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/*global require*/
+//EXAMPLE LEVEL
+
+/*
+{
+  name: '',
+  levelType: '', // Possible values are "tutorial" / "real"
+  duration: , // measured in times.
+  levelPassAction: 'next', // Possible values are "next"
+  gameOverAction: 'gameover' // possible values are "gameover" and "restart"
+  time = {
+    bpm: 120,
+    signature: 4
+  };
+  sound = {
+    launch: '',
+    bounce: '',
+    destruction: '',
+    song: ''
+  },
+  atomSpeed: 1, // Beats to make a round trip
+  atomList: [] // Array of moments where a new atom should be created
+}
+
+*/
+
+var levelList = [{
+  name: 'Tutorial',
+  levelType: 'tutorial',
+  duration: 2,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 115,
+    signature: 4
+  },
+  sound: {
+    launch: __webpack_require__(225),
+    bounce: __webpack_require__(223),
+    destroy: __webpack_require__(224),
+    song: __webpack_require__(226)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }]
+}, {
+  name: 'Lave Diso Riedquat',
+  levelType: 'tutorial',
+  duration: 5,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 115,
+    signature: 4
+  },
+  sound: {
+    launch: __webpack_require__(225),
+    bounce: __webpack_require__(223),
+    destroy: __webpack_require__(224),
+    song: __webpack_require__(226)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
+}];
+
+exports.default = levelList;
 
 /***/ }),
 /* 92 */
@@ -28779,6 +28849,41 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(90);
 
+
+/***/ }),
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./sound/bounce_dry.mp3";
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./sound/destroy.mp3";
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./sound/launch.mp3";
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./sound/level1.mp3";
 
 /***/ })
 /******/ ]);
