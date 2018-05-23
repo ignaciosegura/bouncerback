@@ -11,6 +11,29 @@
     fill: #88ffff;
     transform: scale(0);
     filter: drop-shadow(0 0 25px #88ffff); }
+.text {
+  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  width: 80vw;
+  text-align: center;
+  transform: translate(-50%, 0);
+  animation: text-removal 1.5s normal ease-in-out 3.5s 1 running; }
+  .text.title {
+    font-size: 32px; }
+
+@keyframes text-removal {
+  from {
+    color: white;
+    opacity: 1; }
+  40% {
+    color: #900; }
+  to {
+    color: #990;
+    opacity: 0; } }
 #vortex {
   position: relative;
   z-index: 100;

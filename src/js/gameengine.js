@@ -13,6 +13,7 @@ import TimeShop from './stores/timeshop.js';
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Level from './level.js';
+import Text from './text.js';
 import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';

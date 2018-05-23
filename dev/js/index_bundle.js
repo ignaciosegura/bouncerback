@@ -15632,6 +15632,10 @@ var _level = __webpack_require__(97);
 
 var _level2 = _interopRequireDefault(_level);
 
+var _text = __webpack_require__(227);
+
+var _text2 = _interopRequireDefault(_text);
+
 var _vortex = __webpack_require__(101);
 
 var _vortex2 = _interopRequireDefault(_vortex);
@@ -15704,7 +15708,7 @@ var GameEngine = function () {
   }, {
     key: 'renderLevelName',
     value: function renderLevelName() {
-      new Text(this.level.name, 'title');
+      new _text2.default(this.level.name, 'title');
     }
   }, {
     key: 'gameLoop',
@@ -28884,6 +28888,69 @@ module.exports = __webpack_require__.p + "./sound/launch.mp3";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "./sound/level1.mp3";
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*global require */
+
+// Text field
+
+__webpack_require__(228);
+
+var Text = function () {
+  function Text(text) {
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'plain';
+
+    _classCallCheck(this, Text);
+
+    this.text = text;
+    this.type = type;
+    this.timeForRemoval = 5000;
+
+    this.render();
+  }
+
+  _createClass(Text, [{
+    key: 'render',
+    value: function render() {
+      var gameSurface = document.getElementById('gamesurface');
+      var textToRender = '<div class="text ' + this.type + '">' + this.text + '</div>';
+      gameSurface.insertAdjacentHTML('beforeend', textToRender);
+      this.scheduleRemoval();
+    }
+  }, {
+    key: 'scheduleRemoval',
+    value: function scheduleRemoval() {
+      var textToRemove = document.querySelector('#gamesurface > .text');
+      setTimeout(function () {
+        return textToRemove.remove();
+      }, this.timeForRemoval);
+    }
+  }]);
+
+  return Text;
+}();
+
+exports.default = Text;
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
