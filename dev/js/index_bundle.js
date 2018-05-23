@@ -16030,7 +16030,6 @@ var Vortex = function () {
   function Vortex(radius) {
     _classCallCheck(this, Vortex);
 
-    this.timeToEffect = 3000;
     this.sounds = {
       creation: new _soundfx2.default(__webpack_require__(125))
     };
@@ -16041,7 +16040,7 @@ var Vortex = function () {
     key: 'createVortex',
     value: function createVortex(radius) {
       this.sounds.creation.play();
-      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" style="animation-duration: ' + this.timeToEffect + '" />';
+      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" >\n      <circle/>';
       var pointZero = document.getElementById('point-zero');
       pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
