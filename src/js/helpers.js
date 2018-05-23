@@ -30,16 +30,16 @@ function getXYFromVector(vector, displacement) {
   }
 }
 
-function compareVectorsForBounce(angle1, angle2, range) {
-  angle1 = makeAnglePositive(angle1);
-  angle2 = makeAnglePositive(angle2);
+function compareVectorsForBounce(angleAtom, anglePuck, range) {
+  angleAtom = makeAnglePositive(angleAtom);
+  anglePuck = makeAnglePositive(anglePuck);
   range = range / 2;
   let bracket = {
-    from: angle2 - range,
-    to: angle2 + range
+    from: anglePuck - range,
+    to: anglePuck + range
   }
 
-  return (angle1 > bracket.from && angle1 < bracket.to)
+  return (angleAtom > bracket.from && angleAtom < bracket.to)
     ? true
     : false;
 }
