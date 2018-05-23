@@ -8,7 +8,7 @@
 
   &.dying {
     fill: $dying-red;
-    filter: drop-shadow(0 0 25px #900);
+    filter: drop-shadow(0 0 25px $dying-red);
     opacity: 0;
   }
 
@@ -18,6 +18,8 @@
 
   &.captured {
     fill: $blind-blue;
+    transform: scale(0);
+    filter: drop-shadow(0 0 25px $blind-blue);
   }
   
 }
