@@ -15313,9 +15313,9 @@ var levelList = [{
   atomSpeed: 4,
   atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }]
 }, {
-  name: 'Lave Diso Riedquat',
+  name: 'Chronosaedron',
   levelType: 'game',
-  duration: 5,
+  duration: 30,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
   time: {
@@ -15329,9 +15329,9 @@ var levelList = [{
     song: __webpack_require__(130)
   },
   atomSpeed: 2,
-  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }]
 }];
-
+// Quantamorphica
 exports.default = levelList;
 
 /***/ }),
@@ -15462,7 +15462,7 @@ var Atom = function () {
       var distance = _coordsservice2.default.getDistanceFromXY(pos.cx, pos.cy);
 
       if (this.AtomIsOnReboundArea()) {
-        this.next.rebound = this.calculateNextEvent();
+        this.next.rebound = this.calculateNextEvent('rebound');
         if (this.status == 'alive') this.setStatus('collide');
       } else if (distance > radius && this.status == 'collide') {
         this.setStatus('dying');

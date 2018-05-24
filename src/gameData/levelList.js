@@ -49,9 +49,9 @@ const levelList = [
     ]
   },
   {
-    name: 'Lave Diso Riedquat',
+    name: 'Chronosaedron',
     levelType: 'game',
-    duration: 5,
+    duration: 30,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
@@ -72,8 +72,11 @@ const levelList = [
       { t: 8, b: 3.5 },
       { t: 9, b: 1.5 },
       { t: 11, b: 2.75 },
+      { t: 13, b: 1 },
+      { t: 16, b: 0.5 },
+      { t: 19, b: 3.25 },
     ]
   }
 ];
-
+// Quantamorphica
 export default levelList;
