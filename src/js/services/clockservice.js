@@ -23,6 +23,7 @@ class ClockService {
   static startGameLoop(engine) {
     this.startTheClock();
     this.resetClock();
+
     this.gameLoop = engine.gameLoop;
 
     this.scheduleTick();
@@ -40,11 +41,6 @@ class ClockService {
       this.nextTick();
       this.scheduleTick();
     }, time);
-
-  }
-
-  static dummy() {
-    console.log(this.gameInterval);
   }
 }
 

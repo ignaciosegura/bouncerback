@@ -57,9 +57,6 @@ class GameEngine {
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
 
-      console.log(TimeShop.tick);
-      console.log(TimeShop.time);
-      console.log(this.level);
       AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
     });
   }

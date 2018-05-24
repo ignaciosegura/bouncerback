@@ -26,7 +26,6 @@ class GameSurface extends React.Component {
   }
 
   componentWillUpdate() {
-    console.log('component will update');
     let playground = document.getElementById('point-zero');
     playground.remove();
     this.engine = null;

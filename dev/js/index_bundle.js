@@ -15783,9 +15783,6 @@ var GameEngine = function () {
 
         _this.vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
 
-        console.log(_timeshop2.default.tick);
-        console.log(_timeshop2.default.time);
-        console.log(_this.level);
         _atomservice2.default.setAtomsToVortex(_this.atoms, _this.vortex.timeToEffect);
       });
     }
@@ -15941,7 +15938,6 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = (0, 
   }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate() {
-      console.log('component will update');
       var playground = document.getElementById('point-zero');
       playground.remove();
       this.engine = null;
@@ -16331,6 +16327,7 @@ var ClockService = function () {
     value: function startGameLoop(engine) {
       this.startTheClock();
       this.resetClock();
+
       this.gameLoop = engine.gameLoop;
 
       this.scheduleTick();
@@ -16352,11 +16349,6 @@ var ClockService = function () {
         _this.nextTick();
         _this.scheduleTick();
       }, time);
-    }
-  }, {
-    key: 'dummy',
-    value: function dummy() {
-      console.log(this.gameInterval);
     }
   }]);
 
