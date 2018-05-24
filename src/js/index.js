@@ -7,10 +7,10 @@ import ReactDOM from 'react-dom';
 import Scoreboard from './scoreboard.js';
 import Dummy from './dummy.js';
 import GameSurface from './gamesurface.js';
-import ScoreShop from './stores/scoreshop.js';
-import {Provider, inject} from 'mobx-react';
+import GameShop from './stores/gameshop.js';
+import { Provider, inject } from 'mobx-react';
 
-@inject('ScoreShop')
+@inject('GameShop')
 class Index extends React.Component {
 
   render() {
@@ -23,6 +23,6 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(
-  <Provider ScoreShop={ScoreShop}><Index /></Provider>,
+  <Provider GameShop={GameShop}><Index /></Provider>,
   document.getElementById('content')
 );

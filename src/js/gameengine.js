@@ -3,11 +3,11 @@
 
 require('../sass/_game_props.scss');
 
-import {autorun} from 'mobx';
+import { autorun } from 'mobx';
 
 import levelList from '../gameData/levelList.js';
 
-import ScoreShop from './stores/scoreshop.js';
+import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
 
 import Puck from './puck.js';
@@ -42,18 +42,20 @@ class GameEngine {
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
 
+    this.level.soundtrack.play();
+
     this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
 
     this.setupAutoruns();
   }
 
   setupAutoruns() {
-    autorun(() => {
+    let createVortex = autorun(() => {
       if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
       AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
-    })
+    });
   }
 
   createPointZero(place) {
@@ -74,11 +76,12 @@ class GameEngine {
     AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
 
-    if (bounces > 0) ScoreShop.addBounce(bounces);
+    if (bounces > 0) GameShop.addBounce(bounces);
 
     this.checkVortex();
     this.checkAtomList();
     this.checkGameOver();
+    this.checkAllAtomsAreinVortex();
 
     TimeShop.nextTick();
   }
@@ -95,6 +98,13 @@ class GameEngine {
       return;
 
     AtomService.checkVortex(this.atoms, this.vortex);
+  }
+
+  checkAllAtomsAreinVortex() {
+    if (AtomService.allAtomsAreInVortex(this.atoms) !== true) return;
+
+    this.level.soundtrack.fadeOut();
+    console.log('Level beaten, go to next');
   }
 
   checkAtomList() {

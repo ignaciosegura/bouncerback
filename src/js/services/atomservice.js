@@ -2,7 +2,7 @@
 // AtomService
 
 import Atom from '../atom.js';
-import {compareVectorsForBounce} from '../helpers.js';
+import { compareVectorsForBounce } from '../helpers.js';
 import CoordsService from './coordsservice.js';
 
 class AtomService {
@@ -50,14 +50,24 @@ class AtomService {
   }
 
   static setAtomsToVortex(atoms, timeToEffect) {
-    setTimeout(function() {
-      atoms.forEach( a => a.setAtomToVortex(timeToEffect) );
+    setTimeout(function () {
+      atoms.forEach(a => a.setAtomToVortex(timeToEffect));
     }, timeToEffect);
   }
 
   static checkVortex(atoms, vortex) {
     let vortexActiveRadius = vortex.activeRadius;
-    atoms.forEach( a => a.checkVortex(vortexActiveRadius) );
+    atoms.forEach(a => a.checkVortex(vortexActiveRadius));
+  }
+
+  static allAtomsAreInVortex(atoms) {
+    let capturedAtoms = atoms.reduce((ax, current) => {
+      return (current.status == 'captured')
+        ? ax + 1
+        : ax;
+    }, 0);
+
+    return (capturedAtoms === atoms.length);
   }
 }
 

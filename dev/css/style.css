@@ -1,17 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.atom {
-  fill: white;
-  stroke: none; }
-  .atom.dying {
-    fill: #900;
-    filter: drop-shadow(0 0 25px #900);
-    opacity: 0; }
-  .atom.vortex {
-    fill: #990; }
-  .atom.captured {
-    fill: #88ffff;
-    transform: scale(0);
-    filter: drop-shadow(0 0 25px #88ffff); }
-.text {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.text {
   font-family: 'c64-angled', Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: white;
@@ -53,6 +40,19 @@
   to {
     fill: white;
     transform: scale(0.1); } }
+.atom {
+  fill: white;
+  stroke: none; }
+  .atom.dying {
+    fill: #900;
+    filter: drop-shadow(0 0 25px #900);
+    opacity: 0; }
+  .atom.vortex {
+    fill: #990; }
+  .atom.captured {
+    fill: #88ffff;
+    transform: scale(0);
+    filter: drop-shadow(0 0 25px #88ffff); }
 #point-zero {
   width: 0;
   height: 0;
