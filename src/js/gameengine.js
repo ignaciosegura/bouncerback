@@ -13,6 +13,7 @@ import TimeShop from './stores/timeshop.js';
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Level from './level.js';
+import Text from './text.js';
 import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';
@@ -31,6 +32,8 @@ class GameEngine {
     this.gameLoop = this.gameLoop.bind(this);
 
     this.createPointZero('#the-zone');
+
+    this.renderLevelName();
 
     let puck = new Puck(0);
     puck.placePuck();
@@ -59,6 +62,10 @@ class GameEngine {
     let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
     let theZone = document.querySelector(place);
     theZone.insertAdjacentHTML('beforeend', puckContainer);
+  }
+
+  renderLevelName() {
+    new Text(this.level.name, 'title');
   }
 
   gameLoop() {
