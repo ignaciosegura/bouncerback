@@ -13,7 +13,7 @@ class ClockService {
   }
 
   static resetClock() {
-    TimeShop.tick = 0;
+    TimeShop.reset();
   }
 
   static nextTick() {

@@ -50,7 +50,7 @@ const levelList = [
   },
   {
     name: 'Lave Diso Riedquat',
-    levelType: 'tutorial',
+    levelType: 'game',
     duration: 5,
     levelPassAction: 'next',
     gameOverAction: 'gameover',

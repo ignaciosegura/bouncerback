@@ -56,6 +56,10 @@ class GameEngine {
       if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
+
+      console.log(TimeShop.tick);
+      console.log(TimeShop.time);
+      console.log(this.level);
       AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
     });
   }

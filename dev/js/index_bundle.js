@@ -10050,7 +10050,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4; /* global  */
+var _desc, _value, _class, _descriptor, _descriptor2; /* global  */
 // TimeShop
 
 var _mobx = __webpack_require__(20);
@@ -10111,9 +10111,9 @@ var Time = (_class = function () {
 
     _initDefineProp(this, 'tick', _descriptor2, this);
 
-    _initDefineProp(this, 'beat', _descriptor3, this);
-
-    _initDefineProp(this, 'time', _descriptor4, this);
+    this.framesPerBeat = 1;
+    this.framesPerTime = 1;
+    this.timeSignature = 1;
   } // possible values are 'on', 'off' and 'slowing-down'
 
 
@@ -10123,25 +10123,33 @@ var Time = (_class = function () {
       this.bpm = bpm;
       this.timeSignature = timeSignature;
       this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
-      this.framesPerTime = timeSignature * this.framesPerBeat;
+      this.framesPerTime = this.timeSignature * this.framesPerBeat;
       this.levelDuration = duration;
     }
   }, {
-    key: 'updateTimeUnits',
-    value: function updateTimeUnits() {
-      this.beat = this.getRoundedTimeUnit(this.beat, this.framesPerBeat) % this.timeSignature;
-      this.time = this.getRoundedTimeUnit(this.time, this.framesPerTime);
+    key: 'reset',
+    value: function reset() {
+      this.tick = 0;
     }
   }, {
     key: 'getRoundedTimeUnit',
-    value: function getRoundedTimeUnit(current, framesPerUnit) {
+    value: function getRoundedTimeUnit(framesPerUnit) {
       return Math.floor(this.tick / framesPerUnit);
     }
   }, {
     key: 'nextTick',
     value: function nextTick() {
       this.tick++;
-      this.updateTimeUnits();
+    }
+  }, {
+    key: 'beat',
+    get: function get() {
+      return this.getRoundedTimeUnit(this.framesPerBeat) % this.timeSignature;
+    }
+  }, {
+    key: 'time',
+    get: function get() {
+      return this.getRoundedTimeUnit(this.framesPerTime);
     }
   }, {
     key: 'newBeat',
@@ -10166,17 +10174,7 @@ var Time = (_class = function () {
   initializer: function initializer() {
     return 0;
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'beat', [_mobx.observable], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 0;
-  }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'time', [_mobx.observable], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 0;
-  }
-}), _applyDecoratedDescriptor(_class.prototype, 'newBeat', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'newBeat'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'levelIsOver', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'levelIsOver'), _class.prototype)), _class);
+}), _applyDecoratedDescriptor(_class.prototype, 'beat', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'beat'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'time', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'time'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'newBeat', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'newBeat'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'levelIsOver', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'levelIsOver'), _class.prototype)), _class);
 
 
 var TimeShop = new Time();
@@ -15316,7 +15314,7 @@ var levelList = [{
   atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }]
 }, {
   name: 'Lave Diso Riedquat',
-  levelType: 'tutorial',
+  levelType: 'game',
   duration: 5,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
@@ -15784,6 +15782,10 @@ var GameEngine = function () {
         if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next' || _this.vortex !== null) return;
 
         _this.vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
+
+        console.log(_timeshop2.default.tick);
+        console.log(_timeshop2.default.time);
+        console.log(_this.level);
         _atomservice2.default.setAtomsToVortex(_this.atoms, _this.vortex.timeToEffect);
       });
     }
@@ -16317,7 +16319,7 @@ var ClockService = function () {
   }, {
     key: 'resetClock',
     value: function resetClock() {
-      _timeshop2.default.tick = 0;
+      _timeshop2.default.reset();
     }
   }, {
     key: 'nextTick',
@@ -16464,7 +16466,7 @@ var Vortex = function () {
     key: 'createVortex',
     value: function createVortex(radius) {
       this.sounds.creation.play();
-      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" >\n      <circle/>';
+      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" >\n      </circle>';
       var pointZero = document.getElementById('point-zero');
       pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
