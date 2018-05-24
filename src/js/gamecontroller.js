@@ -8,7 +8,7 @@ class GameController {
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
-    this.movePucks(vector);
+    this.movePucks(vector); // First run
     this.movePucksOnMouse();
   }
 
