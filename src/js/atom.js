@@ -105,7 +105,7 @@ class Atom {
     const distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
 
     if (this.AtomIsOnReboundArea()) {
-      this.next.rebound = this.calculateNextEvent();
+      this.next.rebound = this.calculateNextEvent('rebound');
       if (this.status == 'alive')
         this.setStatus('collide');
     } else if (distance > radius && this.status == 'collide') {

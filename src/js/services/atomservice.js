@@ -3,7 +3,6 @@
 
 import Atom from '../atom.js';
 import { compareVectorsForBounce } from '../helpers.js';
-import CoordsService from './coordsservice.js';
 
 class AtomService {
   static moveAtoms(atoms) {

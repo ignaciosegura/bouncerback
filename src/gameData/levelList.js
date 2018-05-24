@@ -49,22 +49,22 @@ const levelList = [
     ]
   },
   {
-    name: 'Lave Diso Riedquat',
-    levelType: 'tutorial',
-    duration: 5,
+    name: 'Chronosaedron',
+    levelType: 'game',
+    duration: 30,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
-      bpm: 115,
+      bpm: 130,
       signature: 4
     },
     sound: {
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/level1.mp3')
+      song: require('../sound/tracks/level2.mp3')
     },
-    atomSpeed: 4,
+    atomSpeed: 2,
     atomList: [
       { t: 0, b: 0 },
       { t: 4, b: 0 },
@@ -72,8 +72,11 @@ const levelList = [
       { t: 8, b: 3.5 },
       { t: 9, b: 1.5 },
       { t: 11, b: 2.75 },
+      { t: 13, b: 1 },
+      { t: 16, b: 0.5 },
+      { t: 19, b: 3.25 },
     ]
   }
 ];
-
+// Quantamorphica
 export default levelList;

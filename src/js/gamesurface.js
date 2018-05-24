@@ -9,25 +9,31 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 import GameEngine from './gameengine.js';
-
 import GameShop from './stores/gameshop.js';
 
-@inject('GameShop')
+@inject('GameShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
     super();
-    this.engine = false;
+    this.engine = null;
     this.bootGameEngine = this.bootGameEngine.bind(this);
   }
 
   bootGameEngine(e) {
-    if (this.engine !== false) return;
+    if (this.engine !== null) return;
+
     this.engine = new GameEngine(GameShop.level);
+  }
+
+  componentWillUpdate() {
+    let playground = document.getElementById('point-zero');
+    playground.remove();
+    this.engine = null;
   }
 
   render() {
     return <div id="gamesurface">
-      <svg id="the-zone" onClick={this.bootGameEngine}>
+      <svg id="the-zone" onClick={this.bootGameEngine} data-level={this.props.GameShop.level}>
         <circle id="the-circle" cx="300" cy="300" r="300" />
       </svg>
     </div>
