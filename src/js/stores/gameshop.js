@@ -10,6 +10,13 @@ class Game {
   addBounce(b = 1) {
     this.bounces += b;
   }
+
+  levelUp(l) {
+    this.level += l;
+  }
+  nextLevel() {
+    this.levelUp(1);
+  }
 }
 
 const GameShop = new Game();

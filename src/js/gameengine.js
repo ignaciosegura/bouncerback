@@ -105,6 +105,7 @@ class GameEngine {
 
     this.level.soundtrack.fadeOut();
     ClockService.stopTheClock();
+    GameShop.nextLevel();
   }
 
   checkAtomList() {

@@ -62,7 +62,7 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/level1.mp3')
+      song: require('../sound/tracks/level2.mp3')
     },
     atomSpeed: 4,
     atomList: [

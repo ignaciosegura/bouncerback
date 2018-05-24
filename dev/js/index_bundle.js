@@ -10007,6 +10007,16 @@ var Game = (_class = function () {
 
       this.bounces += b;
     }
+  }, {
+    key: 'levelUp',
+    value: function levelUp(l) {
+      this.level += l;
+    }
+  }, {
+    key: 'nextLevel',
+    value: function nextLevel() {
+      this.levelUp(1);
+    }
   }]);
 
   return Game;
@@ -15324,7 +15334,7 @@ var levelList = [{
     launch: __webpack_require__(61),
     bounce: __webpack_require__(59),
     destroy: __webpack_require__(60),
-    song: __webpack_require__(62)
+    song: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../sound/tracks/level2.mp3\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
   },
   atomSpeed: 4,
   atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }]
@@ -15834,6 +15844,7 @@ var GameEngine = function () {
 
       this.level.soundtrack.fadeOut();
       _clockservice2.default.stopTheClock();
+      _gameshop2.default.nextLevel();
     }
   }, {
     key: 'checkAtomList',
@@ -15880,9 +15891,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = __webpack_require__(24);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _mobxReact = __webpack_require__(27);
 
 var _gameengine = __webpack_require__(98);
 
@@ -15907,7 +15922,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(110);
 
-var GameSurface = function (_React$Component) {
+var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(GameSurface, _React$Component);
 
   function GameSurface(props) {
@@ -15915,7 +15930,7 @@ var GameSurface = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (GameSurface.__proto__ || Object.getPrototypeOf(GameSurface)).call(this));
 
-    _this.engine = false;
+    _this.engine = null;
     _this.bootGameEngine = _this.bootGameEngine.bind(_this);
     return _this;
   }
@@ -15923,8 +15938,17 @@ var GameSurface = function (_React$Component) {
   _createClass(GameSurface, [{
     key: 'bootGameEngine',
     value: function bootGameEngine(e) {
-      if (this.engine !== false) return;
+      if (this.engine !== null) return;
+
       this.engine = new _gameengine2.default(_gameshop2.default.level);
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      console.log('component will update');
+      var playground = document.getElementById('point-zero');
+      playground.remove();
+      this.engine = null;
     }
   }, {
     key: 'render',
@@ -15934,7 +15958,7 @@ var GameSurface = function (_React$Component) {
         { id: 'gamesurface' },
         _react2.default.createElement(
           'svg',
-          { id: 'the-zone', onClick: this.bootGameEngine },
+          { id: 'the-zone', onClick: this.bootGameEngine, 'data-level': this.props.GameShop.level },
           _react2.default.createElement('circle', { id: 'the-circle', cx: '300', cy: '300', r: '300' })
         )
       );
@@ -15942,8 +15966,7 @@ var GameSurface = function (_React$Component) {
   }]);
 
   return GameSurface;
-}(_react2.default.Component);
-
+}(_react2.default.Component)) || _class) || _class);
 exports.default = GameSurface;
 
 /***/ }),
