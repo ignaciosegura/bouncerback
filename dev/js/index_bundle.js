@@ -9912,7 +9912,7 @@ var SoundFX = function () {
     value: function fadeOut() {
       var _this = this;
 
-      var soundFrame = 10;
+      var soundFrame = 5;
       var rate = 1 * soundFrame / this.fadeoutTime;
 
       this.fadeInterval = setInterval(function () {

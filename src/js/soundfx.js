@@ -15,7 +15,7 @@ class SoundFX {
   }
 
   fadeOut() {
-    let soundFrame = 10;
+    let soundFrame = 5;
     let rate = 1 * soundFrame / this.fadeoutTime;
 
     this.fadeInterval = setInterval(
