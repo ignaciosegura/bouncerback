@@ -6,6 +6,7 @@ import { observable, computed } from 'mobx';
 class Time {
   frameRate = 60;
   millisecondsPerFrame = 1000 / this.frameRate;
+  @observable clock = 'on'; // possible values are 'on', 'off' and 'slowing-down'
   @observable tick = 0;
   @observable beat = 0;
   @observable time = 0;

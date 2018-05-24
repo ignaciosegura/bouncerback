@@ -6,13 +6,10 @@
 require('../sass/_gamesurface.scss');
 
 import React from 'react';
-import { observer, inject } from 'mobx-react';
 
 import GameEngine from './gameengine.js';
-
 import GameShop from './stores/gameshop.js';
 
-@inject('GameShop')
 class GameSurface extends React.Component {
   constructor(props) {
     super();

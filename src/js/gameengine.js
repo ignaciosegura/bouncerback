@@ -18,6 +18,7 @@ import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';
 import CoordsService from './services/coordsservice.js';
+import ClockService from './services/clockservice.js';
 
 class GameEngine {
 
@@ -30,6 +31,7 @@ class GameEngine {
     this.atoms = [];
     this.vortex = null;
     this.gameLoop = this.gameLoop.bind(this);
+    this.gameInterval;
 
     this.createPointZero('#the-zone');
 
@@ -44,7 +46,7 @@ class GameEngine {
 
     this.level.soundtrack.play();
 
-    this.gameLoopInterval = setInterval(this.gameLoop, TimeShop.millisecondsPerFrame);
+    ClockService.startGameLoop(this);
 
     this.setupAutoruns();
   }
@@ -82,8 +84,6 @@ class GameEngine {
     this.checkAtomList();
     this.checkGameOver();
     this.checkAllAtomsAreinVortex();
-
-    TimeShop.nextTick();
   }
 
   checkGameOver() {
@@ -104,7 +104,7 @@ class GameEngine {
     if (AtomService.allAtomsAreInVortex(this.atoms) !== true) return;
 
     this.level.soundtrack.fadeOut();
-    console.log('Level beaten, go to next');
+    ClockService.stopTheClock();
   }
 
   checkAtomList() {
