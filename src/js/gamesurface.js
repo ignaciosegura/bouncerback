@@ -6,11 +6,13 @@
 require('../sass/_gamesurface.scss');
 
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import GameEngine from './gameengine.js';
 
-@inject('ScoreShop')
+import GameShop from './stores/gameshop.js';
+
+@inject('GameShop')
 class GameSurface extends React.Component {
   constructor(props) {
     super();
@@ -20,7 +22,7 @@ class GameSurface extends React.Component {
 
   bootGameEngine(e) {
     if (this.engine !== false) return;
-    this.engine = new GameEngine(0);  
+    this.engine = new GameEngine(GameShop.level);
   }
 
   render() {

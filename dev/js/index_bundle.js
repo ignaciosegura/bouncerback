@@ -9895,6 +9895,10 @@ var SoundFX = function () {
     _classCallCheck(this, SoundFX);
 
     this.sound = new Audio(sound);
+    this.sound.volume = 1;
+    this.fadeoutTime = 3000;
+    this.fadeInterval;
+
     this.sound.load();
   }
 
@@ -9902,6 +9906,20 @@ var SoundFX = function () {
     key: "play",
     value: function play() {
       this.sound.play();
+    }
+  }, {
+    key: "fadeOut",
+    value: function fadeOut() {
+      var _this = this;
+
+      var soundFrame = 10;
+      var rate = 1 * soundFrame / this.fadeoutTime;
+
+      this.fadeInterval = setInterval(function () {
+        var newVolume = _this.sound.volume - rate;
+        _this.sound.volume = newVolume >= 0 ? newVolume : 0;
+        if (_this.sound.volume === 0) clearInterval(_this.fadeInterval);
+      }, soundFrame);
     }
   }]);
 
@@ -11956,110 +11974,7 @@ var Atom = function () {
 exports.default = Atom;
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _desc, _value, _class, _descriptor, _descriptor2; /* global  */
-// ScoreShop
-
-var _mobx = __webpack_require__(28);
-
-function _initDefineProp(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
-
-function _initializerWarningHelper(descriptor, context) {
-  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-}
-
-var Score = (_class = function () {
-  function Score() {
-    _classCallCheck(this, Score);
-
-    _initDefineProp(this, 'bounces', _descriptor, this);
-
-    _initDefineProp(this, 'level', _descriptor2, this);
-  }
-
-  _createClass(Score, [{
-    key: 'addBounce',
-    value: function addBounce() {
-      var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      this.bounces += b;
-    }
-  }, {
-    key: 'report',
-    get: function get() {
-      console.log('Bounces: ' + this.bounces + ' / Level: ' + this.level);
-    }
-  }]);
-
-  return Score;
-}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'bounces', [_mobx.observable], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 0;
-  }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'level', [_mobx.observable], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 1;
-  }
-}), _applyDecoratedDescriptor(_class.prototype, 'report', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'report'), _class.prototype)), _class);
-
-
-var ScoreShop = new Score();
-
-exports.default = ScoreShop;
-
-/***/ }),
+/* 55 */,
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15374,9 +15289,9 @@ var _gamesurface = __webpack_require__(98);
 
 var _gamesurface2 = _interopRequireDefault(_gamesurface);
 
-var _scoreshop = __webpack_require__(55);
+var _gameshop = __webpack_require__(232);
 
-var _scoreshop2 = _interopRequireDefault(_scoreshop);
+var _gameshop2 = _interopRequireDefault(_gameshop);
 
 var _mobxReact = __webpack_require__(27);
 
@@ -15392,7 +15307,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(113); // Required by Webpack to read SASS folder and generate a CSS file
 
-var Index = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
+var Index = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = function (_React$Component) {
   _inherits(Index, _React$Component);
 
   function Index() {
@@ -15420,7 +15335,7 @@ var Index = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function 
 
 _reactDom2.default.render(_react2.default.createElement(
   _mobxReact.Provider,
-  { ScoreShop: _scoreshop2.default },
+  { GameShop: _gameshop2.default },
   _react2.default.createElement(Index, null)
 ), document.getElementById('content'));
 
@@ -15531,7 +15446,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Dummy = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
+var Dummy = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = function (_React$Component) {
   _inherits(Dummy, _React$Component);
 
   function Dummy() {
@@ -15546,7 +15461,7 @@ var Dummy = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function 
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dummy.__proto__ || Object.getPrototypeOf(Dummy)).call.apply(_ref, [this].concat(args))), _this), _this.clickedMe = function (e) {
-      _this.props.ScoreShop.addBounce();
+      _this.props.GameShop.addBounce();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -15663,9 +15578,9 @@ var _levelList = __webpack_require__(94);
 
 var _levelList2 = _interopRequireDefault(_levelList);
 
-var _scoreshop = __webpack_require__(55);
+var _gameshop = __webpack_require__(232);
 
-var _scoreshop2 = _interopRequireDefault(_scoreshop);
+var _gameshop2 = _interopRequireDefault(_gameshop);
 
 var _timeshop = __webpack_require__(56);
 
@@ -15726,6 +15641,8 @@ var GameEngine = function () {
 
     var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
 
+    this.level.soundtrack.play();
+
     this.gameLoopInterval = setInterval(this.gameLoop, _timeshop2.default.millisecondsPerFrame);
 
     this.setupAutoruns();
@@ -15736,7 +15653,7 @@ var GameEngine = function () {
     value: function setupAutoruns() {
       var _this = this;
 
-      (0, _mobx.autorun)(function () {
+      var createVortex = (0, _mobx.autorun)(function () {
         if (!_timeshop2.default.levelIsOver || _this.level.levelPassAction !== 'next' || _this.vortex !== null) return;
 
         _this.vortex = new _vortex2.default(_this.gameSurfaceCoords.radius);
@@ -15760,11 +15677,12 @@ var GameEngine = function () {
       _atomservice2.default.moveAtoms(this.atoms);
       bounces = _atomservice2.default.bounceAtoms(this.atoms, this.pucks);
 
-      if (bounces > 0) _scoreshop2.default.addBounce(bounces);
+      if (bounces > 0) _gameshop2.default.addBounce(bounces);
 
       this.checkVortex();
       this.checkAtomList();
       this.checkGameOver();
+      this.checkAllAtomsAreinVortex();
 
       _timeshop2.default.nextTick();
     }
@@ -15782,6 +15700,14 @@ var GameEngine = function () {
       if (this.vortex === null || this.vortex.active === false) return;
 
       _atomservice2.default.checkVortex(this.atoms, this.vortex);
+    }
+  }, {
+    key: 'checkAllAtomsAreinVortex',
+    value: function checkAllAtomsAreinVortex() {
+      if (_atomservice2.default.allAtomsAreInVortex(this.atoms) !== true) return;
+
+      this.level.soundtrack.fadeOut();
+      console.log('Level beaten, go to next');
     }
   }, {
     key: 'checkAtomList',
@@ -15840,6 +15766,10 @@ var _gameengine = __webpack_require__(97);
 
 var _gameengine2 = _interopRequireDefault(_gameengine);
 
+var _gameshop = __webpack_require__(232);
+
+var _gameshop2 = _interopRequireDefault(_gameshop);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15855,7 +15785,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(109);
 
-var GameSurface = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = function (_React$Component) {
+var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = function (_React$Component) {
   _inherits(GameSurface, _React$Component);
 
   function GameSurface(props) {
@@ -15872,7 +15802,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = fun
     key: 'bootGameEngine',
     value: function bootGameEngine(e) {
       if (this.engine !== false) return;
-      this.engine = new _gameengine2.default(0);
+      this.engine = new _gameengine2.default(_gameshop2.default.level);
     }
   }, {
     key: 'render',
@@ -15941,10 +15871,6 @@ var _soundfx = __webpack_require__(36);
 
 var _soundfx2 = _interopRequireDefault(_soundfx);
 
-var _atom = __webpack_require__(54);
-
-var _atom2 = _interopRequireDefault(_atom);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15956,7 +15882,6 @@ var Level = function () {
     for (var k in setup) {
       this[k] = setup[k];
     }
-    this.levelIsOver = false;
     this.nextAtom = {
       order: 0,
       tick: 0
@@ -15964,15 +15889,9 @@ var Level = function () {
     this.atoms = [];
 
     this.soundtrack = new _soundfx2.default(setup.sound.song);
-    this.soundtrack.play();
   }
 
   _createClass(Level, [{
-    key: 'isLevelOver',
-    value: function isLevelOver(times) {
-      return times >= this.levelLength;
-    }
-  }, {
     key: 'areAllAtomsOut',
     value: function areAllAtomsOut() {
       return this.nextAtom.order >= this.atomList.length;
@@ -16074,7 +15993,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(110);
 
-var Scoreboard = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
+var Scoreboard = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(Scoreboard, _React$Component);
 
   function Scoreboard() {
@@ -16086,7 +16005,7 @@ var Scoreboard = (_dec = (0, _mobxReact.inject)('ScoreShop'), _dec(_class = (0, 
   _createClass(Scoreboard, [{
     key: 'render',
     value: function render() {
-      var score = this.props.ScoreShop[this.props.type];
+      var score = this.props.GameShop[this.props.type];
       return _react2.default.createElement(
         'div',
         { className: 'scoreboard ' + this.props.type },
@@ -16204,6 +16123,15 @@ var AtomService = function () {
       atoms.forEach(function (a) {
         return a.checkVortex(vortexActiveRadius);
       });
+    }
+  }, {
+    key: 'allAtomsAreInVortex',
+    value: function allAtomsAreInVortex(atoms) {
+      var capturedAtoms = atoms.reduce(function (ax, current) {
+        return current.status == 'captured' ? ax + 1 : ax;
+      }, 0);
+
+      return capturedAtoms === atoms.length;
     }
   }]);
 
@@ -28902,6 +28830,118 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(93);
 
+
+/***/ }),
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _desc, _value, _class, _descriptor, _descriptor2; /* global  */
+// GameShop
+
+var _mobx = __webpack_require__(28);
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+function _initializerWarningHelper(descriptor, context) {
+  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+}
+
+var Game = (_class = function () {
+  function Game() {
+    _classCallCheck(this, Game);
+
+    _initDefineProp(this, 'bounces', _descriptor, this);
+
+    _initDefineProp(this, 'level', _descriptor2, this);
+  }
+
+  _createClass(Game, [{
+    key: 'addBounce',
+    value: function addBounce() {
+      var b = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      this.bounces += b;
+    }
+  }]);
+
+  return Game;
+}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'bounces', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'level', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+})), _class);
+
+
+var GameShop = new Game();
+
+exports.default = GameShop;
 
 /***/ })
 /******/ ]);

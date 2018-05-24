@@ -1,17 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.atom {
-  fill: white;
-  stroke: none; }
-  .atom.dying {
-    fill: #900;
-    filter: drop-shadow(0 0 25px #900);
-    opacity: 0; }
-  .atom.vortex {
-    fill: #990; }
-  .atom.captured {
-    fill: #88ffff;
-    transform: scale(0);
-    filter: drop-shadow(0 0 25px #88ffff); }
-#vortex {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);#vortex {
   position: relative;
   z-index: 100;
   fill: white;
@@ -30,6 +17,19 @@
   to {
     fill: white;
     transform: scale(0.1); } }
+.atom {
+  fill: white;
+  stroke: none; }
+  .atom.dying {
+    fill: #900;
+    filter: drop-shadow(0 0 25px #900);
+    opacity: 0; }
+  .atom.vortex {
+    fill: #990; }
+  .atom.captured {
+    fill: #88ffff;
+    transform: scale(0);
+    filter: drop-shadow(0 0 25px #88ffff); }
 #point-zero {
   width: 0;
   height: 0;

@@ -4,7 +4,7 @@ class SoundFX {
   constructor(sound = null) {
     this.sound = new Audio(sound);
     this.sound.volume = 1;
-    this.sound.fadeoutTime = 3000;
+    this.fadeoutTime = 3000;
     this.fadeInterval;
 
     this.sound.load();
@@ -20,8 +20,11 @@ class SoundFX {
 
     this.fadeInterval = setInterval(
       () => {
-        this.sound.volume = this.sound.volume - rate;
-        if (this.sound.volume <= 0) clearInterval(this.fadeInterval);
+        let newVolume = this.sound.volume - rate;
+        this.sound.volume = (newVolume >= 0)
+          ? newVolume
+          : 0;
+        if (this.sound.volume === 0) clearInterval(this.fadeInterval);
       }, soundFrame);
   }
 

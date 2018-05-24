@@ -3,13 +3,13 @@
 
 
 import React from 'react';
-import {inject} from 'mobx-react';
+import { inject } from 'mobx-react';
 
-@inject('ScoreShop')
+@inject('GameShop')
 class Dummy extends React.Component {
 
   clickedMe = (e) => {
-    this.props.ScoreShop.addBounce();
+    this.props.GameShop.addBounce();
   }
 
   render() {
