@@ -1,5 +1,7 @@
 // Text in-game
 
+@import '_variables.scss';
+
 .text {
   font-family: 'c64-angled', Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -27,11 +29,11 @@
   }
 
   40% {
-    color: #a00;
+    color: $dying-red;
   }
 
   to {
-    color: #ba0;
+    color: $lost-yellow;
     opacity: 0;
   }
 }
