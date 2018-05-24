@@ -49,7 +49,7 @@ const levelList = [
     ]
   },
   {
-    name: 'Chronosaedron',
+    name: 'Chronosaedrøn',
     levelType: 'game',
     duration: 30,
     levelPassAction: 'next',
@@ -75,8 +75,15 @@ const levelList = [
       { t: 13, b: 1 },
       { t: 16, b: 0.5 },
       { t: 19, b: 3.25 },
+      { t: 21, b: 0.75 },
+      { t: 24, b: 2.5 },
     ]
   }
 ];
-// Quantamorphica
+// Quantåmorphica
+// Mekanomancer
+// Femtocosmos
+// Gravcon
+// Neutronika
+// Displexoron
 export default levelList;
