@@ -9896,6 +9896,8 @@ var SoundFX = function () {
 
     this.sound = new Audio(sound);
     this.sound.volume = 1;
+    this.sound.loop = false;
+    this.sound.playbackRate = 1;
     this.fadeoutTime = 3000;
     this.fadeInterval;
 
