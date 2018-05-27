@@ -5,12 +5,11 @@ require('../sass/index.scss'); // Required by Webpack to read SASS folder and ge
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Scoreboard from './scoreboard.js';
-import Dummy from './dummy.js';
 import GameSurface from './gamesurface.js';
 import GameShop from './stores/gameshop.js';
+import DefaultsShop from './stores/defaultsshop.js';
 import { Provider, inject } from 'mobx-react';
 
-@inject('GameShop')
 class Index extends React.Component {
 
   render() {
@@ -23,6 +22,6 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(
-  <Provider GameShop={GameShop}><Index /></Provider>,
+  <Provider GameShop={GameShop} DefaultsShop={DefaultsShop}><Index /></Provider>,
   document.getElementById('content')
 );

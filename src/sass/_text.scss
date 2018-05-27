@@ -4,22 +4,33 @@
 
 .text {
   font-family: 'c64-angled', Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   color: white;
 
   position: absolute;
-  top: 35%;
+  top: 60%;  
   left: 50%;
   width: 80vw;
   text-align: center;
 
   transform: translate(-50%, 0);
 
-  animation: text-removal 1.5s normal ease-in-out 3.5s 1 running;
+  &.title,
+  &.plain,
+  &.clicked {
+    animation: text-removal 1.5s normal ease-in-out 3.5s 1 running;
+  }
 
   &.title {
-    font-size: 40px;
+    top: 35%;
+    font-size: 44px;
   }
+  &.clicked {
+    cursor: pointer;
+    animation-delay: 0s;
+  }
+
+
 }
 
 @keyframes text-removal {

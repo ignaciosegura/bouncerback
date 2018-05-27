@@ -111,7 +111,7 @@ const levelList = [
     ]
   }
 ];
-// Synthetic
+// Synthetogenesis
 // Quantåmorphica
 // Mekanomancer
 // Femtocosmos

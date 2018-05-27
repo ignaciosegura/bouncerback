@@ -4,11 +4,14 @@
 
 require('../sass/_text.scss');
 
+import GameShop from './stores/gameshop.js';
+import DefaultsShop from './stores/defaultsshop.js';
+
 class Text {
   constructor(text, type = 'plain') {
     this.text = text;
     this.type = type;
-    this.timeForRemoval = 5000;
+    this.timeForRemoval = DefaultsShop.text.timeForRemoval;
 
     this.render();
   }

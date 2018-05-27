@@ -26,7 +26,11 @@ class SoundFX {
         this.sound.volume = (newVolume >= 0)
           ? newVolume
           : 0;
-        if (this.sound.volume === 0) clearInterval(this.fadeInterval);
+        if (this.sound.volume === 0) {
+          this.sound.pause();
+          clearInterval(this.fadeInterval);
+
+        }
       }, soundFrame);
   }
 
