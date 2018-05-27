@@ -15338,7 +15338,7 @@ var levelList = [{
 // Femtocosmos
 // Gravcon
 // Neutronika
-// Displexoron
+// Hexerion
 exports.default = levelList;
 
 /***/ }),

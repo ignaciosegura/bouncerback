@@ -40,12 +40,43 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/level1.mp3')
+      song: require('../sound/tracks/tutorial.mp3')
     },
     atomSpeed: 4,
     atomList: [
       { t: 0, b: 0 },
       { t: 1, b: 0 },
+    ]
+  },
+  {
+    name: 'Femtocosmos',
+    levelType: 'game',
+    duration: 16,
+    levelPassAction: 'next',
+    gameOverAction: 'gameover',
+    time: {
+      bpm: 130,
+      signature: 4
+    },
+    sound: {
+      launch: require('../sound/launch.mp3'),
+      bounce: require('../sound/bounce_dry.mp3'),
+      destroy: require('../sound/destroy.mp3'),
+      song: require('../sound/tracks/femtocosmos.mp3')
+    },
+    atomSpeed: 2,
+    atomList: [
+      { t: 0, b: 0 },
+      { t: 4, b: 0 },
+      { t: 6, b: 1.5 },
+      { t: 8, b: 3.5 },
+      { t: 9, b: 1.5 },
+      { t: 11, b: 2.75 },
+      { t: 13, b: 1 },
+      { t: 16, b: 0.5 },
+      { t: 19, b: 3.25 },
+      { t: 21, b: 0.75 },
+      { t: 24, b: 2.5 },
     ]
   },
   {
@@ -62,7 +93,7 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/level2.mp3')
+      song: require('../sound/tracks/chronosaedron.mp3')
     },
     atomSpeed: 2,
     atomList: [
@@ -80,10 +111,11 @@ const levelList = [
     ]
   }
 ];
+// Synthetic
 // Quantåmorphica
 // Mekanomancer
 // Femtocosmos
 // Gravcon
 // Neutronika
-// Displexoron
+// Hexerion
 export default levelList;
