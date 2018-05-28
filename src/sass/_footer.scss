@@ -1,0 +1,23 @@
+// Footer
+
+@import '_variables.scss';
+
+footer {
+  font-size: 16px;
+  color: white;
+  position: fixed;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+
+  a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $blind-blue;
+    }
+  }
+}
