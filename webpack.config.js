@@ -1,5 +1,5 @@
 // *** COMMON CONFIG OPTIONS *** //
-var siteTitle = 'BOUNCEBACK';
+var siteTitle = 'BOUNCERBACK';
 var faviconPath = './src/img/favicon.png';
 
 // In webpack.config.js
