@@ -29229,7 +29229,7 @@ var TextService = function () {
   }, {
     key: 'renderReadyText',
     value: function renderReadyText() {
-      return this.renderText('I\'m ready', 'ready');
+      return this.renderText('I\'m ready!', 'ready');
     }
   }, {
     key: 'renderText',

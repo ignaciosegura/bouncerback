@@ -9,7 +9,7 @@ class TextService {
   }
 
   static renderReadyText() {
-    return this.renderText('I\'m ready', 'ready');
+    return this.renderText('I\'m ready!', 'ready');
   }
 
   static renderText(text, type) {

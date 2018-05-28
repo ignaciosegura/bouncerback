@@ -40,7 +40,8 @@
   width: auto;
   white-space: nowrap;
   text-align: center;
-  transform: translate(-50%); }
+  transform: translate(-50%);
+  animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   .text.fadeout {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
@@ -51,6 +52,18 @@
     top: 50%;
     padding: 0.5em 0.5em 0.6em;
     border: solid white 4px; }
+
+@keyframes text-entry {
+  from {
+    opacity: 0;
+    color: #990;
+    border-color: #990; }
+  60% {
+    color: #900;
+    border-color: #990; }
+  to {
+    color: white;
+    border-color: white; } }
 
 @keyframes text-removal {
   from {
