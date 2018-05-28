@@ -45,7 +45,7 @@
   .text.fadeout {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
-    top: 30%;
+    top: 35%;
     font-size: 44px; }
   .text.ready {
     cursor: pointer;
@@ -94,7 +94,7 @@
   height: 0;
   overflow: visible; }
   #point-zero * {
-    transition: fill linear 1s, filter linear 2s, opacity linear 2s; }
+    transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
   #point-zero rect {
     fill: white;
     stroke: none; }
