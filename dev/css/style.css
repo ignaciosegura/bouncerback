@@ -1,27 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.text {
-  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  color: white;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  width: 80vw;
-  text-align: center;
-  transform: translate(-50%, 0);
-  animation: text-removal 1.5s normal ease-in-out 3.5s 1 running; }
-  .text.title {
-    font-size: 40px; }
-
-@keyframes text-removal {
-  from {
-    color: white;
-    opacity: 1; }
-  40% {
-    color: #900; }
-  to {
-    color: #990;
-    opacity: 0; } }
-#vortex {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);#vortex {
   position: relative;
   z-index: 100;
   fill: white;
@@ -53,6 +30,65 @@
     fill: #88ffff;
     transform: scale(0);
     filter: drop-shadow(0 0 25px #88ffff); }
+.text {
+  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  color: white;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: auto;
+  white-space: nowrap;
+  text-align: center;
+  transform: translate(-50%);
+  animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
+  .text.fadeout {
+    animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
+  .text.title {
+    top: 30%;
+    font-size: 44px; }
+  .text.ready {
+    cursor: pointer;
+    top: 50%;
+    padding: 0.5em 0.5em 0.6em;
+    border: solid white 4px; }
+
+@keyframes text-entry {
+  from {
+    opacity: 0;
+    color: #990;
+    border-color: #990; }
+  60% {
+    color: #900;
+    border-color: #990; }
+  to {
+    color: white;
+    border-color: white; } }
+
+@keyframes text-removal {
+  from {
+    color: white;
+    border-color: white;
+    opacity: 1;
+    transform: translate(-50%); }
+  40% {
+    color: #900;
+    border-color: #900; }
+  69% {
+    transform: translate(-50%); }
+  70% {
+    transform: translate(-50%, -100%); }
+  74% {
+    transform: translate(-50%, 100%); }
+  78% {
+    transform: translate(-50%, -100%); }
+  82% {
+    transform: translate(-50%, 100%); }
+  to {
+    color: #990;
+    border-color: #990;
+    opacity: 0;
+    transform: translate(-50%); } }
 #point-zero {
   width: 0;
   height: 0;

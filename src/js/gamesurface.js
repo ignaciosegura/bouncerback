@@ -6,23 +6,30 @@
 require('../sass/_gamesurface.scss');
 
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import { observer, inject } from 'mobx-react';
+
+import Ready from './ready.js';
 
 import GameEngine from './gameengine.js';
 import GameShop from './stores/gameshop.js';
 
-@inject('GameShop') @observer
+@inject('DefaultsShop', 'GameShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
     super();
     this.engine = null;
-    this.bootGameEngine = this.bootGameEngine.bind(this);
   }
 
-  bootGameEngine(e) {
+  componentDidMount() {
     if (this.engine !== null) return;
 
     this.engine = new GameEngine(GameShop.level);
+  }
+
+  componentDidUpdate() {
+    this.componentDidMount();
   }
 
   componentWillUpdate() {
@@ -33,7 +40,7 @@ class GameSurface extends React.Component {
 
   render() {
     return <div id="gamesurface">
-      <svg id="the-zone" onClick={this.bootGameEngine} data-level={this.props.GameShop.level}>
+      <svg id="the-zone" data-level={this.props.GameShop.level}>
         <circle id="the-circle" cx="300" cy="300" r="300" />
       </svg>
     </div>
