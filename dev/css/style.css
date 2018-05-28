@@ -49,7 +49,7 @@
   .text.ready {
     cursor: pointer;
     padding: 0.5em 0.5em 0.6em;
-    border: solid white 2px; }
+    border: solid white 4px; }
 
 @keyframes text-removal {
   from {
