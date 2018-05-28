@@ -25,7 +25,6 @@ class CoordsService {
   }
 
   static getXYFromVector(vector, displacement) {
-    let debug = Math.cos(vector) * displacement;
     return {
       x: Math.cos(vector) * displacement,
       y: Math.sin(vector) * displacement
