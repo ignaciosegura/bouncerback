@@ -3,10 +3,14 @@
 import { observable, computed } from 'mobx';
 
 class Default {
-  text = {
-    timeForRemoval: 5000,
-    readingTime: 3500,
+  constructor() {
+    this.text = {
+      fadeoutTime: 1500,
+      readingTime: 3500,
+    }
+    this.TimeForRemoval = this.fadeoutTime + this.readingTime;
   }
+
 }
 
 const DefaultsShop = new Default();

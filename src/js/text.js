@@ -4,28 +4,38 @@
 
 require('../sass/_text.scss');
 
-import GameShop from './stores/gameshop.js';
-import DefaultsShop from './stores/defaultsshop.js';
+import TimeShop from './stores/timeshop.js';
 
 class Text {
-  constructor(text, type = 'plain') {
+  constructor(text, type = 'plain', timeForRemoval = null) {
     this.text = text;
     this.type = type;
-    this.timeForRemoval = DefaultsShop.text.timeForRemoval;
+    this.tick = TimeShop.tick;
+    this.domElement = null;
+    this.timeForRemoval = timeForRemoval;
 
     this.render();
+  
+    if(this.timeForRemoval !== null) {
+      this.scheduleRemoval(this.timeForRemoval);
+    }
   }
 
   render() {
     let gameSurface = document.getElementById('gamesurface');
-    let textToRender = `<div class="text ${this.type}">${this.text}</div>`;
+    let textId = `${this.type}-${this.tick}`;
+    let textToRender = `<div id="${textId}" class="text ${this.type}">${this.text}</div>`;
     gameSurface.insertAdjacentHTML('beforeend', textToRender);
-    this.scheduleRemoval();
+
+    this.domElement = document.getElementById(textId);
   }
 
-  scheduleRemoval() {
-    let textToRemove = document.querySelector('#gamesurface > .text');
-    setTimeout(() => textToRemove.remove(), this.timeForRemoval);
+  scheduleRemoval(timeForRemoval) {
+    setTimeout(() => this.remove(), timeForRemoval);
+  }
+
+  remove() {
+    this.domElement.remove();
   }
 }
 

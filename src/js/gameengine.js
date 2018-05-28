@@ -13,12 +13,13 @@ import TimeShop from './stores/timeshop.js';
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
 import Level from './level.js';
-import Text from './text.js';
 import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
+import TextService from './services/textservice.js';
+import DefaultsShop from './stores/defaultsshop';
 
 class GameEngine {
 
@@ -33,10 +34,23 @@ class GameEngine {
     this.gameLoop = this.gameLoop.bind(this);
     this.gameInterval;
 
+    this.setupReadyState();
+  }
+
+  setupReadyState() {
     this.createPointZero('#the-zone');
+    let title = TextService.renderTitle(this.level.name);
+    let readyText = TextService.renderReadyText();
+    let fadeoutTime = DefaultsShop.text.fadeoutTime;
 
-    this.renderLevelName();
+    readyText.domElement.onclick = () => {
+      this.startGame();
+      TextService.scheduleTextRemoval(title, fadeoutTime);
+      TextService.scheduleTextRemoval(readyText, fadeoutTime);
+    }
+  }
 
+  startGame() {
     let puck = new Puck(0);
     puck.placePuck();
     this.pucks.push(puck);
@@ -65,10 +79,6 @@ class GameEngine {
     let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
     let theZone = document.querySelector(place);
     theZone.insertAdjacentHTML('beforeend', puckContainer);
-  }
-
-  renderLevelName() {
-    new Text(this.level.name, 'title');
   }
 
   gameLoop() {
