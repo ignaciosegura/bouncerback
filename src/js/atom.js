@@ -123,10 +123,10 @@ class Atom {
     let speedFactor;
 
     if (isMovingAway) {
-      speedFactor = 1 / (this.next.rebound - currentTick);
+      speedFactor = CoordsService.makeFinite(1 / (this.next.rebound - currentTick));
       return this.speed.current - (this.speed.original * speedFactor);
     } else {
-      speedFactor = 1 / (this.next.center - currentTick);
+      speedFactor = CoordsService.makeFinite(1 / (this.next.center - currentTick));
       return this.speed.current + speedFactor;
     }
   }
@@ -135,6 +135,7 @@ class Atom {
     let atomPosition = this.atomPosition;
     let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
     this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
+
     this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
   }
 

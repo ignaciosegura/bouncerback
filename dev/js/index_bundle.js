@@ -9859,10 +9859,16 @@ var CoordsService = function () {
   }, {
     key: 'getXYFromVector',
     value: function getXYFromVector(vector, displacement) {
+      var debug = Math.cos(vector) * displacement;
       return {
         x: Math.cos(vector) * displacement,
         y: Math.sin(vector) * displacement
       };
+    }
+  }, {
+    key: 'makeFinite',
+    value: function makeFinite(value) {
+      return isFinite(value) ? value : 0;
     }
   }]);
 
@@ -15511,10 +15517,10 @@ var Atom = function () {
       var speedFactor = void 0;
 
       if (isMovingAway) {
-        speedFactor = 1 / (this.next.rebound - currentTick);
+        speedFactor = _coordsservice2.default.makeFinite(1 / (this.next.rebound - currentTick));
         return this.speed.current - this.speed.original * speedFactor;
       } else {
-        speedFactor = 1 / (this.next.center - currentTick);
+        speedFactor = _coordsservice2.default.makeFinite(1 / (this.next.center - currentTick));
         return this.speed.current + speedFactor;
       }
     }
@@ -15524,6 +15530,7 @@ var Atom = function () {
       var atomPosition = this.atomPosition;
       var displacement = _coordsservice2.default.getXYFromVector(this.vector, this.speed.current);
       this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
+
       this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
     }
   }, {
