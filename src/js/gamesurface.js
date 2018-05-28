@@ -28,6 +28,10 @@ class GameSurface extends React.Component {
     this.engine = new GameEngine(GameShop.level);
   }
 
+  componentDidUpdate() {
+    this.componentDidMount();
+  }
+
   componentWillUpdate() {
     let playground = document.getElementById('point-zero');
     playground.remove();

@@ -15762,6 +15762,11 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('DefaultsShop', 'GameShop'), _d
       this.engine = new _gameengine2.default(_gameshop2.default.level);
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.componentDidMount();
+    }
+  }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate() {
       var playground = document.getElementById('point-zero');
