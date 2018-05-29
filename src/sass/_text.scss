@@ -3,7 +3,6 @@
 @import '_variables.scss';
 
 .text {
-  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
   font-size: 24px;
   color: white;
 
@@ -15,7 +14,7 @@
   text-align: center;
 
   transform: translate(-50%);
-  animation: text-entry 0.5s ease-in-out 0s 1 forwards;
+  animation: $animation-text-entry;
 
   &.fadeout {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards;

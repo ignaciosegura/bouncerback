@@ -1,4 +1,17 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);#vortex {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.scoreboard {
+  padding-top: 1em;
+  width: 8em;
+  text-align: center;
+  text-transform: uppercase; }
+  .scoreboard.bounces {
+    float: left; }
+  .scoreboard.level {
+    float: right; }
+  .scoreboard .label,
+  .scoreboard .value.updated {
+    animation: text-entry 0.5s ease-in-out 0s 1 forwards;
+    animation-duration: 0.25s; }
+#vortex {
   position: relative;
   z-index: 100;
   fill: white;
@@ -31,7 +44,6 @@
     transform: scale(0);
     filter: drop-shadow(0 0 25px #88ffff); }
 .text {
-  font-family: 'c64-angled', Helvetica, Arial, sans-serif;
   font-size: 24px;
   color: white;
   position: absolute;
@@ -124,6 +136,7 @@ svg#the-zone {
   stroke-width: 2;
   fill: transparent; }
 footer {
+  font-family: 'Didact Gothic', sans-serif;
   font-size: 16px;
   color: white;
   position: fixed;
@@ -144,7 +157,7 @@ footer {
 html, body {
   background: black;
   color: white;
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: "c64-angled", Helvetica, Arial, sans-serif;
   font-size: 24px;
   margin: 0;
   padding: 0; }
