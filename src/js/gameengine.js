@@ -43,7 +43,8 @@ class GameEngine {
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
 
-    readyText.domElement.onclick = () => {
+    readyText.domElement.onclick = (e) => {
+      e.preventDefault();
       this.startGame();
       TextService.scheduleTextRemoval(title, fadeoutTime);
       TextService.scheduleTextRemoval(readyText, fadeoutTime);

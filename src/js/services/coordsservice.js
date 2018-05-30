@@ -44,6 +44,17 @@ class CoordsService {
     let target = document.querySelector(cssPlace);
     target.insertAdjacentHTML('beforeend', puckContainer);
   }
+
+  static getXYFromInput(e) {
+    let pathToCoords = (e.type == 'touchmove')
+      ? e.changedTouches[0]
+      : e;
+
+    return {
+      x: pathToCoords.clientX,
+      y: pathToCoords.clientY
+    };
+  }
 }
 
 export default CoordsService;
