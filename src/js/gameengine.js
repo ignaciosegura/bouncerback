@@ -55,7 +55,7 @@ class GameEngine {
     this.pucks.push(new Puck(0));
     this.pucks.push(new Puck(1));
 
-    let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
+    new GameController(this.gameSurfaceCoords, this.pucks);
 
     this.level.soundtrack.play();
 

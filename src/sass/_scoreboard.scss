@@ -3,16 +3,18 @@
 @import '_variables.scss';
 
 .scoreboard {
-  padding-top: 1em;
+  position: fixed;
+  z-index: 0;
+  top: 1em;
   width: 8em;
   text-align: center;
   text-transform: uppercase;
   
   &.bounces {
-    float: left;
+    left: 1em;
   }
   &.level {
-    float: right;
+    right: 1em;
   }
 
   .label,

@@ -13,8 +13,12 @@ import { Provider, inject } from 'mobx-react';
 
 class Index extends React.Component {
 
+  preventDefault(e) {
+    e.preventDefault();
+  }
+
   render() {
-    return <div id="container">
+    return <div id="container" onTouchMove={this.preventDefault}>
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
       <GameSurface />

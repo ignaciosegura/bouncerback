@@ -6825,11 +6825,16 @@ var Index = function (_React$Component) {
   }
 
   _createClass(Index, [{
+    key: 'preventDefault',
+    value: function preventDefault(e) {
+      e.preventDefault();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'container' },
+        { id: 'container', onTouchMove: this.preventDefault },
         _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
         _react2.default.createElement(_gamesurface2.default, null),
@@ -7395,7 +7400,7 @@ var GameEngine = function () {
       this.pucks.push(new _puck2.default(0));
       this.pucks.push(new _puck2.default(1));
 
-      var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
+      new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
 
       this.level.soundtrack.play();
 
