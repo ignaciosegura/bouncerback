@@ -6580,7 +6580,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var levelList = [{
   name: 'Tutorial',
-  levelType: 'tutorial',
+  type: 'tutorial',
   duration: 2,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
@@ -7120,7 +7120,7 @@ var GameEngine = function () {
       _atomservice2.default.moveAtoms(this.atoms);
       bounces = _atomservice2.default.bounceAtoms(this.atoms, this.pucks);
 
-      if (bounces > 0) _gameshop2.default.addBounce(bounces);
+      if (bounces > 0 && this.level.type !== 'tutorial') _gameshop2.default.addBounce(bounces);
 
       this.checkVortex();
       this.checkAtomList();

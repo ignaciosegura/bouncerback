@@ -83,7 +83,7 @@ class GameEngine {
     AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
 
-    if (bounces > 0) GameShop.addBounce(bounces);
+    if (bounces > 0 && this.level.type !== 'tutorial') GameShop.addBounce(bounces);
 
     this.checkVortex();
     this.checkAtomList();
