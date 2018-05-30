@@ -13,22 +13,20 @@ class GameController {
   }
 
   movePucksOnMouse() {
-    let mousePos;
-    let mouseVector;
-
-    document.onmousemove = (e) => {
-      mousePos = {
-        x: e.clientX,
-        y: e.clientY
-      };
-      mouseVector = this._getMouseVector(mousePos);
-      this.movePucks(mouseVector);
+    let mouseMoveHandler = (e) => {
+      let vector = this.getVectorFromInput(e);
+      this.movePucks(vector);
     };
+
+    ['mousemove', 'touchmove'].forEach(e => {
+      document.addEventListener(e, mouseMoveHandler.bind(this), false);
+    });
   }
 
-  _getMouseVector(mousePos) {
-    let x = mousePos.x - this.gameSurfaceCoords.centerX;
-    let y = mousePos.y - this.gameSurfaceCoords.centerY;
+  getVectorFromInput(e) {
+    let position = CoordsService.getXYFromInput(e);
+    let x = position.x - this.gameSurfaceCoords.centerX;
+    let y = position.y - this.gameSurfaceCoords.centerY;
     return CoordsService.getVectorFromXY(x, y);
   }
 
