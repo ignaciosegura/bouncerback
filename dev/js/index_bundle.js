@@ -7228,21 +7228,21 @@ var GameController = function () {
     this.pucks = pucks;
 
     this.movePucks(vector); // First run
-    this.movePucksOnMouse();
+    this.movePucksOnInput();
   }
 
   _createClass(GameController, [{
-    key: 'movePucksOnMouse',
-    value: function movePucksOnMouse() {
+    key: 'movePucksOnInput',
+    value: function movePucksOnInput() {
       var _this = this;
 
-      var mouseMoveHandler = function mouseMoveHandler(e) {
+      var inputHandler = function inputHandler(e) {
         var vector = _this.getVectorFromInput(e);
         _this.movePucks(vector);
       };
 
       ['mousemove', 'touchmove'].forEach(function (e) {
-        document.addEventListener(e, mouseMoveHandler.bind(_this), false);
+        document.addEventListener(e, inputHandler.bind(_this), false);
       });
     }
   }, {
@@ -7384,10 +7384,7 @@ var GameEngine = function () {
   }, {
     key: 'startGame',
     value: function startGame() {
-      var puck = new _puck2.default(0);
-      puck.placePuck();
-      this.pucks.push(puck);
-      this.pucks[0].domElement = document.querySelector('#point-zero rect');
+      this.pucks.push(new _puck2.default(0));
 
       var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
 
@@ -7700,14 +7697,19 @@ var Puck = function () {
     };
     this.angle = angle * Math.PI / 180;
     this.vector;
+    this.domElement;
+
+    this.domElement = this.placeInDOM();
   }
 
   _createClass(Puck, [{
-    key: 'placePuck',
-    value: function placePuck() {
-      var puck = '<rect\n      index="' + this.index + '"\n      x="' + this.translateCoords.x + '"\n      y="' + this.translateCoords.y + '"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n    />';
+    key: 'placeInDOM',
+    value: function placeInDOM() {
+      var puck = '<rect class="puck"\n      index="' + this.index + '"\n      x="' + this.translateCoords.x + '"\n      y="' + this.translateCoords.y + '"\n      width="' + this.size.width + '"\n      height="' + this.size.height + '"\n    />';
       var putContainer = document.getElementById('point-zero');
       putContainer.insertAdjacentHTML('beforeend', puck);
+
+      return document.querySelector('#point-zero .puck[index="' + this.index + '"]');
     }
   }], [{
     key: 'getSize',

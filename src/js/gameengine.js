@@ -52,10 +52,7 @@ class GameEngine {
   }
 
   startGame() {
-    let puck = new Puck(0);
-    puck.placePuck();
-    this.pucks.push(puck);
-    this.pucks[0].domElement = document.querySelector('#point-zero rect');
+    this.pucks.push(new Puck(0));
 
     let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
 

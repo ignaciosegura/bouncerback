@@ -9,17 +9,17 @@ class GameController {
     this.pucks = pucks;
 
     this.movePucks(vector); // First run
-    this.movePucksOnMouse();
+    this.movePucksOnInput();
   }
 
-  movePucksOnMouse() {
-    let mouseMoveHandler = (e) => {
+  movePucksOnInput() {
+    let inputHandler = (e) => {
       let vector = this.getVectorFromInput(e);
       this.movePucks(vector);
     };
 
     ['mousemove', 'touchmove'].forEach(e => {
-      document.addEventListener(e, mouseMoveHandler.bind(this), false);
+      document.addEventListener(e, inputHandler.bind(this), false);
     });
   }
 
