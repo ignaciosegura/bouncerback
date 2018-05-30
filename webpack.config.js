@@ -94,7 +94,7 @@ module.exports = {
       {
         test: /\.(png|jpg|svg)$/,
         exclude: /node_modules/,
-        loader: 'svg-url-loader?limit=10000&name=images/[name].[ext]'
+        loader: 'url-loader?limit=10000&name=img/[name].[ext]'
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,

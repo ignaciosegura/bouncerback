@@ -5,6 +5,7 @@ require('../sass/index.scss'); // Required by Webpack to read SASS folder and ge
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Scoreboard from './scoreboard.js';
+import MainTitle from './routes/maintitle.js';
 import GameSurface from './gamesurface.js';
 import Footer from './footer.js';
 import GameShop from './stores/gameshop.js';
@@ -17,6 +18,7 @@ class Index extends React.Component {
     return <div id="container">
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
+      <MainTitle />
       <GameSurface />
       <Footer />
     </div>

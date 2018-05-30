@@ -10,6 +10,14 @@
   .scoreboard .label,
   .scoreboard .value {
     animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
+#main-title {
+  position: absolute;
+  font-size: 24px;
+  top: 1em;
+  height: 1em;
+  left: 50%;
+  max-width: 40%;
+  transform: translate(-50%, 0); }
 #point-zero {
   width: 0;
   height: 0;
@@ -167,6 +175,7 @@ html, body {
   color: white;
   font-family: "c64-angled", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  line-height: 1;
   margin: 0;
   padding: 0; }
 

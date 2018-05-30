@@ -40,7 +40,6 @@
     "resolve-url": "^0.2.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
-    "svg-url-loader": "^2.0.2",
     "transformation-matrix": "^1.10.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^0.5.7",

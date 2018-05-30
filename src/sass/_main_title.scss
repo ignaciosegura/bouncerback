@@ -1,0 +1,14 @@
+// Main title
+
+@import '_variables.scss';
+
+#main-title {
+  position: absolute;
+  font-size: $default-font-size;
+  top: 1em;
+  height: 1em;
+  left: 50%;
+  max-width: 40%;
+
+  transform: translate(-50%, 0);
+}
