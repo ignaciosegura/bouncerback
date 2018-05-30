@@ -104,15 +104,12 @@
     border-color: #990;
     opacity: 0;
     transform: translate(-50%); } }
-#point-zero {
-  width: 0;
-  height: 0;
-  overflow: visible; }
-  #point-zero * {
-    transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
-  #point-zero rect {
-    fill: white;
-    stroke: none; }
+#point-zero * {
+  transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
+
+#point-zero rect {
+  fill: white;
+  stroke: none; }
 #gamesurface {
   width: 100%;
   background: none;
