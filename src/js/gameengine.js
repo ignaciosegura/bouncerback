@@ -38,7 +38,7 @@ class GameEngine {
   }
 
   setupReadyState() {
-    this.createPointZero('#the-zone');
+    CoordsService.createPointZero('#the-zone');
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
@@ -73,12 +73,6 @@ class GameEngine {
 
       AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
     });
-  }
-
-  createPointZero(place) {
-    let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
-    let theZone = document.querySelector(place);
-    theZone.insertAdjacentHTML('beforeend', puckContainer);
   }
 
   gameLoop() {

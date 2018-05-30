@@ -1,4 +1,5 @@
 // Coordinates service
+require('../../sass/_point_zero.scss');
 
 class CoordsService {
 
@@ -35,6 +36,13 @@ class CoordsService {
     return isFinite(value)
       ? value
       : 0;
+  }
+
+  // Creates a Point Zero for SVG coords (required by Firefox, as set origin CSS directive doesn't work)
+  static createPointZero(cssPlace) {
+    let puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
+    let target = document.querySelector(cssPlace);
+    target.insertAdjacentHTML('beforeend', puckContainer);
   }
 }
 

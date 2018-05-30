@@ -4760,6 +4760,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Coordinates service
+__webpack_require__(80);
 
 var CoordsService = function () {
   function CoordsService() {
@@ -4803,6 +4804,16 @@ var CoordsService = function () {
     key: 'makeFinite',
     value: function makeFinite(value) {
       return isFinite(value) ? value : 0;
+    }
+
+    // Creates a Point Zero for SVG coords (required by Firefox, as set origin CSS directive doesn't work)
+
+  }, {
+    key: 'createPointZero',
+    value: function createPointZero(cssPlace) {
+      var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
+      var target = document.querySelector(cssPlace);
+      target.insertAdjacentHTML('beforeend', puckContainer);
     }
   }]);
 
@@ -7059,7 +7070,7 @@ var GameEngine = function () {
     value: function setupReadyState() {
       var _this = this;
 
-      this.createPointZero('#the-zone');
+      _coordsservice2.default.createPointZero('#the-zone');
       var title = _textservice2.default.renderTitle(this.level.name);
       var readyText = _textservice2.default.renderReadyText();
       var fadeoutTime = _defaultsshop2.default.text.fadeoutTime;
@@ -7098,13 +7109,6 @@ var GameEngine = function () {
 
         _atomservice2.default.setAtomsToVortex(_this2.atoms, _this2.vortex.timeToEffect);
       });
-    }
-  }, {
-    key: 'createPointZero',
-    value: function createPointZero(place) {
-      var puckContainer = '<svg id="point-zero" x="50%" y="50%"></svg>';
-      var theZone = document.querySelector(place);
-      theZone.insertAdjacentHTML('beforeend', puckContainer);
     }
   }, {
     key: 'gameLoop',
@@ -27363,6 +27367,25 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(23);
 
+
+/***/ }),
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -10,6 +10,10 @@
   .scoreboard .label,
   .scoreboard .value {
     animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
+#point-zero {
+  width: 0;
+  height: 0;
+  overflow: visible; }
 #vortex {
   position: relative;
   z-index: 100;
