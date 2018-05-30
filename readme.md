@@ -1,4 +1,4 @@
-BOUNCEBACK
+BOUNCERBACK
 --------------------------------
 
 Bounceback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
