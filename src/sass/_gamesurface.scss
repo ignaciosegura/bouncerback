@@ -19,10 +19,24 @@ svg#the-zone {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   overflow: visible;
+  transform: translate(-50%, -50%);
 
-  stroke: white;
-  stroke-width: 2;
-  fill: transparent;
+  #the-circle {
+    animation: zone-creation 0.5s normal ease-in-out 0s 1 forwards;    
+
+    stroke: white;
+    stroke-width: 2;
+    fill: transparent;
+  }
+}
+
+@keyframes zone-creation {
+  from {
+    transform: translate(50%, 50%) scale(0.01);
+  }
+
+  to {
+    transform: translate(0, 0) scale(1);
+  }
 }
