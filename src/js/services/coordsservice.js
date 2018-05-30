@@ -19,16 +19,22 @@ class CoordsService {
       degrees: angle * 180 / Math.PI
     }
   }
-  
+
   static getDistanceFromXY(x, y) {
     return Math.sqrt((x ** 2) + (y ** 2));
   }
-  
+
   static getXYFromVector(vector, displacement) {
     return {
       x: Math.cos(vector) * displacement,
       y: Math.sin(vector) * displacement
     }
+  }
+
+  static makeFinite(value) {
+    return isFinite(value)
+      ? value
+      : 0;
   }
 }
 

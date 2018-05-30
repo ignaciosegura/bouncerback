@@ -55,8 +55,7 @@ class AtomService {
   }
 
   static checkVortex(atoms, vortex) {
-    let vortexActiveRadius = vortex.activeRadius;
-    atoms.forEach(a => a.checkVortex(vortexActiveRadius));
+    atoms.forEach(a => a.checkVortex(vortex.activeRadius));
   }
 
   static allAtomsAreInVortex(atoms) {

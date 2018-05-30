@@ -1,0 +1,22 @@
+// Scoreboards (all them)
+
+@import '_variables.scss';
+
+.scoreboard {
+  padding-top: 1em;
+  width: 8em;
+  text-align: center;
+  text-transform: uppercase;
+  
+  &.bounces {
+    float: left;
+  }
+  &.level {
+    float: right;
+  }
+
+  .label,
+  .value {
+    animation: $animation-text-entry;
+  }
+}

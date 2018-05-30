@@ -7,7 +7,7 @@
   overflow: visible;
 
   * {
-    transition: fill linear 1s, filter linear 2s, opacity linear 2s;
+    transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s;
   }
 
   rect {

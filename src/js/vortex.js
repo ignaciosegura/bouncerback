@@ -20,8 +20,7 @@ class Vortex {
 
   createVortex(radius) {
     this.sounds.creation.play();
-    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${radius}" >
-      </circle>`;
+    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${radius}" ></circle>`;
     let pointZero = document.getElementById('point-zero');
     pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 

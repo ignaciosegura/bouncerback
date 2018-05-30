@@ -6,19 +6,17 @@
   "scripts": {
     "build-production": "NODE_ENV=production webpack",
     "build-development": "NODE_ENV=development webpack",
-    "watch-development": "NODE_ENV=development webpack -w"
+    "watch-development": "NODE_ENV=development webpack -w",
+    "deploy": "node deploy"
   },
   "author": "Nik Nak Studio www.niknak.es",
   "license": "ISC",
   "dependencies": {
     "mobx": "^4.1.1",
     "mobx-react": "^5.0.0",
-    "phaser": "^3.3.0",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
-    "react-router": "^4.1.1",
-    "superagent": "^3.5.2",
-    "transformation-matrix": "^1.10.0"
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-router": "^4.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
@@ -32,16 +30,19 @@
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "extract-text-webpack-plugin": "^2.1.0",
-    "favicons-webpack-plugin": "0.0.7",
+    "favicons-webpack-plugin": "0.0.9",
     "file-loader": "^0.11.1",
+    "ftp-deploy": "^2.1.1",
     "html-webpack-plugin": "^2.21.0",
     "install": "^0.10.0",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.9.0",
     "npm": "^4.5.0",
     "resolve-url": "^0.2.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
     "svg-url-loader": "^2.0.2",
+    "transformation-matrix": "^1.10.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^0.5.7",
     "webpack": "^2.5.0"
   }
