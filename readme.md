@@ -1,9 +1,9 @@
 BOUNCERBACK
 --------------------------------
 
-Bounceback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
+Bouncerback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
 
-Bounceback is built in vanilla ES6 JavaScript using SVG graphics with a bit of React and MobX, just because.
+Bouncerback is built in vanilla ES6 JavaScript using SVG graphics with a bit of React and MobX, just because.
 
 And it's a hundred times better with headphones.
 
