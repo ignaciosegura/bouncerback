@@ -6818,10 +6818,18 @@ __webpack_require__(49); // Required by Webpack to read SASS folder and generate
 var Index = function (_React$Component) {
   _inherits(Index, _React$Component);
 
-  function Index() {
+  function Index(props) {
     _classCallCheck(this, Index);
 
-    return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
+
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+    }, false);
+    return _this;
   }
 
   _createClass(Index, [{

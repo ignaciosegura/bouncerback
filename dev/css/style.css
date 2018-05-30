@@ -171,6 +171,7 @@ html, body {
   font-family: "c64-angled", Helvetica, Arial, sans-serif;
   font-size: 24px;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  touch-action: none; }
 
 /*# sourceMappingURL=style.css.map*/
