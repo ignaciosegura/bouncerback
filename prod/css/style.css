@@ -8,9 +8,12 @@
   .scoreboard.level {
     float: right; }
   .scoreboard .label,
-  .scoreboard .value.updated {
-    animation: text-entry 0.5s ease-in-out 0s 1 forwards;
-    animation-duration: 0.25s; }
+  .scoreboard .value {
+    animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
+#point-zero {
+  width: 0;
+  height: 0;
+  overflow: visible; }
 #vortex {
   position: relative;
   z-index: 100;
@@ -101,15 +104,12 @@
     border-color: #990;
     opacity: 0;
     transform: translate(-50%); } }
-#point-zero {
-  width: 0;
-  height: 0;
-  overflow: visible; }
-  #point-zero * {
-    transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
-  #point-zero rect {
-    fill: white;
-    stroke: none; }
+#point-zero * {
+  transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
+
+#point-zero rect {
+  fill: white;
+  stroke: none; }
 #gamesurface {
   width: 100%;
   background: none;
@@ -118,7 +118,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1; }
+  z-index: 1;
+  touch-action: none; }
 
 svg#the-zone {
   box-sizing: content-box;
@@ -130,11 +131,19 @@ svg#the-zone {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   overflow: visible;
-  stroke: white;
-  stroke-width: 2;
-  fill: transparent; }
+  transform: translate(-50%, -50%); }
+  svg#the-zone #the-circle {
+    animation: zone-creation 0.5s normal ease-in-out 0s 1 forwards;
+    stroke: white;
+    stroke-width: 2;
+    fill: transparent; }
+
+@keyframes zone-creation {
+  from {
+    transform: translate(50%, 50%) scale(0.01); }
+  to {
+    transform: translate(0, 0) scale(1); } }
 footer {
   font-family: 'Didact Gothic', sans-serif;
   font-size: 16px;
