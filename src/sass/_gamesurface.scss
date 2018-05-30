@@ -11,8 +11,7 @@
 
 svg#the-zone {
   box-sizing: content-box;
-  width: 600px;
-  height: 600px;
+  // Size is specified in DefaultShop because Firefox needs attributes instead of CSS
   padding: 20px;
   margin: 0 auto;
   display: block;

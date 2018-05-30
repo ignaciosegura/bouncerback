@@ -39,9 +39,12 @@ class GameSurface extends React.Component {
   }
 
   render() {
+    let radius = this.props.DefaultsShop.circleRadius;
+    let size = radius * 2;
+    
     return <div id="gamesurface">
-      <svg id="the-zone" data-level={this.props.GameShop.level}>
-        <circle id="the-circle" cx="300" cy="300" r="300" />
+      <svg id="the-zone" data-level={this.props.GameShop.level} width={size} height={size}>
+        <circle id="the-circle" cx={radius} cy={radius} r={radius} />
       </svg>
     </div>
   }

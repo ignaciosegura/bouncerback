@@ -4907,6 +4907,8 @@ var Default = function Default() {
     readingTime: 3500
   };
   this.TimeForRemoval = this.fadeoutTime + this.readingTime;
+
+  this.circleRadius = _mobx.observable.box(275);
 };
 
 var DefaultsShop = new Default();
@@ -7280,13 +7282,16 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('DefaultsShop', 'GameShop'), _d
   }, {
     key: 'render',
     value: function render() {
+      var radius = this.props.DefaultsShop.circleRadius;
+      var size = radius * 2;
+
       return _react2.default.createElement(
         'div',
         { id: 'gamesurface' },
         _react2.default.createElement(
           'svg',
-          { id: 'the-zone', 'data-level': this.props.GameShop.level },
-          _react2.default.createElement('circle', { id: 'the-circle', cx: '300', cy: '300', r: '300' })
+          { id: 'the-zone', 'data-level': this.props.GameShop.level, width: size, height: size },
+          _react2.default.createElement('circle', { id: 'the-circle', cx: radius, cy: radius, r: radius })
         )
       );
     }
