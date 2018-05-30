@@ -46,14 +46,16 @@ class CoordsService {
   }
 
   static getXYFromInput(e) {
-    let pathToCoords = (e.type == 'touchmove')
-      ? e.changedTouches[0]
-      : e;
+    return (e.type === 'touchmove')
+      ? Array.from(e.targetTouches).map(t => readPosition(t))
+      : [readPosition(e)];
 
-    return {
-      x: pathToCoords.clientX,
-      y: pathToCoords.clientY
-    };
+    function readPosition(path) {
+      return {
+        x: path.clientX,
+        y: path.clientY
+      };
+    }
   }
 }
 

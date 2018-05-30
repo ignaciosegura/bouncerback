@@ -4882,12 +4882,16 @@ var CoordsService = function () {
   }, {
     key: 'getXYFromInput',
     value: function getXYFromInput(e) {
-      var pathToCoords = e.type == 'touchmove' ? e.changedTouches[0] : e;
+      return e.type === 'touchmove' ? Array.from(e.targetTouches).map(function (t) {
+        return readPosition(t);
+      }) : [readPosition(e)];
 
-      return {
-        x: pathToCoords.clientX,
-        y: pathToCoords.clientY
-      };
+      function readPosition(path) {
+        return {
+          x: path.clientX,
+          y: path.clientY
+        };
+      }
     }
   }]);
 
@@ -7223,11 +7227,11 @@ var GameController = function () {
   function GameController(gameSurfaceCoords, pucks) {
     _classCallCheck(this, GameController);
 
-    var vector = _coordsservice2.default.getVectorFromXY(0, -1);
+    var initVector = [_coordsservice2.default.getVectorFromXY(0, -1)];
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
-    this.movePucks(vector); // First run
+    this.movePucks(initVector); // First run
     this.movePucksOnInput();
   }
 
@@ -7237,8 +7241,11 @@ var GameController = function () {
       var _this = this;
 
       var inputHandler = function inputHandler(e) {
-        var vector = _this.getVectorFromInput(e);
-        _this.movePucks(vector);
+        var positionArr = _coordsservice2.default.getXYFromInput(e);
+        var vectorArr = positionArr.map(function (p) {
+          return _this.getVectorFromPosition(p);
+        });
+        _this.movePucks(vectorArr);
       };
 
       ['mousemove', 'touchmove'].forEach(function (e) {
@@ -7246,19 +7253,20 @@ var GameController = function () {
       });
     }
   }, {
-    key: 'getVectorFromInput',
-    value: function getVectorFromInput(e) {
-      var position = _coordsservice2.default.getXYFromInput(e);
+    key: 'getVectorFromPosition',
+    value: function getVectorFromPosition(position) {
       var x = position.x - this.gameSurfaceCoords.centerX;
       var y = position.y - this.gameSurfaceCoords.centerY;
       return _coordsservice2.default.getVectorFromXY(x, y);
     }
   }, {
     key: 'movePucks',
-    value: function movePucks(vector) {
+    value: function movePucks(vectorArr) {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
+        var vector = vectorArr[p.index] ? vectorArr[p.index] : vectorArr[0];
+
         p.vector = vector.rads;
         var radius = _this2.gameSurfaceCoords.radius;
         var x = Math.cos(vector.rads) * radius;
