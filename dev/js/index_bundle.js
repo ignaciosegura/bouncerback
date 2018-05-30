@@ -7385,6 +7385,7 @@ var GameEngine = function () {
     key: 'startGame',
     value: function startGame() {
       this.pucks.push(new _puck2.default(0));
+      this.pucks.push(new _puck2.default(1));
 
       var gameController = new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
 
