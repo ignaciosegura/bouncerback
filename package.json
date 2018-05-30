@@ -17,7 +17,8 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^4.1.1",
-    "superagent": "^3.5.2"
+    "superagent": "^3.5.2",
+    "transformation-matrix": "^1.10.0"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",

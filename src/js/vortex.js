@@ -4,6 +4,7 @@
 require('../sass/_vortex.scss');
 
 import SoundFX from './soundfx.js';
+import { fromString } from 'transformation-matrix';
 
 class Vortex {
   constructor(radius) {
@@ -29,10 +30,16 @@ class Vortex {
 
   activateVortex() {
     setTimeout(() => {
-      this.active = true
-      this.activeRadius = this.domElement.getBoundingClientRect().width / 2;
+      let vortexDOM = this.domElement;
+      let vortexComputedCSS = window.getComputedStyle(vortexDOM);
+      let transformationMatrix = fromString(vortexComputedCSS.transform);
+      let scale = transformationMatrix.a;
+      let finalWidth = vortexDOM.attributes.r.value * scale;
+
+      this.active = true;
+      this.activeRadius = finalWidth / 2;
     }, this.timeToEffect);
-  }
+}
 }
 
 export default Vortex;
