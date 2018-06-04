@@ -26,6 +26,7 @@
 
 
 const levelList = [
+  {}, // Level Zero does not exist on real game, only on tutorial.
   {
     name: 'Femtocosmos',
     levelType: 'game',

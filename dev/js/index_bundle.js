@@ -6561,10 +6561,10 @@ var Index = function (_React$Component) {
           { id: 'container', onTouchMove: this.preventDefault },
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _maintitle2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/tutorial', render: function render() {
-              return _react2.default.createElement(_gamesurface2.default, { gameType: 'tutorial' });
+              return _react2.default.createElement(_gamesurface2.default, { gameType: 'tutorial', level: 0 });
             } }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
-              return _react2.default.createElement(_gamesurface2.default, { gameType: 'game' });
+              return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
             } }),
           _react2.default.createElement(_footer2.default, null)
         )
@@ -6617,7 +6617,8 @@ Object.defineProperty(exports, "__esModule", {
 
 */
 
-var levelList = [{
+var levelList = [{}, // Level Zero does not exist on real game, only on tutorial.
+{
   name: 'Femtocosmos',
   levelType: 'game',
   duration: 16,
@@ -7425,19 +7426,18 @@ var MainTitle = function (_React$Component) {
         { id: 'main-title' },
         _react2.default.createElement('img', { id: 'game-logo', src: GameLogo }),
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/' },
-          'Title'
-        ),
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/tutorial' },
-          'Tutorial'
-        ),
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { to: '/game' },
-          'Game'
+          'div',
+          { className: 'menu' },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/tutorial', className: 'text ready' },
+            'Tutorial'
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/game', className: 'text ready' },
+            'New Game'
+          )
         )
       );
     }
@@ -27473,6 +27473,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'DefaultsShop'), _d
     var _this = _possibleConstructorReturn(this, (GameSurface.__proto__ || Object.getPrototypeOf(GameSurface)).call(this));
 
     _this.engine = null;
+    _gameshop2.default.level = props.level;
     return _this;
   }
 

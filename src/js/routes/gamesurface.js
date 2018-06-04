@@ -20,6 +20,7 @@ class GameSurface extends React.Component {
   constructor(props) {
     super();
     this.engine = null;
+    GameShop.level = props.level;
   }
 
   componentDidMount() {

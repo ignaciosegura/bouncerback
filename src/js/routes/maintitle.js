@@ -11,9 +11,10 @@ class MainTitle extends React.Component {
   render() {
     return <div id="main-title">
       <img id="game-logo" src={GameLogo} />
-      <Link to="/">Title</Link>
-      <Link to="/tutorial">Tutorial</Link>
-      <Link to="/game">Game</Link>
+      <div className="menu">
+        <Link to="/tutorial" className="text ready">Tutorial</Link>
+        <Link to="/game"className="text ready">New Game</Link>
+      </div>
     </div>
   }
 }
