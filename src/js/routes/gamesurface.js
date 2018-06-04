@@ -10,9 +10,7 @@ import ReactDOM from 'react-dom';
 
 import { observer, inject } from 'mobx-react';
 
-import Ready from '../ready.js';
 import Scoreboard from '../scoreboard.js';
-
 import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';

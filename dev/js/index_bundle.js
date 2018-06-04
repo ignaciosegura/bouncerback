@@ -7378,28 +7378,7 @@ var Puck = function () {
 exports.default = Puck;
 
 /***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-// React class
-
-var Ready = function Ready() {
-  return React.createElement(
-    'div',
-    { id: 'text-ready', className: 'text ready' },
-    'Click when ready'
-  );
-};
-
-exports.default = Ready;
-
-/***/ }),
+/* 33 */,
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27416,10 +27395,6 @@ var _reactDom = __webpack_require__(17);
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _mobxReact = __webpack_require__(16);
-
-var _ready = __webpack_require__(33);
-
-var _ready2 = _interopRequireDefault(_ready);
 
 var _scoreboard = __webpack_require__(35);
 
