@@ -13,14 +13,17 @@ class Puck {
     }
     this.angle = angle * Math.PI / 180;
     this.vector;
+    this.domElement;
+
+    this.domElement = this.placeInDOM();
   }
 
   static getSize() {
     return this.size;
   }
 
-  placePuck() {
-    let puck = `<rect
+  placeInDOM() {
+    let puck = `<rect class="puck"
       index="${this.index}"
       x="${this.translateCoords.x}"
       y="${this.translateCoords.y}"
@@ -29,6 +32,8 @@ class Puck {
     />`;
     let putContainer = document.getElementById('point-zero');
     putContainer.insertAdjacentHTML('beforeend', puck);
+
+    return document.querySelector(`#point-zero .puck[index="${this.index}"]`);
   }
 }
 

@@ -44,6 +44,19 @@ class CoordsService {
     let target = document.querySelector(cssPlace);
     target.insertAdjacentHTML('beforeend', puckContainer);
   }
+
+  static getXYFromInput(e) {
+    return (e.type === 'touchmove')
+      ? Array.from(e.targetTouches).map(t => readPosition(t))
+      : [readPosition(e)];
+
+    function readPosition(path) {
+      return {
+        x: path.clientX,
+        y: path.clientY
+      };
+    }
+  }
 }
 
 export default CoordsService;

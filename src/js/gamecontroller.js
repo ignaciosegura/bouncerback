@@ -4,36 +4,38 @@ import CoordsService from './services/coordsservice.js';
 
 class GameController {
   constructor(gameSurfaceCoords, pucks) {
-    let vector = CoordsService.getVectorFromXY(0, -1);
+    let initVector = [CoordsService.getVectorFromXY(0, -1)];
     this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
-    this.movePucks(vector); // First run
-    this.movePucksOnMouse();
+    this.movePucks(initVector); // First run
+    this.movePucksOnInput();
   }
 
-  movePucksOnMouse() {
-    let mousePos;
-    let mouseVector;
-
-    document.onmousemove = (e) => {
-      mousePos = {
-        x: e.clientX,
-        y: e.clientY
-      };
-      mouseVector = this._getMouseVector(mousePos);
-      this.movePucks(mouseVector);
+  movePucksOnInput() {
+    let inputHandler = (e) => {
+      let positionArr = CoordsService.getXYFromInput(e);
+      let vectorArr = positionArr.map(p => this.getVectorFromPosition(p));
+      this.movePucks(vectorArr);
     };
+
+    ['mousemove', 'touchmove'].forEach(e => {
+      document.addEventListener(e, inputHandler.bind(this), false);
+    });
   }
 
-  _getMouseVector(mousePos) {
-    let x = mousePos.x - this.gameSurfaceCoords.centerX;
-    let y = mousePos.y - this.gameSurfaceCoords.centerY;
+  getVectorFromPosition(position) {
+    let x = position.x - this.gameSurfaceCoords.centerX;
+    let y = position.y - this.gameSurfaceCoords.centerY;
     return CoordsService.getVectorFromXY(x, y);
   }
 
-  movePucks(vector) {
+  movePucks(vectorArr) {
     this.pucks.forEach(p => {
+      let vector = (vectorArr[p.index])
+        ? vectorArr[p.index]
+        : vectorArr[0];
+
       p.vector = vector.rads;
       let radius = this.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;

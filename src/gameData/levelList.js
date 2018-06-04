@@ -109,11 +109,42 @@ const levelList = [
       { t: 21, b: 0.75 },
       { t: 24, b: 2.5 },
     ]
+  },
+  {
+    name: 'Mekanomancer',
+    levelType: 'game',
+    duration: 30,
+    levelPassAction: 'next',
+    gameOverAction: 'gameover',
+    time: {
+      bpm: 180,
+      signature: 3
+    },
+    sound: {
+      launch: require('../sound/launch.mp3'),
+      bounce: require('../sound/bounce_dry.mp3'),
+      destroy: require('../sound/destroy.mp3'),
+      song: require('../sound/tracks/mekanomancer.mp3')
+    },
+    atomSpeed: 3,
+    atomList: [
+      { t: 0, b: 0 },
+      { t: 3, b: 0 },
+      { t: 5, b: 0 },
+      { t: 7, b: 0 },
+      { t: 8, b: 1.5 },
+      { t: 11, b: 1.5 },
+      { t: 13, b: 2 },
+      { t: 16, b: 1 },
+      { t: 19, b: 3.25 },
+      { t: 21, b: 0.75 },
+      { t: 23, b: 0.5 },
+      { t: 25, b: 1.25 },
+    ]
   }
 ];
 // Synthetogenesis
 // Quantåmorphica
-// Mekanomancer
 // Femtocosmos
 // Gravcon
 // Neutronika

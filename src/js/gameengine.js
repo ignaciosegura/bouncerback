@@ -43,7 +43,8 @@ class GameEngine {
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
 
-    readyText.domElement.onclick = () => {
+    readyText.domElement.onclick = (e) => {
+      e.preventDefault();
       this.startGame();
       TextService.scheduleTextRemoval(title, fadeoutTime);
       TextService.scheduleTextRemoval(readyText, fadeoutTime);
@@ -51,12 +52,10 @@ class GameEngine {
   }
 
   startGame() {
-    let puck = new Puck(0);
-    puck.placePuck();
-    this.pucks.push(puck);
-    this.pucks[0].domElement = document.querySelector('#point-zero rect');
+    this.pucks.push(new Puck(0));
+    this.pucks.push(new Puck(1));
 
-    let gameController = new GameController(this.gameSurfaceCoords, this.pucks);
+    new GameController(this.gameSurfaceCoords, this.pucks);
 
     this.level.soundtrack.play();
 

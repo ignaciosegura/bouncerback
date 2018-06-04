@@ -13,9 +13,22 @@ import DefaultsShop from './stores/defaultsshop.js';
 import { Provider, inject } from 'mobx-react';
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+    }, false);
+  }
+
+  preventDefault(e) {
+    e.preventDefault();
+  }
 
   render() {
-    return <div id="container">
+    return <div id="container" onTouchMove={this.preventDefault}>
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
       <MainTitle />
