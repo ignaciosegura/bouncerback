@@ -4,6 +4,9 @@ require('../sass/index.scss'); // Required by Webpack to read SASS folder and ge
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { BrowserRouter, Route } from 'react-router-dom';
+
 import MainTitle from './routes/maintitle.js';
 import GameSurface from './routes/gamesurface.js';
 import Footer from './footer.js';
@@ -28,11 +31,13 @@ class Index extends React.Component {
   }
 
   render() {
-    return <div id="container" onTouchMove={this.preventDefault}>
-      <MainTitle />
-      <GameSurface />
-      <Footer />
-    </div>
+    return <BrowserRouter>
+      <div id="container" onTouchMove={this.preventDefault}>
+        <Route exact path="/" component={MainTitle} />
+        <Route exact path="/game" component={GameSurface} />
+        <Footer />
+      </div>
+    </BrowserRouter>
   }
 }
 
