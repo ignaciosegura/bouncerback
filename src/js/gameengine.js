@@ -21,6 +21,8 @@ import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
 import EndGameService from './services/endgameservice.js';
 import TextService from './services/textservice.js';
+import SoundtrackService from './services/soundtrackservice.js';
+
 import DefaultsShop from './stores/defaultsshop';
 
 class GameEngine {
@@ -43,6 +45,7 @@ class GameEngine {
 
   setupReadyState() {
     CoordsService.createPointZero('#the-zone');
+    SoundtrackService.newTrack(this.level.sound.track);
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
@@ -61,7 +64,7 @@ class GameEngine {
 
     new GameController(this.gameSurfaceCoords, this.pucks);
 
-    this.level.soundtrack.play();
+    SoundtrackService.play();
 
     ClockService.startGameLoop(this);
 

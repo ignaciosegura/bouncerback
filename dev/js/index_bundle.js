@@ -6482,6 +6482,11 @@ module.exports = checkPropTypes;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.history = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
@@ -6493,6 +6498,10 @@ var _reactDom = __webpack_require__(17);
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(153);
+
+var _createBrowserHistory = __webpack_require__(99);
+
+var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
 
 var _maintitle = __webpack_require__(34);
 
@@ -6528,6 +6537,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(50); // Required by Webpack to read SASS folder and generate a CSS file
 
+var history = exports.history = (0, _createBrowserHistory2.default)();
+
 var Index = function (_React$Component) {
   _inherits(Index, _React$Component);
 
@@ -6554,8 +6565,8 @@ var Index = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactRouterDom.BrowserRouter,
-        null,
+        _reactRouterDom.Router,
+        { history: history },
         _react2.default.createElement(
           'div',
           { id: 'container', onTouchMove: this.preventDefault },
@@ -6609,7 +6620,7 @@ Object.defineProperty(exports, "__esModule", {
     launch: '',
     bounce: '',
     destruction: '',
-    song: ''
+    track: ''
   },
   atomSpeed: 1, // Beats to make a round trip
   atomList: [] // Array of moments where a new atom should be created
@@ -6632,7 +6643,7 @@ var levelList = [{}, // Level Zero does not exist on real game, only on tutorial
     launch: __webpack_require__(9),
     bounce: __webpack_require__(7),
     destroy: __webpack_require__(8),
-    song: __webpack_require__(58)
+    track: __webpack_require__(58)
   },
   atomSpeed: 2,
   atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
@@ -6650,7 +6661,7 @@ var levelList = [{}, // Level Zero does not exist on real game, only on tutorial
     launch: __webpack_require__(9),
     bounce: __webpack_require__(7),
     destroy: __webpack_require__(8),
-    song: __webpack_require__(57)
+    track: __webpack_require__(57)
   },
   atomSpeed: 2,
   atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
@@ -6668,7 +6679,7 @@ var levelList = [{}, // Level Zero does not exist on real game, only on tutorial
     launch: __webpack_require__(9),
     bounce: __webpack_require__(7),
     destroy: __webpack_require__(8),
-    song: __webpack_require__(86)
+    track: __webpack_require__(86)
   },
   atomSpeed: 3,
   atomList: [{ t: 0, b: 0 }, { t: 3, b: 0 }, { t: 5, b: 0 }, { t: 7, b: 0 }, { t: 8, b: 1.5 }, { t: 11, b: 1.5 }, { t: 13, b: 2 }, { t: 16, b: 1 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 23, b: 0.5 }, { t: 25, b: 1.25 }]
@@ -7090,6 +7101,10 @@ var _textservice = __webpack_require__(38);
 
 var _textservice2 = _interopRequireDefault(_textservice);
 
+var _soundtrackservice = __webpack_require__(164);
+
+var _soundtrackservice2 = _interopRequireDefault(_soundtrackservice);
+
 var _defaultsshop = __webpack_require__(13);
 
 var _defaultsshop2 = _interopRequireDefault(_defaultsshop);
@@ -7126,6 +7141,7 @@ var GameEngine = function () {
       var _this = this;
 
       _coordsservice2.default.createPointZero('#the-zone');
+      _soundtrackservice2.default.newTrack(this.level.sound.track);
       var title = _textservice2.default.renderTitle(this.level.name);
       var readyText = _textservice2.default.renderReadyText();
       var fadeoutTime = _defaultsshop2.default.text.fadeoutTime;
@@ -7145,7 +7161,7 @@ var GameEngine = function () {
 
       new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
 
-      this.level.soundtrack.play();
+      _soundtrackservice2.default.play();
 
       _clockservice2.default.startGameLoop(this);
 
@@ -7300,8 +7316,6 @@ var Level = function () {
       tick: 0
     };
     this.atoms = [];
-
-    this.soundtrack = new _soundfx2.default(setup.sound.song);
   }
 
   _createClass(Level, [{
@@ -32650,7 +32664,7 @@ var levelList = [{
     launch: __webpack_require__(9),
     bounce: __webpack_require__(7),
     destroy: __webpack_require__(8),
-    song: __webpack_require__(59)
+    track: __webpack_require__(59)
   },
   atomSpeed: 4,
   atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }, { t: 2, b: 0 }, { t: 3, b: 0 }]
@@ -32671,6 +32685,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // End game different conditions service
 
+var _index = __webpack_require__(23);
+
 var _atomservice = __webpack_require__(36);
 
 var _atomservice2 = _interopRequireDefault(_atomservice);
@@ -32678,6 +32694,10 @@ var _atomservice2 = _interopRequireDefault(_atomservice);
 var _clockservice = __webpack_require__(37);
 
 var _clockservice2 = _interopRequireDefault(_clockservice);
+
+var _soundtrackservice = __webpack_require__(164);
+
+var _soundtrackservice2 = _interopRequireDefault(_soundtrackservice);
 
 var _gameshop = __webpack_require__(14);
 
@@ -32705,15 +32725,26 @@ var EndGameService = function () {
           this.gotoNextLevel(level);
           break;
         case 'home':
-        // Do something to Route to home
+          this.goBackHome();
       }
     }
   }, {
-    key: 'gotoNextLevel',
-    value: function gotoNextLevel(level) {
-      level.soundtrack.fadeOut();
+    key: 'stopTheGame',
+    value: function stopTheGame() {
+      _soundtrackservice2.default.fadeOut();
       _clockservice2.default.stopTheClock();
+    }
+  }, {
+    key: 'gotoNextLevel',
+    value: function gotoNextLevel() {
+      this.stopTheGame();
       _gameshop2.default.nextLevel();
+    }
+  }, {
+    key: 'goBackHome',
+    value: function goBackHome() {
+      this.stopTheGame();
+      _index.history.push('/');
     }
   }]);
 
@@ -32721,6 +32752,63 @@ var EndGameService = function () {
 }();
 
 exports.default = EndGameService;
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Soundtrack Service
+
+var _soundfx = __webpack_require__(12);
+
+var _soundfx2 = _interopRequireDefault(_soundfx);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Soundtrack = function () {
+  function Soundtrack() {
+    _classCallCheck(this, Soundtrack);
+
+    this.track = null;
+  }
+
+  _createClass(Soundtrack, [{
+    key: 'newTrack',
+    value: function newTrack(soundtrackFile) {
+      this.track = new _soundfx2.default(soundtrackFile);
+    }
+  }, {
+    key: 'play',
+    value: function play() {
+      this.track.play();
+    }
+  }, {
+    key: 'pause',
+    value: function pause() {
+      this.track.pause();
+    }
+  }, {
+    key: 'fadeOut',
+    value: function fadeOut() {
+      this.track.fadeOut();
+    }
+  }]);
+
+  return Soundtrack;
+}();
+
+var SoundtrackService = new Soundtrack();
+
+exports.default = SoundtrackService;
 
 /***/ })
 /******/ ]);

@@ -1,7 +1,10 @@
 // End game different conditions service
 
+import {history} from '../index.js';
+
 import AtomService from './atomservice.js';
 import ClockService from './clockservice.js';
+import SoundtrackService from './soundtrackservice.js';
 
 import GameShop from '../stores/gameshop.js';
 
@@ -16,14 +19,23 @@ class EndGameService {
       this.gotoNextLevel(level);
       break;
     case 'home':
-      // Do something to Route to home
+      this.goBackHome();
     }
   }
 
-  static gotoNextLevel(level) {
-    level.soundtrack.fadeOut();
+  static stopTheGame() {
+    SoundtrackService.fadeOut();
     ClockService.stopTheClock();
+  }
+
+  static gotoNextLevel() {
+    this.stopTheGame();
     GameShop.nextLevel();
+  }
+
+  static goBackHome() {
+    this.stopTheGame();
+    history.push('/');
   }
 }
 
