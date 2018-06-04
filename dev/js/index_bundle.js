@@ -6492,15 +6492,11 @@ var _reactDom = __webpack_require__(17);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _scoreboard = __webpack_require__(35);
-
-var _scoreboard2 = _interopRequireDefault(_scoreboard);
-
 var _maintitle = __webpack_require__(34);
 
 var _maintitle2 = _interopRequireDefault(_maintitle);
 
-var _gamesurface = __webpack_require__(29);
+var _gamesurface = __webpack_require__(87);
 
 var _gamesurface2 = _interopRequireDefault(_gamesurface);
 
@@ -6558,8 +6554,6 @@ var Index = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'container', onTouchMove: this.preventDefault },
-        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
-        _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
         _react2.default.createElement(_maintitle2.default, null),
         _react2.default.createElement(_gamesurface2.default, null),
         _react2.default.createElement(_footer2.default, null)
@@ -7242,111 +7236,7 @@ var GameEngine = function () {
 exports.default = GameEngine;
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _dec, _class;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(17);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _mobxReact = __webpack_require__(16);
-
-var _ready = __webpack_require__(33);
-
-var _ready2 = _interopRequireDefault(_ready);
-
-var _gameengine = __webpack_require__(28);
-
-var _gameengine2 = _interopRequireDefault(_gameengine);
-
-var _gameshop = __webpack_require__(14);
-
-var _gameshop2 = _interopRequireDefault(_gameshop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/*global require*/
-
-// Game container and touch surface
-
-
-__webpack_require__(44);
-
-var GameSurface = (_dec = (0, _mobxReact.inject)('DefaultsShop', 'GameShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
-  _inherits(GameSurface, _React$Component);
-
-  function GameSurface(props) {
-    _classCallCheck(this, GameSurface);
-
-    var _this = _possibleConstructorReturn(this, (GameSurface.__proto__ || Object.getPrototypeOf(GameSurface)).call(this));
-
-    _this.engine = null;
-    return _this;
-  }
-
-  _createClass(GameSurface, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      if (this.engine !== null) return;
-
-      this.engine = new _gameengine2.default(_gameshop2.default.level);
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.componentDidMount();
-    }
-  }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate() {
-      var playground = document.getElementById('point-zero');
-      playground.remove();
-      this.engine = null;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var radius = this.props.DefaultsShop.circleRadius;
-      var size = radius * 2;
-
-      return _react2.default.createElement(
-        'div',
-        { id: 'gamesurface' },
-        _react2.default.createElement(
-          'svg',
-          { id: 'the-zone', 'data-level': this.props.GameShop.level, width: size, height: size },
-          _react2.default.createElement('circle', { id: 'the-circle', cx: radius, cy: radius, r: radius })
-        )
-      );
-    }
-  }]);
-
-  return GameSurface;
-}(_react2.default.Component)) || _class) || _class);
-exports.default = GameSurface;
-
-/***/ }),
+/* 29 */,
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27501,6 +27391,122 @@ module.exports = __webpack_require__(23);
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "./sound/mekanomancer.mp3";
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(17);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _mobxReact = __webpack_require__(16);
+
+var _ready = __webpack_require__(33);
+
+var _ready2 = _interopRequireDefault(_ready);
+
+var _scoreboard = __webpack_require__(35);
+
+var _scoreboard2 = _interopRequireDefault(_scoreboard);
+
+var _gameengine = __webpack_require__(28);
+
+var _gameengine2 = _interopRequireDefault(_gameengine);
+
+var _gameshop = __webpack_require__(14);
+
+var _gameshop2 = _interopRequireDefault(_gameshop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/*global require*/
+
+// Game container and touch surface
+
+
+__webpack_require__(44);
+
+var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'DefaultsShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
+  _inherits(GameSurface, _React$Component);
+
+  function GameSurface(props) {
+    _classCallCheck(this, GameSurface);
+
+    var _this = _possibleConstructorReturn(this, (GameSurface.__proto__ || Object.getPrototypeOf(GameSurface)).call(this));
+
+    _this.engine = null;
+    return _this;
+  }
+
+  _createClass(GameSurface, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.engine !== null) return;
+
+      this.engine = new _gameengine2.default(_gameshop2.default.level);
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.componentDidMount();
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate() {
+      var playground = document.getElementById('point-zero');
+      playground.remove();
+      this.engine = null;
+    }
+  }, {
+    key: 'preventDefault',
+    value: function preventDefault(e) {
+      e.preventDefault();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var radius = this.props.DefaultsShop.circleRadius;
+      var size = radius * 2;
+
+      return _react2.default.createElement(
+        'div',
+        { id: 'gamesurface', onTouchMove: this.preventDefault },
+        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
+        _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
+        _react2.default.createElement(
+          'svg',
+          { id: 'the-zone', 'data-level': this.props.GameShop.level, width: size, height: size },
+          _react2.default.createElement('circle', { id: 'the-circle', cx: radius, cy: radius, r: radius })
+        )
+      );
+    }
+  }]);
+
+  return GameSurface;
+}(_react2.default.Component)) || _class) || _class);
+exports.default = GameSurface;
 
 /***/ })
 /******/ ]);
