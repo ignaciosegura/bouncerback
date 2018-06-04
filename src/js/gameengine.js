@@ -19,6 +19,7 @@ import Vortex from './vortex.js';
 import AtomService from './services/atomservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
+import EndGameService from './services/endgameservice.js';
 import TextService from './services/textservice.js';
 import DefaultsShop from './stores/defaultsshop';
 
@@ -69,7 +70,7 @@ class GameEngine {
 
   setupAutoruns() {
     let createVortex = autorun(() => {
-      if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
+      if (!TimeShop.levelIsOver || this.vortex !== null) return;
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
 
@@ -109,11 +110,9 @@ class GameEngine {
   }
 
   checkAllAtomsAreinVortex() {
-    if (AtomService.allAtomsAreInVortex(this.atoms) !== true) return;
+    if (!EndGameService.gameHasEnded(this.atoms)) return;
 
-    this.level.soundtrack.fadeOut();
-    ClockService.stopTheClock();
-    GameShop.nextLevel();
+    EndGameService.runEndGameActions(this.level);
   }
 
   checkAtomList() {

@@ -7082,6 +7082,10 @@ var _clockservice = __webpack_require__(37);
 
 var _clockservice2 = _interopRequireDefault(_clockservice);
 
+var _endgameservice = __webpack_require__(163);
+
+var _endgameservice2 = _interopRequireDefault(_endgameservice);
+
 var _textservice = __webpack_require__(38);
 
 var _textservice2 = _interopRequireDefault(_textservice);
@@ -7153,7 +7157,7 @@ var GameEngine = function () {
       var _this2 = this;
 
       var createVortex = (0, _mobx.autorun)(function () {
-        if (!_timeshop2.default.levelIsOver || _this2.level.levelPassAction !== 'next' || _this2.vortex !== null) return;
+        if (!_timeshop2.default.levelIsOver || _this2.vortex !== null) return;
 
         _this2.vortex = new _vortex2.default(_this2.gameSurfaceCoords.radius);
 
@@ -7195,11 +7199,9 @@ var GameEngine = function () {
   }, {
     key: 'checkAllAtomsAreinVortex',
     value: function checkAllAtomsAreinVortex() {
-      if (_atomservice2.default.allAtomsAreInVortex(this.atoms) !== true) return;
+      if (!_endgameservice2.default.gameHasEnded(this.atoms)) return;
 
-      this.level.soundtrack.fadeOut();
-      _clockservice2.default.stopTheClock();
-      _gameshop2.default.nextLevel();
+      _endgameservice2.default.runEndGameActions(this.level);
     }
   }, {
     key: 'checkAtomList',
@@ -32638,7 +32640,7 @@ var levelList = [{
   name: 'Tutorial',
   type: 'tutorial',
   duration: 4,
-  levelPassAction: 'next',
+  levelPassAction: 'home',
   gameOverAction: 'gameover',
   time: {
     bpm: 115,
@@ -32655,6 +32657,70 @@ var levelList = [{
 }];
 
 exports.default = levelList;
+
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // End game different conditions service
+
+var _atomservice = __webpack_require__(36);
+
+var _atomservice2 = _interopRequireDefault(_atomservice);
+
+var _clockservice = __webpack_require__(37);
+
+var _clockservice2 = _interopRequireDefault(_clockservice);
+
+var _gameshop = __webpack_require__(14);
+
+var _gameshop2 = _interopRequireDefault(_gameshop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EndGameService = function () {
+  function EndGameService() {
+    _classCallCheck(this, EndGameService);
+  }
+
+  _createClass(EndGameService, null, [{
+    key: 'gameHasEnded',
+    value: function gameHasEnded(atoms) {
+      return _atomservice2.default.allAtomsAreInVortex(atoms) === true;
+    }
+  }, {
+    key: 'runEndGameActions',
+    value: function runEndGameActions(level) {
+      switch (level.levelPassAction) {
+        case 'next':
+          this.gotoNextLevel(level);
+          break;
+        case 'home':
+        // Do something to Route to home
+      }
+    }
+  }, {
+    key: 'gotoNextLevel',
+    value: function gotoNextLevel(level) {
+      level.soundtrack.fadeOut();
+      _clockservice2.default.stopTheClock();
+      _gameshop2.default.nextLevel();
+    }
+  }]);
+
+  return EndGameService;
+}();
+
+exports.default = EndGameService;
 
 /***/ })
 /******/ ]);

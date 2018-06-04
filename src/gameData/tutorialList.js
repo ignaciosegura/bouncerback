@@ -5,7 +5,7 @@ const levelList = [
     name: 'Tutorial',
     type: 'tutorial',
     duration: 4,
-    levelPassAction: 'next',
+    levelPassAction: 'home',
     gameOverAction: 'gameover',
     time: {
       bpm: 115,
