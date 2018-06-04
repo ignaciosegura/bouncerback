@@ -4,13 +4,18 @@ require('../sass/index.scss'); // Required by Webpack to read SASS folder and ge
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Scoreboard from './scoreboard.js';
+
+import { Router, Route, browserHistory } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory'
+export const history = createBrowserHistory();
+
 import MainTitle from './routes/maintitle.js';
-import GameSurface from './gamesurface.js';
+import GameSurface from './routes/gamesurface.js';
 import Footer from './footer.js';
 import GameShop from './stores/gameshop.js';
 import DefaultsShop from './stores/defaultsshop.js';
-import { Provider, inject } from 'mobx-react';
+
+import { Provider } from 'mobx-react';
 
 class Index extends React.Component {
   constructor(props) {
@@ -28,13 +33,14 @@ class Index extends React.Component {
   }
 
   render() {
-    return <div id="container" onTouchMove={this.preventDefault}>
-      <Scoreboard type="bounces" />
-      <Scoreboard type="level" />
-      <MainTitle />
-      <GameSurface />
-      <Footer />
-    </div>
+    return <Router history={history}>
+      <div id="container" onTouchMove={this.preventDefault}>
+        <Route exact path="/" component={MainTitle} />
+        <Route exact path="/tutorial" render={()=><GameSurface gameType='tutorial' level={0} />} />
+        <Route exact path="/game" render={()=><GameSurface gameType='game' level={1} />} />
+        <Footer />
+      </div>
+    </Router>
   }
 }
 

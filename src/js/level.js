@@ -14,8 +14,6 @@ class Level {
       tick: 0
     }
     this.atoms = [];
-
-    this.soundtrack = new SoundFX(setup.sound.song);
   }
 
   areAllAtomsOut() {

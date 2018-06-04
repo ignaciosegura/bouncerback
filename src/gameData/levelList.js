@@ -16,7 +16,7 @@
     launch: '',
     bounce: '',
     destruction: '',
-    song: ''
+    track: ''
   },
   atomSpeed: 1, // Beats to make a round trip
   atomList: [] // Array of moments where a new atom should be created
@@ -26,28 +26,7 @@
 
 
 const levelList = [
-  {
-    name: 'Tutorial',
-    type: 'tutorial',
-    duration: 2,
-    levelPassAction: 'next',
-    gameOverAction: 'gameover',
-    time: {
-      bpm: 115,
-      signature: 4
-    },
-    sound: {
-      launch: require('../sound/launch.mp3'),
-      bounce: require('../sound/bounce_dry.mp3'),
-      destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/tutorial.mp3')
-    },
-    atomSpeed: 4,
-    atomList: [
-      { t: 0, b: 0 },
-      { t: 1, b: 0 },
-    ]
-  },
+  {}, // Level Zero does not exist on real game, only on tutorial.
   {
     name: 'Femtocosmos',
     levelType: 'game',
@@ -62,7 +41,7 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/femtocosmos.mp3')
+      track: require('../sound/tracks/femtocosmos.mp3')
     },
     atomSpeed: 2,
     atomList: [
@@ -93,7 +72,7 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/chronosaedron.mp3')
+      track: require('../sound/tracks/chronosaedron.mp3')
     },
     atomSpeed: 2,
     atomList: [
@@ -124,7 +103,7 @@ const levelList = [
       launch: require('../sound/launch.mp3'),
       bounce: require('../sound/bounce_dry.mp3'),
       destroy: require('../sound/destroy.mp3'),
-      song: require('../sound/tracks/mekanomancer.mp3')
+      track: require('../sound/tracks/mekanomancer.mp3')
     },
     atomSpeed: 3,
     atomList: [
