@@ -34,7 +34,8 @@ class Index extends React.Component {
     return <BrowserRouter>
       <div id="container" onTouchMove={this.preventDefault}>
         <Route exact path="/" component={MainTitle} />
-        <Route exact path="/game" component={GameSurface} />
+        <Route exact path="/tutorial" render={()=><GameSurface gameType='tutorial' />} />
+        <Route exact path="/game" render={()=><GameSurface gameType='game' />} />
         <Footer />
       </div>
     </BrowserRouter>

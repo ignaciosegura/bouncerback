@@ -6,6 +6,7 @@ require('../sass/_game_props.scss');
 import { autorun } from 'mobx';
 
 import levelList from '../gameData/levelList.js';
+import tutorialList from '../gameData/tutorialList.js';
 
 import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -23,8 +24,10 @@ import DefaultsShop from './stores/defaultsshop';
 
 class GameEngine {
 
-  constructor(level) {
-    this.level = new Level(levelList[level]);
+  constructor(level, gameType) {
+    this.level = gameType === 'tutorial'
+      ? new Level(tutorialList[level])
+      : new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();

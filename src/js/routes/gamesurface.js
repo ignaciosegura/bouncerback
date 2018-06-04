@@ -25,7 +25,7 @@ class GameSurface extends React.Component {
   componentDidMount() {
     if (this.engine !== null) return;
 
-    this.engine = new GameEngine(GameShop.level);
+    this.engine = new GameEngine(GameShop.level, this.props.gameType);
   }
 
   componentDidUpdate() {

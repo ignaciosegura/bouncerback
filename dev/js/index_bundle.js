@@ -6560,7 +6560,12 @@ var Index = function (_React$Component) {
           'div',
           { id: 'container', onTouchMove: this.preventDefault },
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _maintitle2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', component: _gamesurface2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/tutorial', render: function render() {
+              return _react2.default.createElement(_gamesurface2.default, { gameType: 'tutorial' });
+            } }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
+              return _react2.default.createElement(_gamesurface2.default, { gameType: 'game' });
+            } }),
           _react2.default.createElement(_footer2.default, null)
         )
       );
@@ -6613,24 +6618,6 @@ Object.defineProperty(exports, "__esModule", {
 */
 
 var levelList = [{
-  name: 'Tutorial',
-  type: 'tutorial',
-  duration: 2,
-  levelPassAction: 'next',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 115,
-    signature: 4
-  },
-  sound: {
-    launch: __webpack_require__(9),
-    bounce: __webpack_require__(7),
-    destroy: __webpack_require__(8),
-    song: __webpack_require__(59)
-  },
-  atomSpeed: 4,
-  atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }]
-}, {
   name: 'Femtocosmos',
   levelType: 'game',
   duration: 16,
@@ -7054,6 +7041,10 @@ var _levelList = __webpack_require__(24);
 
 var _levelList2 = _interopRequireDefault(_levelList);
 
+var _tutorialList = __webpack_require__(162);
+
+var _tutorialList2 = _interopRequireDefault(_tutorialList);
+
 var _gameshop = __webpack_require__(14);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
@@ -7108,10 +7099,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 __webpack_require__(43);
 
 var GameEngine = function () {
-  function GameEngine(level) {
+  function GameEngine(level, gameType) {
     _classCallCheck(this, GameEngine);
 
-    this.level = new _level2.default(_levelList2.default[level]);
+    this.level = gameType === 'tutorial' ? new _level2.default(_tutorialList2.default[level]) : new _level2.default(_levelList2.default[level]);
     _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
@@ -7437,6 +7428,11 @@ var MainTitle = function (_React$Component) {
           _reactRouterDom.Link,
           { to: '/' },
           'Title'
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/tutorial' },
+          'Tutorial'
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
@@ -27485,7 +27481,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'DefaultsShop'), _d
     value: function componentDidMount() {
       if (this.engine !== null) return;
 
-      this.engine = new _gameengine2.default(_gameshop2.default.level);
+      this.engine = new _gameengine2.default(_gameshop2.default.level, this.props.gameType);
     }
   }, {
     key: 'componentDidUpdate',
@@ -32624,6 +32620,40 @@ var withRouter = function withRouter(Component) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (withRouter);
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/* global require */
+
+var levelList = [{
+  name: 'Tutorial',
+  type: 'tutorial',
+  duration: 4,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 115,
+    signature: 4
+  },
+  sound: {
+    launch: __webpack_require__(9),
+    bounce: __webpack_require__(7),
+    destroy: __webpack_require__(8),
+    song: __webpack_require__(59)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 1, b: 0 }, { t: 2, b: 0 }, { t: 3, b: 0 }]
+}];
+
+exports.default = levelList;
 
 /***/ })
 /******/ ]);
