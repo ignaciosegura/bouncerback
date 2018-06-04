@@ -6,6 +6,7 @@ require('../sass/_game_props.scss');
 import { autorun } from 'mobx';
 
 import levelList from '../gameData/levelList.js';
+import tutorialList from '../gameData/tutorialList.js';
 
 import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -18,13 +19,18 @@ import Vortex from './vortex.js';
 import AtomService from './services/atomservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
+import EndGameService from './services/endgameservice.js';
 import TextService from './services/textservice.js';
+import SoundtrackService from './services/soundtrackservice.js';
+
 import DefaultsShop from './stores/defaultsshop';
 
 class GameEngine {
 
-  constructor(level) {
-    this.level = new Level(levelList[level]);
+  constructor(level, gameType) {
+    this.level = gameType === 'tutorial'
+      ? new Level(tutorialList[level])
+      : new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
 
     this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
@@ -39,6 +45,7 @@ class GameEngine {
 
   setupReadyState() {
     CoordsService.createPointZero('#the-zone');
+    SoundtrackService.newTrack(this.level.sound.track);
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
@@ -57,7 +64,7 @@ class GameEngine {
 
     new GameController(this.gameSurfaceCoords, this.pucks);
 
-    this.level.soundtrack.play();
+    SoundtrackService.play();
 
     ClockService.startGameLoop(this);
 
@@ -66,7 +73,7 @@ class GameEngine {
 
   setupAutoruns() {
     let createVortex = autorun(() => {
-      if (!TimeShop.levelIsOver || this.level.levelPassAction !== 'next' || this.vortex !== null) return;
+      if (!TimeShop.levelIsOver || this.vortex !== null) return;
 
       this.vortex = new Vortex(this.gameSurfaceCoords.radius);
 
@@ -106,11 +113,9 @@ class GameEngine {
   }
 
   checkAllAtomsAreinVortex() {
-    if (AtomService.allAtomsAreInVortex(this.atoms) !== true) return;
+    if (!EndGameService.gameHasEnded(this.atoms)) return;
 
-    this.level.soundtrack.fadeOut();
-    ClockService.stopTheClock();
-    GameShop.nextLevel();
+    EndGameService.runEndGameActions(this.level);
   }
 
   checkAtomList() {

@@ -7,8 +7,9 @@
 html, body {
   background: $background-color;
   color: $foreground-color;
-  font-family: $retro;
-  font-size: 24px;
+  font-family: $retro-font-family;
+  font-size: $default-font-size;
+  line-height: 1;
   margin: 0;
   padding: 0;
   touch-action: none;

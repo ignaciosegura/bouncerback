@@ -9,6 +9,8 @@ class Default {
       readingTime: 3500,
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
+
+    this.circleRadius = observable.box(275);
   }
 
 }

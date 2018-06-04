@@ -1,0 +1,58 @@
+// All Animations
+
+// Variables.
+
+$animation-text-entry: text-entry 0.5s ease-in-out 0s 1 forwards;
+$animation-text-removal: text-removal 1.5s normal ease-in-out 0s 1 forwards;
+
+@keyframes text-entry {
+    from {
+      opacity: 0;
+      color: $blind-blue;
+      border-color: $blind-blue;
+      fill: $blind-blue;
+    }
+  
+    to {
+      color: white;
+      border-color: white;
+      fill: white;
+    }
+  }
+  
+  @keyframes text-removal {
+    from {
+      color: white;
+      border-color: white;
+      opacity: 1;
+      transform: translate(-50%);
+    }
+  
+    40% {
+      color: $dying-red;
+      border-color: $dying-red;
+    }
+  
+    69% {
+      transform: translate(-50%);
+    }
+    70% {
+      transform: translate(-50%, -100%);
+    }
+    74% {
+      transform: translate(-50%, 100%);
+    }
+    78% {
+      transform: translate(-50%, -100%);
+    }
+    82% {
+      transform: translate(-50%, 100%);
+    }
+  
+    to {
+      color: $lost-yellow;
+      border-color: $lost-yellow;
+      opacity: 0;
+      transform: translate(-50%);
+    }
+  }

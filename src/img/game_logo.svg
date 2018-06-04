@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 951.46 107.58"><defs><style>.a{font-size:110.25px;fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:4px;font-family:Commodore 64 Angled;}</style></defs><title>game_logo</title><text class="a" transform="translate(2 94.81)">BOUNCERBACK</text></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-163 347.4 951.5 107.6" style="enable-background:new -163 347.4 951.5 107.6;" xml:space="preserve">
+<style type="text/css">
+	.st0{enable-background:new    ;}
+	.st1{fill:#FFFFFF;}
+</style>
+<title>game_logo</title>
+<g class="st0">
+	<path class="st1" d="M-150.2,366.9h53.8l10.8,10.8v21.5h-10.8v10.8h10.8v21.5l-10.8,10.8h-53.8V366.9z M-128.7,377.6v21.5h21.5
+		v-21.5H-128.7z M-128.7,409.9v21.5h21.5v-21.5H-128.7z"/>
+	<path class="st1" d="M-64.1,377.6l10.8-10.8h43.1l10.8,10.8v53.8l-10.8,10.8h-43.1l-10.8-10.8V377.6z M-42.6,377.6v53.8H-21v-53.8
+		H-42.6z"/>
+	<path class="st1" d="M22,366.9h21.5v64.6h21.5v-64.6h21.5v64.6l-10.8,10.8H32.8L22,431.5V366.9z"/>
+	<path class="st1" d="M108.2,366.9h21.5v10.8l21.5,21.5v-32.3h21.5v75.4h-21.5v-21.5l-21.5-21.5v43.1h-21.5V366.9z"/>
+	<path class="st1" d="M194.3,377.6l10.8-10.8h43.1l10.8,10.8v10.8h-21.5v-10.8h-21.5v53.8h21.5v-10.8h21.5v10.8l-10.8,10.8h-43.1
+		l-10.8-10.8V377.6z"/>
+	<path class="st1" d="M280.4,366.9H345v10.8H302v21.5h21.5v10.8H302v21.5H345v10.8h-64.6V366.9z"/>
+	<path class="st1" d="M366.6,366.9h53.8l10.8,10.8v21.5l-10.8,10.8h-10.8l10.8,10.8l10.8,10.8v10.8h-21.5v-10.8l-10.8-10.8h-10.8
+		v21.5h-21.5V366.9z M388.1,377.6v21.5h21.5v-21.5H388.1z"/>
+	<path class="st1" d="M452.7,366.9h53.8l10.8,10.8v21.5h-10.8v10.8h10.8v21.5l-10.8,10.8h-53.8V366.9z M474.2,377.6v21.5h21.5v-21.5
+		H474.2z M474.2,409.9v21.5h21.5v-21.5H474.2z"/>
+	<path class="st1" d="M538.8,388.4l21.5-21.5h21.5l21.5,21.5v53.8h-21.5v-32.3h-21.5v32.3h-21.5V388.4z M560.4,388.4v10.8h21.5
+		v-10.8H560.4z"/>
+	<path class="st1" d="M625,377.6l10.8-10.8h43.1l10.8,10.8v10.8H668v-10.8h-21.5v53.8H668v-10.8h21.5v10.8l-10.8,10.8h-43.1
+		L625,431.5V377.6z"/>
+	<path class="st1" d="M711.1,366.9h21.5v21.5h10.8l10.8-10.8v-10.8h21.5v10.8l-10.8,10.8l-10.8,10.8v10.8l10.8,10.8l10.8,10.8v10.8
+		h-21.5v-10.8l-10.8-10.8h-10.8v21.5h-21.5V366.9z"/>
+</g>
+</svg>

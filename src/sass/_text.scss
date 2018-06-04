@@ -1,6 +1,7 @@
 // Text in-game
 
 @import '_variables.scss';
+@import '_animations.scss';
 
 .text {
   font-size: 24px;
@@ -17,7 +18,7 @@
   animation: $animation-text-entry;
 
   &.fadeout {
-    animation: text-removal 1.5s normal ease-in-out 0s 1 forwards;
+    animation: $animation-text-removal;
   }
 
   &.title {
@@ -32,57 +33,16 @@
   }
 }
 
-@keyframes text-entry {
-  from {
-    opacity: 0;
-    color: $lost-yellow;
-    border-color: $lost-yellow;
-  }
+.menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
 
-  60% {
-    color: $dying-red;
-    border-color: $lost-yellow;
-  }
-
-  to {
-    color: white;
-    border-color: white;
-  }
-}
-
-@keyframes text-removal {
-  from {
-    color: white;
-    border-color: white;
-    opacity: 1;
-    transform: translate(-50%);
-  }
-
-  40% {
-    color: $dying-red;
-    border-color: $dying-red;
-  }
-
-  69% {
-    transform: translate(-50%);
-  }
-  70% {
-    transform: translate(-50%, -100%);
-  }
-  74% {
-    transform: translate(-50%, 100%);
-  }
-  78% {
-    transform: translate(-50%, -100%);
-  }
-  82% {
-    transform: translate(-50%, 100%);
-  }
-
-  to {
-    color: $lost-yellow;
-    border-color: $lost-yellow;
-    opacity: 0;
-    transform: translate(-50%);
+  .text {
+    position: static;
+    transform: none;
+    margin: 0 1em;
   }
 }
