@@ -1,6 +1,6 @@
 /* global require */
 
-require ('../../sass/_main_title.scss');
+require('../../sass/_main_title.scss');
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ class MainTitle extends React.Component {
       <img id="game-logo" src={GameLogo} />
       <div className="menu">
         <Link to="/tutorial" className="text ready">Tutorial</Link>
-        <Link to="/game"className="text ready">New Game</Link>
+        <Link to="/game" className="text ready">New Game</Link>
       </div>
     </div>
   }
