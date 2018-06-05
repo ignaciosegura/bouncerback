@@ -5089,6 +5089,11 @@ var Game = (_class = function () {
     value: function nextLevel() {
       this.levelUp(1);
     }
+  }, {
+    key: 'resetBounces',
+    value: function resetBounces() {
+      this.bounces = 0;
+    }
   }]);
 
   return Game;
@@ -5192,6 +5197,8 @@ var Time = (_class = function () {
   _createClass(Time, [{
     key: 'setup',
     value: function setup(bpm, timeSignature, duration) {
+      this.reset();
+      this.clock = 'on';
       this.bpm = bpm;
       this.timeSignature = timeSignature;
       this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
@@ -7638,6 +7645,8 @@ var AtomService = function () {
   }, {
     key: 'allAtomsAreInVortex',
     value: function allAtomsAreInVortex(atoms) {
+      if (atoms.length === 0) return false;
+
       var capturedAtoms = atoms.reduce(function (ax, current) {
         return current.status == 'captured' ? ax + 1 : ax;
       }, 0);
@@ -8944,7 +8953,7 @@ var levelList = [{}, // Level Zero does not exist on real game, only on tutorial
 {
   name: 'Femtocosmos',
   levelType: 'game',
-  duration: 16,
+  duration: 32,
   levelPassAction: 'next',
   gameOverAction: 'gameover',
   time: {
@@ -33100,6 +33109,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(45);
 
+var _gameshop = __webpack_require__(12);
+
+var _gameshop2 = _interopRequireDefault(_gameshop);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33123,6 +33136,11 @@ var ScreenMenu = function (_React$Component) {
   }
 
   _createClass(ScreenMenu, [{
+    key: 'resetScores',
+    value: function resetScores() {
+      _gameshop2.default.resetBounces();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -33130,7 +33148,7 @@ var ScreenMenu = function (_React$Component) {
         { className: 'screen-menu' },
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/game', className: 'text ready' },
+          { to: '/game', className: 'text ready', onClick: this.resetScores },
           'New Game'
         ),
         _react2.default.createElement(
