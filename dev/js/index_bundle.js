@@ -7513,7 +7513,7 @@ var Index = function (_React$Component) {
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
                 return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
               } }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _notfound2.default, status: 404 }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _notfound2.default }),
             '} />'
           )
         ),

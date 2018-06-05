@@ -40,7 +40,7 @@ class Index extends React.Component {
           <Route exact path="/" component={MainTitle} />
           <Route exact path="/tutorial" render={() => <GameSurface gameType='tutorial' level={0} />} />
           <Route exact path="/game" render={() => <GameSurface gameType='game' level={1} />} />
-          <Route path="*" component={NotFound} status={404} />} />
+          <Route path="*" component={NotFound} />} />
         </Switch>
       </Router>
       <Footer />
