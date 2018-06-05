@@ -100,9 +100,8 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
-
-    EndGameService.goGameOver();
+    if (EndGameService.gameIsOver())
+      EndGameService.goGameOver();
   }
 
   checkVortex() {
