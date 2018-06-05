@@ -5,3 +5,5 @@ package-lock.json
 dev/*
 dev/js/index_bundle.js
 dev/js/index_bundle.js.map
+dev/css/style.css
+dev/css/style.css.map
