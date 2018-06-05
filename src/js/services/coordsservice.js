@@ -46,16 +46,36 @@ class CoordsService {
   }
 
   static getXYFromInput(e) {
-    return (e.type === 'touchmove')
-      ? Array.from(e.targetTouches).map(t => readPosition(t))
-      : [readPosition(e)];
-
-    function readPosition(path) {
+    let readPosition = path => {
       return {
         x: path.clientX,
         y: path.clientY
-      };
+      }
     }
+    return (e.type === 'touchmove')
+      ? Array.from(e.targetTouches).map(t => readPosition(t))
+      : [readPosition(e)];
+  }
+
+  static compareVectorsForBounce(angleAtom, anglePuck, range) {
+    angleAtom = this.makeAnglePositive(angleAtom);
+    anglePuck = this.makeAnglePositive(anglePuck);
+    let halfRange = range / 2;
+    let bracket = {
+      from: anglePuck - halfRange,
+      to: anglePuck + halfRange
+    }
+    let isInRange = (a) => (a > bracket.from && a < bracket.to);
+
+    return (isInRange(angleAtom))
+      ? true
+      : isInRange(angleAtom + (Math.PI * 2));
+  }
+
+  static makeAnglePositive(angle) {
+    return (angle < 0)
+      ? angle + 2 * Math.PI
+      : angle;
   }
 }
 

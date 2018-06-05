@@ -2,7 +2,7 @@
 // AtomService
 
 import Atom from '../atom.js';
-import { compareVectorsForBounce } from '../helpers.js';
+import CoordsService from './coordsservice.js';
 
 class AtomService {
   static moveAtoms(atoms) {
@@ -37,7 +37,7 @@ class AtomService {
 
     colliders.forEach(a => {
       pucks.forEach(p => {
-        let result = compareVectorsForBounce(a.vector, p.vector, p.angle);
+        let result = CoordsService.compareVectorsForBounce(a.vector, p.vector, p.angle);
 
         if (result) {
           a.executeBounce();
