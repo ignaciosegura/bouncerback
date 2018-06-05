@@ -15,7 +15,6 @@ class Time {
 
   setup(bpm, timeSignature, duration) {
     this.reset();
-    this.clock = 'on';
     this.bpm = bpm;
     this.timeSignature = timeSignature;
     this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;

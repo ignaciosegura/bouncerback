@@ -106,6 +106,7 @@ class Atom {
 
     if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent('rebound');
+      this.next.center = this.calculateNextEvent('center');
       if (this.status == 'alive')
         this.setStatus('collide');
     } else if (distance > radius && this.status == 'collide') {
