@@ -1,0 +1,18 @@
+// Screen menu
+
+.screen-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+
+    a {
+      position: static;
+      transform: none;
+      margin: 0 1em;
+      color: white;
+      text-decoration: none;
+    }
+  }
+

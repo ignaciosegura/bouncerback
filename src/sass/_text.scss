@@ -32,17 +32,3 @@
     border: solid white 4px;
   }
 }
-
-.menu {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-content: center;
-
-  .text {
-    position: static;
-    transform: none;
-    margin: 0 1em;
-  }
-}

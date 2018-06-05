@@ -1,0 +1,18 @@
+// Screen menu
+/* global require */
+
+require('../sass/_screenmenu.scss');
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+class ScreenMenu extends React.Component {
+  render() {
+    return <div className="screen-menu">
+      <Link to="/tutorial" className="text ready">Tutorial</Link>
+      <Link to="/game" className="text ready">New Game</Link>
+    </div>
+  }
+}
+
+export default ScreenMenu;

@@ -1,4 +1,16 @@
-@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);@keyframes text-entry {
+@import url(https://fonts.googleapis.com/css?family=Didact+Gothic);.screen-menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center; }
+  .screen-menu a {
+    position: static;
+    transform: none;
+    margin: 0 1em;
+    color: white;
+    text-decoration: none; }
+@keyframes text-entry {
   from {
     opacity: 0;
     color: #88ffff;
@@ -46,9 +58,6 @@
     width: 500px;
     max-width: 75vw;
     margin-bottom: 2em; }
-  #main-title a {
-    color: white;
-    text-decoration: none; }
 @keyframes text-entry {
   from {
     opacity: 0;
@@ -192,17 +201,6 @@
     top: 50%;
     padding: 0.5em 0.5em 0.6em;
     border: solid white 4px; }
-
-.menu {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-content: center; }
-  .menu .text {
-    position: static;
-    transform: none;
-    margin: 0 1em; }
 #point-zero * {
   transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
 
