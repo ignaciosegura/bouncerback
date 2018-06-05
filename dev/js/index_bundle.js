@@ -7454,6 +7454,10 @@ var _defaultsshop2 = _interopRequireDefault(_defaultsshop);
 
 var _mobxReact = __webpack_require__(25);
 
+var _notfound = __webpack_require__(137);
+
+var _notfound2 = _interopRequireDefault(_notfound);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7494,20 +7498,26 @@ var Index = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactRouterDom.Router,
-        { history: history },
+        'div',
+        { id: 'container', onTouchMove: this.preventDefault },
         _react2.default.createElement(
-          'div',
-          { id: 'container', onTouchMove: this.preventDefault },
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _maintitle2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/tutorial', render: function render() {
-              return _react2.default.createElement(_gamesurface2.default, { gameType: 'tutorial', level: 0 });
-            } }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
-              return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
-            } }),
-          _react2.default.createElement(_footer2.default, null)
-        )
+          _reactRouterDom.Router,
+          { history: history },
+          _react2.default.createElement(
+            _reactRouterDom.Switch,
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _maintitle2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/tutorial', render: function render() {
+                return _react2.default.createElement(_gamesurface2.default, { gameType: 'tutorial', level: 0 });
+              } }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
+                return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
+              } }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _notfound2.default, status: 404 }),
+            '} />'
+          )
+        ),
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -9534,7 +9544,7 @@ var GameEngine = function () {
       if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
 
       clearInterval(this.gameLoopInterval);
-      console.log('Game Over!');
+      _endgameservice2.default.goGameOver();
     }
   }, {
     key: 'checkVortex',
@@ -10047,6 +10057,12 @@ var EndGameService = function () {
     value: function goBackHome() {
       this.stopTheGame();
       _index.history.push('/');
+    }
+  }, {
+    key: 'goGameOver',
+    value: function goGameOver() {
+      this.stopTheGame();
+      _index.history.push('gameover');
     }
   }]);
 
@@ -33030,6 +33046,48 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(32);
 
+
+/***/ }),
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFound = function NotFound() {
+  return _react2.default.createElement(
+    "div",
+    { className: "not-found-404" },
+    "Bad Selection!"
+  );
+}; // Not found component
+
+exports.default = NotFound;
 
 /***/ })
 /******/ ]);

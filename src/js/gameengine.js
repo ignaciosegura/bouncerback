@@ -102,7 +102,7 @@ class GameEngine {
     if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
 
     clearInterval(this.gameLoopInterval);
-    console.log('Game Over!');
+    EndGameService.goGameOver();
   }
 
   checkVortex() {

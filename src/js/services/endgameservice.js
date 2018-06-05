@@ -1,6 +1,6 @@
 // End game different conditions service
 
-import {history} from '../index.js';
+import { history } from '../index.js';
 
 import AtomService from './atomservice.js';
 import ClockService from './clockservice.js';
@@ -14,12 +14,12 @@ class EndGameService {
   }
 
   static runEndGameActions(level) {
-    switch(level.levelPassAction) {
-    case 'next':
-      this.gotoNextLevel(level);
-      break;
-    case 'home':
-      this.goBackHome();
+    switch (level.levelPassAction) {
+      case 'next':
+        this.gotoNextLevel(level);
+        break;
+      case 'home':
+        this.goBackHome();
     }
   }
 
@@ -36,6 +36,10 @@ class EndGameService {
   static goBackHome() {
     this.stopTheGame();
     history.push('/');
+  }
+  static goGameOver() {
+    this.stopTheGame();
+    history.push('gameover');
   }
 }
 
