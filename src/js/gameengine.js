@@ -38,7 +38,6 @@ class GameEngine {
     this.atoms = [];
     this.vortex = null;
     this.gameLoop = this.gameLoop.bind(this);
-    this.gameInterval;
 
     this.setupReadyState();
   }
@@ -101,8 +100,7 @@ class GameEngine {
   checkGameOver() {
     if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
 
-    clearInterval(this.gameLoopInterval);
-    console.log('Game Over!');
+    EndGameService.goGameOver();
   }
 
   checkVortex() {

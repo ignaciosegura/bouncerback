@@ -5,17 +5,19 @@ require('../sass/index.scss'); // Required by Webpack to read SASS folder and ge
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Router, Route, browserHistory } from 'react-router-dom';
+import { Router, Route, Switch, browserHistory } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory'
 export const history = createBrowserHistory();
 
 import MainTitle from './routes/maintitle.js';
 import GameSurface from './routes/gamesurface.js';
+import GameOver from './routes/gameover.js';
 import Footer from './footer.js';
 import GameShop from './stores/gameshop.js';
 import DefaultsShop from './stores/defaultsshop.js';
 
 import { Provider } from 'mobx-react';
+import NotFound from './routes/notfound';
 
 class Index extends React.Component {
   constructor(props) {
@@ -33,14 +35,18 @@ class Index extends React.Component {
   }
 
   render() {
-    return <Router history={history}>
-      <div id="container" onTouchMove={this.preventDefault}>
-        <Route exact path="/" component={MainTitle} />
-        <Route exact path="/tutorial" render={()=><GameSurface gameType='tutorial' level={0} />} />
-        <Route exact path="/game" render={()=><GameSurface gameType='game' level={1} />} />
-        <Footer />
-      </div>
-    </Router>
+    return <div id="container" onTouchMove={this.preventDefault}>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={MainTitle} />
+          <Route exact path="/tutorial" render={() => <GameSurface gameType='tutorial' level={0} />} />
+          <Route exact path="/game" render={() => <GameSurface gameType='game' level={1} />} />
+          <Route exact path="/game-over" component={GameOver} />
+          <Route path="*" component={NotFound} />} />
+        </Switch>
+      </Router>
+      <Footer />
+    </div>
   }
 }
 

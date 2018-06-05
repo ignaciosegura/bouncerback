@@ -59,6 +59,9 @@ class AtomService {
   }
 
   static allAtomsAreInVortex(atoms) {
+    if (atoms.length === 0)
+      return false;
+
     let capturedAtoms = atoms.reduce((ax, current) => {
       return (current.status == 'captured')
         ? ax + 1

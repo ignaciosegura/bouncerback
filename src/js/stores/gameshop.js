@@ -17,6 +17,10 @@ class Game {
   nextLevel() {
     this.levelUp(1);
   }
+
+  resetBounces() {
+    this.bounces = 0;
+  }
 }
 
 const GameShop = new Game();
