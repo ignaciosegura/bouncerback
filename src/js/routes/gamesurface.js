@@ -11,11 +11,12 @@ import ReactDOM from 'react-dom';
 import { observer, inject } from 'mobx-react';
 
 import Scoreboard from '../scoreboard.js';
+import LivesCounter from '../livescounter.js';
 import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';
 
-@inject ('GameShop', 'DefaultsShop') @observer
+@inject('GameShop', 'DefaultsShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
     super();
@@ -50,6 +51,7 @@ class GameSurface extends React.Component {
     return <div id="gamesurface" onTouchMove={this.preventDefault}>
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
+      <LivesCounter />
       <svg id="the-zone" data-level={this.props.GameShop.level} width={size} height={size}>
         <circle id="the-circle" cx={radius} cy={radius} r={radius} />
       </svg>

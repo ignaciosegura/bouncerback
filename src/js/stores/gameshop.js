@@ -6,6 +6,7 @@ import { observable, computed } from 'mobx';
 class Game {
   @observable bounces = 0;
   @observable level = 0;
+  @observable lives = 0;
 
   addBounce(b = 1) {
     this.bounces += b;
@@ -20,6 +21,15 @@ class Game {
 
   resetBounces() {
     this.bounces = 0;
+  }
+
+  setLives(lives) {
+    this.lives = lives;
+  }
+  removeALife() {
+    this.lives = (this.lives > 0)
+      ? --this.lives
+      : 0;
   }
 }
 
