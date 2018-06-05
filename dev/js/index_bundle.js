@@ -7440,6 +7440,10 @@ var _gamesurface = __webpack_require__(59);
 
 var _gamesurface2 = _interopRequireDefault(_gamesurface);
 
+var _gameover = __webpack_require__(141);
+
+var _gameover2 = _interopRequireDefault(_gameover);
+
 var _footer = __webpack_require__(53);
 
 var _footer2 = _interopRequireDefault(_footer);
@@ -7513,6 +7517,7 @@ var Index = function (_React$Component) {
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game', render: function render() {
                 return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
               } }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game-over', component: _gameover2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _notfound2.default }),
             '} />'
           )
@@ -9471,7 +9476,6 @@ var GameEngine = function () {
     this.atoms = [];
     this.vortex = null;
     this.gameLoop = this.gameLoop.bind(this);
-    this.gameInterval;
 
     this.setupReadyState();
   }
@@ -9543,7 +9547,6 @@ var GameEngine = function () {
     value: function checkGameOver() {
       if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
 
-      clearInterval(this.gameLoopInterval);
       _endgameservice2.default.goGameOver();
     }
   }, {
@@ -10051,7 +10054,7 @@ var EndGameService = function () {
     key: 'goGameOver',
     value: function goGameOver() {
       this.stopTheGame();
-      _index.history.push('gameover');
+      _index.history.push('/game-over');
     }
   }]);
 
@@ -33127,13 +33130,13 @@ var ScreenMenu = function (_React$Component) {
         { className: 'screen-menu' },
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/tutorial', className: 'text ready' },
-          'Tutorial'
+          { to: '/game', className: 'text ready' },
+          'New Game'
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/game', className: 'text ready' },
-          'New Game'
+          { to: '/tutorial', className: 'text ready' },
+          'Tutorial'
         )
       );
     }
@@ -33146,6 +33149,83 @@ exports.default = ScreenMenu;
 
 /***/ }),
 /* 139 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 140 */,
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(45);
+
+var _screenmenu = __webpack_require__(138);
+
+var _screenmenu2 = _interopRequireDefault(_screenmenu);
+
+var _scoreboard = __webpack_require__(61);
+
+var _scoreboard2 = _interopRequireDefault(_scoreboard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* global require */
+__webpack_require__(142);
+
+var GameOver = function (_React$Component) {
+  _inherits(GameOver, _React$Component);
+
+  function GameOver() {
+    _classCallCheck(this, GameOver);
+
+    return _possibleConstructorReturn(this, (GameOver.__proto__ || Object.getPrototypeOf(GameOver)).apply(this, arguments));
+  }
+
+  _createClass(GameOver, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'game-over-screen' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Game Over'
+        ),
+        _react2.default.createElement(_screenmenu2.default, null),
+        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
+        _react2.default.createElement(_scoreboard2.default, { type: 'level' })
+      );
+    }
+  }]);
+
+  return GameOver;
+}(_react2.default.Component);
+
+exports.default = GameOver;
+
+/***/ }),
+/* 142 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -1,0 +1,40 @@
+// Game Over screen layout
+
+@import '_variables.scss';
+@import '_animations.scss';
+
+#game-over-screen {
+  position: absolute;
+  font-size: $default-font-size;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  animation: $animation-text-entry;
+
+  h1 {
+    text-align: center;
+    font-weight: normal;
+    font-size: $default-font-title-size;
+    margin-bottom: 1em;
+  }
+
+  .screen-menu {
+    margin-bottom: 3em;
+  }
+
+  .scoreboard {
+    position: static;
+    width: auto;
+    margin-bottom: 1em;
+
+    .label,
+    .value {
+      display: inline;
+    }
+
+    .label:after {
+      content: ': ';
+    }
+  }
+}

@@ -8,6 +8,7 @@
   font-size: $default-font-size;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
 
   animation: $animation-text-entry;
 
@@ -17,6 +18,4 @@
     max-width: 75vw;
     margin-bottom: 2em;
   }
-
-  transform: translate(-50%, -50%);
 }

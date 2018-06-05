@@ -39,7 +39,7 @@ class EndGameService {
   }
   static goGameOver() {
     this.stopTheGame();
-    history.push('gameover');
+    history.push('/game-over');
   }
 }
 
