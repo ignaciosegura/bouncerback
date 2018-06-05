@@ -1,0 +1,35 @@
+// Lives counter
+
+@import '_variables.scss';
+@import '_animations.scss';
+
+#lives-counter {
+  position: absolute;
+  bottom: 2em;
+  left: 2em;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin: 0 0.5em 0 0;
+    padding: 0;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: white;
+    opacity: 0;
+
+    animation: $animation-object-entry;
+    
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        animation-delay:(#{$i*0.05s}); 
+      }
+    }
+
+    &.dying {
+      animation: $animation-object-removal;
+    }
+  }
+}

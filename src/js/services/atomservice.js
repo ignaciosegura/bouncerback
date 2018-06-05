@@ -3,6 +3,7 @@
 
 import Atom from '../atom.js';
 import CoordsService from './coordsservice.js';
+import GameShop from '../stores/gameshop.js';
 
 class AtomService {
   static moveAtoms(atoms) {
@@ -28,6 +29,7 @@ class AtomService {
 
       atoms[i].domElement.remove();
       atoms.splice(i, 1);
+      GameShop.removeALife();
     }
   }
 

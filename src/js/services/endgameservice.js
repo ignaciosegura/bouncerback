@@ -13,6 +13,10 @@ class EndGameService {
     return (AtomService.allAtomsAreInVortex(atoms) === true);
   }
 
+  static gameIsOver() {
+    return (GameShop.lives === 0);
+  }
+
   static runEndGameActions(level) {
     switch (level.levelPassAction) {
       case 'next':

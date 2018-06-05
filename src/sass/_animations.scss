@@ -3,22 +3,37 @@
 // Variables.
 
 $animation-text-entry: text-entry 0.5s ease-in-out 0s 1 forwards;
+$animation-object-entry: object-entry 0.5s ease-in-out 0s 1 forwards;
 $animation-text-removal: text-removal 1.5s normal ease-in-out 0s 1 forwards;
+$animation-object-removal: object-removal 1.5s normal ease-in-out 0s 1 forwards;
 
 @keyframes text-entry {
     from {
       opacity: 0;
       color: $blind-blue;
       border-color: $blind-blue;
-      fill: $blind-blue;
     }
   
     to {
       color: white;
       border-color: white;
+    }
+  }
+
+  @keyframes object-entry {
+    from {
+      opacity: 0;
+      background-color: $blind-blue;
+      fill: $blind-blue;
+    }
+  
+    to {
+      opacity: 1;
+      background-color: white;
       fill: white;
     }
   }
+  
   
   @keyframes text-removal {
     from {
@@ -54,5 +69,38 @@ $animation-text-removal: text-removal 1.5s normal ease-in-out 0s 1 forwards;
       border-color: $lost-yellow;
       opacity: 0;
       transform: translate(-50%);
+    }
+  }
+
+  @keyframes object-removal {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  
+    40% {
+      background-color: $dying-red;
+    }
+  
+    69% {
+      transform: translateY(-50%);
+    }
+    70% {
+      transform: translateY(-100%);
+    }
+    74% {
+      transform: translateY(100%);
+    }
+    78% {
+      transform: translateY(-100%);
+    }
+    82% {
+      transform: translateY(100%);
+    }
+  
+    to {
+      background-color: $lost-yellow;
+      opacity: 0;
+      transform: translateY(0);
     }
   }

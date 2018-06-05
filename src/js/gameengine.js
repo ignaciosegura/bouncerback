@@ -32,6 +32,7 @@ class GameEngine {
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
+    GameShop.setLives(Math.ceil(this.level.atomList.length / 2));
 
     this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks = [];
@@ -45,6 +46,7 @@ class GameEngine {
   setupReadyState() {
     CoordsService.createPointZero('#the-zone');
     SoundtrackService.newTrack(this.level.sound.track);
+
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
     let fadeoutTime = DefaultsShop.text.fadeoutTime;
@@ -98,9 +100,8 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (!this.level.areAllAtomsOut() || this.atoms.length > 0) return false;
-
-    EndGameService.goGameOver();
+    if (EndGameService.gameIsOver())
+      EndGameService.goGameOver();
   }
 
   checkVortex() {
