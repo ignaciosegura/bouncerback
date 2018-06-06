@@ -30,6 +30,7 @@ class EndGameService {
   static stopTheGame() {
     SoundtrackService.fadeOut();
     ClockService.stopTheClock();
+    GameShop.setLives(0);
   }
 
   static gotoNextLevel() {
