@@ -1,9 +1,11 @@
 // Sound engine
 
+import DefaultsShop from './stores/defaultsshop.js';
+
 class SoundFX {
   constructor(sound = null) {
     this.sound = new Audio(sound);
-    this.sound.volume = 1;
+    this.sound.volume = 1 * DefaultsShop.soundFactor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;
     this.fadeoutTime = 3000;

@@ -11,6 +11,8 @@ class Default {
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
 
     this.circleRadius = observable.box(275);
+
+    this.soundFactor = 0.5;
   }
 
 }
