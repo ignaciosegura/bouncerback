@@ -349,6 +349,19 @@
       animation-delay: 2.5s; }
     #lives-counter li.dying {
       animation: object-removal 1.5s normal ease-in-out 0s 1 forwards; }
+#system-menu {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  margin: 0;
+  padding: 0; }
+  #system-menu a {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: solid white 1px;
+    margin: 0 0 0 0.5em;
+    background-size: contain; }
 #point-zero {
   width: 0;
   height: 0;

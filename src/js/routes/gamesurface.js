@@ -12,6 +12,7 @@ import { observer, inject } from 'mobx-react';
 
 import Scoreboard from '../scoreboard.js';
 import LivesCounter from '../livescounter.js';
+import SystemMenu from '../systemmenu.js';
 import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';
@@ -52,6 +53,7 @@ class GameSurface extends React.Component {
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
       <LivesCounter />
+      <SystemMenu />
       <svg id="the-zone" data-level={this.props.GameShop.level} width={size} height={size}>
         <circle id="the-circle" cx={radius} cy={radius} r={radius} />
       </svg>

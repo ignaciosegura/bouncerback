@@ -12,6 +12,12 @@ class ClockService {
     TimeShop.clock = 'off';
   }
 
+  static toggleClock() {
+    TimeShop.clock = (TimeShop.clock === 'on')
+      ? 'off'
+      : 'on';
+  }
+
   static resetClock() {
     TimeShop.reset();
   }

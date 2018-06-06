@@ -3,6 +3,11 @@
 import { observable, computed } from 'mobx';
 
 class Default {
+  @observable sound = {
+    muted: false,
+    factor: 0.5
+  }
+
   constructor() {
     this.text = {
       fadeoutTime: 1500,
@@ -11,11 +16,10 @@ class Default {
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
 
     this.circleRadius = observable.box(275);
+  }
 
-    this.sound = {
-      active: true,
-      factor: 0.5
-    }
+  toggleSound() {
+    this.sound.muted = !this.sound.muted;
   }
 
 }
