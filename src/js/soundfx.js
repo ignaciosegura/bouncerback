@@ -1,6 +1,6 @@
 // Sound engine
 
-import { computed, autorun } from 'mobx';
+import { computed } from 'mobx';
 
 import SystemShop from './stores/systemshop.js';
 
