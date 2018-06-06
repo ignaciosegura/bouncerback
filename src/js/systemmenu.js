@@ -8,6 +8,7 @@ import { observer, inject } from 'mobx-react';
 
 import SystemShop from './stores/systemshop.js';
 import ClockService from './services/clockservice.js';
+import EndGameService from './services/endgameservice.js';
 
 
 @inject('TimeShop', 'SystemShop') @observer
@@ -24,6 +25,10 @@ class SystemMenu extends React.Component {
     e.preventDefault();
     ClockService.toggleClock();
   }
+  closeClick(e) {
+    EndGameService.stopTheGame();
+  }
+
 
   render() {
     let soundStatusClass = (this.props.SystemShop.sound.muted)
@@ -34,9 +39,9 @@ class SystemMenu extends React.Component {
       : 'paused';
 
     return <div id='system-menu'>
-      <a href='#' className={soundStatusClass} onClick={this.soundClick}></a>
-      <a href='#' className={pauseStatusClass} onClick={this.pauseClick}></a>
-      <Link to='/' className='close'></Link>
+      <a href='#' className={soundStatusClass} onClick={this.soundClick}>S</a>
+      <a href='#' className={pauseStatusClass} onClick={this.pauseClick}>G</a>
+      <Link to='/' className='close'  onClick={this.closeClick}>X</Link>
     </div>
   }
 }
