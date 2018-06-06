@@ -16,7 +16,7 @@ import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';
 
-@inject('GameShop', 'DefaultsShop') @observer
+@inject('GameShop', 'SystemShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
     super();
@@ -45,7 +45,7 @@ class GameSurface extends React.Component {
   }
 
   render() {
-    let radius = this.props.DefaultsShop.circleRadius;
+    let radius = this.props.SystemShop.circleRadius;
     let size = radius * 2;
 
     return <div id="gamesurface" onTouchMove={this.preventDefault}>

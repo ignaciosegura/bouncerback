@@ -12,11 +12,14 @@ class Default {
 
     this.circleRadius = observable.box(275);
 
-    this.soundFactor = 0.5;
+    this.sound = {
+      active: true,
+      factor: 0.5
+    }
   }
 
 }
 
-const DefaultsShop = new Default();
+const SystemShop = new Default();
 
-export default DefaultsShop;
+export default SystemShop;
