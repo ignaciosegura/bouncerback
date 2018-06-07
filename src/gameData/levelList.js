@@ -28,6 +28,35 @@
 const levelList = [
   {}, // Level Zero does not exist on real game, only on tutorial.
   {
+    name: 'Neutronika',
+    levelType: 'game',
+    duration: 28,
+    levelPassAction: 'next',
+    gameOverAction: 'gameover',
+    time: {
+      bpm: 115,
+      signature: 4
+    },
+    sound: {
+      launch: require('../sound/launch.mp3'),
+      bounce: require('../sound/bounce_dry.mp3'),
+      destroy: require('../sound/destroy.mp3'),
+      track: require('../sound/tracks/neutronika.mp3')
+    },
+    atomSpeed: 4,
+    atomList: [
+      { t: 0, b: 0 },
+      { t: 2, b: 0 },
+      { t: 3, b: 3.5 },
+      { t: 5, b: 2 },
+      { t: 11, b: 2.75 },
+      { t: 15, b: 3 },
+      { t: 17, b: 1 },
+      { t: 19, b: 0.75 },
+      { t: 22, b: 3.25 },
+    ]
+  },
+  {
     name: 'Femtocosmos',
     levelType: 'game',
     duration: 32,
@@ -124,7 +153,6 @@ const levelList = [
 ];
 // Synthetogenesis
 // Quantåmorphica
-// Femtocosmos
 // Gravcon
 // Neutronika
 // Hexerion
