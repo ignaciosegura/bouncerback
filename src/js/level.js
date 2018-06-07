@@ -2,6 +2,7 @@
 // setup object to be delivered on instantiation:
 
 import SoundFX from './soundfx.js';
+import ClockService from './services/clockservice.js';
 
 class Level {
 
@@ -18,6 +19,18 @@ class Level {
 
   areAllAtomsOut() {
     return (this.nextAtom.order >= this.atomList.length);
+  }
+
+  scheduleNextAtom() {
+    this.nextAtom.order++;
+    this.scheduleAtom(this.nextAtom.order);
+  }
+
+  scheduleAtom(order) {
+    if (this.areAllAtomsOut()) return;
+    let atomTime = this.atomList[order];
+
+    this.nextAtom.tick = ClockService.calculateTickFromMusicalNotation(atomTime.t, atomTime.b);
   }
 }
 
