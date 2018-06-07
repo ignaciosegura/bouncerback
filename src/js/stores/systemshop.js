@@ -3,6 +3,11 @@
 import { observable, computed } from 'mobx';
 
 class Default {
+  @observable sound = {
+    muted: false,
+    factor: 0.5
+  }
+
   constructor() {
     this.text = {
       fadeoutTime: 1500,
@@ -13,8 +18,12 @@ class Default {
     this.circleRadius = observable.box(275);
   }
 
+  toggleSound() {
+    this.sound.muted = !this.sound.muted;
+  }
+
 }
 
-const DefaultsShop = new Default();
+const SystemShop = new Default();
 
-export default DefaultsShop;
+export default SystemShop;

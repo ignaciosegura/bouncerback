@@ -12,11 +12,12 @@ import { observer, inject } from 'mobx-react';
 
 import Scoreboard from '../scoreboard.js';
 import LivesCounter from '../livescounter.js';
+import SystemMenu from '../systemmenu.js';
 import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';
 
-@inject('GameShop', 'DefaultsShop') @observer
+@inject('GameShop', 'SystemShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
     super();
@@ -45,13 +46,14 @@ class GameSurface extends React.Component {
   }
 
   render() {
-    let radius = this.props.DefaultsShop.circleRadius;
+    let radius = this.props.SystemShop.circleRadius;
     let size = radius * 2;
 
     return <div id="gamesurface" onTouchMove={this.preventDefault}>
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
       <LivesCounter />
+      <SystemMenu />
       <svg id="the-zone" data-level={this.props.GameShop.level} width={size} height={size}>
         <circle id="the-circle" cx={radius} cy={radius} r={radius} />
       </svg>

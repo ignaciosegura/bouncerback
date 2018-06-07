@@ -1,11 +1,18 @@
 // Sound engine
 
+import { computed } from 'mobx';
+
+import SystemShop from './stores/systemshop.js';
+
 class SoundFX {
   constructor(sound = null) {
     this.sound = new Audio(sound);
-    this.sound.volume = 1;
+    this.sound.volume = 1 * SystemShop.sound.factor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;
+    this.sound.muted = computed(() => {
+      return SystemShop.sound.muted
+    }).get();
     this.fadeoutTime = 3000;
     this.fadeInterval;
 
@@ -13,7 +20,11 @@ class SoundFX {
   }
 
   play() {
-    this.sound.play();
+    if (!SystemShop.sound.muted) 
+      this.sound.play();
+  }
+  pause() {
+    this.sound.pause();
   }
 
   fadeOut() {

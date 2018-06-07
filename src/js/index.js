@@ -14,7 +14,8 @@ import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
 import Footer from './footer.js';
 import GameShop from './stores/gameshop.js';
-import DefaultsShop from './stores/defaultsshop.js';
+import SystemShop from './stores/systemshop.js';
+import TimeShop from './stores/timeshop.js';
 
 import { Provider } from 'mobx-react';
 import NotFound from './routes/notfound';
@@ -51,6 +52,6 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(
-  <Provider GameShop={GameShop} DefaultsShop={DefaultsShop}><Index /></Provider>,
+  <Provider GameShop={GameShop} SystemShop={SystemShop} TimeShop={TimeShop}><Index /></Provider>,
   document.getElementById('content')
 );

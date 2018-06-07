@@ -23,7 +23,7 @@ import EndGameService from './services/endgameservice.js';
 import TextService from './services/textservice.js';
 import SoundtrackService from './services/soundtrackservice.js';
 
-import DefaultsShop from './stores/defaultsshop';
+import SystemShop from './stores/systemshop';
 
 class GameEngine {
 
@@ -49,7 +49,7 @@ class GameEngine {
 
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
-    let fadeoutTime = DefaultsShop.text.fadeoutTime;
+    let fadeoutTime = SystemShop.text.fadeoutTime;
 
     readyText.domElement.onclick = (e) => {
       e.preventDefault();
