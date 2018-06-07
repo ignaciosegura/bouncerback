@@ -11,7 +11,7 @@ class Level {
     }
     this.nextAtom = {
       order: 0,
-      tick: 0
+      tick: 0,
     }
     this.atoms = [];
   }

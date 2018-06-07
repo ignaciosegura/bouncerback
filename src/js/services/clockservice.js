@@ -48,6 +48,10 @@ class ClockService {
       this.scheduleTick();
     }, time);
   }
+
+  static calculateTickFromMusicalNotation(time = 0, beat = 0) {
+    return (time * TimeShop.framesPerTime) + (beat * TimeShop.framesPerBeat);
+  }
 }
 
 export default ClockService;

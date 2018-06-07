@@ -46,6 +46,7 @@ class GameEngine {
   setupReadyState() {
     CoordsService.createPointZero('#the-zone');
     SoundtrackService.newTrack(this.level.sound.track);
+    this.scheduleAtom(0);
 
     let title = TextService.renderTitle(this.level.name);
     let readyText = TextService.renderReadyText();
@@ -122,23 +123,19 @@ class GameEngine {
     if (Math.round(this.level.nextAtom.tick) !== TimeShop.tick) return;
 
     this.addAtomToGameSurface();
-    this.scheduleNextAtom();
-
+    this.level.nextAtom.order++;
+    this.scheduleAtom(this.level.nextAtom.order);
   }
 
   addAtomToGameSurface() {
     this.atoms.push(AtomService.createAtom(this.level.nextAtom.order, this.level));
   }
 
-
-  scheduleNextAtom() {
-    this.level.nextAtom.order++;
+  scheduleAtom(order) {
     if (this.level.areAllAtomsOut()) return;
+    let atomTime = this.level.atomList[order];
 
-    let nextAtom = this.level.nextAtom.order;
-    let atomTime = this.level.atomList[nextAtom];
-
-    this.level.nextAtom.tick = atomTime.b * TimeShop.framesPerBeat + atomTime.t * TimeShop.framesPerTime;
+    this.level.nextAtom.tick = ClockService.calculateTickFromMusicalNotation(atomTime.t, atomTime.b);
   }
 }
 
