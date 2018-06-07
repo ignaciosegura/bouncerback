@@ -19,7 +19,7 @@ import Vortex from './vortex.js';
 import AtomService from './services/atomservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
-import EndGameService from './services/endgameservice.js';
+import GameService from './services/gameservice.js';
 import TextService from './services/textservice.js';
 import SoundtrackService from './services/soundtrackservice.js';
 
@@ -33,7 +33,7 @@ class GameEngine {
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
-    EndGameService.setInitialLives(this.level.atomList.length, gameType);
+    GameService.setInitialLives(this.level.atomList.length, gameType);
 
     this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks = [];
@@ -102,8 +102,8 @@ class GameEngine {
   }
 
   checkGameOver() {
-    if (EndGameService.gameIsOver())
-      EndGameService.goGameOver();
+    if (GameService.gameIsOver())
+      GameService.goGameOver();
   }
 
   checkVortex() {
@@ -114,9 +114,9 @@ class GameEngine {
   }
 
   checkAllAtomsAreinVortex() {
-    if (!EndGameService.gameHasEnded(this.atoms)) return;
+    if (!GameService.gameHasEnded(this.atoms)) return;
 
-    EndGameService.runEndGameActions(this.level);
+    GameService.runEndGameActions(this.level);
   }
 
   checkAtomList() {

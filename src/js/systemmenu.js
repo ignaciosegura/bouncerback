@@ -3,12 +3,12 @@
 require('../sass/_systemmenu.scss');
 
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
 import SystemShop from './stores/systemshop.js';
 import ClockService from './services/clockservice.js';
-import EndGameService from './services/endgameservice.js';
+import GameService from './services/gameservice.js';
 
 
 @inject('TimeShop', 'SystemShop') @observer
@@ -26,7 +26,7 @@ class SystemMenu extends React.Component {
     ClockService.toggleClock();
   }
   closeClick(e) {
-    EndGameService.stopTheGame();
+    GameService.stopTheGame();
   }
 
 
@@ -41,7 +41,7 @@ class SystemMenu extends React.Component {
     return <div id='system-menu'>
       <a href='#' className={soundStatusClass} onClick={this.soundClick}>S</a>
       <a href='#' className={pauseStatusClass} onClick={this.pauseClick}>G</a>
-      <Link to='/' className='close'  onClick={this.closeClick}>X</Link>
+      <Link to='/' className='close' onClick={this.closeClick}>X</Link>
     </div>
   }
 }

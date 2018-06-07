@@ -8,7 +8,7 @@ import SoundtrackService from './soundtrackservice.js';
 
 import GameShop from '../stores/gameshop.js';
 
-class EndGameService {
+class GameService {
   static setInitialLives(atomCount, gameType) {
     let lives = gameType === 'tutorial'
       ? atomCount
@@ -55,4 +55,4 @@ class EndGameService {
   }
 }
 
-export default EndGameService;
+export default GameService;
