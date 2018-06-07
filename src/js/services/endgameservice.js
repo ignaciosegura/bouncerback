@@ -9,6 +9,13 @@ import SoundtrackService from './soundtrackservice.js';
 import GameShop from '../stores/gameshop.js';
 
 class EndGameService {
+  static setInitialLives(atomCount, gameType) {
+    let lives = gameType === 'tutorial'
+      ? atomCount
+      : Math.ceil(atomCount / 2);
+    GameShop.setLives(lives);
+  }
+
   static gameHasEnded(atoms) {
     return (AtomService.allAtomsAreInVortex(atoms) === true);
   }

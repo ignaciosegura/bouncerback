@@ -28,11 +28,12 @@ import SystemShop from './stores/systemshop';
 class GameEngine {
 
   constructor(level, gameType) {
-    this.level = gameType === 'tutorial'
+    this.gameType = gameType;
+    this.level = this.gameType === 'tutorial'
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
-    GameShop.setLives(Math.ceil(this.level.atomList.length / 2));
+    EndGameService.setInitialLives(this.level.atomList.length, gameType);
 
     this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks = [];
