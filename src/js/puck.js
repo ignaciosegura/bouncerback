@@ -1,10 +1,10 @@
 // Puck class
 
 class Puck {
-  constructor(index = 0, angle = 10) {
+  constructor(index = 0, angle = 20) {
     this.index = index;
     this.size = {
-      width: 80,
+      width: 100,
       height: 10
     }
     this.translateCoords = {
