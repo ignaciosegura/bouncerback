@@ -4,7 +4,7 @@ const levelList = [
   {
     name: 'Tutorial',
     type: 'tutorial',
-    duration: 4,
+    duration: 32,
     levelPassAction: 'home',
     gameOverAction: 'gameover',
     time: {
@@ -19,10 +19,10 @@ const levelList = [
     },
     atomSpeed: 8,
     atomList: [
-      { t: 0, b: 0 },
-      { t: 1, b: 0 },
-      { t: 2, b: 0 },
-      { t: 3, b: 0 },
+      { t: 8, b: 0 },
+      { t: 14, b: 0 },
+      { t: 20, b: 0 },
+      { t: 26, b: 0 },
     ]
   },
 ];
