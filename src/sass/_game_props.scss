@@ -2,6 +2,10 @@
 
 
 #point-zero {
+  circle {
+    transition: fill linear 1s, opacity linear 2s;
+  }
+
   rect {
     fill: white;
     stroke: none;
