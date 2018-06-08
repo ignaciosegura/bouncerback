@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="es.niknak.bouncerback" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Bouncerback</name>
+    <description>
+        Bouncerback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
+    </description>
+    <author email="nacho@isegura.es" href="http://bouncerback.niknak.es">
+        Nik Nak Studio. Music by Ignorance is Strength.
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="loglevel" value="DEBUG" />
+</widget>
