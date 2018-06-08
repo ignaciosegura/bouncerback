@@ -32,3 +32,19 @@ In watch mode: npm run watch-development
 Building for development (/dev folder): npm run build-development
 
 Build for production (/prod folder): npm run build-production
+
+
+ANDROID BUILD
+
+Requires PhoneGap Build CLI:
+
+> npm install -g pgb-cli
+
+or
+
+> brew tap phonegap-build/build
+> brew install pgb
+
+To run remote build from Adobe Phonegap Cloud: npm run build-android
+
+

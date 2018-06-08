@@ -12,3 +12,8 @@ In your browser, open the file:
 
     /www/index.html
 
+### To build the app
+
+    pgb login nacho@isegura.es
+    pgb build 3197157
+    pgb download 3197157 android ./builds

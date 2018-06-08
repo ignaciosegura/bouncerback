@@ -7,7 +7,8 @@
     "build-production": "NODE_ENV=production webpack",
     "build-development": "NODE_ENV=development webpack",
     "watch-development": "NODE_ENV=development webpack -w",
-    "deploy": "node deploy"
+    "deploy": "node deploy",
+    "build-android": "cd bouncerapp && pgb login nacho@isegura.es && pgb build 3197157 && pgb download 3197157 android ./builds"
   },
   "author": "Nik Nak Studio www.niknak.es",
   "license": "ISC",
@@ -38,6 +39,7 @@
     "install": "^0.10.0",
     "node-sass": "^4.9.0",
     "npm": "^4.5.0",
+    "pgb-cli": "^1.0.2",
     "resolve-url": "^0.2.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
