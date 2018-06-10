@@ -358,14 +358,12 @@
   stroke: none; }
   .atom.dying {
     fill: #900;
-    filter: drop-shadow(0 0 25px #900);
     opacity: 0; }
   .atom.vortex {
     fill: #990; }
   .atom.captured {
     fill: #88ffff;
-    transform: scale(0);
-    filter: drop-shadow(0 0 25px #88ffff); }
+    transform: scale(0); }
 #system-menu {
   position: absolute;
   bottom: 2em;
@@ -486,8 +484,8 @@
     top: 50%;
     padding: 0.5em 0.5em 0.6em;
     border: solid white 4px; }
-#point-zero * {
-  transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s; }
+#point-zero circle {
+  transition: fill linear 1s, opacity linear 2s; }
 
 #point-zero rect {
   fill: white;
@@ -639,4 +637,17 @@ html, body {
   line-height: 1;
   margin: 0;
   padding: 0;
-  touch-action: none; }
+  touch-action: none;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                supported by Chrome and Opera */ }
