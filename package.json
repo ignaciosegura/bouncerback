@@ -1,16 +1,16 @@
 {
-  "name": "bounceback",
+  "name": "bouncerback",
   "version": "1.0.0",
-  "description": "Bounceback, a JS game built on React and Phaser.JS",
+  "description": "Bouncerback, a JS game built on React and MobX",
   "main": "index.js",
   "scripts": {
     "build-production": "NODE_ENV=production webpack",
     "build-development": "NODE_ENV=development webpack",
     "watch-development": "NODE_ENV=development webpack -w",
     "deploy": "node deploy",
-    "build-android": "cd bouncerapp && pgb login nacho@isegura.es && pgb build 3197157 && pgb download 3197157 android ./builds"
+    "build-android": "pgb login nacho@isegura.es && pgb build 3197157 && pgb download 3197157 android ./builds"
   },
-  "author": "Nik Nak Studio www.niknak.es",
+  "author": "Nik Nak Studio (www.niknak.es). Soundtrack by Ignorance Is Strength (ignoranceisat.bandcamp.com)",
   "license": "ISC",
   "dependencies": {
     "mobx": "^4.1.1",

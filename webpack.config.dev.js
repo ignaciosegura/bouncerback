@@ -6,7 +6,7 @@ var loaderOptionsPluginConfig = new webpack.LoaderOptionsPlugin({
 
 var config = {
   environment: 'development',
-  outputDir: '/bouncerapp/www',
+  outputDir: '/dev',
   debug: true,
   devTool: 'source-map',
   plugins: [loaderOptionsPluginConfig],
