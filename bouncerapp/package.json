@@ -1,19 +1,21 @@
 {
-  "name": "es.niknak.bouncerback",
-  "version": "1.0.0",
-  "displayName": "Bouncerback",
-  "cordova": {
-    "platforms": [
-      "android"
-    ],
-    "plugins": {
-      "cordova-plugin-media": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-inappbrowser": {}
-    }
-  },
-  "dependencies": {
-    "cordova-android": "^6.4.0"
-  },
-  "devDependencies": {}
+    "name": "es.niknak.bouncerback",
+    "version": "1.0.0",
+    "displayName": "Bouncerback",
+    "cordova": {
+        "platforms": [
+            "android",
+            "browser"
+        ],
+        "plugins": {
+            "cordova-plugin-media": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-inappbrowser": {}
+        }
+    },
+    "dependencies": {
+        "cordova-android": "^6.4.0",
+        "cordova-browser": "^5.0.3"
+    },
+    "devDependencies": {}
 }

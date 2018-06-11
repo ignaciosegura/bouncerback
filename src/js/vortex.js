@@ -31,19 +31,19 @@ class Vortex {
   activateVortex() {
     setTimeout(() => {
       let vortexDOM = this.domElement;
-      let boundingRectangleWidth = vortexDOM.getBoundingClientRect().width;
+      let boundingRectangleWidth = Math.round(vortexDOM.getBoundingClientRect().width);
       let finalWidth;
 
       if (boundingRectangleWidth == this.initialRadius * 2) {
         let vortexComputedCSS = window.getComputedStyle(vortexDOM);
         let transformationMatrix = fromString(vortexComputedCSS.transform);
         let scale = transformationMatrix.a;
-        
+
         finalWidth = vortexDOM.attributes.r.value * scale;
       } else {
         finalWidth = boundingRectangleWidth;
       }
-      
+
 
       this.active = true;
       this.activeRadius = finalWidth / 2;

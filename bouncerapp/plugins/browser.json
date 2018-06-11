@@ -7,13 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
     "cordova-plugin-media": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "es.niknak.bouncerback"
-    },
-    "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },
