@@ -38,7 +38,7 @@ class Vortex {
       this.active = true;
       this.activeRadius = finalWidth / 2;
     }, this.timeToEffect);
-}
+  }
 }
 
 export default Vortex;
