@@ -9,6 +9,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <access launch-external="yes" origin="http://niknak.es/*" />
+    <access launch-external="yes" origin="http://www.niknak.es/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <preference name="DisallowOverscroll" value="true" />

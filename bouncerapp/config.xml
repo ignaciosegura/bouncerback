@@ -25,13 +25,13 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
     <access origin="*" />
-    <access origin="http://niknak.es/*" launch-external="yes" />
-    <access origin="http://www.niknak.es/*" launch-external="yes" />
+    <access launch-external="yes" origin="http://niknak.es/*" />
+    <access launch-external="yes" origin="http://www.niknak.es/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <engine name="android" spec="^6.4.0" />
+    <engine name="android" spec="^7.1.0" />
     <engine name="browser" spec="^5.0.3" />
     <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-media" />
+    <plugin name="cordova-plugin-media" spec="~5.0.2" />
     <plugin name="cordova-plugin-splashscreen" />
 </widget>
