@@ -117,7 +117,7 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            name: './sound/[name].[ext]',
+            name: './res/sound/[name].[ext]',
           }
         }
       },
