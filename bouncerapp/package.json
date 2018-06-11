@@ -8,7 +8,8 @@
     ],
     "plugins": {
       "cordova-plugin-media": {},
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-inappbrowser": {}
     }
   },
   "dependencies": {

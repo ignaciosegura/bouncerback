@@ -8,7 +8,10 @@
     "build-development": "NODE_ENV=development webpack",
     "watch-development": "NODE_ENV=development webpack -w",
     "deploy": "node deploy",
-    "build-android": "pgb login nacho@isegura.es && pgb build 3197157 && pgb download 3197157 android ./builds"
+    "build-android": "pgb login nacho@isegura.es && pgb build 3197157 android && pgb download 3197157 android ./builds",
+    "copy-to-phonegap": "cp -a ./dev/. ./bouncerapp/www/",
+    "phonegap-serve": "npm run copy-to-phonegap && cd ./bouncerapp && phonegap serve",
+    "phonegap-emulate": "cd ./bouncerapp && cordova run --emulator"
   },
   "author": "Nik Nak Studio (www.niknak.es). Soundtrack by Ignorance Is Strength (ignoranceisat.bandcamp.com)",
   "license": "ISC",

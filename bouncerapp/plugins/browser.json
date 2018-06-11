@@ -12,6 +12,9 @@
     },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },
   "dependent_plugins": {
