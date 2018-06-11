@@ -10494,6 +10494,7 @@ var Vortex = function () {
     _classCallCheck(this, Vortex);
 
     this.timeToEffect = 3000;
+    this.initialRadius = radius;
     this.active = false;
     this.activeRadius = 0;
     this.sounds = {
@@ -10507,7 +10508,7 @@ var Vortex = function () {
     key: 'createVortex',
     value: function createVortex(radius) {
       this.sounds.creation.play();
-      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + radius + '" ></circle>';
+      var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + this.initialRadius + '" ></circle>';
       var pointZero = document.getElementById('point-zero');
       pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
@@ -10520,10 +10521,18 @@ var Vortex = function () {
 
       setTimeout(function () {
         var vortexDOM = _this.domElement;
-        var vortexComputedCSS = window.getComputedStyle(vortexDOM);
-        var transformationMatrix = (0, _transformationMatrix.fromString)(vortexComputedCSS.transform);
-        var scale = transformationMatrix.a;
-        var finalWidth = vortexDOM.attributes.r.value * scale;
+        var boundingRectangleWidth = vortexDOM.getBoundingClientRect().width;
+        var finalWidth = void 0;
+
+        if (boundingRectangleWidth == _this.initialRadius * 2) {
+          var vortexComputedCSS = window.getComputedStyle(vortexDOM);
+          var transformationMatrix = (0, _transformationMatrix.fromString)(vortexComputedCSS.transform);
+          var scale = transformationMatrix.a;
+
+          finalWidth = vortexDOM.attributes.r.value * scale;
+        } else {
+          finalWidth = boundingRectangleWidth;
+        }
 
         _this.active = true;
         _this.activeRadius = finalWidth / 2;
