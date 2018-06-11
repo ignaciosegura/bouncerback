@@ -24,8 +24,6 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
-    <plugin name="cordova-plugin-media" />
-    <plugin name="cordova-plugin-splashscreen" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
@@ -100,4 +98,6 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <engine name="android" spec="~6.1.2" />
+    <plugin name="cordova-plugin-media" />
+    <plugin name="cordova-plugin-splashscreen" />
 </widget>
