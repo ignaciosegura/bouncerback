@@ -2,8 +2,8 @@
 
 
 #point-zero {
-  * {
-    transition: fill linear 1s, filter linear 2s, opacity linear 2s, scale ease-in-out 1s;
+  circle {
+    transition: fill linear 1s, opacity linear 2s;
   }
 
   rect {

@@ -9,6 +9,7 @@ import { fromString } from 'transformation-matrix';
 class Vortex {
   constructor(radius) {
     this.timeToEffect = 3000;
+    this.initialRadius = radius;
     this.active = false;
     this.activeRadius = 0;
     this.sounds = {
@@ -20,7 +21,7 @@ class Vortex {
 
   createVortex(radius) {
     this.sounds.creation.play();
-    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${radius}" ></circle>`;
+    let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${this.initialRadius}" ></circle>`;
     let pointZero = document.getElementById('point-zero');
     pointZero.insertAdjacentHTML('beforeend', vortexHTML);
 
@@ -30,10 +31,19 @@ class Vortex {
   activateVortex() {
     setTimeout(() => {
       let vortexDOM = this.domElement;
-      let vortexComputedCSS = window.getComputedStyle(vortexDOM);
-      let transformationMatrix = fromString(vortexComputedCSS.transform);
-      let scale = transformationMatrix.a;
-      let finalWidth = vortexDOM.attributes.r.value * scale;
+      let boundingRectangleWidth = vortexDOM.getBoundingClientRect().width;
+      let finalWidth;
+
+      if (boundingRectangleWidth == this.initialRadius * 2) {
+        let vortexComputedCSS = window.getComputedStyle(vortexDOM);
+        let transformationMatrix = fromString(vortexComputedCSS.transform);
+        let scale = transformationMatrix.a;
+        
+        finalWidth = vortexDOM.attributes.r.value * scale;
+      } else {
+        finalWidth = boundingRectangleWidth;
+      }
+      
 
       this.active = true;
       this.activeRadius = finalWidth / 2;
