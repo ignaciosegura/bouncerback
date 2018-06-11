@@ -15,6 +15,9 @@
     },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },
   "dependent_plugins": {
