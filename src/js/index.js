@@ -19,7 +19,6 @@ import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
 
 import { Provider } from 'mobx-react';
-import NotFound from './routes/notfound';
 
 class Index extends React.Component {
   constructor(props) {
