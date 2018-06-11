@@ -1,0 +1,83 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Bouncerback",
+  "short_name": "Bouncerback",
+  "version": "es.niknak.bouncerback",
+  "description": "Bouncerback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.",
+  "author": "Nik Nak Studio. Music and Sound FX by Ignorance is Strength.",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/android/icon-36-ldpi.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/android/icon-48-mdpi.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/android/icon-72-hdpi.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/android/icon-96-xhdpi.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/blackberry/icon-80.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/blackberry/icon-80.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/ios/icon-57.png",
+      "type": "image/png",
+      "sizes": "57x57"
+    },
+    {
+      "src": "res/icon/ios/icon-72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "res/icon/ios/icon-57-2x.png",
+      "type": "image/png",
+      "sizes": "114x114"
+    },
+    {
+      "src": "res/icon/ios/icon-72-2x.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "res/icon/webos/icon-64.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/windows-phone/icon-48.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "res/icon/windows-phone/icon-173.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "orientation": "landscape",
+  "start_url": "index.html"
+}

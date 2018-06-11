@@ -1,0 +1,17 @@
+{
+  "name": "es.niknak.bouncerback",
+  "version": "1.0.0",
+  "displayName": "Bouncerback",
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-media": {},
+      "cordova-plugin-splashscreen": {}
+    }
+  },
+  "dependencies": {
+    "cordova-android": "~6.1.2"
+  }
+}
