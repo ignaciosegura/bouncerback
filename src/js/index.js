@@ -29,6 +29,10 @@ class Index extends React.Component {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, false);
+
+    document.addEventListener('deviceready', () => {
+
+    }, false);
   }
 
   preventDefault(e) {

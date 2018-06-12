@@ -6797,6 +6797,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _mobx = __webpack_require__(5);
 
+var _platformservice = __webpack_require__(150);
+
+var _platformservice2 = _interopRequireDefault(_platformservice);
+
 var _systemshop = __webpack_require__(9);
 
 var _systemshop2 = _interopRequireDefault(_systemshop);
@@ -6806,12 +6810,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var SoundFX = function () {
-  function SoundFX() {
-    var sound = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
+  function SoundFX(sound) {
     _classCallCheck(this, SoundFX);
 
-    this.sound = new Audio(sound);
+    this.soundPath = _platformservice2.default.adaptPathToDevices(sound);
+    this.sound = new Audio(this.soundPath);
     this.sound.volume = 1 * _systemshop2.default.sound.factor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;
@@ -7772,6 +7775,8 @@ var Index = function (_React$Component) {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, false);
+
+    document.addEventListener('deviceready', function () {}, false);
     return _this;
   }
 
@@ -33602,6 +33607,74 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(34);
 
+
+/***/ }),
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Specifics for different platforms
+
+var PlatformService = function () {
+  function PlatformService() {
+    _classCallCheck(this, PlatformService);
+  }
+
+  _createClass(PlatformService, null, [{
+    key: 'isPhonegap',
+    value: function isPhonegap() {
+      return _typeof(window.cordova) == 'object';
+    }
+  }, {
+    key: 'isAndroid',
+    value: function isAndroid() {
+      return this.isPhonegap() && window.cordova.platformId === 'android';
+    }
+  }, {
+    key: 'adaptPathToDevices',
+    value: function adaptPathToDevices(path) {
+      var newPath = path;
+      if (this.isAndroid()) newPath = '/android_asset/www/' + path;
+
+      return newPath;
+    }
+  }]);
+
+  return PlatformService;
+}();
+
+exports.default = PlatformService;
 
 /***/ })
 /******/ ]);

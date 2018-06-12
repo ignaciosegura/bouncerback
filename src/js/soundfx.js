@@ -2,11 +2,13 @@
 
 import { computed } from 'mobx';
 
+import PlatformService from './services/platformservice.js';
 import SystemShop from './stores/systemshop.js';
 
 class SoundFX {
-  constructor(sound = null) {
-    this.sound = new Audio(sound);
+  constructor(sound) {
+    this.soundPath = PlatformService.adaptPathToDevices(sound);
+    this.sound = new Audio(this.soundPath);
     this.sound.volume = 1 * SystemShop.sound.factor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;
@@ -20,7 +22,7 @@ class SoundFX {
   }
 
   play() {
-    if (!SystemShop.sound.muted) 
+    if (!SystemShop.sound.muted)
       this.sound.play();
   }
   pause() {
