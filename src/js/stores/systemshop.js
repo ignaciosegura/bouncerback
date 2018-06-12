@@ -7,7 +7,20 @@ class Default {
     muted: false,
     factor: 0.5
   }
-  @observable circleRadius = this.getZoneCSSWidth() / 2;
+  @observable gameSurfaceCoords = {
+    centerX: null,
+    centerY: null,
+    width: null,
+    height: null,
+    radius: null
+  }
+  @computed get canonicalSizes() {
+    return {
+      width: this.gameSurfaceCoords.width / 11 * 2,
+      height: this.gameSurfaceCoords.width / 55,
+      radius: this.gameSurfaceCoords.width / 55,
+    }
+  }
 
   constructor() {
     this.text = {
@@ -20,19 +33,6 @@ class Default {
   toggleSound() {
     this.sound.muted = !this.sound.muted;
   }
-
-  getZoneCSSWidth() {
-    let theZone = document.getElementById('the-zone');
-
-    return (theZone !== null)
-      ? parseInt(window.getComputedStyle(theZone).width)
-      : 0;
-  }
-
-  getCircleRadius() {
-    return this.getZoneCSSWidth() / 2;
-  }
-
 }
 
 const SystemShop = new Default();

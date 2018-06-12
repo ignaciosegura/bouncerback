@@ -1,11 +1,13 @@
 // Puck class
 
+import SystemShop from './stores/systemshop.js';
+
 class Puck {
   constructor(index = 0, angle = 20) {
     this.index = index;
     this.size = {
-      width: 100,
-      height: 10
+      width: SystemShop.gameSurfaceCoords.width / 11 * 2,
+      height: SystemShop.gameSurfaceCoords.width / 55
     }
     this.translateCoords = {
       x: this.size.width / -2,

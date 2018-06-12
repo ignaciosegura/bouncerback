@@ -9,7 +9,9 @@ class CoordsService {
     return {
       centerX: (coords.left + coords.right) / 2,
       centerY: (coords.top + coords.bottom) / 2,
-      radius: parseInt(theCircle.getAttribute('cx'))
+      width: coords.width,
+      height: coords.height,
+      radius: coords.width / 2,
     };
   }
 

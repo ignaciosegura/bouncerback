@@ -1,11 +1,10 @@
 // Game Controller class
-
+import SystemShop from './stores/systemshop.js';
 import CoordsService from './services/coordsservice.js';
 
 class GameController {
-  constructor(gameSurfaceCoords, pucks) {
+  constructor(pucks) {
     let initVector = [CoordsService.getVectorFromXY(0, -1)];
-    this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
     this.movePucks(initVector); // First run
@@ -25,8 +24,8 @@ class GameController {
   }
 
   getVectorFromPosition(position) {
-    let x = position.x - this.gameSurfaceCoords.centerX;
-    let y = position.y - this.gameSurfaceCoords.centerY;
+    let x = position.x - SystemShop.gameSurfaceCoords.centerX;
+    let y = position.y - SystemShop.gameSurfaceCoords.centerY;
     return CoordsService.getVectorFromXY(x, y);
   }
 
@@ -37,7 +36,7 @@ class GameController {
         : vectorArr[0];
 
       p.vector = vector.rads;
-      let radius = this.gameSurfaceCoords.radius;
+      let radius = SystemShop.gameSurfaceCoords.radius;
       let x = Math.cos(vector.rads) * radius;
       let y = Math.sin(vector.rads) * radius;
       let perpendicularInDegs = vector.degrees + 90;

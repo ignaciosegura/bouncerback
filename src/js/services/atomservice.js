@@ -10,8 +10,8 @@ class AtomService {
     atoms.forEach(a => a.moveAtom());
   }
 
-  static checkAtomsStatus(atoms, radius) {
-    atoms.forEach(a => a.checkAtom(radius));
+  static checkAtomsStatus(atoms) {
+    atoms.forEach(a => a.checkAtom());
   }
 
   static createAtom(index, level) {
