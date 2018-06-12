@@ -84,9 +84,12 @@
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   #main-title img {
     display: block;
-    width: 500px;
+    width: 300px;
     max-width: 75vw;
-    margin-bottom: 2em; }
+    margin: 0 auto 2em; }
+    @media (min-width: 800px) {
+      #main-title img {
+        width: 500px; } }
 @keyframes text-entry {
   from {
     opacity: 0;
@@ -638,13 +641,16 @@
       content: ': '; }
 footer {
   font-family: 'Didact Gothic', sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   color: white;
   position: fixed;
   bottom: 5px;
   width: 100%;
   text-align: center;
   z-index: 10; }
+  @media (min-width: 800px) {
+    footer {
+      font-size: 16px; } }
   footer a {
     color: white;
     text-decoration: none;
