@@ -509,8 +509,18 @@ svg#the-zone {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 150px;
+  height: 150px;
   overflow: visible;
   transform: translate(-50%, -50%); }
+  @media (min-width: 360px) {
+    svg#the-zone {
+      width: 400px;
+      height: 400px; } }
+  @media (min-width: 800px) {
+    svg#the-zone {
+      width: 550px;
+      height: 550px; } }
   svg#the-zone #the-circle {
     animation: zone-creation 0.5s normal ease-in-out 0s 1 forwards;
     stroke: white;

@@ -1,3 +1,6 @@
+@import '~breakpoint-sass/stylesheets/breakpoint';
+@import '_variables.scss';
+
 #gamesurface {
   width: 100%;
   background: none;
@@ -19,8 +22,19 @@ svg#the-zone {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 150px;
+  height: 150px;
   overflow: visible;
   transform: translate(-50%, -50%);
+
+  @include breakpoint($break-small) {
+    width: 400px;
+    height: 400px;
+  }
+  @include breakpoint($break-mid) {
+    width: 550px;
+    height: 550px;
+  }
 
   #the-circle {
     animation: zone-creation 0.5s normal ease-in-out 0s 1 forwards;    

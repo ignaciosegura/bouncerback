@@ -16,6 +16,7 @@ import SystemMenu from '../systemmenu.js';
 import GameEngine from '../gameengine.js';
 
 import GameShop from '../stores/gameshop.js';
+import SystemShop from '../stores/systemshop.js';
 
 @inject('GameShop', 'SystemShop') @observer
 class GameSurface extends React.Component {
@@ -27,6 +28,8 @@ class GameSurface extends React.Component {
 
   componentDidMount() {
     if (this.engine !== null) return;
+    if (this.props.SystemShop.circleRadius == 0)
+      SystemShop.circleRadius = SystemShop.getCircleRadius();
 
     this.engine = new GameEngine(GameShop.level, this.props.gameType);
   }

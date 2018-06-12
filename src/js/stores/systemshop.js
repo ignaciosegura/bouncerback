@@ -7,6 +7,7 @@ class Default {
     muted: false,
     factor: 0.5
   }
+  @observable circleRadius = this.getZoneCSSWidth() / 2;
 
   constructor() {
     this.text = {
@@ -14,12 +15,22 @@ class Default {
       readingTime: 3500,
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
-
-    this.circleRadius = observable.box(275);
   }
 
   toggleSound() {
     this.sound.muted = !this.sound.muted;
+  }
+
+  getZoneCSSWidth() {
+    let theZone = document.getElementById('the-zone');
+
+    return (theZone !== null)
+      ? parseInt(window.getComputedStyle(theZone).width)
+      : 0;
+  }
+
+  getCircleRadius() {
+    return this.getZoneCSSWidth() / 2;
   }
 
 }
