@@ -4897,12 +4897,23 @@ function _initializerWarningHelper(descriptor, context) {
 }
 
 var Default = (_class = function () {
+  _createClass(Default, [{
+    key: 'canonicalSizes',
+    get: function get() {
+      return {
+        width: this.gameSurfaceCoords.width / 11 * 2,
+        height: this.gameSurfaceCoords.width / 55,
+        radius: this.gameSurfaceCoords.width / 55
+      };
+    }
+  }]);
+
   function Default() {
     _classCallCheck(this, Default);
 
     _initDefineProp(this, 'sound', _descriptor, this);
 
-    _initDefineProp(this, 'circleRadius', _descriptor2, this);
+    _initDefineProp(this, 'gameSurfaceCoords', _descriptor2, this);
 
     this.text = {
       fadeoutTime: 1500,
@@ -4916,18 +4927,6 @@ var Default = (_class = function () {
     value: function toggleSound() {
       this.sound.muted = !this.sound.muted;
     }
-  }, {
-    key: 'getZoneCSSWidth',
-    value: function getZoneCSSWidth() {
-      var theZone = document.getElementById('the-zone');
-
-      return theZone !== null ? parseInt(window.getComputedStyle(theZone).width) : 0;
-    }
-  }, {
-    key: 'getCircleRadius',
-    value: function getCircleRadius() {
-      return this.getZoneCSSWidth() / 2;
-    }
   }]);
 
   return Default;
@@ -4939,12 +4938,18 @@ var Default = (_class = function () {
       factor: 0.5
     };
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'circleRadius', [_mobx.observable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'gameSurfaceCoords', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
-    return this.getZoneCSSWidth() / 2;
+    return {
+      centerX: null,
+      centerY: null,
+      width: null,
+      height: null,
+      radius: null
+    };
   }
-})), _class);
+}), _applyDecoratedDescriptor(_class.prototype, 'canonicalSizes', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'canonicalSizes'), _class.prototype)), _class);
 
 
 var SystemShop = new Default();
@@ -6718,7 +6723,9 @@ var CoordsService = function () {
       return {
         centerX: (coords.left + coords.right) / 2,
         centerY: (coords.top + coords.bottom) / 2,
-        radius: parseInt(theCircle.getAttribute('cx'))
+        width: coords.width,
+        height: coords.height,
+        radius: coords.width / 2
       };
     }
   }, {
@@ -8027,9 +8034,9 @@ var AtomService = function () {
     }
   }, {
     key: 'checkAtomsStatus',
-    value: function checkAtomsStatus(atoms, radius) {
+    value: function checkAtomsStatus(atoms) {
       atoms.forEach(function (a) {
-        return a.checkAtom(radius);
+        return a.checkAtom();
       });
     }
   }, {
@@ -9506,6 +9513,10 @@ var _timeshop = __webpack_require__(10);
 
 var _timeshop2 = _interopRequireDefault(_timeshop);
 
+var _systemshop = __webpack_require__(9);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
 var _coordsservice = __webpack_require__(19);
 
 var _coordsservice2 = _interopRequireDefault(_coordsservice);
@@ -9529,7 +9540,7 @@ var Atom = function () {
     };
     this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
-    this.radius = 10;
+    this.radius = _systemshop2.default.canonicalSizes.radius;
     this.sounds = {
       launch: new _soundfx2.default(level.sound.launch),
       bounce: new _soundfx2.default(level.sound.bounce),
@@ -9558,7 +9569,7 @@ var Atom = function () {
     key: 'convertTimesPerTripIntoPixelsPerFrame',
     value: function convertTimesPerTripIntoPixelsPerFrame(speed) {
       var framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-      var gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
+      var gameSurfaceCoords = _systemshop2.default.gameSurfaceCoords;
       var tripLength = gameSurfaceCoords.radius * 2;
 
       return tripLength / framesPerTrip;
@@ -9608,7 +9619,8 @@ var Atom = function () {
     }
   }, {
     key: 'checkAtom',
-    value: function checkAtom(radius) {
+    value: function checkAtom() {
+      var radius = _systemshop2.default.gameSurfaceCoords.radius;
       var pos = this.atomPosition;
       var distance = _coordsservice2.default.getDistanceFromXY(pos.cx, pos.cy);
 
@@ -9760,6 +9772,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game Controller class
 
+
+var _systemshop = __webpack_require__(9);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
 var _coordsservice = __webpack_require__(19);
 
 var _coordsservice2 = _interopRequireDefault(_coordsservice);
@@ -9769,11 +9786,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GameController = function () {
-  function GameController(gameSurfaceCoords, pucks) {
+  function GameController(pucks) {
     _classCallCheck(this, GameController);
 
     var initVector = [_coordsservice2.default.getVectorFromXY(0, -1)];
-    this.gameSurfaceCoords = gameSurfaceCoords;
     this.pucks = pucks;
 
     this.movePucks(initVector); // First run
@@ -9800,20 +9816,18 @@ var GameController = function () {
   }, {
     key: 'getVectorFromPosition',
     value: function getVectorFromPosition(position) {
-      var x = position.x - this.gameSurfaceCoords.centerX;
-      var y = position.y - this.gameSurfaceCoords.centerY;
+      var x = position.x - _systemshop2.default.gameSurfaceCoords.centerX;
+      var y = position.y - _systemshop2.default.gameSurfaceCoords.centerY;
       return _coordsservice2.default.getVectorFromXY(x, y);
     }
   }, {
     key: 'movePucks',
     value: function movePucks(vectorArr) {
-      var _this2 = this;
-
       this.pucks.forEach(function (p) {
         var vector = vectorArr[p.index] ? vectorArr[p.index] : vectorArr[0];
 
         p.vector = vector.rads;
-        var radius = _this2.gameSurfaceCoords.radius;
+        var radius = _systemshop2.default.gameSurfaceCoords.radius;
         var x = Math.cos(vector.rads) * radius;
         var y = Math.sin(vector.rads) * radius;
         var perpendicularInDegs = vector.degrees + 90;
@@ -9859,6 +9873,10 @@ var _timeshop = __webpack_require__(10);
 
 var _timeshop2 = _interopRequireDefault(_timeshop);
 
+var _systemshop = __webpack_require__(9);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
 var _puck = __webpack_require__(61);
 
 var _puck2 = _interopRequireDefault(_puck);
@@ -9899,10 +9917,6 @@ var _soundtrackservice = __webpack_require__(39);
 
 var _soundtrackservice2 = _interopRequireDefault(_soundtrackservice);
 
-var _systemshop = __webpack_require__(9);
-
-var _systemshop2 = _interopRequireDefault(_systemshop);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9921,7 +9935,6 @@ var GameEngine = function () {
     _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
     _gameservice2.default.setInitialLives(this.level.atomList.length, gameType);
 
-    this.gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
     this.pucks = [];
     this.atoms = [];
     this.vortex = null;
@@ -9953,10 +9966,11 @@ var GameEngine = function () {
   }, {
     key: 'startGame',
     value: function startGame() {
+      _systemshop2.default.gameSurfaceCoords = _coordsservice2.default.findGameSurfaceCoords();
       this.pucks.push(new _puck2.default(0));
       this.pucks.push(new _puck2.default(1));
 
-      new _gamecontroller2.default(this.gameSurfaceCoords, this.pucks);
+      new _gamecontroller2.default(this.pucks);
 
       _soundtrackservice2.default.play();
 
@@ -9983,7 +9997,7 @@ var GameEngine = function () {
       var bounces = void 0;
 
       _atomservice2.default.destroyAtoms(this.atoms);
-      _atomservice2.default.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
+      _atomservice2.default.checkAtomsStatus(this.atoms);
       _atomservice2.default.moveAtoms(this.atoms);
       bounces = _atomservice2.default.bounceAtoms(this.atoms, this.pucks);
 
@@ -10195,11 +10209,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Puck class
+
+var _systemshop = __webpack_require__(9);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Puck class
 
 var Puck = function () {
   function Puck() {
@@ -10210,8 +10228,8 @@ var Puck = function () {
 
     this.index = index;
     this.size = {
-      width: 100,
-      height: 10
+      width: _systemshop2.default.gameSurfaceCoords.width / 11 * 2,
+      height: _systemshop2.default.gameSurfaceCoords.width / 55
     };
     this.translateCoords = {
       x: this.size.width / -2,
@@ -10396,7 +10414,6 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (this.engine !== null) return;
-      if (this.props.SystemShop.circleRadius == 0) _systemshop2.default.circleRadius = _systemshop2.default.getCircleRadius();
 
       this.engine = new _gameengine2.default(_gameshop2.default.level, this.props.gameType);
     }
@@ -10420,9 +10437,6 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
   }, {
     key: 'render',
     value: function render() {
-      var radius = this.props.SystemShop.circleRadius;
-      var size = radius * 2;
-
       return _react2.default.createElement(
         'div',
         { id: 'gamesurface', onTouchMove: this.preventDefault },
@@ -10431,9 +10445,13 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
         _react2.default.createElement(_livescounter2.default, null),
         _react2.default.createElement(_systemmenu2.default, null),
         _react2.default.createElement(
-          'svg',
-          { id: 'the-zone', 'data-level': this.props.GameShop.level, width: size, height: size },
-          _react2.default.createElement('circle', { id: 'the-circle', cx: radius, cy: radius, r: radius })
+          'div',
+          { id: 'zone-wrapper' },
+          _react2.default.createElement(
+            'svg',
+            { id: 'the-zone', 'data-level': this.props.GameShop.level, width: '100%', height: '100%' },
+            _react2.default.createElement('circle', { id: 'the-circle', cx: '50%', cy: '50%', r: '50%' })
+          )
         )
       );
     }
@@ -10770,7 +10788,7 @@ var Text = function () {
   _createClass(Text, [{
     key: 'render',
     value: function render() {
-      var gameSurface = document.getElementById('gamesurface');
+      var gameSurface = document.getElementById('zone-wrapper');
       var textId = this.type + '-' + this.tick;
       var textToRender = '<div id="' + textId + '" class="text ' + this.type + '">' + this.text + '</div>';
       gameSurface.insertAdjacentHTML('beforeend', textToRender);
