@@ -515,8 +515,8 @@ svg#the-zone {
   transform: translate(-50%, -50%); }
   @media (min-width: 360px) {
     svg#the-zone {
-      width: 400px;
-      height: 400px; } }
+      width: 300px;
+      height: 300px; } }
   @media (min-width: 800px) {
     svg#the-zone {
       width: 550px;

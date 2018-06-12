@@ -28,8 +28,8 @@ svg#the-zone {
   transform: translate(-50%, -50%);
 
   @include breakpoint($break-small) {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
   }
   @include breakpoint($break-mid) {
     width: 550px;
