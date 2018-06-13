@@ -3,7 +3,7 @@
 import GameService from './gameservice.js';
 
 class PhoneGapService {
-  setupPhoneGapListeners() {
+  static setupPhoneGapListeners() {
 
     document.addEventListener('deviceready', () => {
 

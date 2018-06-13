@@ -7772,6 +7772,10 @@ var _footer = __webpack_require__(56);
 
 var _footer2 = _interopRequireDefault(_footer);
 
+var _phonegapservice = __webpack_require__(152);
+
+var _phonegapservice2 = _interopRequireDefault(_phonegapservice);
+
 var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
@@ -7815,6 +7819,8 @@ var Index = function (_React$Component) {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, false);
+
+    _phonegapservice2.default.setupPhoneGapListeners();
     return _this;
   }
 
@@ -33738,6 +33744,73 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(34);
 
+
+/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Logic specific to mobile version
+
+var _gameservice = __webpack_require__(38);
+
+var _gameservice2 = _interopRequireDefault(_gameservice);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PhoneGapService = function () {
+  function PhoneGapService() {
+    _classCallCheck(this, PhoneGapService);
+  }
+
+  _createClass(PhoneGapService, null, [{
+    key: 'setupPhoneGapListeners',
+    value: function setupPhoneGapListeners() {
+
+      document.addEventListener('deviceready', function () {
+
+        document.addEventListener('pause', function () {
+          _gameservice2.default.pauseTheGame();
+        });
+        document.addEventListener('resume', function () {
+          _gameservice2.default.resumeTheGame();
+        });
+      }, false);
+    }
+  }]);
+
+  return PhoneGapService;
+}();
+
+exports.default = PhoneGapService;
 
 /***/ })
 /******/ ]);

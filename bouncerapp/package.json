@@ -4,8 +4,8 @@
     "displayName": "Bouncerback",
     "cordova": {
         "platforms": [
-            "browser",
-            "android"
+            "android",
+            "browser"
         ],
         "plugins": {
             "cordova-plugin-media": {},
@@ -15,7 +15,7 @@
         }
     },
     "dependencies": {
-        "cordova-android": "^7.0.0",
+        "cordova-android": "^7.1.0",
         "cordova-browser": "^5.0.3",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-media": "~5.0.2",
