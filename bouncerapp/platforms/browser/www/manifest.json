@@ -8,5 +8,6 @@
   "author": "Nik Nak Studio. Music and Sound FX by Ignorance is Strength.",
   "icons": [],
   "orientation": "landscape",
-  "start_url": "index.html"
+  "start_url": "index.html",
+  "theme_color": "#fff"
 }

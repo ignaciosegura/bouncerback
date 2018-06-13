@@ -39,16 +39,16 @@ if (fs.existsSync(faviconPath)) {
     background: '#fff',
     title: siteTitle,
     icons: {
-      android: true,
+      android: false,
       appleIcon: true,
       appleStartup: false,
       coast: false,
       favicons: true,
       firefox: true,
       opengraph: true,
-      twitter: true,
+      twitter: false,
       yandex: false,
-      windows: true
+      windows: false
     }
   });
 

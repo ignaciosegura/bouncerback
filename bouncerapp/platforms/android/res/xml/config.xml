@@ -1,5 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="es.niknak.bouncerback" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <allow-navigation href="cdvfile:*" />
     <name>Bouncerback</name>
     <description>
         Bouncerback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
@@ -9,8 +27,11 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <access launch-external="yes" origin="http://niknak.es/*" />
+    <access launch-external="yes" origin="http://www.niknak.es/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <allow-intent href="file://*/*" />
     <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
@@ -31,7 +52,7 @@
     <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="orientation" value="landscape" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
@@ -45,4 +66,6 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
 </widget>
