@@ -6645,6 +6645,12 @@ var ClockService = function () {
       _timeshop2.default.clock = 'off';
     }
   }, {
+    key: 'resumeTheClock',
+    value: function resumeTheClock() {
+      this.startTheClock();
+      this.scheduleTick();
+    }
+  }, {
     key: 'toggleClock',
     value: function toggleClock() {
       _timeshop2.default.clock = _timeshop2.default.clock === 'on' ? 'off' : 'on';
@@ -7809,8 +7815,6 @@ var Index = function (_React$Component) {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, false);
-
-    document.addEventListener('deviceready', function () {}, false);
     return _this;
   }
 
@@ -8155,6 +8159,10 @@ var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
 
+var _timeshop = __webpack_require__(10);
+
+var _timeshop2 = _interopRequireDefault(_timeshop);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8197,6 +8205,23 @@ var GameService = function () {
       _soundtrackservice2.default.fadeOut();
       _clockservice2.default.stopTheClock();
       _gameshop2.default.setLives(0);
+    }
+  }, {
+    key: 'pauseTheGame',
+    value: function pauseTheGame() {
+      _clockservice2.default.stopTheClock();
+      _soundtrackservice2.default.pause();
+    }
+  }, {
+    key: 'resumeTheGame',
+    value: function resumeTheGame() {
+      _clockservice2.default.resumeTheClock();
+      _soundtrackservice2.default.resume();
+    }
+  }, {
+    key: 'toggleGame',
+    value: function toggleGame() {
+      if (_timeshop2.default.clock == 'on') this.pauseTheGame();else this.resumeTheGame();
     }
   }, {
     key: 'gotoNextLevel',
@@ -8279,6 +8304,11 @@ var Soundtrack = function () {
       if (this.track) this.track.play();
     }
   }, {
+    key: 'resume',
+    value: function resume() {
+      if (this.track && this.track.sound.currentTime > 0) this.track.play();
+    }
+  }, {
     key: 'pause',
     value: function pause() {
       if (this.track) this.track.pause();
@@ -8287,6 +8317,11 @@ var Soundtrack = function () {
     key: 'fadeOut',
     value: function fadeOut() {
       if (this.track) this.track.fadeOut();
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      if (this.track) this.track.pause();
     }
   }]);
 
@@ -10670,10 +10705,6 @@ var _systemshop = __webpack_require__(9);
 
 var _systemshop2 = _interopRequireDefault(_systemshop);
 
-var _clockservice = __webpack_require__(18);
-
-var _clockservice2 = _interopRequireDefault(_clockservice);
-
 var _gameservice = __webpack_require__(38);
 
 var _gameservice2 = _interopRequireDefault(_gameservice);
@@ -10709,7 +10740,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
     key: 'pauseClick',
     value: function pauseClick(e) {
       e.preventDefault();
-      _clockservice2.default.toggleClock();
+      _gameservice2.default.toggleGame();
     }
   }, {
     key: 'closeClick',
