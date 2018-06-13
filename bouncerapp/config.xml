@@ -75,6 +75,7 @@
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <engine name="android" spec="~6.4" />
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-inappbrowser" />

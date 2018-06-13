@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "displayName": "Bouncerback",
   "cordova": {
-    "platforms": [],
+    "platforms": [
+      "android"
+    ],
     "plugins": {
       "cordova-plugin-media": {},
       "cordova-plugin-splashscreen": {},
