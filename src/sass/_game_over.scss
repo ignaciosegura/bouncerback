@@ -2,6 +2,7 @@
 
 @import '_variables.scss';
 @import '_animations.scss';
+@import '~breakpoint-sass/stylesheets/breakpoint';
 
 #game-over-screen {
   position: absolute;
@@ -11,6 +12,10 @@
   transform: translate(-50%, -50%);
 
   animation: $animation-text-entry;
+
+  @include breakpoint($break-mid) {
+    font-size: $default-font-size * 1.5;
+  }
 
   h1 {
     text-align: center;

@@ -10,6 +10,7 @@ import tutorialList from '../gameData/tutorialList.js';
 
 import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
+import SystemShop from './stores/systemshop.js';
 
 import Puck from './puck.js';
 import GameController from './gamecontroller.js';
@@ -23,8 +24,6 @@ import GameService from './services/gameservice.js';
 import TextService from './services/textservice.js';
 import SoundtrackService from './services/soundtrackservice.js';
 
-import SystemShop from './stores/systemshop';
-
 class GameEngine {
 
   constructor(level, gameType) {
@@ -35,7 +34,6 @@ class GameEngine {
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
     GameService.setInitialLives(this.level.atomList.length, gameType);
 
-    this.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks = [];
     this.atoms = [];
     this.vortex = null;
@@ -62,10 +60,11 @@ class GameEngine {
   }
 
   startGame() {
+    SystemShop.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks.push(new Puck(0));
     this.pucks.push(new Puck(1));
 
-    new GameController(this.gameSurfaceCoords, this.pucks);
+    new GameController(this.pucks);
 
     SoundtrackService.play();
 
@@ -88,7 +87,7 @@ class GameEngine {
     let bounces;
 
     AtomService.destroyAtoms(this.atoms);
-    AtomService.checkAtomsStatus(this.atoms, this.gameSurfaceCoords.radius);
+    AtomService.checkAtomsStatus(this.atoms);
     AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
 

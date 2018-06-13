@@ -102,12 +102,22 @@ module.exports = {
         loader: 'url-loader?limit=100000'
       },
       {
+        test: /\.htaccess$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: './.htaccess',
+          }
+        }
+      },
+      {
         test: /\.mp3$/,
         exclude: /node_modules/,
         use: {
           loader: 'file-loader',
           options: {
-            name: './sound/[name].[ext]',
+            name: './res/sound/[name].[ext]',
           }
         }
       },

@@ -24,6 +24,8 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+    <preference name="android-minSdkVersion" value="19" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
@@ -73,11 +75,15 @@
         <splash height="480" platform="ios" src="www/res/screen/ios/Default~iphone.png" width="320" />
     </platform>
     <access origin="*" />
+    <access launch-external="yes" origin="http://niknak.es/*" />
+    <access launch-external="yes" origin="http://www.niknak.es/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <engine name="android" spec="~6.4" />
-    <plugin name="cordova-plugin-media" />
-    <plugin name="cordova-plugin-splashscreen" />
+    <allow-intent href="file://*/*" />
+    <engine name="android" spec="^7.1.0" />
+    <engine name="browser" spec="^5.0.3" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-media" spec="~5.0.2" />
+    <plugin name="cordova-plugin-splashscreen" />
 </widget>

@@ -7,6 +7,20 @@ class Default {
     muted: false,
     factor: 0.5
   }
+  @observable gameSurfaceCoords = {
+    centerX: null,
+    centerY: null,
+    width: null,
+    height: null,
+    radius: null
+  }
+  @computed get canonicalSizes() {
+    return {
+      width: this.gameSurfaceCoords.width / 11 * 2,
+      height: this.gameSurfaceCoords.width / 55,
+      radius: this.gameSurfaceCoords.width / 55,
+    }
+  }
 
   constructor() {
     this.text = {
@@ -14,14 +28,11 @@ class Default {
       readingTime: 3500,
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
-
-    this.circleRadius = observable.box(275);
   }
 
   toggleSound() {
     this.sound.muted = !this.sound.muted;
   }
-
 }
 
 const SystemShop = new Default();

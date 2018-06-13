@@ -1,16 +1,21 @@
 // Footer
 
+@import '~breakpoint-sass/stylesheets/breakpoint';
 @import '_variables.scss';
 
 footer {
   font-family: 'Didact Gothic', sans-serif;
-  font-size: 16px;
+  font-size: $default-font-size * 0.75;
   color: white;
   position: fixed;
   bottom: 5px;
   width: 100%;
   text-align: center;
   z-index: 10;
+
+  @include breakpoint($break-mid) {
+    font-size: $default-font-size;
+  }
 
   a {
     color: white;

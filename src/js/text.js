@@ -15,14 +15,14 @@ class Text {
     this.timeForRemoval = timeForRemoval;
 
     this.render();
-  
-    if(this.timeForRemoval !== null) {
+
+    if (this.timeForRemoval !== null) {
       this.scheduleRemoval(this.timeForRemoval);
     }
   }
 
   render() {
-    let gameSurface = document.getElementById('gamesurface');
+    let gameSurface = document.getElementById('zone-wrapper');
     let textId = `${this.type}-${this.tick}`;
     let textToRender = `<div id="${textId}" class="text ${this.type}">${this.text}</div>`;
     gameSurface.insertAdjacentHTML('beforeend', textToRender);

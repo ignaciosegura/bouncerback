@@ -4,12 +4,12 @@ const levelList = [
   {
     name: 'Tutorial',
     type: 'tutorial',
-    duration: 32,
+    duration: 12,
     levelPassAction: 'home',
     gameOverAction: 'gameover',
     time: {
-      bpm: 140,
-      signature: 3
+      bpm: 65,
+      signature: 4
     },
     sound: {
       launch: require('../sound/launch.mp3'),
@@ -17,12 +17,12 @@ const levelList = [
       destroy: require('../sound/destroy.mp3'),
       track: require('../sound/tracks/tutorial.mp3')
     },
-    atomSpeed: 8,
+    atomSpeed: 4,
     atomList: [
+      { t: 3, b: 0 },
+      { t: 6, b: 0 },
       { t: 8, b: 0 },
-      { t: 14, b: 0 },
-      { t: 20, b: 0 },
-      { t: 26, b: 0 },
+      { t: 9, b: 0 },
     ]
   },
 ];

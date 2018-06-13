@@ -2,6 +2,7 @@
 
 @import '_variables.scss';
 @import '_animations.scss';
+@import '~breakpoint-sass/stylesheets/breakpoint';
 
 #main-title {
   position: absolute;
@@ -14,8 +15,12 @@
 
   img {
     display: block;
-    width: 500px;
+    width: 300px;
     max-width: 75vw;
-    margin-bottom: 2em;
+    margin: 0 auto 2em;
+    
+    @include breakpoint($break-mid) {
+      width: 500px;
+    }
   }
 }

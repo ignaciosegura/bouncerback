@@ -5,6 +5,7 @@ require('../sass/_atom.scss');
 
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
+import SystemShop from './stores/systemshop.js';
 import CoordsService from './services/coordsservice.js';
 
 class Atom {
@@ -15,7 +16,7 @@ class Atom {
     }
     this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
-    this.radius = 10;
+    this.radius = SystemShop.canonicalSizes.radius;
     this.sounds = {
       launch: new SoundFX(level.sound.launch),
       bounce: new SoundFX(level.sound.bounce),
@@ -55,7 +56,7 @@ class Atom {
 
   convertTimesPerTripIntoPixelsPerFrame(speed) {
     let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-    let gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
+    let gameSurfaceCoords = SystemShop.gameSurfaceCoords;
     let tripLength = gameSurfaceCoords.radius * 2;
 
     return tripLength / framesPerTrip;
@@ -100,9 +101,10 @@ class Atom {
     this.sounds.bounce.play();
   }
 
-  checkAtom(radius) {
-    const pos = this.atomPosition;
-    const distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
+  checkAtom() {
+    let radius = SystemShop.gameSurfaceCoords.radius;
+    let pos = this.atomPosition;
+    let distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
 
     if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent('rebound');
