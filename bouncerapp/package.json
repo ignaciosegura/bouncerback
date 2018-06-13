@@ -24,6 +24,6 @@
         "cordova-res-generator": "^0.4.2"
     },
     "scripts": {
-        "cordova-icons-generate": "./node_modules/.bin/cordova-res-generator --platforms android --icon ./res/icon.png --splash ./res/splash.png --outputdir ./res"
+        "generate-icons": "./node_modules/.bin/cordova-res-generator --platforms android --icon ./res/icon.png --splash ./res/splash.png --outputdir ./res"
     }
 }

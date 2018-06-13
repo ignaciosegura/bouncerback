@@ -48,10 +48,10 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
-    <plugin name="cordova-plugin-media" spec="~5.0.2" />
-    <plugin name="cordova-plugin-splashscreen" />
-    <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <engine name="android" spec="^7.1.0" />
     <engine name="browser" spec="^5.0.3" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <plugin name="cordova-plugin-inappbrowser" />
+    <plugin name="cordova-plugin-media" spec="~5.0.2" />
+    <plugin name="cordova-plugin-splashscreen" />
 </widget>

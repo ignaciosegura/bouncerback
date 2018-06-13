@@ -30,4 +30,6 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-installLocation" value="auto" />
     <preference name="AndroidLaunchMode" value="singleTop" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="SplashScreen" value="screen" />
 </widget>
