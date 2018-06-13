@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 
 import SystemShop from './stores/systemshop.js';
-import ClockService from './services/clockservice.js';
 import GameService from './services/gameservice.js';
-
 
 @inject('TimeShop', 'SystemShop') @observer
 class SystemMenu extends React.Component {
@@ -23,12 +21,12 @@ class SystemMenu extends React.Component {
 
   pauseClick(e) {
     e.preventDefault();
-    ClockService.toggleClock();
+    GameService.toggleGame();
   }
   closeClick(e) {
+    e.preventDefault();
     GameService.stopTheGame();
   }
-
 
   render() {
     let soundStatusClass = (this.props.SystemShop.sound.muted)

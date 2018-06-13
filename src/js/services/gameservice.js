@@ -7,6 +7,7 @@ import ClockService from './clockservice.js';
 import SoundtrackService from './soundtrackservice.js';
 
 import GameShop from '../stores/gameshop.js';
+import TimeShop from '../stores/timeshop.js';
 
 class GameService {
   static setInitialLives(atomCount, gameType) {
@@ -38,6 +39,23 @@ class GameService {
     SoundtrackService.fadeOut();
     ClockService.stopTheClock();
     GameShop.setLives(0);
+  }
+
+  static pauseTheGame() {
+    ClockService.stopTheClock();
+    SoundtrackService.pause();
+  }
+
+  static resumeTheGame() {
+    ClockService.resumeTheClock();
+    SoundtrackService.resume();
+  }
+
+  static toggleGame() {
+    if (TimeShop.clock == 'on')
+      this.pauseTheGame();
+    else
+      this.resumeTheGame();
   }
 
   static gotoNextLevel() {

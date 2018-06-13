@@ -4927,6 +4927,16 @@ var Default = (_class = function () {
     value: function toggleSound() {
       this.sound.muted = !this.sound.muted;
     }
+  }, {
+    key: 'muteSound',
+    value: function muteSound() {
+      this.sound.muted = true;
+    }
+  }, {
+    key: 'unmuteSound',
+    value: function unmuteSound() {
+      this.sound.muted = false;
+    }
   }]);
 
   return Default;
@@ -8266,17 +8276,17 @@ var Soundtrack = function () {
   }, {
     key: 'play',
     value: function play() {
-      this.track.play();
+      if (this.track) this.track.play();
     }
   }, {
     key: 'pause',
     value: function pause() {
-      this.track.pause();
+      if (this.track) this.track.pause();
     }
   }, {
     key: 'fadeOut',
     value: function fadeOut() {
-      this.track.fadeOut();
+      if (this.track) this.track.fadeOut();
     }
   }]);
 
@@ -10704,6 +10714,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
   }, {
     key: 'closeClick',
     value: function closeClick(e) {
+      e.preventDefault();
       _gameservice2.default.stopTheGame();
     }
   }, {

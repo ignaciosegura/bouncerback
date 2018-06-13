@@ -20,10 +20,5 @@
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-media": "~5.0.2"
     },
-    "devDependencies": {
-        "cordova-res-generator": "^0.4.2"
-    },
-    "scripts": {
-        "generate-icons": "./node_modules/.bin/cordova-res-generator --platforms android --icon ./res/icon.png --splash ./res/splash.png --outputdir ./res"
-    }
+    "devDependencies": {}
 }

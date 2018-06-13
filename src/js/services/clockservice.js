@@ -12,6 +12,11 @@ class ClockService {
     TimeShop.clock = 'off';
   }
 
+  static resumeTheClock() {
+    this.startTheClock();
+    this.scheduleTick();
+  }
+
   static toggleClock() {
     TimeShop.clock = (TimeShop.clock === 'on')
       ? 'off'
