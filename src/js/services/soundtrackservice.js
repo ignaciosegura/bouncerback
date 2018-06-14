@@ -12,7 +12,7 @@ class Soundtrack {
   }
 
   setupAutorun() {
-    this.autowatch = autorun(() => 
+    this.autowatch = autorun(() =>
       this.track.sound.muted = SystemShop.sound.muted
     );
   }
@@ -23,13 +23,24 @@ class Soundtrack {
   }
 
   play() {
-    this.track.play();
+    if (this.track)
+      this.track.play();
+  }
+  resume() {
+    if (this.track && this.track.sound.currentTime > 0)
+      this.track.play();
   }
   pause() {
-    this.track.pause();
+    if (this.track)
+      this.track.pause();
   }
   fadeOut() {
-    this.track.fadeOut();
+    if (this.track)
+      this.track.fadeOut();
+  }
+  toggle() {
+    if (this.track)
+      this.track.pause();
   }
 }
 

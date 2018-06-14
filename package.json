@@ -9,10 +9,11 @@
     "watch-development": "NODE_ENV=development webpack -w",
     "deploy": "node deploy",
     "phonegap-build-android-remote": "pgb login nacho@isegura.es && pgb build 3197157 android && pgb download 3197157 android ./builds",
-    "phonegap-build-android-local": "npm run copy-to-phonegap && cd ./bouncerapp && npm run generate-icons && phonegap build android",
+    "phonegap-build-android-local": "npm run generate-icons && npm run copy-to-phonegap && cd ./bouncerapp && phonegap build android",
     "copy-to-phonegap": "cp -a ./dev/. ./bouncerapp/www/",
     "phonegap-serve": "npm run copy-to-phonegap && cd ./bouncerapp && phonegap serve",
-    "phonegap-emulate": "cd ./bouncerapp && cordova run --emulator"
+    "phonegap-emulate": "cd ./bouncerapp && cordova run --emulator",
+    "generate-icons": "./node_modules/.bin/cordova-res-generator --platforms android --icon ./src/img/icon.png --splash ./src/img/splash.png --outputdir ./bouncerapp/res"
   },
   "author": "Nik Nak Studio (www.niknak.es). Soundtrack by Ignorance Is Strength (ignoranceisat.bandcamp.com)",
   "license": "ISC",
@@ -32,6 +33,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "breakpoint-sass": "^2.7.0",
+    "cordova-res-generator": "^0.4.2",
     "css-loader": "^0.28.1",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",

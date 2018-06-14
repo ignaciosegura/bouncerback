@@ -77,7 +77,7 @@ class GameEngine {
     let createVortex = autorun(() => {
       if (!TimeShop.levelIsOver || this.vortex !== null) return;
 
-      this.vortex = new Vortex(this.gameSurfaceCoords.radius);
+      this.vortex = new Vortex(SystemShop.gameSurfaceCoords.radius);
 
       AtomService.setAtomsToVortex(this.atoms, this.vortex.timeToEffect);
     });

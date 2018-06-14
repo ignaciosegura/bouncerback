@@ -14,6 +14,8 @@ import MainTitle from './routes/maintitle.js';
 import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
 import Footer from './footer.js';
+
+import PhoneGapService from './services/phonegapservice.js';
 import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -30,9 +32,7 @@ class Index extends React.Component {
       e.preventDefault();
     }, false);
 
-    document.addEventListener('deviceready', () => {
-
-    }, false);
+    PhoneGapService.setupPhoneGapListeners();
   }
 
   preventDefault(e) {

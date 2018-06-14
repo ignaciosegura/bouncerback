@@ -11,25 +11,26 @@ import CoordsService from './services/coordsservice.js';
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.speed = {
-      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed)
-    }
-    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.vector = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = SystemShop.canonicalSizes.radius;
-    this.sounds = {
-      launch: new SoundFX(level.sound.launch),
-      bounce: new SoundFX(level.sound.bounce),
-      destroy: new SoundFX(level.sound.destroy)
+    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.speed = {
+      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed, this.radius)
     }
+    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
     this.destructionTime = 2000; // in milliseconds
     this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
     this.creationTick = TimeShop.tick;
-    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.next = {
       rebound: this.calculateNextEvent('rebound'),
       center: 0,
     };
+    this.sounds = {
+      launch: new SoundFX(require('../sound/launch.mp3')),
+      bounce: new SoundFX(require('../sound/bounce_dry.mp3')),
+      destroy: new SoundFX(require('../sound/destroy.mp3')),
+      capture: new SoundFX(require('../sound/capture.mp3'))
+    }
     this.domElement;
   }
 
@@ -54,10 +55,10 @@ class Atom {
   }
 
 
-  convertTimesPerTripIntoPixelsPerFrame(speed) {
+  convertTimesPerTripIntoPixelsPerFrame(speed, oversize = 0) {
     let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
     let gameSurfaceCoords = SystemShop.gameSurfaceCoords;
-    let tripLength = gameSurfaceCoords.radius * 2;
+    let tripLength = (gameSurfaceCoords.radius * 2) - (oversize * 2);
 
     return tripLength / framesPerTrip;
   }
@@ -159,6 +160,7 @@ class Atom {
       return;
 
     this.setStatus('captured');
+    this.sounds.capture.play();
   }
 }
 

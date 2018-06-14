@@ -4927,6 +4927,16 @@ var Default = (_class = function () {
     value: function toggleSound() {
       this.sound.muted = !this.sound.muted;
     }
+  }, {
+    key: 'muteSound',
+    value: function muteSound() {
+      this.sound.muted = true;
+    }
+  }, {
+    key: 'unmuteSound',
+    value: function unmuteSound() {
+      this.sound.muted = false;
+    }
   }]);
 
   return Default;
@@ -6635,6 +6645,12 @@ var ClockService = function () {
       _timeshop2.default.clock = 'off';
     }
   }, {
+    key: 'resumeTheClock',
+    value: function resumeTheClock() {
+      this.startTheClock();
+      this.scheduleTick();
+    }
+  }, {
     key: 'toggleClock',
     value: function toggleClock() {
       _timeshop2.default.clock = _timeshop2.default.clock === 'on' ? 'off' : 'on';
@@ -7756,6 +7772,10 @@ var _footer = __webpack_require__(56);
 
 var _footer2 = _interopRequireDefault(_footer);
 
+var _phonegapservice = __webpack_require__(152);
+
+var _phonegapservice2 = _interopRequireDefault(_phonegapservice);
+
 var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
@@ -7800,7 +7820,7 @@ var Index = function (_React$Component) {
       e.preventDefault();
     }, false);
 
-    document.addEventListener('deviceready', function () {}, false);
+    _phonegapservice2.default.setupPhoneGapListeners();
     return _this;
   }
 
@@ -8145,6 +8165,10 @@ var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
 
+var _timeshop = __webpack_require__(10);
+
+var _timeshop2 = _interopRequireDefault(_timeshop);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8187,6 +8211,23 @@ var GameService = function () {
       _soundtrackservice2.default.fadeOut();
       _clockservice2.default.stopTheClock();
       _gameshop2.default.setLives(0);
+    }
+  }, {
+    key: 'pauseTheGame',
+    value: function pauseTheGame() {
+      _clockservice2.default.stopTheClock();
+      _soundtrackservice2.default.pause();
+    }
+  }, {
+    key: 'resumeTheGame',
+    value: function resumeTheGame() {
+      _clockservice2.default.resumeTheClock();
+      _soundtrackservice2.default.resume();
+    }
+  }, {
+    key: 'toggleGame',
+    value: function toggleGame() {
+      if (_timeshop2.default.clock == 'on') this.pauseTheGame();else this.resumeTheGame();
     }
   }, {
     key: 'gotoNextLevel',
@@ -8266,17 +8307,27 @@ var Soundtrack = function () {
   }, {
     key: 'play',
     value: function play() {
-      this.track.play();
+      if (this.track) this.track.play();
+    }
+  }, {
+    key: 'resume',
+    value: function resume() {
+      if (this.track && this.track.sound.currentTime > 0) this.track.play();
     }
   }, {
     key: 'pause',
     value: function pause() {
-      this.track.pause();
+      if (this.track) this.track.pause();
     }
   }, {
     key: 'fadeOut',
     value: function fadeOut() {
-      this.track.fadeOut();
+      if (this.track) this.track.fadeOut();
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      if (this.track) this.track.pause();
     }
   }]);
 
@@ -10660,10 +10711,6 @@ var _systemshop = __webpack_require__(9);
 
 var _systemshop2 = _interopRequireDefault(_systemshop);
 
-var _clockservice = __webpack_require__(18);
-
-var _clockservice2 = _interopRequireDefault(_clockservice);
-
 var _gameservice = __webpack_require__(38);
 
 var _gameservice2 = _interopRequireDefault(_gameservice);
@@ -10699,11 +10746,12 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
     key: 'pauseClick',
     value: function pauseClick(e) {
       e.preventDefault();
-      _clockservice2.default.toggleClock();
+      _gameservice2.default.toggleGame();
     }
   }, {
     key: 'closeClick',
     value: function closeClick(e) {
+      e.preventDefault();
       _gameservice2.default.stopTheGame();
     }
   }, {
@@ -33696,6 +33744,73 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(34);
 
+
+/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Logic specific to mobile version
+
+var _gameservice = __webpack_require__(38);
+
+var _gameservice2 = _interopRequireDefault(_gameservice);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PhoneGapService = function () {
+  function PhoneGapService() {
+    _classCallCheck(this, PhoneGapService);
+  }
+
+  _createClass(PhoneGapService, null, [{
+    key: 'setupPhoneGapListeners',
+    value: function setupPhoneGapListeners() {
+
+      document.addEventListener('deviceready', function () {
+
+        document.addEventListener('pause', function () {
+          _gameservice2.default.pauseTheGame();
+        });
+        document.addEventListener('resume', function () {
+          _gameservice2.default.resumeTheGame();
+        });
+      }, false);
+    }
+  }]);
+
+  return PhoneGapService;
+}();
+
+exports.default = PhoneGapService;
 
 /***/ })
 /******/ ]);

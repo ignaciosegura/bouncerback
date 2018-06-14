@@ -33,6 +33,12 @@ class Default {
   toggleSound() {
     this.sound.muted = !this.sound.muted;
   }
+  muteSound() {
+    this.sound.muted = true;
+  }
+  unmuteSound() {
+    this.sound.muted = false;
+  }
 }
 
 const SystemShop = new Default();
