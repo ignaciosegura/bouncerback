@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"Device\"><param name=\"browser-package\" value=\"Device\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ScreenSize\"><param name=\"browser-package\" value=\"ScreenSize\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -34,6 +38,9 @@
             "PACKAGE_NAME": "es.niknak.bouncerback"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "es.niknak.bouncerback"
+        },
+        "cordova-plugin-screensize": {
             "PACKAGE_NAME": "es.niknak.bouncerback"
         }
     },
@@ -284,6 +291,20 @@
             "id": "cordova-plugin-device.DeviceProxy",
             "pluginId": "cordova-plugin-device",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-screensize/www/screensize.js",
+            "id": "cordova-plugin-screensize.screensize",
+            "pluginId": "cordova-plugin-screensize",
+            "clobbers": [
+                "window.plugins.screensize"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-screensize/src/browser/ScreenSizeProxy.js",
+            "id": "cordova-plugin-screensize.ScreenSizeProxy",
+            "pluginId": "cordova-plugin-screensize",
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -292,6 +313,7 @@
         "cordova-plugin-media": "5.0.2",
         "cordova-plugin-splashscreen": "5.0.2",
         "cordova-plugin-device": "2.0.2",
-        "cordova-plugin-whitelist": "1.3.3"
+        "cordova-plugin-whitelist": "1.3.3",
+        "cordova-plugin-screensize": "1.3.1"
     }
 }

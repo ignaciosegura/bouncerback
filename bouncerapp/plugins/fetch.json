@@ -38,5 +38,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-screensize": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-screensize"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

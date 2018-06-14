@@ -13,13 +13,19 @@ class GameController {
   movePucksOnInput() {
     let inputHandler = (e) => {
       let positionArr = CoordsService.getXYFromInput(e);
-      let vectorArr = positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
+      let vectorArr = (e.type == 'touchmove')
+        ? this.getVectorsFromTouchPositions(positionArr)
+        : positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
       this.movePucks(vectorArr);
     };
 
     ['mousemove', 'touchmove'].forEach(e => {
       document.addEventListener(e, inputHandler.bind(this), false);
     });
+  }
+
+  getVectorsFromTouchPositions(positionArr) {
+    return positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
   }
 
   movePucks(vectorArr) {
