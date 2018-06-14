@@ -1,6 +1,7 @@
 // Puck class
 
 import SystemShop from './stores/systemshop.js';
+import CoordsService from './services/coordsservice.js';
 
 class Puck {
   constructor(index = 0, angle = 20) {
@@ -13,10 +14,8 @@ class Puck {
       x: this.size.width / -2,
       y: this.size.height / -2
     }
+    this.vector = CoordsService.getVectorFromXY(0, -1);
     this.angle = angle * Math.PI / 180;
-    this.vector;
-    this.domElement;
-
     this.domElement = this.placeInDOM();
   }
 

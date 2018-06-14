@@ -1,5 +1,6 @@
 // Coordinates service
 require('../../sass/_point_zero.scss');
+import SystemShop from '../stores/systemshop.js';
 
 class CoordsService {
 
@@ -16,11 +17,17 @@ class CoordsService {
   }
 
   static getVectorFromXY(x, y) {
-    let angle = Math.atan2(y, x);
-    return {
-      rads: angle,
-      degrees: angle * 180 / Math.PI
-    }
+    return Math.atan2(y, x);
+  }
+
+  static getDegreesFromRads(rads) {
+    return rads * 180 / Math.PI;
+  }
+
+  static getVectorFromScreenCoords(position) {
+    let x = position.x - SystemShop.gameSurfaceCoords.centerX;
+    let y = position.y - SystemShop.gameSurfaceCoords.centerY;
+    return this.getVectorFromXY(x, y);
   }
 
   static getDistanceFromXY(x, y) {
