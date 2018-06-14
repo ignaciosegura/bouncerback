@@ -26,9 +26,10 @@ class Atom {
       center: 0,
     };
     this.sounds = {
-      launch: new SoundFX(level.sound.launch),
-      bounce: new SoundFX(level.sound.bounce),
-      destroy: new SoundFX(level.sound.destroy)
+      launch: new SoundFX(require('../sound/launch.mp3')),
+      bounce: new SoundFX(require('../sound/bounce_dry.mp3')),
+      destroy: new SoundFX(require('../sound/destroy.mp3')),
+      capture: new SoundFX(require('../sound/capture.mp3'))
     }
     this.domElement;
   }
@@ -159,6 +160,7 @@ class Atom {
       return;
 
     this.setStatus('captured');
+    this.sounds.capture.play();
   }
 }
 

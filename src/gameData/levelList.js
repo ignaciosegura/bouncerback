@@ -38,9 +38,6 @@ const levelList = [
       signature: 4
     },
     sound: {
-      launch: require('../sound/launch.mp3'),
-      bounce: require('../sound/bounce_dry.mp3'),
-      destroy: require('../sound/destroy.mp3'),
       track: require('../sound/tracks/neutronika.mp3')
     },
     atomSpeed: 4,
@@ -67,9 +64,6 @@ const levelList = [
       signature: 4
     },
     sound: {
-      launch: require('../sound/launch.mp3'),
-      bounce: require('../sound/bounce_dry.mp3'),
-      destroy: require('../sound/destroy.mp3'),
       track: require('../sound/tracks/femtocosmos.mp3')
     },
     atomSpeed: 2,
@@ -98,9 +92,6 @@ const levelList = [
       signature: 4
     },
     sound: {
-      launch: require('../sound/launch.mp3'),
-      bounce: require('../sound/bounce_dry.mp3'),
-      destroy: require('../sound/destroy.mp3'),
       track: require('../sound/tracks/chronosaedron.mp3')
     },
     atomSpeed: 2,
@@ -129,9 +120,6 @@ const levelList = [
       signature: 3
     },
     sound: {
-      launch: require('../sound/launch.mp3'),
-      bounce: require('../sound/bounce_dry.mp3'),
-      destroy: require('../sound/destroy.mp3'),
       track: require('../sound/tracks/mekanomancer.mp3')
     },
     atomSpeed: 3,
