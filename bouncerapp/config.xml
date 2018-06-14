@@ -53,5 +53,5 @@
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-media" spec="~5.0.2" />
-    <plugin name="cordova-plugin-splashscreen" />
+    <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
 </widget>
