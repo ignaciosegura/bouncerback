@@ -15,7 +15,7 @@ class GameController {
       let positionArr = CoordsService.getXYFromInput(e);
       let vectorArr = (e.type == 'touchmove')
         ? this.getVectorsFromTouchPositions(positionArr)
-        : positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
+        : this.getVectorsFromMousePosition(positionArr)
       this.movePucks(vectorArr);
     };
 
@@ -24,16 +24,28 @@ class GameController {
     });
   }
 
+  getVectorsFromMousePosition(positionArr) {
+    let mousePos = CoordsService.getVectorFromScreenCoords(positionArr[0]);
+    return [mousePos, mousePos];
+  }
+
   getVectorsFromTouchPositions(positionArr) {
-    return positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
+    let xyArr = positionArr.map(p => CoordsService.getXYFromScreenCoords(p));
+    let leftOrRight;
+    let vectorArr = [0, 0];
+
+    xyArr.forEach(xy => {
+      leftOrRight = (xy.x < 0)
+        ? 0
+        : 1;
+      vectorArr[leftOrRight] = CoordsService.getVectorFromXY(xy.x, xy.y);
+    });
+    return vectorArr;
   }
 
   movePucks(vectorArr) {
     this.pucks.forEach(p => {
-      let vector = (vectorArr[p.index])
-        ? vectorArr[p.index]
-        : p.vector;
-
+      let vector = vectorArr[p.index];
       p.vector = this.moveOnePuck(p, vector);
     });
   }
