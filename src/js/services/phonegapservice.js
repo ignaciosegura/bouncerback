@@ -21,7 +21,6 @@ class PhoneGapService {
   }
 
   static getRealScreenSizeIfPossible() {
-
     return (window.plugins.screensize)
       ? window.plugins.screensize.get(
         result => { return result }
