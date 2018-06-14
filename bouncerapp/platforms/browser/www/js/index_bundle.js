@@ -6661,9 +6661,16 @@ var CoordsService = function () {
   }, {
     key: 'getVectorFromScreenCoords',
     value: function getVectorFromScreenCoords(position) {
-      var x = position.x - _systemshop2.default.gameSurfaceCoords.centerX;
-      var y = position.y - _systemshop2.default.gameSurfaceCoords.centerY;
-      return this.getVectorFromXY(x, y);
+      var normalizedPos = this.getXYFromScreenCoords(position);
+      return this.getVectorFromXY(normalizedPos.x, normalizedPos.y);
+    }
+  }, {
+    key: 'getXYFromScreenCoords',
+    value: function getXYFromScreenCoords(position) {
+      return {
+        x: position.x - _systemshop2.default.gameSurfaceCoords.centerX,
+        y: position.y - _systemshop2.default.gameSurfaceCoords.centerY
+      };
     }
   }, {
     key: 'getDistanceFromXY',
@@ -9845,7 +9852,7 @@ var GameController = function () {
 
     this.pucks = pucks;
 
-    this.movePucks([]); // First run
+    this.movePucks([0, Math.PI]); // First run
     this.movePucksOnInput();
   }
 
@@ -9856,9 +9863,7 @@ var GameController = function () {
 
       var inputHandler = function inputHandler(e) {
         var positionArr = _coordsservice2.default.getXYFromInput(e);
-        var vectorArr = e.type == 'touchmove' ? _this.getVectorsFromTouchPositions(positionArr) : positionArr.map(function (p) {
-          return _coordsservice2.default.getVectorFromScreenCoords(p);
-        });
+        var vectorArr = e.type == 'touchmove' ? _this.getVectorsFromTouchPositions(positionArr) : _this.getVectorsFromMousePosition(positionArr);
         _this.movePucks(vectorArr);
       };
 
@@ -9867,11 +9872,25 @@ var GameController = function () {
       });
     }
   }, {
+    key: 'getVectorsFromMousePosition',
+    value: function getVectorsFromMousePosition(positionArr) {
+      var mousePos = _coordsservice2.default.getVectorFromScreenCoords(positionArr[0]);
+      return [mousePos, mousePos];
+    }
+  }, {
     key: 'getVectorsFromTouchPositions',
     value: function getVectorsFromTouchPositions(positionArr) {
-      return positionArr.map(function (p) {
-        return _coordsservice2.default.getVectorFromScreenCoords(p);
+      var xyArr = positionArr.map(function (p) {
+        return _coordsservice2.default.getXYFromScreenCoords(p);
       });
+      var leftOrRight = void 0;
+      var vectorArr = [null, null];
+
+      xyArr.forEach(function (xy) {
+        leftOrRight = xy.x < 0 ? 0 : 1;
+        vectorArr[leftOrRight] = _coordsservice2.default.getVectorFromXY(xy.x, xy.y);
+      });
+      return vectorArr;
     }
   }, {
     key: 'movePucks',
@@ -9879,8 +9898,8 @@ var GameController = function () {
       var _this2 = this;
 
       this.pucks.forEach(function (p) {
-        var vector = vectorArr[p.index] ? vectorArr[p.index] : p.vector;
-
+        if (vectorArr[p.index] === null) return;
+        var vector = vectorArr[p.index];
         p.vector = _this2.moveOnePuck(p, vector);
       });
     }
@@ -10635,7 +10654,6 @@ var PhoneGapService = function () {
   }, {
     key: 'getRealScreenSizeIfPossible',
     value: function getRealScreenSizeIfPossible() {
-
       return window.plugins.screensize ? window.plugins.screensize.get(function (result) {
         return result;
       }, function (result) {
