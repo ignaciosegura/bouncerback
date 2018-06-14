@@ -25,7 +25,7 @@ class SystemMenu extends React.Component {
   }
   closeClick(e) {
     e.preventDefault();
-    GameService.stopTheGame();
+    GameService.goBackHome();
   }
 
   render() {
