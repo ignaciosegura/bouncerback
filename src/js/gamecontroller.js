@@ -6,7 +6,7 @@ class GameController {
   constructor(pucks) {
     this.pucks = pucks;
 
-    this.movePucks([]); // First run
+    this.movePucks([0, Math.PI]); // First run
     this.movePucksOnInput();
   }
 
@@ -32,7 +32,7 @@ class GameController {
   getVectorsFromTouchPositions(positionArr) {
     let xyArr = positionArr.map(p => CoordsService.getXYFromScreenCoords(p));
     let leftOrRight;
-    let vectorArr = [0, 0];
+    let vectorArr = [null, null];
 
     xyArr.forEach(xy => {
       leftOrRight = (xy.x < 0)
@@ -45,6 +45,8 @@ class GameController {
 
   movePucks(vectorArr) {
     this.pucks.forEach(p => {
+      if (vectorArr[p.index] === null)
+        return;
       let vector = vectorArr[p.index];
       p.vector = this.moveOnePuck(p, vector);
     });
