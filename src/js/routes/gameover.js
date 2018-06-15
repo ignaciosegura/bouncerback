@@ -1,6 +1,3 @@
-/* global require */
-require('../../sass/_game_ended.scss');
-
 import React from 'react';
 
 import ScreenMenu from '../screenmenu.js';

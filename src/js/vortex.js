@@ -1,7 +1,5 @@
-/*global require*/
+/* global require */
 // Vortex class
-
-require('../sass/_vortex.scss');
 
 import SoundFX from './soundfx.js';
 import { fromString } from 'transformation-matrix';

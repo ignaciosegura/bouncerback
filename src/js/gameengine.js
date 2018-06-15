@@ -1,7 +1,4 @@
-/*global require*/
 // Game engine class
-
-require('../sass/_game_props.scss');
 
 import { autorun } from 'mobx';
 

@@ -1,9 +1,5 @@
 // Game Over screen layout
 
-@import '_variables.scss';
-@import '_animations.scss';
-@import '~breakpoint-sass/stylesheets/breakpoint';
-
 #game-ended-screen {
   position: absolute;
   font-size: $default-font-size;

@@ -1,8 +1,4 @@
-/* global require */
-
 // Game beaten screen
-
-require('../../sass/_game_ended.scss');
 
 import React from 'react';
 
