@@ -75,6 +75,20 @@
     opacity: 0;
     transform: translateY(0); } }
 
+@keyframes flicker {
+  from {
+    transform: translate(-50%, -55%);
+    color: #900; }
+  1% {
+    transform: translate(-50%, -45%);
+    color: #990; }
+  2% {
+    transform: translate(-50%, -50%);
+    color: white; }
+  to {
+    transform: translate(-50%, -50%);
+    color: white; } }
+
 #main-title {
   position: absolute;
   font-size: 16px;
@@ -155,6 +169,20 @@
     opacity: 0;
     transform: translateY(0); } }
 
+@keyframes flicker {
+  from {
+    transform: translate(-50%, -55%);
+    color: #900; }
+  1% {
+    transform: translate(-50%, -45%);
+    color: #990; }
+  2% {
+    transform: translate(-50%, -50%);
+    color: white; }
+  to {
+    transform: translate(-50%, -50%);
+    color: white; } }
+
 .scoreboard {
   position: fixed;
   z-index: 0;
@@ -233,6 +261,20 @@
     background-color: #990;
     opacity: 0;
     transform: translateY(0); } }
+
+@keyframes flicker {
+  from {
+    transform: translate(-50%, -55%);
+    color: #900; }
+  1% {
+    transform: translate(-50%, -45%);
+    color: #990; }
+  2% {
+    transform: translate(-50%, -50%);
+    color: white; }
+  to {
+    transform: translate(-50%, -50%);
+    color: white; } }
 
 #lives-counter {
   position: absolute;
@@ -466,6 +508,20 @@
     opacity: 0;
     transform: translateY(0); } }
 
+@keyframes flicker {
+  from {
+    transform: translate(-50%, -55%);
+    color: #900; }
+  1% {
+    transform: translate(-50%, -45%);
+    color: #990; }
+  2% {
+    transform: translate(-50%, -50%);
+    color: white; }
+  to {
+    transform: translate(-50%, -50%);
+    color: white; } }
+
 .text {
   font-size: 16px;
   color: white;
@@ -613,32 +669,53 @@
     opacity: 0;
     transform: translateY(0); } }
 
-#game-over-screen {
+@keyframes flicker {
+  from {
+    transform: translate(-50%, -55%);
+    color: #900; }
+  1% {
+    transform: translate(-50%, -45%);
+    color: #990; }
+  2% {
+    transform: translate(-50%, -50%);
+    color: white; }
+  to {
+    transform: translate(-50%, -50%);
+    color: white; } }
+
+#game-ended-screen {
   position: absolute;
   font-size: 16px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
+  animation: text-entry 0.5s ease-in-out 0s 1 forwards, flicker 5s linear 5s 999 forwards; }
   @media (min-width: 800px) {
-    #game-over-screen {
+    #game-ended-screen {
       font-size: 24px; } }
-  #game-over-screen h1 {
+  #game-ended-screen h1 {
     text-align: center;
     font-weight: normal;
     font-size: 1.5rem;
-    margin-bottom: 1em; }
-  #game-over-screen .screen-menu {
+    margin-bottom: 0 0 1em; }
+  #game-ended-screen h2 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 12px;
     margin-bottom: 3em; }
-  #game-over-screen .scoreboard {
+  #game-ended-screen .screen-menu {
+    margin-bottom: 3em; }
+  #game-ended-screen .scoreboard {
     position: static;
     width: auto;
     margin-bottom: 1em; }
-    #game-over-screen .scoreboard .label,
-    #game-over-screen .scoreboard .value {
+    #game-ended-screen .scoreboard .label,
+    #game-ended-screen .scoreboard .value {
       display: inline; }
-    #game-over-screen .scoreboard .label:after {
+    #game-ended-screen .scoreboard .label:after {
       content: ': '; }
+  #game-ended-screen.game-beaten h1 {
+    margin-bottom: 0.5em; }
 footer {
   font-family: 'Didact Gothic', sans-serif;
   font-size: 12px;
