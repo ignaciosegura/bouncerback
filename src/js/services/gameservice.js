@@ -62,7 +62,7 @@ class GameService {
     this.stopTheGame();
     let currentLevel = GameShop.level;
 
-    if(GameShop.isLastLevel())
+    if(GameShop.isLastLevel() && !GameShop.isTutorial())
       this.goGameBeaten();
     else
       this.goNextLevel();

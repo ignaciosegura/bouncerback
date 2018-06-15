@@ -9,6 +9,7 @@ class Game {
   @observable level = 0;
   @observable lives = 0;
   totalLevels = levelList.length;
+  type = '';
 
   addBounce(b = 1) {
     this.bounces += b;
@@ -35,6 +36,9 @@ class Game {
   }
   isLastLevel() {
     return ((this.level + 1) === this.totalLevels);
+  }
+  isTutorial() {
+    return (this.type === 'tutorial');
   }
 }
 

@@ -27,10 +27,10 @@ import SoundtrackService from './services/soundtrackservice.js';
 class GameEngine {
 
   constructor(level, gameType) {
-    this.gameType = gameType;
-    this.level = this.gameType === 'tutorial'
+    this.level = gameType === 'tutorial'
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
+    GameShop.type = gameType;
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
     GameService.setInitialLives(this.level.atomList.length, gameType);
 
