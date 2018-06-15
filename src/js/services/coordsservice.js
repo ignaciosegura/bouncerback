@@ -1,5 +1,4 @@
 // Coordinates service
-require('../../sass/_point_zero.scss');
 import SystemShop from '../stores/systemshop.js';
 
 class CoordsService {

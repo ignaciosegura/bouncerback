@@ -27,11 +27,11 @@ class GameService {
 
   static runEndGameActions(level) {
     switch (level.levelPassAction) {
-      case 'next':
-        this.gotoNextLevel(level);
-        break;
-      case 'home':
-        this.goBackHome();
+    case 'next':
+      this.gotoNextLevel(level);
+      break;
+    case 'home':
+      this.goBackHome();
     }
   }
 
@@ -58,8 +58,17 @@ class GameService {
       this.resumeTheGame();
   }
 
-  static gotoNextLevel() {
+  static whereToGoNext() {
     this.stopTheGame();
+    let currentLevel = GameShop.level;
+
+    if(GameShop.isLastLevel() && !GameShop.isTutorial())
+      this.goGameBeaten();
+    else
+      this.goNextLevel();
+  }
+
+  static goNextLevel() {
     GameShop.nextLevel();
   }
 
@@ -67,9 +76,15 @@ class GameService {
     this.stopTheGame();
     history.push('/');
   }
+
   static goGameOver() {
     this.stopTheGame();
     history.push('/game-over');
+  }
+
+  static goGameBeaten() {
+    this.stopTheGame();
+    history.push('/game-passed');
   }
 }
 

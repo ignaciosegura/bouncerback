@@ -1,0 +1,12 @@
+$retro-font-family: 'c64-angled', Helvetica, Arial, sans-serif;
+$sans-font-family: 'didact-gothic', Helvetica, Arial, sans-serif;
+
+@font-face {
+  font-family: 'c64-angled';
+  src: url('../fonts/c64_angled.ttf');
+}
+
+@font-face {
+  font-family: 'didact-gothic';
+  src: url('../fonts/didact_gothic_regular.ttf');
+}

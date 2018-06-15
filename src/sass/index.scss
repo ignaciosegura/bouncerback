@@ -1,36 +1,25 @@
 // Base loader for SASS files
 
 @import '~breakpoint-sass/stylesheets/breakpoint';
-@import '_variables.scss';
-@import '_fonts.scss';
 
-html, body {
-  background: $background-color;
-  color: $foreground-color;
-  font-family: $retro-font-family;
-  font-size: $default-font-size;
-  line-height: 1;
-  margin: 0;
-  padding: 0;
-  touch-action: none;
+@import 'res/_variables.scss';
+@import 'res/_fonts.scss';
+@import 'res/_animations.scss';
 
-  @include breakpoint($break-mid) {
-    font-size: $default-font-size * 1.5;
-  }
+@import 'routes/_layout.scss';
+@import 'routes/_main_title.scss';
+@import 'routes/_gamesurface.scss';
+@import 'routes/_game_ended.scss';
 
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
-}
+@import 'menus/_screenmenu.scss';
+@import 'menus/_systemmenu.scss';
 
-h1 {
-  font-size: $default-font-size;
+@import 'components/_atom.scss';
+@import 'components/_footer.scss';
+@import 'components/_game_props.scss';
+@import 'components/_lives_counter.scss';
+@import 'components/_point_zero.scss';
+@import 'components/_scoreboard.scss';
+@import 'components/_text.scss';
+@import 'components/_vortex.scss';
 
-  @include breakpoint($break-mid) {
-    font-size: $default-font-size * 1.5;
-  }
-}

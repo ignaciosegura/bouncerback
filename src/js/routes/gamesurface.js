@@ -1,9 +1,4 @@
-/*global require*/
-
 // Game container and touch surface
-
-
-require('../../sass/_gamesurface.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';

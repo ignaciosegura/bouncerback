@@ -1,12 +1,9 @@
-/*global require*/
 // Game engine class
-
-require('../sass/_game_props.scss');
 
 import { autorun } from 'mobx';
 
-import levelList from '../gameData/levelList.js';
-import tutorialList from '../gameData/tutorialList.js';
+import levelList from '../gameData/levellist.js';
+import tutorialList from '../gameData/tutoriallist.js';
 
 import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -27,10 +24,10 @@ import SoundtrackService from './services/soundtrackservice.js';
 class GameEngine {
 
   constructor(level, gameType) {
-    this.gameType = gameType;
-    this.level = this.gameType === 'tutorial'
+    this.level = gameType === 'tutorial'
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
+    GameShop.type = gameType;
     TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
     GameService.setInitialLives(this.level.atomList.length, gameType);
 
