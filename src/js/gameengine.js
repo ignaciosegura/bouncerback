@@ -5,8 +5,8 @@ require('../sass/_game_props.scss');
 
 import { autorun } from 'mobx';
 
-import levelList from '../gameData/levelList.js';
-import tutorialList from '../gameData/tutorialList.js';
+import levelList from '../gameData/levellist.js';
+import tutorialList from '../gameData/tutoriallist.js';
 
 import GameShop from './stores/gameshop.js';
 import TimeShop from './stores/timeshop.js';
