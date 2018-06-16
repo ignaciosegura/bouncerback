@@ -117,6 +117,24 @@ h1 {
     h1 {
       font-size: 24px; } }
 
+body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: black;
+  transition: background-color linear 1s; }
+  body.neutral {
+    background: black; }
+  body.danger {
+    background-color: #900; }
+  body.game-over {
+    background-color: #900; }
+  body.beaten {
+    background-color: #33f; }
+
 #main-title {
   position: absolute;
   font-size: 16px;

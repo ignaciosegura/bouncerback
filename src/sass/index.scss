@@ -6,7 +6,9 @@
 @import 'res/_fonts.scss';
 @import 'res/_animations.scss';
 
-@import 'routes/_layout.scss';
+@import 'global/_layout.scss';
+@import 'global/_background.scss';
+
 @import 'routes/_main_title.scss';
 @import 'routes/_gamesurface.scss';
 @import 'routes/_game_ended.scss';

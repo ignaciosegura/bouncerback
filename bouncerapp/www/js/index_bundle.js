@@ -517,21 +517,23 @@ var Default = (_class = function () {
       readingTime: 3500
     };
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
+
+    this.backgroundState = 'neutral';
   }
 
   _createClass(Default, [{
-    key: 'toggleSound',
-    value: function toggleSound() {
+    key: 'toggleAllSound',
+    value: function toggleAllSound() {
       this.sound.muted = !this.sound.muted;
     }
   }, {
-    key: 'muteSound',
-    value: function muteSound() {
+    key: 'muteAllSound',
+    value: function muteAllSound() {
       this.sound.muted = true;
     }
   }, {
-    key: 'unmuteSound',
-    value: function unmuteSound() {
+    key: 'unmuteAllSound',
+    value: function unmuteAllSound() {
       this.sound.muted = false;
     }
   }]);
@@ -4751,6 +4753,12 @@ var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3; /* global  *
 
 var _mobx = __webpack_require__(6);
 
+var _levellist = __webpack_require__(153);
+
+var _levellist2 = _interopRequireDefault(_levellist);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
   Object.defineProperty(target, property, {
@@ -4805,6 +4813,9 @@ var Game = (_class = function () {
     _initDefineProp(this, 'level', _descriptor2, this);
 
     _initDefineProp(this, 'lives', _descriptor3, this);
+
+    this.totalLevels = _levellist2.default.length;
+    this.type = '';
   }
 
   _createClass(Game, [{
@@ -4838,6 +4849,16 @@ var Game = (_class = function () {
     key: 'removeALife',
     value: function removeALife() {
       this.lives = this.lives > 0 ? --this.lives : 0;
+    }
+  }, {
+    key: 'isLastLevel',
+    value: function isLastLevel() {
+      return this.level + 1 === this.totalLevels;
+    }
+  }, {
+    key: 'isTutorial',
+    value: function isTutorial() {
+      return this.type === 'tutorial';
     }
   }]);
 
@@ -6617,7 +6638,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Coordinates service
+
 
 var _systemshop = __webpack_require__(5);
 
@@ -6626,9 +6648,6 @@ var _systemshop2 = _interopRequireDefault(_systemshop);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Coordinates service
-__webpack_require__(78);
 
 var CoordsService = function () {
   function CoordsService() {
@@ -7061,8 +7080,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Clock service
 
-var _mobx = __webpack_require__(6);
-
 var _timeshop = __webpack_require__(10);
 
 var _timeshop2 = _interopRequireDefault(_timeshop);
@@ -7080,17 +7097,13 @@ var ClockService = function () {
     key: 'startTheClock',
     value: function startTheClock() {
       _timeshop2.default.clock = 'on';
+      this.scheduleTick();
     }
   }, {
     key: 'stopTheClock',
     value: function stopTheClock() {
       _timeshop2.default.clock = 'off';
-    }
-  }, {
-    key: 'resumeTheClock',
-    value: function resumeTheClock() {
-      this.startTheClock();
-      this.scheduleTick();
+      this.killScheduledTick();
     }
   }, {
     key: 'toggleClock',
@@ -7110,12 +7123,9 @@ var ClockService = function () {
   }, {
     key: 'startGameLoop',
     value: function startGameLoop(engine) {
-      this.startTheClock();
-      this.resetClock();
-
       this.gameLoop = engine.gameLoop;
-
-      this.scheduleTick();
+      this.resetClock();
+      this.startTheClock();
     }
   }, {
     key: 'scheduleTick',
@@ -7129,11 +7139,16 @@ var ClockService = function () {
     value: function setNextIteration(time) {
       var _this = this;
 
-      setTimeout(function () {
+      _timeshop2.default.nextTimeout = setTimeout(function () {
         _this.gameLoop();
         _this.nextTick();
         _this.scheduleTick();
       }, time);
+    }
+  }, {
+    key: 'killScheduledTick',
+    value: function killScheduledTick() {
+      clearTimeout(_timeshop2.default.nextTimeout);
     }
   }, {
     key: 'calculateTickFromMusicalNotation',
@@ -7215,7 +7230,7 @@ var GameService = function () {
     value: function runEndGameActions(level) {
       switch (level.levelPassAction) {
         case 'next':
-          this.gotoNextLevel(level);
+          this.whereToGoNext(level);
           break;
         case 'home':
           this.goBackHome();
@@ -7237,7 +7252,7 @@ var GameService = function () {
   }, {
     key: 'resumeTheGame',
     value: function resumeTheGame() {
-      _clockservice2.default.resumeTheClock();
+      _clockservice2.default.startTheClock();
       _soundtrackservice2.default.resume();
     }
   }, {
@@ -7246,22 +7261,36 @@ var GameService = function () {
       if (_timeshop2.default.clock == 'on') this.pauseTheGame();else this.resumeTheGame();
     }
   }, {
-    key: 'gotoNextLevel',
-    value: function gotoNextLevel() {
+    key: 'whereToGoNext',
+    value: function whereToGoNext() {
+      if (_gameshop2.default.isLastLevel() && !_gameshop2.default.isTutorial()) this.goGameBeaten();else this.goNextLevel();
+    }
+  }, {
+    key: 'goNextLevel',
+    value: function goNextLevel() {
       this.stopTheGame();
       _gameshop2.default.nextLevel();
     }
   }, {
+    key: 'goGameBeaten',
+    value: function goGameBeaten() {
+      this.goTo('/game-beaten');
+    }
+  }, {
     key: 'goBackHome',
     value: function goBackHome() {
-      this.stopTheGame();
-      _index.history.push('/');
+      this.goTo('/');
     }
   }, {
     key: 'goGameOver',
     value: function goGameOver() {
+      this.goTo('/game-over');
+    }
+  }, {
+    key: 'goTo',
+    value: function goTo(route) {
       this.stopTheGame();
-      _index.history.push('/game-over');
+      _index.history.push(route);
     }
   }]);
 
@@ -7909,6 +7938,10 @@ var _gameover = __webpack_require__(62);
 
 var _gameover2 = _interopRequireDefault(_gameover);
 
+var _gamebeaten = __webpack_require__(155);
+
+var _gamebeaten2 = _interopRequireDefault(_gamebeaten);
+
 var _footer = __webpack_require__(56);
 
 var _footer2 = _interopRequireDefault(_footer);
@@ -7916,6 +7949,10 @@ var _footer2 = _interopRequireDefault(_footer);
 var _phonegapservice = __webpack_require__(65);
 
 var _phonegapservice2 = _interopRequireDefault(_phonegapservice);
+
+var _backgroundservice = __webpack_require__(157);
+
+var _backgroundservice2 = _interopRequireDefault(_backgroundservice);
 
 var _gameshop = __webpack_require__(7);
 
@@ -7961,6 +7998,10 @@ var Index = function (_React$Component) {
       e.preventDefault();
     }, false);
 
+    history.listen(function (location, action) {
+      _backgroundservice2.default.renderProperState();
+    });
+
     _phonegapservice2.default.setupPhoneGapListeners();
     return _this;
   }
@@ -7990,6 +8031,7 @@ var Index = function (_React$Component) {
                 return _react2.default.createElement(_gamesurface2.default, { gameType: 'game', level: 1 });
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game-over', component: _gameover2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/game-beaten', component: _gamebeaten2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _maintitle2.default }),
             '} />'
           )
@@ -8021,7 +8063,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class; // Scoreboard element. Used for both bounces and level.
 
 var _react = __webpack_require__(0);
 
@@ -8036,11 +8078,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/*global require*/
-// Scoreboard element. Used for both bounces and level.
-
-__webpack_require__(79);
 
 var Scoreboard = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(Scoreboard, _React$Component);
@@ -8105,12 +8142,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// Screen menu
-/* global require */
-
-__webpack_require__(80);
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Screen menu
 
 var ScreenMenu = function (_React$Component) {
   _inherits(ScreenMenu, _React$Component);
@@ -9414,142 +9446,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/*global require*/
-//EXAMPLE LEVEL
-
-/*
-{
-  name: '',
-  levelType: '', // Possible values are "tutorial" / "real"
-  duration: , // measured in times.
-  levelPassAction: 'next', // Possible values are "next"
-  gameOverAction: 'gameover' // possible values are "gameover" and "restart"
-  time = {
-    bpm: 120,
-    signature: 4
-  };
-  sound = {
-    launch: '',
-    bounce: '',
-    destruction: '',
-    track: ''
-  },
-  atomSpeed: 1, // Beats to make a round trip
-  atomList: [] // Array of moments where a new atom should be created
-}
-
-*/
-
-var levelList = [{}, // Level Zero does not exist on real game, only on tutorial.
-{
-  name: 'Neutronika',
-  levelType: 'game',
-  duration: 28,
-  levelPassAction: 'next',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 115,
-    signature: 4
-  },
-  sound: {
-    track: __webpack_require__(95)
-  },
-  atomSpeed: 4,
-  atomList: [{ t: 0, b: 0 }, { t: 2, b: 0 }, { t: 3, b: 3.5 }, { t: 5, b: 2 }, { t: 11, b: 2.75 }, { t: 15, b: 3 }, { t: 17, b: 1 }, { t: 19, b: 0.75 }, { t: 22, b: 3.25 }]
-}, {
-  name: 'Femtocosmos',
-  levelType: 'game',
-  duration: 32,
-  levelPassAction: 'next',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 130,
-    signature: 4
-  },
-  sound: {
-    track: __webpack_require__(93)
-  },
-  atomSpeed: 2,
-  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
-}, {
-  name: 'Chronosaedrøn',
-  levelType: 'game',
-  duration: 30,
-  levelPassAction: 'next',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 130,
-    signature: 4
-  },
-  sound: {
-    track: __webpack_require__(92)
-  },
-  atomSpeed: 2,
-  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
-}, {
-  name: 'Mekanomancer',
-  levelType: 'game',
-  duration: 30,
-  levelPassAction: 'next',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 180,
-    signature: 3
-  },
-  sound: {
-    track: __webpack_require__(94)
-  },
-  atomSpeed: 3,
-  atomList: [{ t: 0, b: 0 }, { t: 3, b: 0 }, { t: 5, b: 0 }, { t: 7, b: 0 }, { t: 8, b: 1.5 }, { t: 11, b: 1.5 }, { t: 13, b: 2 }, { t: 16, b: 1 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 23, b: 0.5 }, { t: 25, b: 1.25 }]
-}];
-// Synthetogenesis
-// Quantåmorphica
-// Gravcon
-// Neutronika
-// Hexerion
-exports.default = levelList;
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/* global require */
-
-var levelList = [{
-  name: 'Tutorial',
-  type: 'tutorial',
-  duration: 12,
-  levelPassAction: 'home',
-  gameOverAction: 'gameover',
-  time: {
-    bpm: 65,
-    signature: 4
-  },
-  sound: {
-    track: __webpack_require__(96)
-  },
-  atomSpeed: 4,
-  atomList: [{ t: 1, b: 0 }, { t: 3, b: 0 }, { t: 6, b: 0 }, { t: 10, b: 0 }]
-}];
-
-exports.default = levelList;
-
-/***/ }),
+/* 53 */,
+/* 54 */,
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9560,7 +9458,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*global require*/
+// Atom class
 
 var _soundfx = __webpack_require__(19);
 
@@ -9581,11 +9480,6 @@ var _coordsservice2 = _interopRequireDefault(_coordsservice);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*global require*/
-// Atom class
-
-__webpack_require__(71);
 
 var Atom = function () {
   function Atom(index, level) {
@@ -9778,12 +9672,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/* global require */
-// Dummy element. We need something we can click during development
-
-__webpack_require__(72);
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Footer element.
 
 var Footer = function (_React$Component) {
   _inherits(Footer, _React$Component);
@@ -9795,21 +9684,21 @@ var Footer = function (_React$Component) {
   }
 
   _createClass(Footer, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'footer',
+        "footer",
         null,
         _react2.default.createElement(
-          'a',
-          { rel: 'nofollow', href: 'http://www.niknak.es', target: '_blank' },
-          '\xA9 Nik Nak Studio'
+          "a",
+          { rel: "nofollow", href: "http://www.niknak.es", target: "_blank" },
+          "\xA9 Nik Nak Studio"
         ),
-        ' /\xA0',
+        " /\xA0",
         _react2.default.createElement(
-          'a',
-          { rel: 'nofollow', href: 'https://github.com/ignaciosegura/bouncerback', target: '_blank' },
-          'Bouncerback on GitHub'
+          "a",
+          { rel: "nofollow", href: "https://github.com/ignaciosegura/bouncerback", target: "_blank" },
+          "Bouncerback on GitHub"
         )
       );
     }
@@ -9933,17 +9822,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Game engine class
 
 var _mobx = __webpack_require__(6);
 
-var _levelList = __webpack_require__(53);
+var _levellist = __webpack_require__(153);
 
-var _levelList2 = _interopRequireDefault(_levelList);
+var _levellist2 = _interopRequireDefault(_levellist);
 
-var _tutorialList = __webpack_require__(54);
+var _tutoriallist = __webpack_require__(154);
 
-var _tutorialList2 = _interopRequireDefault(_tutorialList);
+var _tutoriallist2 = _interopRequireDefault(_tutoriallist);
 
 var _gameshop = __webpack_require__(7);
 
@@ -10001,17 +9890,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*global require*/
-// Game engine class
-
-__webpack_require__(74);
-
 var GameEngine = function () {
   function GameEngine(level, gameType) {
     _classCallCheck(this, GameEngine);
 
-    this.gameType = gameType;
-    this.level = this.gameType === 'tutorial' ? new _level2.default(_tutorialList2.default[level]) : new _level2.default(_levelList2.default[level]);
+    this.level = gameType === 'tutorial' ? new _level2.default(_tutoriallist2.default[level]) : new _level2.default(_levellist2.default[level]);
+    _gameshop2.default.type = gameType;
     _timeshop2.default.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
     _gameservice2.default.setInitialLives(this.level.atomList.length, gameType);
 
@@ -10207,7 +10091,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class; // Atom counter React component
 
 var _react = __webpack_require__(0);
 
@@ -10228,11 +10112,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/*global require*/
-// Atom counter React component
-
-__webpack_require__(76);
 
 var LivesCounter = (_dec = (0, _mobxReact.inject)('GameShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(LivesCounter, _React$Component);
@@ -10362,8 +10241,6 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(23);
-
 var _screenmenu = __webpack_require__(37);
 
 var _screenmenu2 = _interopRequireDefault(_screenmenu);
@@ -10380,9 +10257,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/* global require */
-__webpack_require__(73);
-
 var GameOver = function (_React$Component) {
   _inherits(GameOver, _React$Component);
 
@@ -10397,7 +10271,7 @@ var GameOver = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'game-over-screen' },
+        { id: 'game-ended-screen', className: 'game-over' },
         _react2.default.createElement(
           'h1',
           null,
@@ -10428,7 +10302,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class; // Game container and touch surface
 
 var _react = __webpack_require__(0);
 
@@ -10471,13 +10345,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/*global require*/
-
-// Game container and touch surface
-
-
-__webpack_require__(75);
 
 var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(GameSurface, _React$Component);
@@ -10570,11 +10437,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* Global require */
 
-/* global require */
-
-__webpack_require__(77);
 
 var GameLogo = __webpack_require__(130);
 
@@ -10791,7 +10655,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class; // System menu
 
 var _react = __webpack_require__(0);
 
@@ -10817,10 +10681,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// System menu
-
-__webpack_require__(81);
-
 var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
   _inherits(SystemMenu, _React$Component);
 
@@ -10834,7 +10694,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
     key: 'soundClick',
     value: function soundClick(e) {
       e.preventDefault();
-      _systemshop2.default.toggleSound();
+      _systemshop2.default.toggleAllSound();
     }
   }, {
     key: 'pauseClick',
@@ -10891,7 +10751,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Text field
 
 var _timeshop = __webpack_require__(10);
 
@@ -10900,12 +10760,6 @@ var _timeshop2 = _interopRequireDefault(_timeshop);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*global require */
-
-// Text field
-
-__webpack_require__(82);
 
 var Text = function () {
   function Text(text) {
@@ -10969,7 +10823,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* global require */
+// Vortex class
 
 var _soundfx = __webpack_require__(19);
 
@@ -10980,11 +10835,6 @@ var _transformationMatrix = __webpack_require__(129);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/*global require*/
-// Vortex class
-
-__webpack_require__(83);
 
 var Vortex = function () {
   function Vortex(radius) {
@@ -11003,7 +10853,7 @@ var Vortex = function () {
 
   _createClass(Vortex, [{
     key: 'createVortex',
-    value: function createVortex(radius) {
+    value: function createVortex() {
       this.sounds.creation.play();
       var vortexHTML = '<circle id="vortex" cx="0" cy="0" r="' + this.initialRadius + '" ></circle>';
       var pointZero = document.getElementById('point-zero');
@@ -11043,84 +10893,19 @@ var Vortex = function () {
 exports.default = Vortex;
 
 /***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
 /* 84 */
 /***/ (function(module, exports) {
 
@@ -33863,6 +33648,291 @@ module.exports = __webpack_require__(35);
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "./res/sound/capture.mp3";
+
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/*global require*/
+//EXAMPLE LEVEL
+
+/*
+{
+  name: '',
+  levelType: '', // Possible values are "tutorial" / "real"
+  duration: , // measured in times.
+  levelPassAction: 'next', // Possible values are "next"
+  gameOverAction: 'gameover' // possible values are "gameover" and "restart"
+  time = {
+    bpm: 120,
+    signature: 4
+  };
+  sound = {
+    launch: '',
+    bounce: '',
+    destruction: '',
+    track: ''
+  },
+  atomSpeed: 1, // Beats to make a round trip
+  atomList: [] // Array of moments where a new atom should be created
+}
+
+*/
+
+var levelList = [{}, // Level Zero does not exist on real game, only on tutorial.
+{
+  name: 'Neutronika',
+  levelType: 'game',
+  duration: 28,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 115,
+    signature: 4
+  },
+  sound: {
+    track: __webpack_require__(95)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 0, b: 0 }, { t: 2, b: 0 }, { t: 3, b: 3.5 }, { t: 5, b: 2 }, { t: 11, b: 2.75 }, { t: 15, b: 3 }, { t: 17, b: 1 }, { t: 19, b: 0.75 }, { t: 22, b: 3.25 }]
+}, {
+  name: 'Femtocosmos',
+  levelType: 'game',
+  duration: 32,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 130,
+    signature: 4
+  },
+  sound: {
+    track: __webpack_require__(93)
+  },
+  atomSpeed: 2,
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
+}, {
+  name: 'Chronosaedrøn',
+  levelType: 'game',
+  duration: 30,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 130,
+    signature: 4
+  },
+  sound: {
+    track: __webpack_require__(92)
+  },
+  atomSpeed: 2,
+  atomList: [{ t: 0, b: 0 }, { t: 4, b: 0 }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
+}, {
+  name: 'Mekanomancer',
+  levelType: 'game',
+  duration: 30,
+  levelPassAction: 'next',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 180,
+    signature: 3
+  },
+  sound: {
+    track: __webpack_require__(94)
+  },
+  atomSpeed: 3,
+  atomList: [{ t: 0, b: 0 }, { t: 3, b: 0 }, { t: 5, b: 0 }, { t: 7, b: 0 }, { t: 8, b: 1.5 }, { t: 11, b: 1.5 }, { t: 13, b: 2 }, { t: 16, b: 1 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 23, b: 0.5 }, { t: 25, b: 1.25 }]
+}];
+// Synthetogenesis
+// Quantåmorphica
+// Gravcon
+// Neutronika
+// Hexerion
+exports.default = levelList;
+
+/***/ }),
+/* 154 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/* global require */
+
+var levelList = [{
+  name: 'Tutorial',
+  type: 'tutorial',
+  duration: 12,
+  levelPassAction: 'home',
+  gameOverAction: 'gameover',
+  time: {
+    bpm: 65,
+    signature: 4
+  },
+  sound: {
+    track: __webpack_require__(96)
+  },
+  atomSpeed: 4,
+  atomList: [{ t: 1, b: 0 }, { t: 3, b: 0 }, { t: 6, b: 0 }, { t: 10, b: 0 }]
+}];
+
+exports.default = levelList;
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _screenmenu = __webpack_require__(37);
+
+var _screenmenu2 = _interopRequireDefault(_screenmenu);
+
+var _scoreboard = __webpack_require__(36);
+
+var _scoreboard2 = _interopRequireDefault(_scoreboard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Game beaten screen
+
+var GameBeaten = function (_React$Component) {
+  _inherits(GameBeaten, _React$Component);
+
+  function GameBeaten() {
+    _classCallCheck(this, GameBeaten);
+
+    return _possibleConstructorReturn(this, (GameBeaten.__proto__ || Object.getPrototypeOf(GameBeaten)).apply(this, arguments));
+  }
+
+  _createClass(GameBeaten, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'game-ended-screen', className: 'game-beaten' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Congratulations!'
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'You saved the vortex, yourself and the whole universe. Sort of.'
+        ),
+        _react2.default.createElement(_screenmenu2.default, null),
+        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
+        _react2.default.createElement(_scoreboard2.default, { type: 'level' })
+      );
+    }
+  }]);
+
+  return GameBeaten;
+}(_react2.default.Component);
+
+exports.default = GameBeaten;
+
+/***/ }),
+/* 156 */,
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Background service
+
+var _systemshop = __webpack_require__(5);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
+var _gameshop = __webpack_require__(7);
+
+var _gameshop2 = _interopRequireDefault(_gameshop);
+
+var _mobx = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Background = function () {
+  function Background() {
+    var _this = this;
+
+    _classCallCheck(this, Background);
+
+    this.domElement = document.getElementsByTagName('body')[0];
+
+    (0, _mobx.autorun)(function () {
+      _this.renderProperState();
+    });
+  }
+
+  _createClass(Background, [{
+    key: 'changeState',
+    value: function changeState(newState) {
+      this.domElement.classList.remove(_systemshop2.default.backgroundState);
+      return this.setState(newState);
+    }
+  }, {
+    key: 'setState',
+    value: function setState(newState) {
+      this.domElement.classList.add(newState);
+      _systemshop2.default.backgroundState = newState;
+
+      return newState;
+    }
+  }, {
+    key: 'renderProperState',
+    value: function renderProperState() {
+      var currentScreen = window.location.pathname;
+
+      if (currentScreen === '/game' && _gameshop2.default.lives === 1) {
+        this.changeState('danger');
+      } else if (currentScreen === '/game-over') {
+        this.changeState('game-over');
+      } else if (currentScreen === '/game-beaten') {
+        this.changeState('beaten');
+      } else {
+        this.changeState('neutral');
+      }
+    }
+  }]);
+
+  return Background;
+}();
+
+var BackgroundService = new Background();
+
+exports.default = BackgroundService;
 
 /***/ })
 /******/ ]);
