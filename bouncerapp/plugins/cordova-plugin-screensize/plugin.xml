@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  id="cordova-plugin-screensize"
+  version="1.3.1">
+
+  <name>screensize</name>
+  <description>A cordova plugin to get the physical size of the device screen</description>
+  <license>MIT</license>
+  <keywords>cordova,screen,screensize,width,height,diameter</keywords>
+  <repo>https://github.com/pbakondy/cordova-plugin-screensize</repo>
+  <issue>https://github.com/pbakondy/cordova-plugin-screensize/issues</issue>
+
+  <engines>
+    <engine name="cordova" version=">=3.0.0"/>
+  </engines>
+
+  <js-module src="www/screensize.js" name="screensize">
+    <clobbers target="window.plugins.screensize" />
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="ScreenSize">
+        <param name="android-package" value="com.pbakondy.ScreenSize"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/com/pbakondy/ScreenSize.java" target-dir="src/com/pbakondy" />
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="ScreenSize">
+        <param name="ios-package" value="ScreenSize" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/ScreenSize.h"/>
+    <source-file src="src/ios/ScreenSize.m"/>
+  </platform>
+
+  <!-- osx -->
+  <platform name="osx">
+    <config-file target="config.xml" parent="/*">
+      <feature name="ScreenSize">
+        <param name="ios-package" value="ScreenSize" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/osx/ScreenSize.h"/>
+    <source-file src="src/osx/ScreenSize.m"/>
+  </platform>
+
+  <!-- browser -->
+  <platform name="browser">
+    <config-file target="config.xml" parent="/*">
+      <feature name="ScreenSize">
+        <param name="browser-package" value="ScreenSize" />
+      </feature>
+    </config-file>
+
+    <js-module src="src/browser/ScreenSizeProxy.js" name="ScreenSizeProxy">
+      <runs />
+    </js-module>
+  </platform>
+
+</plugin>
