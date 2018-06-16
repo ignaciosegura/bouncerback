@@ -14,7 +14,7 @@ class SystemMenu extends React.Component {
   }
   soundClick(e) {
     e.preventDefault();
-    SystemShop.toggleSound();
+    SystemShop.toggleAllSound();
   }
 
   pauseClick(e) {

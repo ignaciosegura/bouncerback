@@ -28,15 +28,17 @@ class Default {
       readingTime: 3500,
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
+
+    this.backgroundState = 'neutral';
   }
 
-  toggleSound() {
+  toggleAllSound() {
     this.sound.muted = !this.sound.muted;
   }
-  muteSound() {
+  muteAllSound() {
     this.sound.muted = true;
   }
-  unmuteSound() {
+  unmuteAllSound() {
     this.sound.muted = false;
   }
 }

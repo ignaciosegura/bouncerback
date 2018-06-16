@@ -4923,18 +4923,18 @@ var Default = (_class = function () {
   }
 
   _createClass(Default, [{
-    key: 'toggleSound',
-    value: function toggleSound() {
+    key: 'toggleAllSound',
+    value: function toggleAllSound() {
       this.sound.muted = !this.sound.muted;
     }
   }, {
-    key: 'muteSound',
-    value: function muteSound() {
+    key: 'muteAllSound',
+    value: function muteAllSound() {
       this.sound.muted = true;
     }
   }, {
-    key: 'unmuteSound',
-    value: function unmuteSound() {
+    key: 'unmuteAllSound',
+    value: function unmuteAllSound() {
       this.sound.muted = false;
     }
   }]);
@@ -10740,7 +10740,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
     key: 'soundClick',
     value: function soundClick(e) {
       e.preventDefault();
-      _systemshop2.default.toggleSound();
+      _systemshop2.default.toggleAllSound();
     }
   }, {
     key: 'pauseClick',
