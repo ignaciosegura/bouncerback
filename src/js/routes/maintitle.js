@@ -1,7 +1,4 @@
-/* global require */
-
-require('../../sass/_main_title.scss');
-
+/* Global require */
 import React from 'react';
 
 import ScreenMenu from '../screenmenu.js';

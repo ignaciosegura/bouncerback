@@ -13,6 +13,7 @@ export const history = createBrowserHistory();
 import MainTitle from './routes/maintitle.js';
 import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
+import GameBeaten from './routes/gamebeaten.js';
 import Footer from './footer.js';
 
 import PhoneGapService from './services/phonegapservice.js';
@@ -47,6 +48,7 @@ class Index extends React.Component {
           <Route exact path="/tutorial" render={() => <GameSurface gameType='tutorial' level={0} />} />
           <Route exact path="/game" render={() => <GameSurface gameType='game' level={1} />} />
           <Route exact path="/game-over" component={GameOver} />
+          <Route exact path="/game-beaten" component={GameBeaten} />
           <Route path="*" component={MainTitle} />} />
         </Switch>
       </Router>

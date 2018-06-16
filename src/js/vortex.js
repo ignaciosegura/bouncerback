@@ -1,7 +1,5 @@
-/*global require*/
+/* global require */
 // Vortex class
-
-require('../sass/_vortex.scss');
 
 import SoundFX from './soundfx.js';
 import { fromString } from 'transformation-matrix';
@@ -19,7 +17,7 @@ class Vortex {
     this.activateVortex();
   }
 
-  createVortex(radius) {
+  createVortex() {
     this.sounds.creation.play();
     let vortexHTML = `<circle id="vortex" cx="0" cy="0" r="${this.initialRadius}" ></circle>`;
     let pointZero = document.getElementById('point-zero');

@@ -1,7 +1,4 @@
-/* global require */
-// Dummy element. We need something we can click during development
-
-require('../sass/_footer.scss');
+// Footer element.
 
 import React from 'react';
 

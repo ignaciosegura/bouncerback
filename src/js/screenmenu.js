@@ -1,7 +1,4 @@
 // Screen menu
-/* global require */
-
-require('../sass/_screenmenu.scss');
 
 import React from 'react';
 import { Link } from 'react-router-dom';

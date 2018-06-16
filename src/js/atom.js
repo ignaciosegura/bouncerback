@@ -1,8 +1,6 @@
 /*global require*/
 // Atom class
 
-require('../sass/_atom.scss');
-
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';

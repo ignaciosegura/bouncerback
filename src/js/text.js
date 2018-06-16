@@ -1,8 +1,4 @@
-/*global require */
-
 // Text field
-
-require('../sass/_text.scss');
 
 import TimeShop from './stores/timeshop.js';
 

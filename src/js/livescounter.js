@@ -1,7 +1,4 @@
-/*global require*/
 // Atom counter React component
-
-require('../sass/_lives_counter.scss');
 
 import React from 'react';
 import { observer, inject } from 'mobx-react';
