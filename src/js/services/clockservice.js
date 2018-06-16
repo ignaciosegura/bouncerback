@@ -1,20 +1,16 @@
 // Clock service
 
-import { autorun } from 'mobx';
 import TimeShop from '../stores/timeshop.js';
 
 class ClockService {
   static startTheClock() {
     TimeShop.clock = 'on';
+    this.scheduleTick();
   }
 
   static stopTheClock() {
     TimeShop.clock = 'off';
-  }
-
-  static resumeTheClock() {
-    this.startTheClock();
-    this.scheduleTick();
+    this.killScheduledTick();
   }
 
   static toggleClock() {
@@ -32,12 +28,9 @@ class ClockService {
   }
 
   static startGameLoop(engine) {
-    this.startTheClock();
-    this.resetClock();
-
     this.gameLoop = engine.gameLoop;
-
-    this.scheduleTick();
+    this.resetClock();
+    this.startTheClock();
   }
 
   static scheduleTick() {
@@ -47,11 +40,15 @@ class ClockService {
   }
 
   static setNextIteration(time) {
-    setTimeout(() => {
+    TimeShop.nextTimeout = setTimeout(() => {
       this.gameLoop();
       this.nextTick();
       this.scheduleTick();
     }, time);
+  }
+
+  static killScheduledTick() {
+    clearTimeout(TimeShop.nextTimeout);
   }
 
   static calculateTickFromMusicalNotation(time = 0, beat = 0) {

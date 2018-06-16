@@ -12,6 +12,7 @@ class Time {
   framesPerTime = 1;
   timeSignature = 1;
   levelDuration;
+  nextTimeout;
 
   setup(bpm, timeSignature, duration) {
     this.reset();

@@ -17,6 +17,7 @@ import GameBeaten from './routes/gamebeaten.js';
 import Footer from './footer.js';
 
 import PhoneGapService from './services/phonegapservice.js';
+import BackgroundService from './services/backgroundservice.js';
 import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -32,6 +33,10 @@ class Index extends React.Component {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, false);
+
+    history.listen((location, action) => {
+      BackgroundService.renderProperState();
+    });
 
     PhoneGapService.setupPhoneGapListeners();
   }
