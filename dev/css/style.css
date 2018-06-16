@@ -203,7 +203,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: text-entry 0.5s ease-in-out 0s 1 forwards, flicker 5s linear 5s 999 forwards; }
+  animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     #game-ended-screen {
       font-size: 24px; } }

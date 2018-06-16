@@ -7,7 +7,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  animation: $animation-text-entry, $animation-flicker;
+  animation: $animation-text-entry;
 
   @include breakpoint($break-mid) {
     font-size: $default-font-size * 1.5;
