@@ -2,6 +2,8 @@
 
 import GameService from './gameservice.js';
 
+import SystemShop from '../stores/systemshop.js';
+
 class PhoneGapService {
   static setupPhoneGapListeners() {
 
@@ -14,7 +16,17 @@ class PhoneGapService {
         GameService.resumeTheGame();
       });
 
+      SystemShop.physicalScreen = this.getRealScreenSizeIfPossible();
     }, false);
+  }
+
+  static getRealScreenSizeIfPossible() {
+    return (window.plugins.screensize)
+      ? window.plugins.screensize.get(
+        result => { return result }
+        , result => { return result }
+      )
+      : null;
   }
 }
 

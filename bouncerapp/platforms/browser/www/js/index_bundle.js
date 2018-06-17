@@ -6680,9 +6680,22 @@ var CoordsService = function () {
   }, {
     key: 'getVectorFromScreenCoords',
     value: function getVectorFromScreenCoords(position) {
+<<<<<<< HEAD
       var x = position.x - _systemshop2.default.gameSurfaceCoords.centerX;
       var y = position.y - _systemshop2.default.gameSurfaceCoords.centerY;
       return this.getVectorFromXY(x, y);
+=======
+      var normalizedPos = this.getXYFromScreenCoords(position);
+      return this.getVectorFromXY(normalizedPos.x, normalizedPos.y);
+    }
+  }, {
+    key: 'getXYFromScreenCoords',
+    value: function getXYFromScreenCoords(position) {
+      return {
+        x: position.x - _systemshop2.default.gameSurfaceCoords.centerX,
+        y: position.y - _systemshop2.default.gameSurfaceCoords.centerY
+      };
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
     }
   }, {
     key: 'getDistanceFromXY',
@@ -9734,7 +9747,11 @@ var GameController = function () {
 
     this.pucks = pucks;
 
+<<<<<<< HEAD
     this.movePucks([]); // First run
+=======
+    this.movePucks([0, Math.PI]); // First run
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
     this.movePucksOnInput();
   }
 
@@ -9745,9 +9762,13 @@ var GameController = function () {
 
       var inputHandler = function inputHandler(e) {
         var positionArr = _coordsservice2.default.getXYFromInput(e);
+<<<<<<< HEAD
         var vectorArr = positionArr.map(function (p) {
           return _coordsservice2.default.getVectorFromScreenCoords(p);
         });
+=======
+        var vectorArr = e.type == 'touchmove' ? _this.getVectorsFromTouchPositions(positionArr) : _this.getVectorsFromMousePosition(positionArr);
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
         _this.movePucks(vectorArr);
       };
 
@@ -9756,6 +9777,7 @@ var GameController = function () {
       });
     }
   }, {
+<<<<<<< HEAD
     key: 'movePucks',
     value: function movePucks(vectorArr) {
       var _this2 = this;
@@ -9765,6 +9787,50 @@ var GameController = function () {
 
         p.vector = _this2.moveOnePuck(p, vector);
       });
+=======
+    key: 'getVectorsFromMousePosition',
+    value: function getVectorsFromMousePosition(positionArr) {
+      var mousePos = _coordsservice2.default.getVectorFromScreenCoords(positionArr[0]);
+      return [mousePos, mousePos];
+    }
+  }, {
+    key: 'getVectorsFromTouchPositions',
+    value: function getVectorsFromTouchPositions(positionArr) {
+      var xyArr = positionArr.map(function (p) {
+        return _coordsservice2.default.getXYFromScreenCoords(p);
+      });
+      var leftOrRight = void 0;
+      var vectorArr = [null, null];
+
+      xyArr.forEach(function (xy) {
+        leftOrRight = xy.x < 0 ? 0 : 1;
+        vectorArr[leftOrRight] = _coordsservice2.default.getVectorFromXY(xy.x, xy.y);
+      });
+      return vectorArr;
+    }
+  }, {
+    key: 'movePucks',
+    value: function movePucks(vectorArr) {
+      var _this2 = this;
+
+      this.pucks.forEach(function (p) {
+        if (vectorArr[p.index] === null) return;
+        var vector = vectorArr[p.index];
+        p.vector = _this2.moveOnePuck(p, vector);
+      });
+    }
+  }, {
+    key: 'moveOnePuck',
+    value: function moveOnePuck(puck, vector) {
+      var radius = _systemshop2.default.gameSurfaceCoords.radius;
+      var x = Math.cos(vector) * radius;
+      var y = Math.sin(vector) * radius;
+      var perpendicularInDegs = _coordsservice2.default.getDegreesFromRads(vector) + 90;
+
+      puck.domElement.setAttribute('transform', 'translate(' + x + ', ' + y + '), rotate(' + perpendicularInDegs + ')');
+
+      return vector;
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
     }
   }, {
     key: 'moveOnePuck',
@@ -10459,6 +10525,13 @@ var _gameservice = __webpack_require__(25);
 
 var _gameservice2 = _interopRequireDefault(_gameservice);
 
+<<<<<<< HEAD
+=======
+var _systemshop = __webpack_require__(5);
+
+var _systemshop2 = _interopRequireDefault(_systemshop);
+
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10471,6 +10544,10 @@ var PhoneGapService = function () {
   _createClass(PhoneGapService, null, [{
     key: 'setupPhoneGapListeners',
     value: function setupPhoneGapListeners() {
+<<<<<<< HEAD
+=======
+      var _this = this;
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
 
       document.addEventListener('deviceready', function () {
 
@@ -10480,8 +10557,24 @@ var PhoneGapService = function () {
         document.addEventListener('resume', function () {
           _gameservice2.default.resumeTheGame();
         });
+<<<<<<< HEAD
       }, false);
     }
+=======
+
+        _systemshop2.default.physicalScreen = _this.getRealScreenSizeIfPossible();
+      }, false);
+    }
+  }, {
+    key: 'getRealScreenSizeIfPossible',
+    value: function getRealScreenSizeIfPossible() {
+      return window.plugins.screensize ? window.plugins.screensize.get(function (result) {
+        return result;
+      }, function (result) {
+        return result;
+      }) : null;
+    }
+>>>>>>> 8dd14fdef54f53ec8aea144ed494fcb17348757e
   }]);
 
   return PhoneGapService;
