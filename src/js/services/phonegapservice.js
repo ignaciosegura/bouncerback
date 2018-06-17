@@ -15,6 +15,9 @@ class PhoneGapService {
       document.addEventListener('resume', () => {
         GameService.resumeTheGame();
       });
+      document.addEventListener('backbutton', () => {
+        GameService.stopTheGame();
+      });
 
       SystemShop.physicalScreen = this.getRealScreenSizeIfPossible();
     }, false);
