@@ -10856,6 +10856,9 @@ var PhoneGapService = function () {
         document.addEventListener('resume', function () {
           _gameservice2.default.resumeTheGame();
         });
+        document.addEventListener('backbutton', function () {
+          _gameservice2.default.stopTheGame();
+        });
 
         _systemshop2.default.physicalScreen = _this.getRealScreenSizeIfPossible();
       }, false);
@@ -10914,7 +10917,7 @@ var PlatformService = function () {
     key: 'adaptPathToDevices',
     value: function adaptPathToDevices(path) {
       var newPath = path;
-      if (this.isAndroid()) newPath = '/android_asset/www/' + path;
+      if (this.isAndroid()) newPath = '/android_asset/www/' + path;else newPath = '/' + path;
 
       return newPath;
     }
