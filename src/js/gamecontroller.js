@@ -47,8 +47,7 @@ class GameController {
     this.pucks.forEach(p => {
       if (vectorArr[p.index] === null)
         return;
-      let vector = vectorArr[p.index];
-      p.updatePosition(vector);
+      p.updatePosition(vectorArr[p.index]);
     });
   }
 }
