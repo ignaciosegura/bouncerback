@@ -1,5 +1,6 @@
 // Logic specific to mobile version
 
+import { history } from '../index.js';
 import GameService from './gameservice.js';
 
 import SystemShop from '../stores/systemshop.js';
@@ -17,6 +18,7 @@ class PhoneGapService {
       });
       document.addEventListener('backbutton', () => {
         GameService.stopTheGame();
+        history.goBack();
       });
 
       SystemShop.physicalScreen = this.getRealScreenSizeIfPossible();
