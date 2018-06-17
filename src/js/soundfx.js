@@ -8,7 +8,7 @@ import SystemShop from './stores/systemshop.js';
 class SoundFX {
   constructor(sound) {
     this.soundPath = PlatformService.adaptPathToDevices(sound);
-    this.sound = new Audio('/' + this.soundPath);
+    this.sound = new Audio(this.soundPath);
     this.sound.volume = 1 * SystemShop.sound.factor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;

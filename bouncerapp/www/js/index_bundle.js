@@ -6774,7 +6774,7 @@ var SoundFX = function () {
     _classCallCheck(this, SoundFX);
 
     this.soundPath = _platformservice2.default.adaptPathToDevices(sound);
-    this.sound = new Audio('/' + this.soundPath);
+    this.sound = new Audio(this.soundPath);
     this.sound.volume = 1 * _systemshop2.default.sound.factor;
     this.sound.loop = false;
     this.sound.playbackRate = 1;
