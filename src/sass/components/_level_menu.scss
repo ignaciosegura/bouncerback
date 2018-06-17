@@ -1,0 +1,15 @@
+#level-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  a {
+    position: static;
+    display: block;
+    margin: 0 auto 1.5em;
+    text-decoration: none;
+    text-align: left;
+    transform: none;
+  }
+}

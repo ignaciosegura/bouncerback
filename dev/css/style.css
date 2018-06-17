@@ -112,7 +112,8 @@ html, body {
       font-size: 24px; } }
 
 h1 {
-  font-size: 16px; }
+  font-size: 16px;
+  font-weight: normal; }
   @media (min-width: 800px) {
     h1 {
       font-size: 24px; } }
@@ -297,6 +298,19 @@ footer {
 #point-zero rect {
   fill: white;
   stroke: none; }
+
+#level-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  #level-menu a {
+    position: static;
+    display: block;
+    margin: 0 auto 1.5em;
+    text-decoration: none;
+    text-align: left;
+    transform: none; }
 
 #lives-counter {
   position: absolute;

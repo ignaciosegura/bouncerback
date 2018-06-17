@@ -11,7 +11,7 @@ class ScreenMenu extends React.Component {
   }
   render() {
     return <div className="screen-menu">
-      <Link to="/game" className="text ready">New Game</Link>
+      <Link to="/level-list" className="text ready">New Game</Link>
       <Link to="/tutorial" className="text ready">Tutorial</Link>
     </div>
   }
