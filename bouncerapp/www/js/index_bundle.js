@@ -5178,6 +5178,7 @@ var CoordsService = function () {
     key: 'getVectorFromYandScreen',
     value: function getVectorFromYandScreen(x, y) {
       var sinY = y / (window.innerHeight / 2);
+      sinY = sinY > 1 || sinY < -1 ? Math.round(sinY) : sinY;
       var cosX = sinY >= 0 ? Math.acos(sinY) : Math.acos(sinY) - Math.PI;
       var polarity = Math.sign(x) === Math.sign(cosX) ? 1 : -1;
 
