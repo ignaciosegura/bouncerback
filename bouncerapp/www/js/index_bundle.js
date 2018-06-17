@@ -5240,18 +5240,26 @@ var CoordsService = function () {
   }, {
     key: 'compareVectorsForBounce',
     value: function compareVectorsForBounce(angleAtom, anglePuck, range) {
-      angleAtom = this.makeAnglePositive(angleAtom);
-      anglePuck = this.makeAnglePositive(anglePuck);
+      var angleAtomPos = this.makeAnglePositive(angleAtom);
+      var angleAtomFullCircle = angleAtomPos + Math.PI * 2;
+
+      var anglePuckPos = this.makeAnglePositive(anglePuck);
       var halfRange = range / 2;
       var bracket = {
-        from: anglePuck - halfRange,
-        to: anglePuck + halfRange
-      };
-      var isInRange = function isInRange(a) {
-        return a > bracket.from && a < bracket.to;
+        from: anglePuckPos - halfRange,
+        to: anglePuckPos + halfRange
       };
 
-      return isInRange(angleAtom) ? true : isInRange(angleAtom + Math.PI * 2);
+      if (this.isInRange(angleAtom, bracket) || this.isInRange(angleAtomPos, bracket) || this.isInRange(angleAtomFullCircle, bracket)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, {
+    key: 'isInRange',
+    value: function isInRange(angle, bracket) {
+      return angle > bracket.from && angle < bracket.to;
     }
   }, {
     key: 'makeAnglePositive',
