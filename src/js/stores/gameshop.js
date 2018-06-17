@@ -15,11 +15,8 @@ class Game {
     this.bounces += b;
   }
 
-  levelUp(l) {
-    this.level += l;
-  }
   nextLevel() {
-    this.levelUp(1);
+    this.level++;
   }
 
   resetBounces() {
