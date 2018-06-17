@@ -16,9 +16,11 @@ import SystemShop from '../stores/systemshop.js';
 @inject('GameShop', 'SystemShop') @observer
 class GameSurface extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.engine = null;
-    GameShop.level = props.level;
+    GameShop.level = props.gameType === 'game'
+      ? props.match.params.level
+      : 0;
   }
 
   componentDidMount() {

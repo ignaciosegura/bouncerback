@@ -25,6 +25,7 @@ html, body {
   
   h1 {
     font-size: $default-font-size;
+    font-weight: normal;
   
     @include breakpoint($break-mid) {
       font-size: $default-font-size * 1.5;
