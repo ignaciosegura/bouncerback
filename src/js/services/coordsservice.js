@@ -24,9 +24,15 @@ class CoordsService {
   }
 
   static getVectorFromScreenCoords(position) {
-    let x = position.x - SystemShop.gameSurfaceCoords.centerX;
-    let y = position.y - SystemShop.gameSurfaceCoords.centerY;
-    return this.getVectorFromXY(x, y);
+    let normalizedPos = this.getXYFromScreenCoords(position);
+    return this.getVectorFromXY(normalizedPos.x, normalizedPos.y);
+  }
+
+  static getXYFromScreenCoords(position) {
+    return {
+      x: position.x - SystemShop.gameSurfaceCoords.centerX,
+      y: position.y - SystemShop.gameSurfaceCoords.centerY
+    }
   }
 
   static getDistanceFromXY(x, y) {

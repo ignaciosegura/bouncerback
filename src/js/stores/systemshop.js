@@ -21,6 +21,7 @@ class Default {
       radius: this.gameSurfaceCoords.width / 55,
     }
   }
+  physicalScreen;
 
   constructor() {
     this.text = {

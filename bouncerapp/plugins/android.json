@@ -18,6 +18,9 @@
     },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-screensize": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },
   "dependent_plugins": {
