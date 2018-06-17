@@ -48,19 +48,8 @@ class GameController {
       if (vectorArr[p.index] === null)
         return;
       let vector = vectorArr[p.index];
-      p.vector = this.moveOnePuck(p, vector);
+      p.updatePosition(vector);
     });
-  }
-
-  moveOnePuck(puck, vector) {
-    let radius = SystemShop.gameSurfaceCoords.radius;
-    let x = Math.cos(vector) * radius;
-    let y = Math.sin(vector) * radius;
-    let perpendicularInDegs = CoordsService.getDegreesFromRads(vector) + 90;
-
-    puck.domElement.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
-
-    return vector;
   }
 }
 
