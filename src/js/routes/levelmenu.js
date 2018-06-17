@@ -9,7 +9,7 @@ class LevelMenu extends React.Component {
     let levelList = levels.slice(1);
     let levelLinks = levelList.map((el, i) => {
       let levelIndex = i + 1;
-      return <Link to={"/game/" + levelIndex} className="text ready" >{levelIndex}&nbsp; {el.name}</Link>;
+      return <Link to={"/game/" + levelIndex} key={levelIndex} className="text ready" >{levelIndex}&nbsp; {el.name}</Link>;
     }, '');
     return levelLinks;
   }
