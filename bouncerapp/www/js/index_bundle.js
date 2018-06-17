@@ -230,6 +230,8 @@ var Default = (_class = function () {
 
     _initDefineProp(this, 'gameSurfaceCoords', _descriptor2, this);
 
+    this.physicalScreen = null;
+
     this.text = {
       fadeoutTime: 1500,
       readingTime: 3500
@@ -656,14 +658,9 @@ var Game = (_class = function () {
       this.bounces += b;
     }
   }, {
-    key: 'levelUp',
-    value: function levelUp(l) {
-      this.level += l;
-    }
-  }, {
     key: 'nextLevel',
     value: function nextLevel() {
-      this.levelUp(1);
+      this.level++;
     }
   }, {
     key: 'resetBounces',
@@ -5178,6 +5175,16 @@ var CoordsService = function () {
       return Math.atan2(y, x);
     }
   }, {
+    key: 'getVectorFromYandScreen',
+    value: function getVectorFromYandScreen(x, y) {
+      var sinY = y / (window.innerHeight / 2);
+      var cosX = sinY >= 0 ? Math.acos(sinY) : Math.acos(sinY) - Math.PI;
+      var polarity = Math.sign(x) === Math.sign(cosX) ? 1 : -1;
+
+      cosX *= polarity;
+      return this.getVectorFromXY(cosX, sinY);
+    }
+  }, {
     key: 'getDegreesFromRads',
     value: function getDegreesFromRads(rads) {
       return rads * 180 / Math.PI;
@@ -5233,9 +5240,9 @@ var CoordsService = function () {
           y: path.clientY
         };
       };
-      return e.type === 'touchmove' ? Array.from(e.targetTouches).map(function (t) {
+      return e.type === 'mousemove' ? [readPosition(e)] : Array.from(e.changedTouches).map(function (t) {
         return readPosition(t);
-      }) : [readPosition(e)];
+      });
     }
   }, {
     key: 'compareVectorsForBounce',
@@ -9882,13 +9889,13 @@ var GameController = function () {
       var _this = this;
 
       var inputHandler = function inputHandler(e) {
-        e.preventDefault;
+        e.preventDefault();
         var positionArr = _coordsservice2.default.getXYFromInput(e);
-        var vectorArr = e.type == 'touchmove' ? _this.getVectorsFromTouchPositions(positionArr) : _this.getVectorsFromMousePosition(positionArr);
+        var vectorArr = e.type == 'mousemove' ? _this.getVectorsFromMousePosition(positionArr) : _this.getVectorsFromTouchPositions(positionArr);
         _this.movePucks(vectorArr);
       };
 
-      ['touchmove', 'mousemove'].forEach(function (e) {
+      ['touchmove', 'touchend', 'mousemove'].forEach(function (e) {
         document.addEventListener(e, inputHandler.bind(_this), false);
       });
     }
@@ -9909,7 +9916,7 @@ var GameController = function () {
 
       xyArr.forEach(function (xy) {
         leftOrRight = xy.x < 0 ? 0 : 1;
-        vectorArr[leftOrRight] = _coordsservice2.default.getVectorFromXY(xy.x, xy.y);
+        vectorArr[leftOrRight] = _coordsservice2.default.getVectorFromYandScreen(xy.x, xy.y);
       });
       return vectorArr;
     }
@@ -10661,7 +10668,7 @@ var LevelMenu = function (_React$Component) {
         var levelIndex = i + 1;
         return _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: "/game/" + levelIndex, className: 'text ready' },
+          { to: "/game/" + levelIndex, key: levelIndex, className: 'text ready' },
           levelIndex,
           '\xA0 ',
           el.name

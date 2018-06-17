@@ -19,6 +19,22 @@ class CoordsService {
     return Math.atan2(y, x);
   }
 
+  static getVectorFromYandScreen(x, y) {
+    let sinY = y / (window.innerHeight / 2);
+    sinY = (sinY > 1 || sinY < -1)
+      ? Math.round(sinY)
+      : sinY;
+    let cosX = sinY >= 0
+      ? Math.acos(sinY)
+      : Math.acos(sinY) - Math.PI;
+    let polarity = Math.sign(x) === Math.sign(cosX)
+      ? 1
+      : -1;
+
+    cosX *= polarity;
+    return this.getVectorFromXY(cosX, sinY);
+  }
+
   static getDegreesFromRads(rads) {
     return rads * 180 / Math.PI;
   }

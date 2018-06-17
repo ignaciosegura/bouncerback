@@ -39,7 +39,7 @@ class GameController {
       leftOrRight = (xy.x < 0)
         ? 0
         : 1;
-      vectorArr[leftOrRight] = CoordsService.getVectorFromXY(xy.x, xy.y);
+      vectorArr[leftOrRight] = CoordsService.getVectorFromYandScreen(xy.x, xy.y);
     });
     return vectorArr;
   }

@@ -469,7 +469,7 @@ footer {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
     top: 30%;
-    font-size: 28px; }
+    font-size: 24px; }
     @media (min-width: 800px) {
       .text.title {
         top: 35%;
