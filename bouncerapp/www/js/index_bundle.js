@@ -9882,12 +9882,13 @@ var GameController = function () {
       var _this = this;
 
       var inputHandler = function inputHandler(e) {
+        e.preventDefault;
         var positionArr = _coordsservice2.default.getXYFromInput(e);
         var vectorArr = e.type == 'touchmove' ? _this.getVectorsFromTouchPositions(positionArr) : _this.getVectorsFromMousePosition(positionArr);
         _this.movePucks(vectorArr);
       };
 
-      ['mousemove', 'touchmove'].forEach(function (e) {
+      ['touchmove', 'mousemove'].forEach(function (e) {
         document.addEventListener(e, inputHandler.bind(_this), false);
       });
     }

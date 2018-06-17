@@ -12,14 +12,15 @@ class GameController {
 
   movePucksOnInput() {
     let inputHandler = (e) => {
+      e.preventDefault();
       let positionArr = CoordsService.getXYFromInput(e);
-      let vectorArr = (e.type == 'touchmove')
-        ? this.getVectorsFromTouchPositions(positionArr)
-        : this.getVectorsFromMousePosition(positionArr)
+      let vectorArr = (e.type == 'mousemove')
+        ? this.getVectorsFromMousePosition(positionArr)
+        : this.getVectorsFromTouchPositions(positionArr);
       this.movePucks(vectorArr);
     };
 
-    ['mousemove', 'touchmove'].forEach(e => {
+    ['touchmove', 'touchend', 'mousemove'].forEach(e => {
       document.addEventListener(e, inputHandler.bind(this), false);
     });
   }

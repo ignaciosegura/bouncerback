@@ -66,9 +66,9 @@ class CoordsService {
         y: path.clientY
       }
     }
-    return (e.type === 'touchmove')
-      ? Array.from(e.targetTouches).map(t => readPosition(t))
-      : [readPosition(e)];
+    return (e.type === 'mousemove')
+      ? [readPosition(e)]
+      : Array.from(e.changedTouches).map(t => readPosition(t));
   }
 
   static compareVectorsForBounce(angleAtom, anglePuck, range) {
