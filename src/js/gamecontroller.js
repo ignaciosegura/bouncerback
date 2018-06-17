@@ -6,7 +6,7 @@ class GameController {
   constructor(pucks) {
     this.pucks = pucks;
 
-    this.movePucks([0, Math.PI]); // First run
+    this.movePucks([Math.PI, 0]); // First run
     this.movePucksOnInput();
   }
 
