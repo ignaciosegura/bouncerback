@@ -9,7 +9,7 @@ import CoordsService from './services/coordsservice.js';
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.vector = Math.random() * 2 * Math.PI - Math.PI;
+    this.vector = (Math.random() * 2 * Math.PI) - Math.PI;
     this.radius = SystemShop.canonicalSizes.radius;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.speed = {

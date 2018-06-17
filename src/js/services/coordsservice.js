@@ -72,18 +72,26 @@ class CoordsService {
   }
 
   static compareVectorsForBounce(angleAtom, anglePuck, range) {
-    angleAtom = this.makeAnglePositive(angleAtom);
-    anglePuck = this.makeAnglePositive(anglePuck);
+    let angleAtomPos = this.makeAnglePositive(angleAtom);
+    let angleAtomFullCircle = angleAtomPos + (Math.PI * 2);
+
+    let anglePuckPos = this.makeAnglePositive(anglePuck);
     let halfRange = range / 2;
     let bracket = {
-      from: anglePuck - halfRange,
-      to: anglePuck + halfRange
+      from: anglePuckPos - halfRange,
+      to: anglePuckPos + halfRange
     }
-    let isInRange = (a) => (a > bracket.from && a < bracket.to);
 
-    return (isInRange(angleAtom))
-      ? true
-      : isInRange(angleAtom + (Math.PI * 2));
+    if (this.isInRange(angleAtom, bracket)
+      || this.isInRange(angleAtomPos, bracket)
+      || this.isInRange(angleAtomFullCircle, bracket)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  static isInRange(angle, bracket) {
+    return (angle > bracket.from && angle < bracket.to);
   }
 
   static makeAnglePositive(angle) {
