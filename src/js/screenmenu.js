@@ -7,7 +7,7 @@ import GameShop from './stores/gameshop.js';
 
 class ScreenMenu extends React.Component {
   componentWillUnmount() {
-    GameShop.resetBounces();
+    GameShop.resetScore();
   }
   render() {
     return <div className="screen-menu">
