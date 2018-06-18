@@ -38,12 +38,13 @@ class AtomService {
     let bouncesCount = 0;
 
     colliders.forEach(a => {
-      pucks.forEach(p => {
+      pucks.some(p => {
         let result = CoordsService.compareVectorsForBounce(a.vector, p.vector, p.angle);
 
         if (result) {
           a.executeBounce();
           bouncesCount++;
+          return true;
         }
       })
     });

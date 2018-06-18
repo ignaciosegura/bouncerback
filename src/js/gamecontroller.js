@@ -21,7 +21,8 @@ class GameController {
     };
 
     ['touchmove', 'touchend', 'mousemove'].forEach(e => {
-      document.addEventListener(e, inputHandler.bind(this), false);
+      let gameSurface = document.getElementById('gamesurface');
+      gameSurface.addEventListener(e, inputHandler.bind(this), false);
     });
   }
 

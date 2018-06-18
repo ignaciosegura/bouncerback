@@ -18,7 +18,7 @@ class Default {
     return {
       width: this.gameSurfaceCoords.width / 11 * 2,
       height: this.gameSurfaceCoords.width / 55,
-      radius: this.gameSurfaceCoords.width / 55,
+      radius: this.gameSurfaceCoords.width / 40,
     }
   }
   physicalScreen = null;
