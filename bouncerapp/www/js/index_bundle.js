@@ -218,7 +218,7 @@ var Default = (_class = function () {
       return {
         width: this.gameSurfaceCoords.width / 11 * 2,
         height: this.gameSurfaceCoords.width / 55,
-        radius: this.gameSurfaceCoords.width / 55
+        radius: this.gameSurfaceCoords.width / 40
       };
     }
   }]);
@@ -5177,8 +5177,10 @@ var CoordsService = function () {
   }, {
     key: 'getVectorFromYandScreen',
     value: function getVectorFromYandScreen(x, y) {
-      var sinY = y / (window.innerHeight / 2);
-      sinY = sinY > 1 || sinY < -1 ? Math.round(sinY) : sinY;
+      var YRangeFactor = 2;
+      var sinY = y * YRangeFactor / (window.innerHeight / 2);
+
+      sinY = Math.abs(sinY) > 1 ? 1 * Math.sign(sinY) : sinY;
       var cosX = sinY >= 0 ? Math.acos(sinY) : Math.acos(sinY) - Math.PI;
       var polarity = Math.sign(x) === Math.sign(cosX) ? 1 : -1;
 
@@ -7452,6 +7454,11 @@ var GameService = function () {
       _gameshop2.default.setLives(lives);
     }
   }, {
+    key: 'addBouncesToScore',
+    value: function addBouncesToScore(bounces) {
+      if (bounces > 0 && _gameshop2.default.type !== 'tutorial') _gameshop2.default.addBounce(bounces);
+    }
+  }, {
     key: 'gameHasEnded',
     value: function gameHasEnded(atoms) {
       return _atomservice2.default.allAtomsAreInVortex(atoms) === true;
@@ -8372,12 +8379,13 @@ var AtomService = function () {
       var bouncesCount = 0;
 
       colliders.forEach(function (a) {
-        pucks.forEach(function (p) {
+        pucks.some(function (p) {
           var result = _coordsservice2.default.compareVectorsForBounce(a.vector, p.vector, p.angle);
 
           if (result) {
             a.executeBounce();
             bouncesCount++;
+            return true;
           }
         });
       });
@@ -9897,7 +9905,8 @@ var GameController = function () {
       };
 
       ['touchmove', 'touchend', 'mousemove'].forEach(function (e) {
-        document.addEventListener(e, inputHandler.bind(_this), false);
+        var gameSurface = document.getElementById('gamesurface');
+        gameSurface.addEventListener(e, inputHandler.bind(_this), false);
       });
     }
   }, {
@@ -10089,8 +10098,7 @@ var GameEngine = function () {
       _atomservice2.default.checkAtomsStatus(this.atoms);
       _atomservice2.default.moveAtoms(this.atoms);
       bounces = _atomservice2.default.bounceAtoms(this.atoms, this.pucks);
-
-      if (bounces > 0 && this.level.type !== 'tutorial') _gameshop2.default.addBounce(bounces);
+      _gameservice2.default.addBouncesToScore(bounces);
 
       this.checkVortex();
       this.checkAtomList();
@@ -11061,20 +11069,26 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
   _createClass(SystemMenu, [{
     key: 'soundClick',
     value: function soundClick(e) {
-      e.preventDefault();
+      this.stopDefaultActions(e);
       _systemshop2.default.toggleAllSound();
     }
   }, {
     key: 'pauseClick',
     value: function pauseClick(e) {
-      e.preventDefault();
+      this.stopDefaultActions(e);
       _gameservice2.default.toggleGame();
     }
   }, {
     key: 'closeClick',
     value: function closeClick(e) {
-      e.preventDefault();
+      this.stopDefaultActions(e);
       _gameservice2.default.goBackHome();
+    }
+  }, {
+    key: 'stopDefaultActions',
+    value: function stopDefaultActions(e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
   }, {
     key: 'render',
