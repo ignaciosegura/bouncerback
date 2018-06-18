@@ -27,8 +27,9 @@ class GameController {
   }
 
   getVectorsFromMousePosition(positionArr) {
-    let mousePos = CoordsService.getVectorFromScreenCoords(positionArr[0]);
-    return [mousePos, mousePos];
+    let mouseVector = CoordsService.getVectorFromScreenCoords(positionArr[0]);
+    let reversedMouseVector = CoordsService.getReversedVector(mouseVector);
+    return [mouseVector, reversedMouseVector];
   }
 
   getVectorsFromTouchPositions(positionArr) {

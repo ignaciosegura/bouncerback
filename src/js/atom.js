@@ -143,9 +143,7 @@ class Atom {
   }
 
   reverseAtomDirection() {
-    this.vector = (this.vector > 0)
-      ? this.vector - Math.PI
-      : this.vector + Math.PI;
+    this.vector = CoordsService.getReversedVector(this.vector);
   }
 
   setAtomToVortex() {

@@ -64,6 +64,12 @@ class CoordsService {
     }
   }
 
+  static getReversedVector(vector) {
+    return (vector > 0)
+      ? vector - Math.PI
+      : vector + Math.PI;
+  }
+
   static makeFinite(value) {
     return isFinite(value)
       ? value
