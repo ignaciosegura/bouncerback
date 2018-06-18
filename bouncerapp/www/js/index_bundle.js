@@ -580,7 +580,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3; /* global  */
+var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4; /* global  */
 // GameShop
 
 var _mobx = __webpack_require__(7);
@@ -642,9 +642,11 @@ var Game = (_class = function () {
 
     _initDefineProp(this, 'bounces', _descriptor, this);
 
-    _initDefineProp(this, 'level', _descriptor2, this);
+    _initDefineProp(this, 'captured', _descriptor2, this);
 
-    _initDefineProp(this, 'lives', _descriptor3, this);
+    _initDefineProp(this, 'level', _descriptor3, this);
+
+    _initDefineProp(this, 'lives', _descriptor4, this);
 
     this.totalLevels = _levellist2.default.length;
     this.type = '';
@@ -658,14 +660,32 @@ var Game = (_class = function () {
       this.bounces += b;
     }
   }, {
+    key: 'addCapture',
+    value: function addCapture() {
+      var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      this.captured += c;
+    }
+  }, {
     key: 'nextLevel',
     value: function nextLevel() {
       this.level++;
     }
   }, {
+    key: 'resetCaptures',
+    value: function resetCaptures() {
+      this.captured = 0;
+    }
+  }, {
     key: 'resetBounces',
     value: function resetBounces() {
       this.bounces = 0;
+    }
+  }, {
+    key: 'resetScore',
+    value: function resetScore() {
+      this.resetCaptures();
+      this.resetBounces();
     }
   }, {
     key: 'setLives',
@@ -687,6 +707,11 @@ var Game = (_class = function () {
     value: function isTutorial() {
       return this.type === 'tutorial';
     }
+  }, {
+    key: 'score',
+    get: function get() {
+      return this.bounces * 10 + this.captured * 100;
+    }
   }]);
 
   return Game;
@@ -695,17 +720,22 @@ var Game = (_class = function () {
   initializer: function initializer() {
     return 0;
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'level', [_mobx.observable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'captured', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
     return 0;
   }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'lives', [_mobx.observable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'level', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
     return 0;
   }
-})), _class);
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'lives', [_mobx.observable], {
+  enumerable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _applyDecoratedDescriptor(_class.prototype, 'score', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'score'), _class.prototype)), _class);
 
 
 var GameShop = new Game();
@@ -7278,7 +7308,7 @@ var ScreenMenu = function (_React$Component) {
   _createClass(ScreenMenu, [{
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _gameshop2.default.resetBounces();
+      _gameshop2.default.resetScore();
     }
   }, {
     key: 'render',
@@ -7457,6 +7487,11 @@ var GameService = function () {
     key: 'addBouncesToScore',
     value: function addBouncesToScore(bounces) {
       if (bounces > 0 && _gameshop2.default.type !== 'tutorial') _gameshop2.default.addBounce(bounces);
+    }
+  }, {
+    key: 'addCapturesToScore',
+    value: function addCapturesToScore(captures) {
+      if (_gameshop2.default.type !== 'tutorial') _gameshop2.default.addCapture(captures);
     }
   }, {
     key: 'gameHasEnded',
@@ -9620,6 +9655,10 @@ var _systemshop = __webpack_require__(2);
 
 var _systemshop2 = _interopRequireDefault(_systemshop);
 
+var _gameservice = __webpack_require__(25);
+
+var _gameservice2 = _interopRequireDefault(_gameservice);
+
 var _coordsservice = __webpack_require__(11);
 
 var _coordsservice2 = _interopRequireDefault(_coordsservice);
@@ -9778,7 +9817,13 @@ var Atom = function () {
       var distanceToCenter = _coordsservice2.default.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
       if (distanceToCenter > vortexActiveRadius) return;
 
+      this.setToCaptured();
+    }
+  }, {
+    key: 'setToCaptured',
+    value: function setToCaptured() {
       this.setStatus('captured');
+      _gameservice2.default.addCapturesToScore();
       this.sounds.capture.play();
     }
   }, {
@@ -10497,7 +10542,7 @@ var GameOver = function (_React$Component) {
           'Game Over'
         ),
         _react2.default.createElement(_screenmenu2.default, null),
-        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
+        _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' })
       );
     }
@@ -10608,7 +10653,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
       return _react2.default.createElement(
         'div',
         { id: 'gamesurface', onTouchMove: this.preventDefault },
-        _react2.default.createElement(_scoreboard2.default, { type: 'bounces' }),
+        _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
         _react2.default.createElement(_livescounter2.default, null),
         _react2.default.createElement(_systemmenu2.default, null),
