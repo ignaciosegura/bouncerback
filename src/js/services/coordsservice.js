@@ -20,21 +20,18 @@ class CoordsService {
   }
 
   static getVectorFromYandScreen(x, y) {
-    let YRangeFactor = 2;
+    let YRangeFactor = 1.75;
     let sinY = (y * YRangeFactor) / (window.innerHeight / 2);
 
-    sinY = (Math.abs(sinY) > 1)
+    let rangedSinY = (Math.abs(sinY) > 1)
       ? 1 * Math.sign(sinY)
       : sinY;
-    let cosX = sinY >= 0
-      ? Math.acos(sinY)
-      : Math.acos(sinY) - Math.PI;
-    let polarity = Math.sign(x) === Math.sign(cosX)
-      ? 1
-      : -1;
+    let Yradian = rangedSinY * (Math.PI / 2)
+    let side = Math.sign(x);
 
-    cosX *= polarity;
-    return this.getVectorFromXY(cosX, sinY);
+    return side === 1
+      ? Yradian
+      : Math.PI - Yradian;
   }
 
   static getDegreesFromRads(rads) {
