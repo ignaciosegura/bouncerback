@@ -5207,15 +5207,14 @@ var CoordsService = function () {
   }, {
     key: 'getVectorFromYandScreen',
     value: function getVectorFromYandScreen(x, y) {
-      var YRangeFactor = 2;
+      var YRangeFactor = 1.75;
       var sinY = y * YRangeFactor / (window.innerHeight / 2);
 
-      sinY = Math.abs(sinY) > 1 ? 1 * Math.sign(sinY) : sinY;
-      var cosX = sinY >= 0 ? Math.acos(sinY) : Math.acos(sinY) - Math.PI;
-      var polarity = Math.sign(x) === Math.sign(cosX) ? 1 : -1;
+      var rangedSinY = Math.abs(sinY) > 1 ? 1 * Math.sign(sinY) : sinY;
+      var Yradian = rangedSinY * (Math.PI / 2);
+      var side = Math.sign(x);
 
-      cosX *= polarity;
-      return this.getVectorFromXY(cosX, sinY);
+      return side === 1 ? Yradian : Math.PI - Yradian;
     }
   }, {
     key: 'getDegreesFromRads',
@@ -5248,6 +5247,11 @@ var CoordsService = function () {
         x: Math.cos(vector) * displacement,
         y: Math.sin(vector) * displacement
       };
+    }
+  }, {
+    key: 'getReversedVector',
+    value: function getReversedVector(vector) {
+      return vector > 0 ? vector - Math.PI : vector + Math.PI;
     }
   }, {
     key: 'makeFinite',
@@ -9803,7 +9807,7 @@ var Atom = function () {
   }, {
     key: 'reverseAtomDirection',
     value: function reverseAtomDirection() {
-      this.vector = this.vector > 0 ? this.vector - Math.PI : this.vector + Math.PI;
+      this.vector = _coordsservice2.default.getReversedVector(this.vector);
     }
   }, {
     key: 'setAtomToVortex',
@@ -9957,8 +9961,9 @@ var GameController = function () {
   }, {
     key: 'getVectorsFromMousePosition',
     value: function getVectorsFromMousePosition(positionArr) {
-      var mousePos = _coordsservice2.default.getVectorFromScreenCoords(positionArr[0]);
-      return [mousePos, mousePos];
+      var mouseVector = _coordsservice2.default.getVectorFromScreenCoords(positionArr[0]);
+      var reversedMouseVector = _coordsservice2.default.getReversedVector(mouseVector);
+      return [mouseVector, reversedMouseVector];
     }
   }, {
     key: 'getVectorsFromTouchPositions',
