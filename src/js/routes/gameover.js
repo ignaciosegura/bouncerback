@@ -8,7 +8,7 @@ class GameOver extends React.Component {
     return <div id="game-ended-screen" className="game-over">
       <h1>Game Over</h1>
       <ScreenMenu />
-      <Scoreboard type="bounces" />
+      <Scoreboard type="score" />
       <Scoreboard type="level" />
     </div>
   }
