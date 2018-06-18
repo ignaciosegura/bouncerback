@@ -20,9 +20,11 @@ class CoordsService {
   }
 
   static getVectorFromYandScreen(x, y) {
-    let sinY = y / (window.innerHeight / 2);
-    sinY = (sinY > 1 || sinY < -1)
-      ? Math.round(sinY)
+    let YRangeFactor = 2;
+    let sinY = (y * YRangeFactor) / (window.innerHeight / 2);
+
+    sinY = (Math.abs(sinY) > 1)
+      ? 1 * Math.sign(sinY)
       : sinY;
     let cosX = sinY >= 0
       ? Math.acos(sinY)
