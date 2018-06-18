@@ -45,7 +45,7 @@ class GameSurface extends React.Component {
 
   render() {
     return <div id="gamesurface" onTouchMove={this.preventDefault}>
-      <Scoreboard type="bounces" />
+      <Scoreboard type="score" />
       <Scoreboard type="level" />
       <LivesCounter />
       <SystemMenu />

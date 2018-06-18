@@ -4,6 +4,7 @@
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';
+import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
 
 class Atom {
@@ -157,7 +158,12 @@ class Atom {
     if (distanceToCenter > vortexActiveRadius)
       return;
 
+    this.setToCaptured();
+  }
+
+  setToCaptured() {
     this.setStatus('captured');
+    GameService.addCapturesToScore();
     this.sounds.capture.play();
   }
 }
