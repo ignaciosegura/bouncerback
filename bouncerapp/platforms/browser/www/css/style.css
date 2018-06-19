@@ -112,7 +112,8 @@ html, body {
       font-size: 24px; } }
 
 h1 {
-  font-size: 16px; }
+  font-size: 16px;
+  font-weight: normal; }
   @media (min-width: 800px) {
     h1 {
       font-size: 24px; } }
@@ -203,7 +204,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: text-entry 0.5s ease-in-out 0s 1 forwards, flicker 5s linear 5s 999 forwards; }
+  animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     #game-ended-screen {
       font-size: 24px; } }
@@ -297,6 +298,19 @@ footer {
 #point-zero rect {
   fill: white;
   stroke: none; }
+
+#level-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  #level-menu a {
+    position: static;
+    display: block;
+    margin: 0 auto 1.5em;
+    text-decoration: none;
+    text-align: left;
+    transform: none; }
 
 #lives-counter {
   position: absolute;
@@ -429,7 +443,7 @@ footer {
   width: 8em;
   text-align: center;
   text-transform: uppercase; }
-  .scoreboard.bounces {
+  .scoreboard.score {
     left: 1em; }
   .scoreboard.level {
     right: 1em; }
@@ -455,7 +469,7 @@ footer {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
     top: 30%;
-    font-size: 28px; }
+    font-size: 24px; }
     @media (min-width: 800px) {
       .text.title {
         top: 35%;

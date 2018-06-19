@@ -10938,6 +10938,9 @@ var PhoneGapService = function () {
           _index.history.goBack();
         });
 
+        console.log(AppVersion.version);
+        console.log(AppVersion.build);
+
         _systemshop2.default.physicalScreen = _this.getRealScreenSizeIfPossible();
       }, false);
     }
