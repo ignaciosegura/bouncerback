@@ -101,6 +101,12 @@ class Atom {
     this.sounds.bounce.play();
   }
 
+  startDying() {
+    this.setStatus('dying');
+    this.sounds.destroy.play();
+    this.tagForRemoval();
+  }
+
   checkAtom() {
     let radius = SystemShop.gameSurfaceCoords.radius;
     let pos = this.atomPosition;
@@ -109,12 +115,8 @@ class Atom {
     if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent('rebound');
       this.next.center = this.calculateNextEvent('center');
-      if (this.status == 'alive')
+      if (this.status === 'alive')
         this.setStatus('collide');
-    } else if (distance > radius && this.status == 'collide') {
-      this.setStatus('dying');
-      this.sounds.destroy.play();
-      this.tagForRemoval();
     } else if (this.status === 'vortex') {
       this.speed.current = this.setVortexSpeed();
     }

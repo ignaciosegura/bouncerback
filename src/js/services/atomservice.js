@@ -38,7 +38,7 @@ class AtomService {
     let bouncesCount = 0;
 
     colliders.forEach(a => {
-      pucks.some(p => {
+      let didAtomCollide = pucks.some(p => {
         let result = CoordsService.compareVectorsForBounce(a.vector, p.vector, p.angle);
 
         if (result) {
@@ -46,7 +46,9 @@ class AtomService {
           bouncesCount++;
           return true;
         }
-      })
+      });
+      if (!didAtomCollide)
+        a.startDying();
     });
     return bouncesCount;
   }
