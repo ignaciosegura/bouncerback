@@ -8418,7 +8418,7 @@ var AtomService = function () {
       var bouncesCount = 0;
 
       colliders.forEach(function (a) {
-        pucks.some(function (p) {
+        var didAtomCollide = pucks.some(function (p) {
           var result = _coordsservice2.default.compareVectorsForBounce(a.vector, p.vector, p.angle);
 
           if (result) {
@@ -8427,6 +8427,7 @@ var AtomService = function () {
             return true;
           }
         });
+        if (!didAtomCollide) a.startDying();
       });
       return bouncesCount;
     }
@@ -9762,6 +9763,13 @@ var Atom = function () {
       this.sounds.bounce.play();
     }
   }, {
+    key: 'startDying',
+    value: function startDying() {
+      this.setStatus('dying');
+      this.sounds.destroy.play();
+      this.tagForRemoval();
+    }
+  }, {
     key: 'checkAtom',
     value: function checkAtom() {
       var radius = _systemshop2.default.gameSurfaceCoords.radius;
@@ -9771,11 +9779,7 @@ var Atom = function () {
       if (this.AtomIsOnReboundArea()) {
         this.next.rebound = this.calculateNextEvent('rebound');
         this.next.center = this.calculateNextEvent('center');
-        if (this.status == 'alive') this.setStatus('collide');
-      } else if (distance > radius && this.status == 'collide') {
-        this.setStatus('dying');
-        this.sounds.destroy.play();
-        this.tagForRemoval();
+        if (this.status === 'alive') this.setStatus('collide');
       } else if (this.status === 'vortex') {
         this.speed.current = this.setVortexSpeed();
       }
