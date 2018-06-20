@@ -26,7 +26,7 @@ if (fs.existsSync(faviconPath)) {
   var FaviconsWebpackPlugin = new FaviconsWebpackPlugin({
     logo: faviconPath,
     // The prefix for all image files (might be a folder or a name)
-    prefix: 'icons/',
+    prefix: 'res/icons/',
     // Emit all stats of the generated icons
     emitStats: false,
     // The name of the json containing all favicon information
@@ -99,7 +99,7 @@ module.exports = {
       {
         test: /\.(woff|woff2|ttf|eot)$/,
         exclude: /node_modules/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url-loader?limit=100000&name=/res/fonts/[name].[ext]'
       },
       {
         test: /\.htaccess$/,

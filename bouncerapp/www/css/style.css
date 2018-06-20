@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'didact-gothic';
-  src: url(dda9b9eec9b3c47fa007f94191e90b71.ttf); }
+  src: url(/res/fonts/didact_gothic_regular.ttf) format("truetype"); }
 
 @keyframes text-entry {
   from {
