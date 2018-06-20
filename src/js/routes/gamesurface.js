@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { observer, inject } from 'mobx-react';
+import { history } from '../index.js';
 
 import Scoreboard from '../scoreboard.js';
 import LivesCounter from '../livescounter.js';
@@ -18,13 +19,18 @@ class GameSurface extends React.Component {
   constructor(props) {
     super(props);
     this.engine = null;
-    GameShop.level = props.gameType === 'game'
-      ? props.match.params.level
-      : 0;
+
+    if (props.gameType === 'tutorial')
+      GameShop.level = 0;
   }
 
   componentDidMount() {
     if (this.engine !== null) return;
+
+    if (this.props.gameType === 'game' && this.props.GameShop.level === 0) {
+      history.push('/level-list');
+      return;
+    }
 
     this.engine = new GameEngine(GameShop.level, this.props.gameType);
   }
