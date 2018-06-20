@@ -11,3 +11,5 @@ dev/css/style.css.map
 bouncerapp/platforms
 bouncerapp/platforms/*
 bouncerback.keystore
+
+*.apk
