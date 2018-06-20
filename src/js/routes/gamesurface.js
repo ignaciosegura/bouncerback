@@ -7,6 +7,7 @@ import { observer, inject } from 'mobx-react';
 import { history } from '../index.js';
 
 import Scoreboard from '../scoreboard.js';
+import Chrono from '../chrono.js';
 import LivesCounter from '../livescounter.js';
 import SystemMenu from '../systemmenu.js';
 import GameEngine from '../gameengine.js';
@@ -53,6 +54,7 @@ class GameSurface extends React.Component {
     return <div id="gamesurface" onTouchMove={this.preventDefault}>
       <Scoreboard type="score" />
       <Scoreboard type="level" />
+      <Chrono />
       <LivesCounter />
       <SystemMenu />
       <div id="zone-wrapper">
