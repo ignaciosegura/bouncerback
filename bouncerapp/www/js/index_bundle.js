@@ -6856,6 +6856,10 @@ var _backgroundservice = __webpack_require__(64);
 
 var _backgroundservice2 = _interopRequireDefault(_backgroundservice);
 
+var _gameservice = __webpack_require__(17);
+
+var _gameservice2 = _interopRequireDefault(_gameservice);
+
 var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
@@ -6903,6 +6907,10 @@ var Index = function (_React$Component) {
     history.listen(function (location, action) {
       _backgroundservice2.default.renderProperState();
     });
+
+    window.onpopstate = function () {
+      _gameservice2.default.stopTheGame();
+    };
 
     _phonegapservice2.default.setupPhoneGapListeners();
     return _this;
@@ -10732,7 +10740,10 @@ var LevelMenu = function (_React$Component) {
   function LevelMenu() {
     _classCallCheck(this, LevelMenu);
 
-    return _possibleConstructorReturn(this, (LevelMenu.__proto__ || Object.getPrototypeOf(LevelMenu)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (LevelMenu.__proto__ || Object.getPrototypeOf(LevelMenu)).call(this));
+
+    _gameshop2.default.resetScore();
+    return _this;
   }
 
   _createClass(LevelMenu, [{
@@ -10961,8 +10972,8 @@ var PhoneGapService = function () {
           _index.history.goBack();
         });
 
-        console.log(AppVersion.version);
-        console.log(AppVersion.build);
+        //console.log(AppVersion.version);
+        //console.log(AppVersion.build);
 
         _systemshop2.default.physicalScreen = _this.getRealScreenSizeIfPossible();
       }, false);
