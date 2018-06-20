@@ -7,6 +7,11 @@ import levels from '../../gameData/levellist.js';
 import GameShop from '../stores/gameshop.js';
 
 class LevelMenu extends React.Component {
+  constructor() {
+    super();
+    GameShop.resetScore();
+  }
+
   renderLevelsArr() {
     let levelList = levels.slice(1);
     let levelLinks = levelList.map((el, i) => {

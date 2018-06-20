@@ -21,8 +21,8 @@ class PhoneGapService {
         history.goBack();
       });
 
-      console.log(AppVersion.version);
-      console.log(AppVersion.build);
+      //console.log(AppVersion.version);
+      //console.log(AppVersion.build);
 
       SystemShop.physicalScreen = this.getRealScreenSizeIfPossible();
     }, false);
