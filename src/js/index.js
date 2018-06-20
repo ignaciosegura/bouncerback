@@ -19,6 +19,7 @@ import Footer from './footer.js';
 
 import PhoneGapService from './services/phonegapservice.js';
 import BackgroundService from './services/backgroundservice.js';
+import GameService from './services/gameservice.js';
 import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -38,6 +39,10 @@ class Index extends React.Component {
     history.listen((location, action) => {
       BackgroundService.renderProperState();
     });
+
+    window.onpopstate = function () {
+      GameService.stopTheGame();
+    };
 
     PhoneGapService.setupPhoneGapListeners();
   }
