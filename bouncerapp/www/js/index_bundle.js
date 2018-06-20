@@ -10601,6 +10601,10 @@ var _scoreboard = __webpack_require__(24);
 
 var _scoreboard2 = _interopRequireDefault(_scoreboard);
 
+var _chrono = __webpack_require__(131);
+
+var _chrono2 = _interopRequireDefault(_chrono);
+
 var _livescounter = __webpack_require__(57);
 
 var _livescounter2 = _interopRequireDefault(_livescounter);
@@ -10680,6 +10684,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
         { id: 'gamesurface', onTouchMove: this.preventDefault },
         _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
         _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
+        _react2.default.createElement(_chrono2.default, null),
         _react2.default.createElement(_livescounter2.default, null),
         _react2.default.createElement(_systemmenu2.default, null),
         _react2.default.createElement(
@@ -34103,6 +34108,80 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(16);
 
+
+/***/ }),
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class; // Chrono component
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _mobxReact = __webpack_require__(14);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Chrono = (_dec = (0, _mobxReact.inject)('TimeShop'), _dec(_class = (0, _mobxReact.observer)(_class = function (_React$Component) {
+  _inherits(Chrono, _React$Component);
+
+  function Chrono(props) {
+    _classCallCheck(this, Chrono);
+
+    return _possibleConstructorReturn(this, (Chrono.__proto__ || Object.getPrototypeOf(Chrono)).call(this, props));
+  }
+
+  _createClass(Chrono, [{
+    key: 'render',
+    value: function render() {
+      var time = this.props.TimeShop;
+      var duration = time.levelDuration * time.framesPerTime;
+      var timeLeft = duration - time.tick;
+      var renderedTime = timeLeft > 0 ? Math.ceil(timeLeft) : 0;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'scoreboard chrono' },
+        _react2.default.createElement(
+          'div',
+          { className: 'label' },
+          'Time'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'value' },
+          renderedTime
+        )
+      );
+    }
+  }]);
+
+  return Chrono;
+}(_react2.default.Component)) || _class) || _class);
+exports.default = Chrono;
 
 /***/ })
 /******/ ]);
