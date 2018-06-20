@@ -7,22 +7,22 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-appversion": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
     "cordova-plugin-media": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "es.niknak.bouncerback"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "es.niknak.bouncerback"
-    },
     "cordova-plugin-screensize": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
-    "cordova-plugin-appversion": {
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },

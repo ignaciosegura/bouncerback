@@ -15,7 +15,7 @@
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="26" />
     <preference name="orientation" value="landscape" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" />
