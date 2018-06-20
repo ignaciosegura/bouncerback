@@ -274,7 +274,7 @@ body {
     transform: scale(0); }
 
 footer {
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: "didact-gothic", Helvetica, Arial, sans-serif;
   font-size: 12px;
   color: white;
   position: fixed;
