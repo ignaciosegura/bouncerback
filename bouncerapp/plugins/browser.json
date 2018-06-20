@@ -21,6 +21,12 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-screensize": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
+    "cordova-plugin-appversion": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
     }
   },
   "dependent_plugins": {

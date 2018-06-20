@@ -6,24 +6,38 @@ import levelList from '../../gameData/levellist.js';
 
 class Game {
   @observable bounces = 0;
+  @observable captured = 0;
   @observable level = 0;
   @observable lives = 0;
   totalLevels = levelList.length;
   type = '';
 
+  @computed get score() {
+    return this.bounces * 10 + this.captured * 100;
+  }
+
   addBounce(b = 1) {
     this.bounces += b;
   }
-
-  levelUp(l) {
-    this.level += l;
+  addCapture(c = 1) {
+    this.captured += c;
   }
+
   nextLevel() {
-    this.levelUp(1);
+    this.level++;
+  }
+
+  resetCaptures() {
+    this.captured = 0;
   }
 
   resetBounces() {
     this.bounces = 0;
+  }
+
+  resetScore() {
+    this.resetCaptures();
+    this.resetBounces();
   }
 
   setLives(lives) {

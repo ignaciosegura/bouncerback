@@ -1,0 +1,23 @@
+body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: black;
+  transition: background-color linear 1s;
+
+  &.neutral {
+    background: black;
+  }
+  &.danger {
+    background-color: $dying-red;
+  }
+  &.game-over {
+    background-color: $dying-red;
+  }
+  &.beaten {
+    background-color: $electric-blue;
+  }
+}

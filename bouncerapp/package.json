@@ -11,14 +11,18 @@
             "cordova-plugin-media": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-inappbrowser": {},
-            "cordova-plugin-device": {}
+            "cordova-plugin-device": {},
+            "cordova-plugin-screensize": {},
+            "cordova-plugin-appversion": {}
         }
     },
     "dependencies": {
         "cordova-android": "^7.1.0",
         "cordova-browser": "^5.0.3",
+        "cordova-plugin-appversion": "^1.0.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-media": "~5.0.2",
+        "cordova-plugin-screensize": "^1.3.1",
         "cordova-plugin-splashscreen": "~5.0.2"
     },
     "devDependencies": {}

@@ -245,6 +245,28 @@ module.exports = [
         "id": "cordova-plugin-device.DeviceProxy",
         "pluginId": "cordova-plugin-device",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-screensize/www/screensize.js",
+        "id": "cordova-plugin-screensize.screensize",
+        "pluginId": "cordova-plugin-screensize",
+        "clobbers": [
+            "window.plugins.screensize"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-screensize/src/browser/ScreenSizeProxy.js",
+        "id": "cordova-plugin-screensize.ScreenSizeProxy",
+        "pluginId": "cordova-plugin-screensize",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-appversion/www/app-version.js",
+        "id": "cordova-plugin-appversion.RareloopAppVersion",
+        "pluginId": "cordova-plugin-appversion",
+        "clobbers": [
+            "AppVersion"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -255,7 +277,9 @@ module.exports.metadata =
     "cordova-plugin-media": "5.0.2",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-screensize": "1.3.1",
+    "cordova-plugin-appversion": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

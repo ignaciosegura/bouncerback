@@ -1,6 +1,9 @@
 // Logic specific to mobile version
 
+import { history } from '../index.js';
 import GameService from './gameservice.js';
+
+import SystemShop from '../stores/systemshop.js';
 
 class PhoneGapService {
   static setupPhoneGapListeners() {
@@ -13,8 +16,25 @@ class PhoneGapService {
       document.addEventListener('resume', () => {
         GameService.resumeTheGame();
       });
+      document.addEventListener('backbutton', () => {
+        GameService.stopTheGame();
+        history.goBack();
+      });
 
+      console.log(AppVersion.version);
+      console.log(AppVersion.build);
+
+      SystemShop.physicalScreen = this.getRealScreenSizeIfPossible();
     }, false);
+  }
+
+  static getRealScreenSizeIfPossible() {
+    return (window.plugins.screensize)
+      ? window.plugins.screensize.get(
+        result => { return result }
+        , result => { return result }
+      )
+      : null;
   }
 }
 

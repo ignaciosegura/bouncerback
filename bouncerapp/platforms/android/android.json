@@ -35,6 +35,10 @@
                         {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ScreenSize\"><param name=\"android-package\" value=\"com.pbakondy.ScreenSize\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -60,6 +64,16 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"RareloopAppVersion\"><param name=\"android-package\" value=\"com.rareloop.cordova.appversion.RareloopAppVersion\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -80,6 +94,12 @@
             "PACKAGE_NAME": "es.niknak.bouncerback"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "es.niknak.bouncerback"
+        },
+        "cordova-plugin-screensize": {
+            "PACKAGE_NAME": "es.niknak.bouncerback"
+        },
+        "cordova-plugin-appversion": {
             "PACKAGE_NAME": "es.niknak.bouncerback"
         }
     },
@@ -298,6 +318,22 @@
             "clobbers": [
                 "navigator.splashscreen"
             ]
+        },
+        {
+            "id": "cordova-plugin-screensize.screensize",
+            "file": "plugins/cordova-plugin-screensize/www/screensize.js",
+            "pluginId": "cordova-plugin-screensize",
+            "clobbers": [
+                "window.plugins.screensize"
+            ]
+        },
+        {
+            "id": "cordova-plugin-appversion.RareloopAppVersion",
+            "file": "plugins/cordova-plugin-appversion/www/app-version.js",
+            "pluginId": "cordova-plugin-appversion",
+            "clobbers": [
+                "AppVersion"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -306,6 +342,8 @@
         "cordova-plugin-inappbrowser": "3.0.0",
         "cordova-plugin-media": "5.0.2",
         "cordova-plugin-splashscreen": "5.0.2",
-        "cordova-plugin-whitelist": "1.3.3"
+        "cordova-plugin-whitelist": "1.3.3",
+        "cordova-plugin-screensize": "1.3.1",
+        "cordova-plugin-appversion": "1.0.0"
     }
 }

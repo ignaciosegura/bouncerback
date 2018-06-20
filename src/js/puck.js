@@ -36,6 +36,20 @@ class Puck {
 
     return document.querySelector(`#point-zero .puck[index="${this.index}"]`);
   }
+
+  updatePosition(vector) {
+    this.vector = vector;
+    this.move();
+  }
+
+  move() {
+    let radius = SystemShop.gameSurfaceCoords.radius;
+    let x = Math.cos(this.vector) * radius;
+    let y = Math.sin(this.vector) * radius;
+    let perpendicularInDegs = CoordsService.getDegreesFromRads(this.vector) + 90;
+
+    this.domElement.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
+  }
 }
 
 export default Puck;

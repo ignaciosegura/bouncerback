@@ -17,6 +17,15 @@ class GameService {
     GameShop.setLives(lives);
   }
 
+  static addBouncesToScore(bounces) {
+    if (bounces > 0 && GameShop.type !== 'tutorial')
+      GameShop.addBounce(bounces);
+  }
+  static addCapturesToScore(captures) {
+    if (GameShop.type !== 'tutorial')
+      GameShop.addCapture(captures);
+  }
+
   static gameHasEnded(atoms) {
     return (AtomService.allAtomsAreInVortex(atoms) === true);
   }
@@ -27,11 +36,11 @@ class GameService {
 
   static runEndGameActions(level) {
     switch (level.levelPassAction) {
-    case 'next':
-      this.gotoNextLevel(level);
-      break;
-    case 'home':
-      this.goBackHome();
+      case 'next':
+        this.whereToGoNext(level);
+        break;
+      case 'home':
+        this.goBackHome();
     }
   }
 
@@ -47,7 +56,7 @@ class GameService {
   }
 
   static resumeTheGame() {
-    ClockService.resumeTheClock();
+    ClockService.startTheClock();
     SoundtrackService.resume();
   }
 
@@ -59,32 +68,31 @@ class GameService {
   }
 
   static whereToGoNext() {
-    this.stopTheGame();
-    let currentLevel = GameShop.level;
-
-    if(GameShop.isLastLevel() && !GameShop.isTutorial())
+    if (GameShop.isLastLevel() && !GameShop.isTutorial())
       this.goGameBeaten();
     else
       this.goNextLevel();
   }
 
   static goNextLevel() {
+    this.stopTheGame();
     GameShop.nextLevel();
   }
 
+  static goGameBeaten() {
+    this.goTo('/game-beaten');
+  }
+
   static goBackHome() {
-    this.stopTheGame();
-    history.push('/');
+    this.goTo('/');
   }
 
   static goGameOver() {
-    this.stopTheGame();
-    history.push('/game-over');
+    this.goTo('/game-over');
   }
-
-  static goGameBeaten() {
+  static goTo(route) {
     this.stopTheGame();
-    history.push('/game-passed');
+    history.push(route);
   }
 }
 

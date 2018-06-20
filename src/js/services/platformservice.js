@@ -13,6 +13,8 @@ class PlatformService {
     let newPath = path;
     if (this.isAndroid())
       newPath = '/android_asset/www/' + path;
+    else
+      newPath = '/' + path;
 
     return newPath;
   }

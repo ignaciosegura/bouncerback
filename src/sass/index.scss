@@ -6,7 +6,9 @@
 @import 'res/_fonts.scss';
 @import 'res/_animations.scss';
 
-@import 'routes/_layout.scss';
+@import 'global/_layout.scss';
+@import 'global/_background.scss';
+
 @import 'routes/_main_title.scss';
 @import 'routes/_gamesurface.scss';
 @import 'routes/_game_ended.scss';
@@ -17,6 +19,7 @@
 @import 'components/_atom.scss';
 @import 'components/_footer.scss';
 @import 'components/_game_props.scss';
+@import 'components/_level_menu.scss';
 @import 'components/_lives_counter.scss';
 @import 'components/_point_zero.scss';
 @import 'components/_scoreboard.scss';

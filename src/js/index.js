@@ -11,12 +11,14 @@ import createBrowserHistory from 'history/createBrowserHistory'
 export const history = createBrowserHistory();
 
 import MainTitle from './routes/maintitle.js';
+import LevelMenu from './routes/levelmenu.js';
 import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
 import GameBeaten from './routes/gamebeaten.js';
 import Footer from './footer.js';
 
 import PhoneGapService from './services/phonegapservice.js';
+import BackgroundService from './services/backgroundservice.js';
 import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
@@ -33,6 +35,10 @@ class Index extends React.Component {
       e.preventDefault();
     }, false);
 
+    history.listen((location, action) => {
+      BackgroundService.renderProperState();
+    });
+
     PhoneGapService.setupPhoneGapListeners();
   }
 
@@ -46,7 +52,8 @@ class Index extends React.Component {
         <Switch>
           <Route exact path="/" component={MainTitle} />
           <Route exact path="/tutorial" render={() => <GameSurface gameType='tutorial' level={0} />} />
-          <Route exact path="/game" render={() => <GameSurface gameType='game' level={1} />} />
+          <Route exact path="/level-list" component={LevelMenu} />
+          <Route exact path="/game/:level" render={(props) => <GameSurface gameType='game' {...props} />} />
           <Route exact path="/game-over" component={GameOver} />
           <Route exact path="/game-beaten" component={GameBeaten} />
           <Route path="*" component={MainTitle} />} />

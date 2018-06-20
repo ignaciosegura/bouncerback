@@ -13,17 +13,22 @@ class SystemMenu extends React.Component {
     super(props);
   }
   soundClick(e) {
-    e.preventDefault();
-    SystemShop.toggleSound();
+    this.stopDefaultActions(e);
+    SystemShop.toggleAllSound();
   }
 
   pauseClick(e) {
-    e.preventDefault();
+    this.stopDefaultActions(e);
     GameService.toggleGame();
   }
   closeClick(e) {
-    e.preventDefault();
+    this.stopDefaultActions(e);
     GameService.goBackHome();
+  }
+
+  stopDefaultActions(e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
 
   render() {

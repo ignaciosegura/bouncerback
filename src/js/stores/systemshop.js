@@ -18,9 +18,10 @@ class Default {
     return {
       width: this.gameSurfaceCoords.width / 11 * 2,
       height: this.gameSurfaceCoords.width / 55,
-      radius: this.gameSurfaceCoords.width / 55,
+      radius: this.gameSurfaceCoords.width / 40,
     }
   }
+  physicalScreen = null;
 
   constructor() {
     this.text = {
@@ -28,15 +29,17 @@ class Default {
       readingTime: 3500,
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
+
+    this.backgroundState = 'neutral';
   }
 
-  toggleSound() {
+  toggleAllSound() {
     this.sound.muted = !this.sound.muted;
   }
-  muteSound() {
+  muteAllSound() {
     this.sound.muted = true;
   }
-  unmuteSound() {
+  unmuteAllSound() {
     this.sound.muted = false;
   }
 }

@@ -6,41 +6,52 @@ class GameController {
   constructor(pucks) {
     this.pucks = pucks;
 
-    this.movePucks([]); // First run
+    this.movePucks([Math.PI, 0]); // First run
     this.movePucksOnInput();
   }
 
   movePucksOnInput() {
     let inputHandler = (e) => {
+      e.preventDefault();
       let positionArr = CoordsService.getXYFromInput(e);
-      let vectorArr = positionArr.map(p => CoordsService.getVectorFromScreenCoords(p));
+      let vectorArr = (e.type == 'mousemove')
+        ? this.getVectorsFromMousePosition(positionArr)
+        : this.getVectorsFromTouchPositions(positionArr);
       this.movePucks(vectorArr);
     };
 
-    ['mousemove', 'touchmove'].forEach(e => {
-      document.addEventListener(e, inputHandler.bind(this), false);
+    ['touchmove', 'touchend', 'mousemove'].forEach(e => {
+      let gameSurface = document.getElementById('gamesurface');
+      gameSurface.addEventListener(e, inputHandler.bind(this), false);
     });
+  }
+
+  getVectorsFromMousePosition(positionArr) {
+    let mouseVector = CoordsService.getVectorFromScreenCoords(positionArr[0]);
+    let reversedMouseVector = CoordsService.getReversedVector(mouseVector);
+    return [mouseVector, reversedMouseVector];
+  }
+
+  getVectorsFromTouchPositions(positionArr) {
+    let xyArr = positionArr.map(p => CoordsService.getXYFromScreenCoords(p));
+    let leftOrRight;
+    let vectorArr = [null, null];
+
+    xyArr.forEach(xy => {
+      leftOrRight = (xy.x < 0)
+        ? 0
+        : 1;
+      vectorArr[leftOrRight] = CoordsService.getVectorFromYandScreen(xy.x, xy.y);
+    });
+    return vectorArr;
   }
 
   movePucks(vectorArr) {
     this.pucks.forEach(p => {
-      let vector = (vectorArr[p.index])
-        ? vectorArr[p.index]
-        : p.vector;
-
-      p.vector = this.moveOnePuck(p, vector);
+      if (vectorArr[p.index] === null)
+        return;
+      p.updatePosition(vectorArr[p.index]);
     });
-  }
-
-  moveOnePuck(puck, vector) {
-    let radius = SystemShop.gameSurfaceCoords.radius;
-    let x = Math.cos(vector) * radius;
-    let y = Math.sin(vector) * radius;
-    let perpendicularInDegs = CoordsService.getDegreesFromRads(vector) + 90;
-
-    puck.domElement.setAttribute('transform', `translate(${x}, ${y}), rotate(${perpendicularInDegs})`);
-
-    return vector;
   }
 }
 

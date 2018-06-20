@@ -4,12 +4,13 @@
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';
+import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
 
 class Atom {
   constructor(index, level) {
     this.index = index;
-    this.vector = Math.random() * 2 * Math.PI - Math.PI;
+    this.vector = (Math.random() * 2 * Math.PI) - Math.PI;
     this.radius = SystemShop.canonicalSizes.radius;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.speed = {
@@ -100,6 +101,12 @@ class Atom {
     this.sounds.bounce.play();
   }
 
+  startDying() {
+    this.setStatus('dying');
+    this.sounds.destroy.play();
+    this.tagForRemoval();
+  }
+
   checkAtom() {
     let radius = SystemShop.gameSurfaceCoords.radius;
     let pos = this.atomPosition;
@@ -108,12 +115,8 @@ class Atom {
     if (this.AtomIsOnReboundArea()) {
       this.next.rebound = this.calculateNextEvent('rebound');
       this.next.center = this.calculateNextEvent('center');
-      if (this.status == 'alive')
+      if (this.status === 'alive')
         this.setStatus('collide');
-    } else if (distance > radius && this.status == 'collide') {
-      this.setStatus('dying');
-      this.sounds.destroy.play();
-      this.tagForRemoval();
     } else if (this.status === 'vortex') {
       this.speed.current = this.setVortexSpeed();
     }
@@ -142,9 +145,7 @@ class Atom {
   }
 
   reverseAtomDirection() {
-    this.vector = (this.vector > 0)
-      ? this.vector - Math.PI
-      : this.vector + Math.PI;
+    this.vector = CoordsService.getReversedVector(this.vector);
   }
 
   setAtomToVortex() {
@@ -157,7 +158,12 @@ class Atom {
     if (distanceToCenter > vortexActiveRadius)
       return;
 
+    this.setToCaptured();
+  }
+
+  setToCaptured() {
     this.setStatus('captured');
+    GameService.addCapturesToScore();
     this.sounds.capture.play();
   }
 }

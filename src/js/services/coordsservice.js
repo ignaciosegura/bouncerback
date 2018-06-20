@@ -19,14 +19,35 @@ class CoordsService {
     return Math.atan2(y, x);
   }
 
+  static getVectorFromYandScreen(x, y) {
+    let YRangeFactor = 1.75;
+    let sinY = (y * YRangeFactor) / (window.innerHeight / 2);
+
+    let rangedSinY = (Math.abs(sinY) > 1)
+      ? 1 * Math.sign(sinY)
+      : sinY;
+    let Yradian = rangedSinY * (Math.PI / 2)
+    let side = Math.sign(x);
+
+    return side === 1
+      ? Yradian
+      : Math.PI - Yradian;
+  }
+
   static getDegreesFromRads(rads) {
     return rads * 180 / Math.PI;
   }
 
   static getVectorFromScreenCoords(position) {
-    let x = position.x - SystemShop.gameSurfaceCoords.centerX;
-    let y = position.y - SystemShop.gameSurfaceCoords.centerY;
-    return this.getVectorFromXY(x, y);
+    let normalizedPos = this.getXYFromScreenCoords(position);
+    return this.getVectorFromXY(normalizedPos.x, normalizedPos.y);
+  }
+
+  static getXYFromScreenCoords(position) {
+    return {
+      x: position.x - SystemShop.gameSurfaceCoords.centerX,
+      y: position.y - SystemShop.gameSurfaceCoords.centerY
+    }
   }
 
   static getDistanceFromXY(x, y) {
@@ -38,6 +59,12 @@ class CoordsService {
       x: Math.cos(vector) * displacement,
       y: Math.sin(vector) * displacement
     }
+  }
+
+  static getReversedVector(vector) {
+    return (vector > 0)
+      ? vector - Math.PI
+      : vector + Math.PI;
   }
 
   static makeFinite(value) {
@@ -60,24 +87,32 @@ class CoordsService {
         y: path.clientY
       }
     }
-    return (e.type === 'touchmove')
-      ? Array.from(e.targetTouches).map(t => readPosition(t))
-      : [readPosition(e)];
+    return (e.type === 'mousemove')
+      ? [readPosition(e)]
+      : Array.from(e.changedTouches).map(t => readPosition(t));
   }
 
   static compareVectorsForBounce(angleAtom, anglePuck, range) {
-    angleAtom = this.makeAnglePositive(angleAtom);
-    anglePuck = this.makeAnglePositive(anglePuck);
+    let angleAtomPos = this.makeAnglePositive(angleAtom);
+    let angleAtomFullCircle = angleAtomPos + (Math.PI * 2);
+
+    let anglePuckPos = this.makeAnglePositive(anglePuck);
     let halfRange = range / 2;
     let bracket = {
-      from: anglePuck - halfRange,
-      to: anglePuck + halfRange
+      from: anglePuckPos - halfRange,
+      to: anglePuckPos + halfRange
     }
-    let isInRange = (a) => (a > bracket.from && a < bracket.to);
 
-    return (isInRange(angleAtom))
-      ? true
-      : isInRange(angleAtom + (Math.PI * 2));
+    if (this.isInRange(angleAtom, bracket)
+      || this.isInRange(angleAtomPos, bracket)
+      || this.isInRange(angleAtomFullCircle, bracket)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  static isInRange(angle, bracket) {
+    return (angle > bracket.from && angle < bracket.to);
   }
 
   static makeAnglePositive(angle) {
