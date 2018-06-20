@@ -51,7 +51,7 @@ class CoordsService {
   }
 
   static getDistanceFromXY(x, y) {
-    return Math.sqrt((x ** 2) + (y ** 2));
+    return Math.sqrt((Math.pow(x, 2)) + (Math.pow(y, 2)));
   }
 
   static getXYFromVector(vector, displacement) {

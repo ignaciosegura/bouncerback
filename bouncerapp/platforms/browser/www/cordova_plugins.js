@@ -275,9 +275,9 @@ module.exports.metadata =
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-media": "5.0.2",
+    "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-screensize": "1.3.1",
     "cordova-plugin-appversion": "1.0.0"
 }

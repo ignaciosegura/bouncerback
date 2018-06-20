@@ -13,13 +13,13 @@
     "cordova-plugin-media": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "es.niknak.bouncerback"
+    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "es.niknak.bouncerback"
-    },
-    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "es.niknak.bouncerback"
     },
     "cordova-plugin-screensize": {
