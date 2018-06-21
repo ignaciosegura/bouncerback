@@ -9960,14 +9960,15 @@ var GameController = function () {
 
       var inputHandler = function inputHandler(e) {
         e.preventDefault();
+        e.stopPropagation();
         var positionArr = _coordsservice2.default.getXYFromInput(e);
         var vectorArr = e.type == 'mousemove' ? _this.getVectorsFromMousePosition(positionArr) : _this.getVectorsFromTouchPositions(positionArr);
         _this.movePucks(vectorArr);
       };
 
       ['touchmove', 'touchend', 'mousemove'].forEach(function (e) {
-        var gameSurface = document.getElementById('gamesurface');
-        gameSurface.addEventListener(e, inputHandler.bind(_this), false);
+        var gameBoard = document.getElementById('game-board');
+        gameBoard.addEventListener(e, inputHandler.bind(_this), false);
       });
     }
   }, {
@@ -10681,19 +10682,27 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'gamesurface', onTouchMove: this.preventDefault },
-        _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
-        _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
-        _react2.default.createElement(_chrono2.default, null),
-        _react2.default.createElement(_livescounter2.default, null),
-        _react2.default.createElement(_systemmenu2.default, null),
+        { id: 'gamesurface' },
         _react2.default.createElement(
           'div',
-          { id: 'zone-wrapper' },
+          { id: 'game-hud' },
+          _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
+          _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
+          _react2.default.createElement(_chrono2.default, null),
+          _react2.default.createElement(_livescounter2.default, null),
+          _react2.default.createElement(_systemmenu2.default, null)
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'game-board', onTouchMove: this.preventDefault },
           _react2.default.createElement(
-            'svg',
-            { id: 'the-zone', 'data-level': this.props.GameShop.level, width: '100%', height: '100%' },
-            _react2.default.createElement('circle', { id: 'the-circle', cx: '50%', cy: '50%', r: '50%' })
+            'div',
+            { id: 'zone-wrapper' },
+            _react2.default.createElement(
+              'svg',
+              { id: 'the-zone', 'data-level': this.props.GameShop.level, width: '100%', height: '100%' },
+              _react2.default.createElement('circle', { id: 'the-circle', cx: '50%', cy: '50%', r: '50%' })
+            )
           )
         )
       );
@@ -11155,7 +11164,12 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
   function SystemMenu(props) {
     _classCallCheck(this, SystemMenu);
 
-    return _possibleConstructorReturn(this, (SystemMenu.__proto__ || Object.getPrototypeOf(SystemMenu)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SystemMenu.__proto__ || Object.getPrototypeOf(SystemMenu)).call(this, props));
+
+    _this.soundClick = _this.soundClick.bind(_this);
+    _this.pauseClick = _this.pauseClick.bind(_this);
+    _this.closeClick = _this.closeClick.bind(_this);
+    return _this;
   }
 
   _createClass(SystemMenu, [{
