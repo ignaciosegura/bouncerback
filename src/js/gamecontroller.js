@@ -13,6 +13,7 @@ class GameController {
   movePucksOnInput() {
     let inputHandler = (e) => {
       e.preventDefault();
+      e.stopPropagation();
       let positionArr = CoordsService.getXYFromInput(e);
       let vectorArr = (e.type == 'mousemove')
         ? this.getVectorsFromMousePosition(positionArr)
@@ -21,8 +22,8 @@ class GameController {
     };
 
     ['touchmove', 'touchend', 'mousemove'].forEach(e => {
-      let gameSurface = document.getElementById('gamesurface');
-      gameSurface.addEventListener(e, inputHandler.bind(this), false);
+      let gameBoard = document.getElementById('game-board');
+      gameBoard.addEventListener(e, inputHandler.bind(this), false);
     });
   }
 

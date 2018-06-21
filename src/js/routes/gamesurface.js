@@ -51,16 +51,20 @@ class GameSurface extends React.Component {
   }
 
   render() {
-    return <div id="gamesurface" onTouchMove={this.preventDefault}>
-      <Scoreboard type="score" />
-      <Scoreboard type="level" />
-      <Chrono />
-      <LivesCounter />
-      <SystemMenu />
-      <div id="zone-wrapper">
-        <svg id="the-zone" data-level={this.props.GameShop.level} width="100%" height="100%">
-          <circle id="the-circle" cx="50%" cy="50%" r="50%" />
-        </svg>
+    return <div id="gamesurface">
+      <div id="game-hud">
+        <Scoreboard type="score" />
+        <Scoreboard type="level" />
+        <Chrono />
+        <LivesCounter />
+        <SystemMenu />
+      </div>
+      <div id="game-board" onTouchMove={this.preventDefault}>
+        <div id="zone-wrapper">
+          <svg id="the-zone" data-level={this.props.GameShop.level} width="100%" height="100%">
+            <circle id="the-circle" cx="50%" cy="50%" r="50%" />
+          </svg>
+        </div>
       </div>
     </div>
   }

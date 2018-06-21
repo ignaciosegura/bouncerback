@@ -11,6 +11,10 @@ import GameService from './services/gameservice.js';
 class SystemMenu extends React.Component {
   constructor(props) {
     super(props);
+
+    this.soundClick = this.soundClick.bind(this);
+    this.pauseClick = this.pauseClick.bind(this);
+    this.closeClick = this.closeClick.bind(this);
   }
   soundClick(e) {
     this.stopDefaultActions(e);
