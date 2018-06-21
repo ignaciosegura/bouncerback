@@ -28,6 +28,8 @@ class GameEngine {
       ? new Level(tutorialList[level])
       : new Level(levelList[level]);
     GameShop.type = gameType;
+    TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
+    GameService.setInitialLives(this.level.atomList.length, gameType);
 
     this.pucks = [];
     this.atoms = [];
@@ -38,10 +40,7 @@ class GameEngine {
   }
 
   setupReadyState() {
-    TimeShop.setup(this.level.time.bpm, this.level.time.signature, this.level.duration);
-    GameService.setInitialLives(this.level.atomList.length, GameShop.type);
     CoordsService.createPointZero('#the-zone');
-    SystemShop.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     SoundtrackService.newTrack(this.level.sound.track);
     this.level.scheduleAtom(0);
 
@@ -58,6 +57,7 @@ class GameEngine {
   }
 
   startGame() {
+    SystemShop.gameSurfaceCoords = CoordsService.findGameSurfaceCoords();
     this.pucks.push(new Puck(0));
     this.pucks.push(new Puck(1));
 
