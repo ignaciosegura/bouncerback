@@ -6,10 +6,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 0;
   touch-action: none;
 
-
+  #game-board {
+    width: 100%;
+    background: none;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    touch-action: none;
+  }
   #zone-wrapper {
     box-sizing: content-box;
     // Size is specified in DefaultShop because Firefox needs attributes instead of CSS

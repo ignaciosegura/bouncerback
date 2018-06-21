@@ -160,8 +160,19 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 0;
   touch-action: none; }
+  #gamesurface #game-board {
+    width: 100%;
+    background: none;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    touch-action: none; }
   #gamesurface #zone-wrapper {
     box-sizing: content-box;
     padding: 20px;
@@ -250,7 +261,8 @@ body {
   bottom: 2em;
   right: 2em;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  z-index: 10; }
   #system-menu a {
     display: inline-block;
     width: 1em;
