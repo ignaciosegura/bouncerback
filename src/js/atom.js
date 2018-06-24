@@ -8,9 +8,9 @@ import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
 
 class Atom {
-  constructor(index, level) {
+  constructor(index, level, direction = null) {
     this.index = index;
-    this.vector = (Math.random() * 2 * Math.PI) - Math.PI;
+    this.vector = CoordsService.getRandomVector(direction);
     this.radius = SystemShop.canonicalSizes.radius;
     this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
     this.speed = {

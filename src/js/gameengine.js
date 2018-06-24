@@ -122,7 +122,10 @@ class GameEngine {
   }
 
   addAtomToGameSurface() {
-    this.atoms.push(AtomService.createAtom(this.level.nextAtom.order, this.level));
+    let direction = this.level.atomList[this.level.nextAtom.order].dir
+      ? this.level.atomList[this.level.nextAtom.order].dir
+      : null;
+    this.atoms.push(AtomService.createAtom(this.level.nextAtom.order, this.level, direction));
   }
 }
 
