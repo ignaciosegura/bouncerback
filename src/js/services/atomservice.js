@@ -47,8 +47,6 @@ class AtomService {
           return true;
         }
       });
-      if (!didAtomCollide)
-        a.startDying();
     });
     return bouncesCount;
   }

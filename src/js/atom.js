@@ -29,7 +29,11 @@ class Atom {
       bounce: new SoundFX(require('../sound/bounce_dry.mp3')),
       destroy: new SoundFX(require('../sound/destroy.mp3')),
       capture: new SoundFX(require('../sound/capture.mp3'))
-    }
+    };
+    this.reboundPosition = {
+      cx: 0,
+      cy: 0
+    };
     this.domElement;
   }
 
@@ -51,6 +55,11 @@ class Atom {
       cx: this.domElement.cx.baseVal.value,
       cy: this.domElement.cy.baseVal.value
     })
+  }
+
+  setAtomPosition(cx, cy) {
+    this.domElement.cx.baseVal.value = cx;
+    this.domElement.cy.baseVal.value = cy;
   }
 
 
@@ -97,6 +106,7 @@ class Atom {
 
   executeBounce() {
     this.reverseAtomDirection();
+    this.setAtomPosition(this.reboundPosition.cx, this.reboundPosition.cy);
     this.setStatus('alive');
     this.sounds.bounce.play();
   }
@@ -113,10 +123,13 @@ class Atom {
     let distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
 
     if (this.AtomIsOnReboundArea()) {
+      this.reboundPosition = this.atomPosition;
       this.next.rebound = this.calculateNextEvent('rebound');
       this.next.center = this.calculateNextEvent('center');
       if (this.status === 'alive')
         this.setStatus('collide');
+    } else if (this.status === 'collide' && distance > radius) {
+      this.startDying();
     } else if (this.status === 'vortex') {
       this.speed.current = this.setVortexSpeed();
     }
@@ -139,9 +152,10 @@ class Atom {
   moveAtom() {
     let atomPosition = this.atomPosition;
     let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
-    this.domElement.cx.baseVal.value = atomPosition.cx + displacement.x;
+    let x = atomPosition.cx + displacement.x;
+    let y = atomPosition.cy + displacement.y;
 
-    this.domElement.cy.baseVal.value = atomPosition.cy + displacement.y;
+    this.setAtomPosition(x, y);
   }
 
   reverseAtomDirection() {
