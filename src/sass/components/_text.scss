@@ -1,7 +1,7 @@
 // Text in-game
 
 .text {
-  font-size: 16px;
+  font-size: 14px;
   color: white;
 
   position: absolute;
@@ -15,7 +15,10 @@
   animation: $animation-text-entry;
 
   @include breakpoint($break-mid) {
-    font-size: 24px;
+    font-size: 16px;
+  }
+  @include breakpoint($break-large) {
+    font-size: 20px;
   }
 
   &.fadeout {
@@ -24,11 +27,10 @@
 
   &.title {
     top: 30%;
-    font-size: 24px;
+    font-size: $default-font-title-size;
 
     @include breakpoint($break-mid) {
       top: 35%;
-      font-size: 44px;
     }
   }
   &.ready {

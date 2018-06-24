@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'didact-gothic';
-  src: url(dda9b9eec9b3c47fa007f94191e90b71.ttf) format("truetype"); }
+  src: url(/res/fonts/didact_gothic_regular.ttf) format("truetype"); }
 
 @keyframes text-entry {
   from {
@@ -89,7 +89,7 @@ html, body {
   background: black;
   color: white;
   font-family: "c64-angled", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   margin: 0;
   padding: 0;
@@ -109,14 +109,17 @@ html, body {
                                   supported by Chrome and Opera */ }
   @media (min-width: 800px) {
     html, body {
-      font-size: 24px; } }
+      font-size: 17.5px; } }
+  @media (min-width: 1200px) {
+    html, body {
+      font-size: 21px; } }
 
 h1 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal; }
   @media (min-width: 800px) {
     h1 {
-      font-size: 24px; } }
+      font-size: 21px; } }
 
 body {
   position: absolute;
@@ -138,7 +141,7 @@ body {
 
 #main-title {
   position: absolute;
-  font-size: 16px;
+  font-size: 14px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -181,18 +184,20 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150px;
-    height: 150px;
+    width: 80vmin;
+    height: 80vmin;
+    max-width: 70vmin;
+    max-height: 70vmin;
     overflow: visible;
     transform: translate(-50%, -50%); }
-    @media (min-width: 360px) {
-      #gamesurface #zone-wrapper {
-        width: 300px;
-        height: 300px; } }
     @media (min-width: 800px) {
       #gamesurface #zone-wrapper {
-        width: 550px;
-        height: 550px; } }
+        max-width: 70vmin;
+        max-height: 70vmin; } }
+    @media (min-width: 1200px) {
+      #gamesurface #zone-wrapper {
+        max-width: 60vmin;
+        max-height: 60vmin; } }
     #gamesurface #zone-wrapper svg#the-zone {
       width: 100%;
       height: 100%;
@@ -211,23 +216,23 @@ body {
 
 #game-ended-screen {
   position: absolute;
-  font-size: 16px;
+  font-size: 14px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     #game-ended-screen {
-      font-size: 24px; } }
+      font-size: 21px; } }
   #game-ended-screen h1 {
     text-align: center;
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     margin-bottom: 0 0 1em; }
   #game-ended-screen h2 {
     text-align: center;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 10.5px;
     margin-bottom: 3em; }
   #game-ended-screen .screen-menu {
     margin-bottom: 3em; }
@@ -287,7 +292,7 @@ body {
 
 footer {
   font-family: "didact-gothic", Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 10.5px;
   color: white;
   position: fixed;
   bottom: 5px;
@@ -296,7 +301,7 @@ footer {
   z-index: 10; }
   @media (min-width: 800px) {
     footer {
-      font-size: 16px; } }
+      font-size: 14px; } }
   footer a {
     color: white;
     text-decoration: none;
@@ -466,7 +471,7 @@ footer {
     animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
 
 .text {
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   position: absolute;
   top: 60%;
@@ -478,16 +483,18 @@ footer {
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     .text {
-      font-size: 24px; } }
+      font-size: 16px; } }
+  @media (min-width: 1200px) {
+    .text {
+      font-size: 20px; } }
   .text.fadeout {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
     top: 30%;
-    font-size: 24px; }
+    font-size: 1.5em; }
     @media (min-width: 800px) {
       .text.title {
-        top: 35%;
-        font-size: 44px; } }
+        top: 35%; } }
   .text.ready {
     cursor: pointer;
     top: 50%;
