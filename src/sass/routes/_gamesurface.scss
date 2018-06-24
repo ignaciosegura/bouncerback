@@ -30,18 +30,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150px;
-    height: 150px;
+    width: 80vmin;
+    height: 80vmin;
+    max-width: 70vmin;
+    max-height: 70vmin;
     overflow: visible;
     transform: translate(-50%, -50%);
 
-    @include breakpoint($break-small) {
-      width: 300px;
-      height: 300px;
-    }
     @include breakpoint($break-mid) {
-      width: 550px;
-      height: 550px;
+      max-width: 70vmin;
+      max-height: 70vmin;
+    }
+    @include breakpoint($break-large) {
+      max-width: 60vmin;
+      max-height: 60vmin;
     }
 
     svg#the-zone {

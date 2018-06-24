@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'didact-gothic';
-  src: url(dda9b9eec9b3c47fa007f94191e90b71.ttf) format("truetype"); }
+  src: url(/res/fonts/didact_gothic_regular.ttf) format("truetype"); }
 
 @keyframes text-entry {
   from {
@@ -181,18 +181,20 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150px;
-    height: 150px;
+    width: 80vmin;
+    height: 80vmin;
+    max-width: 70vmin;
+    max-height: 70vmin;
     overflow: visible;
     transform: translate(-50%, -50%); }
-    @media (min-width: 360px) {
-      #gamesurface #zone-wrapper {
-        width: 300px;
-        height: 300px; } }
     @media (min-width: 800px) {
       #gamesurface #zone-wrapper {
-        width: 550px;
-        height: 550px; } }
+        max-width: 70vmin;
+        max-height: 70vmin; } }
+    @media (min-width: 1200px) {
+      #gamesurface #zone-wrapper {
+        max-width: 60vmin;
+        max-height: 60vmin; } }
     #gamesurface #zone-wrapper svg#the-zone {
       width: 100%;
       height: 100%;
