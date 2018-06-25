@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="es.niknak.bouncerback" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="es.niknak.bouncerback" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Bouncerback</name>
     <description>
         Bouncerback is a old-school videogame about bouncing atoms and having to pay attention to too many things at the same time.
@@ -48,12 +48,12 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
-    <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.1.0" />
     <plugin name="cordova-plugin-media" spec="~5.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-screensize" spec="^1.3.1" />
     <plugin name="cordova-plugin-appversion" spec="^1.0.0" />
+    <engine name="browser" spec="^5.0.3" />
+    <engine name="android" spec="^7.1.0" />
 </widget>
