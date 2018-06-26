@@ -56,7 +56,7 @@ const levelList = [
   {
     name: 'Femtocosmos',
     levelType: 'game',
-    duration: 32,
+    duration: 28,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
