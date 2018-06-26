@@ -67,6 +67,23 @@ class CoordsService {
       : vector + Math.PI;
   }
 
+  static getRandomVector(side = null) {
+    let randomDir;
+
+    switch (side) {
+      case 'left':
+        randomDir = (Math.random() * Math.PI) + (Math.PI / 2);
+        break;
+      case 'right':
+        randomDir = (Math.random() * Math.PI) - (Math.PI / 2);
+        break;
+      default:
+        randomDir = (Math.random() * 2 * Math.PI) - Math.PI;
+    }
+
+    return randomDir;
+  }
+
   static makeFinite(value) {
     return isFinite(value)
       ? value

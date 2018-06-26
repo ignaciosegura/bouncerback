@@ -14,8 +14,8 @@ class AtomService {
     atoms.forEach(a => a.checkAtom());
   }
 
-  static createAtom(index, level) {
-    let newAtom = new Atom(index, level);
+  static createAtom(index, level, direction) {
+    let newAtom = new Atom(index, level, direction);
     newAtom.createDOMElement();
     newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
     return newAtom;
