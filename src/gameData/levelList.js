@@ -26,7 +26,7 @@
 
 
 const levelList = [
-  {}, // Level Zero does not exist on real game, only on tutorial.
+  {}, // Level Zero does not exist in real game, only on tutorial.
   {
     name: 'Neutronika',
     levelType: 'game',
