@@ -13,7 +13,7 @@ class Game {
   type = '';
 
   @computed get score() {
-    return this.bounces * 10 + this.captured * 100;
+    return (this.bounces * 10 + this.captured * 100) * this.level;
   }
 
   addBounce(b = 1) {
