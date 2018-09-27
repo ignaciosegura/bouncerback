@@ -27,8 +27,9 @@ class Background {
 
   renderProperState() {
     let currentScreen = window.location.pathname;
+    let currentLives = GameShop.lives;
 
-    if (currentScreen === '/game' && GameShop.lives === 1) {
+    if (currentScreen === '/game' && currentLives === 1) {
       this.changeState('danger');
     } else if (currentScreen === '/game-over') {
       this.changeState('game-over');

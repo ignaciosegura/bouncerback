@@ -26,7 +26,7 @@
 
 
 const levelList = [
-  {}, // Level Zero does not exist on real game, only on tutorial.
+  {}, // Level Zero does not exist in real game, only on tutorial.
   {
     name: 'Neutronika',
     levelType: 'game',
@@ -42,13 +42,13 @@ const levelList = [
     },
     atomSpeed: 4,
     atomList: [
-      { t: 0, b: 0 },
+      { t: 0, b: 0, dir: 'left' },
       { t: 2, b: 0 },
-      { t: 3, b: 3.5 },
+      { t: 3, b: 3.5, dir: 'right' },
       { t: 5, b: 2 },
       { t: 11, b: 2.75 },
-      { t: 15, b: 3 },
-      { t: 17, b: 1 },
+      { t: 15, b: 3, dir: 'right' },
+      { t: 17, b: 1, dir: 'left' },
       { t: 19, b: 0.75 },
       { t: 22, b: 3.25 },
     ]
@@ -56,7 +56,7 @@ const levelList = [
   {
     name: 'Femtocosmos',
     levelType: 'game',
-    duration: 32,
+    duration: 28,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
@@ -66,10 +66,10 @@ const levelList = [
     sound: {
       track: require('../sound/tracks/femtocosmos.mp3')
     },
-    atomSpeed: 2,
+    atomSpeed: 4,
     atomList: [
-      { t: 0, b: 0 },
-      { t: 4, b: 0 },
+      { t: 0, b: 0, dir: 'right' },
+      { t: 4, b: 0, dir: 'right' },
       { t: 6, b: 1.5 },
       { t: 8, b: 3.5 },
       { t: 9, b: 1.5 },
@@ -96,11 +96,11 @@ const levelList = [
     },
     atomSpeed: 2,
     atomList: [
-      { t: 0, b: 0 },
-      { t: 4, b: 0 },
+      { t: 0, b: 0, dir: 'left' },
+      { t: 4, b: 0, dir: 'right' },
       { t: 6, b: 1.5 },
-      { t: 8, b: 3.5 },
-      { t: 9, b: 1.5 },
+      { t: 8, b: 3.5, dir: 'left' },
+      { t: 9, b: 1.5, dir: 'right' },
       { t: 11, b: 2.75 },
       { t: 13, b: 1 },
       { t: 16, b: 0.5 },
@@ -124,11 +124,10 @@ const levelList = [
     },
     atomSpeed: 3,
     atomList: [
-      { t: 0, b: 0 },
-      { t: 3, b: 0 },
+      { t: 0, b: 0, dir: 'right' },
+      { t: 3, b: 0, dir: 'right' },
       { t: 5, b: 0 },
       { t: 7, b: 0 },
-      { t: 8, b: 1.5 },
       { t: 11, b: 1.5 },
       { t: 13, b: 2 },
       { t: 16, b: 1 },
