@@ -30,27 +30,28 @@ const levelList = [
   {
     name: 'Neutronika',
     levelType: 'game',
-    duration: 28,
+    duration: 64,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
-      bpm: 115,
+      bpm: 120,
       signature: 4
     },
     sound: {
-      track: require('../sound/tracks/neutronika.mp3')
+      track: require('../sound/tracks/ambient_house_1.mp3')
     },
     atomSpeed: 4,
     atomList: [
       { t: 0, b: 0, dir: 'left' },
-      { t: 2, b: 0 },
-      { t: 3, b: 3.5, dir: 'right' },
-      { t: 5, b: 2 },
-      { t: 11, b: 2.75 },
-      { t: 15, b: 3, dir: 'right' },
-      { t: 17, b: 1, dir: 'left' },
-      { t: 19, b: 0.75 },
-      { t: 22, b: 3.25 },
+      { t: 6, b: 0, dir: 'left' },
+      { t: 15, b: 0.25 },
+      { t: 19, b: 3.5, dir: 'right' },
+      { t: 21, b: 2 },
+      { t: 23, b: 2.75 },
+      { t: 27, b: 3, dir: 'right' },
+      { t: 33, b: 1, dir: 'left' },
+      { t: 43, b: 0.75 },
+      { t: 54, b: 3.25 },
     ]
   },
   {
