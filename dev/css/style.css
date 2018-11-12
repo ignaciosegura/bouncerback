@@ -148,12 +148,12 @@ body {
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   #main-title img {
     display: block;
-    width: 300px;
+    width: 400px;
     max-width: 75vw;
     margin: 0 auto 2em; }
     @media (min-width: 800px) {
       #main-title img {
-        width: 500px; } }
+        width: 800px; } }
 
 #gamesurface {
   width: 100%;
