@@ -15,7 +15,6 @@ import LevelMenu from './routes/levelmenu.js';
 import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
 import GameBeaten from './routes/gamebeaten.js';
-import Footer from './footer.js';
 
 import PhoneGapService from './services/phonegapservice.js';
 import BackgroundService from './services/backgroundservice.js';
@@ -64,12 +63,11 @@ class Index extends React.Component {
           <Route path="*" component={MainTitle} />} />
         </Switch>
       </Router>
-      <Footer />
     </div>
   }
 }
 
 ReactDOM.render(
   <Provider GameShop={GameShop} SystemShop={SystemShop} TimeShop={TimeShop}><Index /></Provider>,
-  document.getElementById('content')
+  document.getElementsByTagName('body')[0]
 );
