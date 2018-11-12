@@ -23,7 +23,8 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-router": "^4.1.1",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "three": "^0.98.0"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
