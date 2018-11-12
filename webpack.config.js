@@ -92,9 +92,13 @@ module.exports = {
         })
       },
       {
-        test: /\.(png|jpg|svg)$/,
+        test: /\.(png|jpg)$/,
         exclude: /node_modules/,
         loader: 'url-loader?limit=10000&name=img/[name].[ext]'
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
       },
       {
         test: /\.(woff|woff2|ttf|eot)$/,

@@ -1,13 +1,11 @@
 /* Global require */
 import React from 'react';
 
-import THREE from 'three';
-
 import ScreenMenu from '../screenmenu.js';
 
 import Footer from '../footer.js';
 
-let GameLogo = require('../../img/game_logo_v2.svg');
+import InlineSVG from 'svg-inline-react';
 
 class MainTitle extends React.Component {
   generateCanvas() {
@@ -15,9 +13,11 @@ class MainTitle extends React.Component {
   }
 
   render() {
+    let GameLogo = require('../../img/game_logo_v2.svg');
+
     return <div>
       <div id="main-title">
-        <img id="game-logo" src={GameLogo} />
+        <InlineSVG src={GameLogo} raw={true} />
         <ScreenMenu />
       </div>
       <Footer />

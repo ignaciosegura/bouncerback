@@ -1,5 +1,8 @@
 // Main title
 
+$animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
+
+
 #main-title {
   position: absolute;
   font-size: $default-font-size;
@@ -9,14 +12,27 @@
 
   animation: $animation-text-entry;
 
-  img {
+  svg {
     display: block;
-    width: 400px;
+    width: 500px;
     max-width: 75vw;
     margin: 0 auto 2em;
+    animation: $animation-main-logo;
     
     @include breakpoint($break-mid) {
-      width: 800px;
+      width: 900px;
     }
+    @include breakpoint($break-large) {
+      width: 1200px;
+    }
+  }
+}
+
+@keyframes main-logo {
+  from {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
   }
 }
