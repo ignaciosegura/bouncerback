@@ -1,6 +1,7 @@
 // Main title
 
 $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
+$animation-logo-letters: logo-letters 2s linear 0s 1 forwards;
 $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 forwards;
 
 
@@ -26,6 +27,20 @@ $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 fo
     @include breakpoint($break-large) {
       width: 1200px;
     }
+
+    path, rect, circle {
+      animation: $animation-logo-letters;
+
+      &:nth-child(4n+1) {
+        animation-duration: 1.85s;
+      }
+      &:nth-child(4n+2) {
+        animation-duration: 1.9s;
+      }
+      &:nth-child(4n+3) {
+        animation-duration: 1.95s;
+      }
+    }
   }
 
   .screen-menu a {
@@ -42,6 +57,24 @@ $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 fo
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes logo-letters {
+  from {
+    opacity: 0.5;
+  }
+  84% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.25;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 1;
   }
 }
 

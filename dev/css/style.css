@@ -160,6 +160,14 @@ body {
     @media (min-width: 1200px) {
       #main-title svg.main-logo {
         width: 1200px; } }
+    #main-title svg.main-logo path, #main-title svg.main-logo rect, #main-title svg.main-logo circle {
+      animation: logo-letters 2s linear 0s 1 forwards; }
+      #main-title svg.main-logo path:nth-child(4n+1), #main-title svg.main-logo rect:nth-child(4n+1), #main-title svg.main-logo circle:nth-child(4n+1) {
+        animation-duration: 1.85s; }
+      #main-title svg.main-logo path:nth-child(4n+2), #main-title svg.main-logo rect:nth-child(4n+2), #main-title svg.main-logo circle:nth-child(4n+2) {
+        animation-duration: 1.9s; }
+      #main-title svg.main-logo path:nth-child(4n+3), #main-title svg.main-logo rect:nth-child(4n+3), #main-title svg.main-logo circle:nth-child(4n+3) {
+        animation-duration: 1.95s; }
   #main-title .screen-menu a {
     color: black;
     border-color: black;
@@ -170,6 +178,18 @@ body {
     transform: scale(0.85); }
   to {
     transform: scale(1); } }
+
+@keyframes logo-letters {
+  from {
+    opacity: 0.5; }
+  84% {
+    opacity: 0.95; }
+  85% {
+    opacity: 0.25; }
+  90% {
+    opacity: 0.9; }
+  to {
+    opacity: 1; } }
 
 @keyframes main-title-text-entry {
   from {

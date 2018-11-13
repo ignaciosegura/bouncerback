@@ -2,7 +2,6 @@
 import React from 'react';
 
 import ScreenMenu from '../screenmenu.js';
-import BackgroundService from '../services/backgroundservice.js';
 
 import Footer from '../footer.js';
 
