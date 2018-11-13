@@ -130,6 +130,8 @@ body {
   overflow: hidden;
   background: black;
   transition: background-color linear 1s; }
+  body.intro {
+    background: white; }
   body.neutral {
     background: black; }
   body.danger {
@@ -146,24 +148,34 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
-  #main-title svg {
+  #main-title svg.main-logo {
     display: block;
     width: 500px;
     max-width: 75vw;
-    margin: 0 auto 2em;
+    margin: 0 auto 3em;
     animation: main-logo 2s cubic-bezier(0.19, 0.05, 0, 1) 0s 1 forwards; }
     @media (min-width: 800px) {
-      #main-title svg {
+      #main-title svg.main-logo {
         width: 900px; } }
     @media (min-width: 1200px) {
-      #main-title svg {
+      #main-title svg.main-logo {
         width: 1200px; } }
+  #main-title .screen-menu a {
+    color: black;
+    border-color: black;
+    animation: main-title-text-entry 0.5s ease-in-out 0s 1 forwards; }
 
 @keyframes main-logo {
   from {
     transform: scale(0.85); }
   to {
     transform: scale(1); } }
+
+@keyframes main-title-text-entry {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 
 #gamesurface {
   width: 100%;

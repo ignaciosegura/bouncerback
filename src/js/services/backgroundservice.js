@@ -28,16 +28,27 @@ class Background {
   renderProperState() {
     let currentScreen = window.location.pathname;
     let currentLives = GameShop.lives;
+    let newState;
 
-    if (currentScreen === '/game' && currentLives === 1) {
-      this.changeState('danger');
-    } else if (currentScreen === '/game-over') {
-      this.changeState('game-over');
-    } else if (currentScreen === '/game-beaten') {
-      this.changeState('beaten');
-    } else {
-      this.changeState('neutral');
+    switch (currentScreen) {
+      case '/game':
+        if (currentLives === 1)
+          newState = 'danger';
+        break;
+      case '/game-over':
+        newState = 'game-over';
+        break;
+      case '/game-beaten':
+        newState = 'beaten';
+        break;
+      case '/':
+        newState = 'intro';
+        break;
+      default:
+        newState = 'neutral';
     }
+
+    this.changeState(newState);
   }
 }
 

@@ -1,6 +1,7 @@
 // Main title
 
 $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
+$animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 forwards;
 
 
 #main-title {
@@ -12,11 +13,11 @@ $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
 
   animation: $animation-text-entry;
 
-  svg {
+  svg.main-logo {
     display: block;
     width: 500px;
     max-width: 75vw;
-    margin: 0 auto 2em;
+    margin: 0 auto 3em;
     animation: $animation-main-logo;
     
     @include breakpoint($break-mid) {
@@ -26,6 +27,13 @@ $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
       width: 1200px;
     }
   }
+
+  .screen-menu a {
+    color: black;
+    border-color: black;
+
+    animation: $animation-main-title-text-entry;
+  }
 }
 
 @keyframes main-logo {
@@ -34,5 +42,15 @@ $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes main-title-text-entry {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

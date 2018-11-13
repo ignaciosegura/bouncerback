@@ -2,6 +2,7 @@
 import React from 'react';
 
 import ScreenMenu from '../screenmenu.js';
+import BackgroundService from '../services/backgroundservice.js';
 
 import Footer from '../footer.js';
 
@@ -17,7 +18,7 @@ class MainTitle extends React.Component {
 
     return <div>
       <div id="main-title">
-        <InlineSVG src={GameLogo} raw={true} />
+        <InlineSVG className="main-logo" src={GameLogo} raw={true} />
         <ScreenMenu />
       </div>
       <Footer />
