@@ -2,8 +2,15 @@
 
 $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
 $animation-logo-letters: logo-letters 2s linear 0s 1 forwards;
+$animation-logo-circle: logo-circle 3s linear 0s 1 forwards;
+$animation-svg-background: svg-background 20s ease-in-out 0s 999 alternate;
 $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 forwards;
 
+svg.svg-background {
+  position: relative;
+  width: 150%;
+  animation: $animation-svg-background;
+}
 
 #main-title {
   position: absolute;
@@ -18,28 +25,35 @@ $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 fo
     display: block;
     width: 500px;
     max-width: 75vw;
-    margin: 0 auto 4em;
+    margin: 0 auto 3em;
     animation: $animation-main-logo;
     
     @include breakpoint($break-mid) {
       width: 900px;
     }
     @include breakpoint($break-large) {
+      margin-bottom: 4em;
       width: 1200px;
     }
 
     path, rect, circle {
       animation: $animation-logo-letters;
 
-      &:nth-child(4n+1) {
+      &:nth-child(5n+1) {
         animation-duration: 1.85s;
       }
-      &:nth-child(4n+2) {
+      &:nth-child(5n+2) {
         animation-duration: 1.9s;
       }
-      &:nth-child(4n+3) {
+      &:nth-child(5n+3) {
         animation-duration: 1.95s;
       }
+      &:nth-child(5n+4) {
+        animation-duration: 2.05s;
+      }
+    }
+    path:nth-child(2) {
+      animation: $animation-logo-circle;
     }
   }
 
@@ -75,6 +89,45 @@ $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 fo
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes logo-circle {
+  from {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  51% {
+    opacity: 0;
+  }
+  52% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0;
+  }
+  56% {
+    opacity: 1;
+  }
+  61% {
+    opacity: 0;
+  }
+  62% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes svg-background {
+  from {
+    transform: translate(-30%, 25%) rotate(0);
+  }
+  to {
+    transform: translate(25%, -50%) rotate(180deg);
   }
 }
 

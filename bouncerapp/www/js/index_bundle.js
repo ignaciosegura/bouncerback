@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 124);
+/******/ 	return __webpack_require__(__webpack_require__.s = 126);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4910,7 +4910,7 @@ if (process.env.NODE_ENV !== "production" &&
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(50), __webpack_require__(123)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3), __webpack_require__(50), __webpack_require__(125)(module)))
 
 /***/ }),
 /* 8 */
@@ -7008,10 +7008,6 @@ var _gamebeaten = __webpack_require__(60);
 
 var _gamebeaten2 = _interopRequireDefault(_gamebeaten);
 
-var _footer = __webpack_require__(54);
-
-var _footer2 = _interopRequireDefault(_footer);
-
 var _phonegapservice = __webpack_require__(66);
 
 var _phonegapservice2 = _interopRequireDefault(_phonegapservice);
@@ -7110,8 +7106,7 @@ var Index = function (_React$Component) {
             _react2.default.createElement(_reactRouterDom.Route, { path: '*', component: _maintitle2.default }),
             '} />'
           )
-        ),
-        _react2.default.createElement(_footer2.default, null)
+        )
       );
     }
   }]);
@@ -7123,7 +7118,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _mobxReact.Provider,
   { GameShop: _gameshop2.default, SystemShop: _systemshop2.default, TimeShop: _timeshop2.default },
   _react2.default.createElement(Index, null)
-), document.getElementById('content'));
+), document.getElementsByTagName('body')[0]);
 
 /***/ }),
 /* 18 */
@@ -7480,7 +7475,7 @@ var levelList = [{}, // Level Zero does not exist in real game, only on tutorial
     signature: 4
   },
   sound: {
-    track: __webpack_require__(132)
+    track: __webpack_require__(84)
   },
   atomSpeed: 4,
   atomList: [{ t: 0, b: 0, dir: 'left' }, { t: 6, b: 0, dir: 'left' }, { t: 15, b: 0.25 }, { t: 19, b: 3.5, dir: 'right' }, { t: 21, b: 2 }, { t: 23, b: 2.75 }, { t: 27, b: 3, dir: 'right' }, { t: 33, b: 1, dir: 'left' }, { t: 43, b: 0.75 }, { t: 54, b: 3.25 }]
@@ -7495,7 +7490,7 @@ var levelList = [{}, // Level Zero does not exist in real game, only on tutorial
     signature: 4
   },
   sound: {
-    track: __webpack_require__(85)
+    track: __webpack_require__(86)
   },
   atomSpeed: 4,
   atomList: [{ t: 0, b: 0, dir: 'right' }, { t: 4, b: 0, dir: 'right' }, { t: 6, b: 1.5 }, { t: 8, b: 3.5 }, { t: 9, b: 1.5 }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
@@ -7510,7 +7505,7 @@ var levelList = [{}, // Level Zero does not exist in real game, only on tutorial
     signature: 4
   },
   sound: {
-    track: __webpack_require__(84)
+    track: __webpack_require__(85)
   },
   atomSpeed: 2,
   atomList: [{ t: 0, b: 0, dir: 'left' }, { t: 4, b: 0, dir: 'right' }, { t: 6, b: 1.5 }, { t: 8, b: 3.5, dir: 'left' }, { t: 9, b: 1.5, dir: 'right' }, { t: 11, b: 2.75 }, { t: 13, b: 1 }, { t: 16, b: 0.5 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 24, b: 2.5 }]
@@ -7525,7 +7520,7 @@ var levelList = [{}, // Level Zero does not exist in real game, only on tutorial
     signature: 3
   },
   sound: {
-    track: __webpack_require__(86)
+    track: __webpack_require__(87)
   },
   atomSpeed: 3,
   atomList: [{ t: 0, b: 0, dir: 'right' }, { t: 3, b: 0, dir: 'right' }, { t: 5, b: 0 }, { t: 7, b: 0 }, { t: 11, b: 1.5 }, { t: 13, b: 2 }, { t: 16, b: 1 }, { t: 19, b: 3.25 }, { t: 21, b: 0.75 }, { t: 23, b: 0.5 }, { t: 25, b: 1.25 }]
@@ -10011,7 +10006,7 @@ var Footer = function (_React$Component) {
           { rel: "nofollow", href: "https://github.com/ignaciosegura/bouncerback", target: "_blank" },
           "Bouncerback on GitHub"
         ),
-        "\xA0/\xA0v.1.0.3"
+        "\xA0/\xA0v.1.1.1"
       );
     }
   }]);
@@ -10926,6 +10921,14 @@ var _screenmenu = __webpack_require__(25);
 
 var _screenmenu2 = _interopRequireDefault(_screenmenu);
 
+var _footer = __webpack_require__(54);
+
+var _footer2 = _interopRequireDefault(_footer);
+
+var _svgInlineReact = __webpack_require__(122);
+
+var _svgInlineReact2 = _interopRequireDefault(_svgInlineReact);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10934,8 +10937,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* Global require */
 
-
-var GameLogo = __webpack_require__(122);
 
 var MainTitle = function (_React$Component) {
   _inherits(MainTitle, _React$Component);
@@ -10947,13 +10948,23 @@ var MainTitle = function (_React$Component) {
   }
 
   _createClass(MainTitle, [{
+    key: 'generateCanvas',
+    value: function generateCanvas() {}
+  }, {
     key: 'render',
     value: function render() {
+      var GameLogo = __webpack_require__(121);
+
       return _react2.default.createElement(
         'div',
-        { id: 'main-title' },
-        _react2.default.createElement('img', { id: 'game-logo', src: GameLogo }),
-        _react2.default.createElement(_screenmenu2.default, null)
+        null,
+        _react2.default.createElement(
+          'div',
+          { id: 'main-title' },
+          _react2.default.createElement(_svgInlineReact2.default, { className: 'main-logo', src: GameLogo, raw: true }),
+          _react2.default.createElement(_screenmenu2.default, null)
+        ),
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -11022,16 +11033,26 @@ var Background = function () {
     value: function renderProperState() {
       var currentScreen = window.location.pathname;
       var currentLives = _gameshop2.default.lives;
+      var newState = void 0;
 
-      if (currentScreen === '/game' && currentLives === 1) {
-        this.changeState('danger');
-      } else if (currentScreen === '/game-over') {
-        this.changeState('game-over');
-      } else if (currentScreen === '/game-beaten') {
-        this.changeState('beaten');
-      } else {
-        this.changeState('neutral');
+      switch (currentScreen) {
+        case '/game':
+          if (currentLives === 1) newState = 'danger';
+          break;
+        case '/game-over':
+          newState = 'game-over';
+          break;
+        case '/game-beaten':
+          newState = 'beaten';
+          break;
+        case '/':
+          newState = 'intro';
+          break;
+        default:
+          newState = 'neutral';
       }
+
+      this.changeState(newState);
     }
   }]);
 
@@ -11424,7 +11445,7 @@ var _soundfx = __webpack_require__(18);
 
 var _soundfx2 = _interopRequireDefault(_soundfx);
 
-var _transformationMatrix = __webpack_require__(121);
+var _transformationMatrix = __webpack_require__(124);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11738,22 +11759,27 @@ module.exports = __webpack_require__.p + "./res/sound/launch.mp3";
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "./res/sound/chronosaedron.mp3";
+module.exports = __webpack_require__.p + "./res/sound/ambient_house_1.mp3";
 
 /***/ }),
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "./res/sound/femtocosmos.mp3";
+module.exports = __webpack_require__.p + "./res/sound/chronosaedron.mp3";
 
 /***/ }),
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__.p + "./res/sound/femtocosmos.mp3";
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports = __webpack_require__.p + "./res/sound/mekanomancer.mp3";
 
 /***/ }),
-/* 87 */,
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34176,19 +34202,177 @@ assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default?Z.default:Z;
 
 /***/ }),
 /* 121 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 965.894 82.105\" enable-background=\"new 0 0 965.894 82.105\" xml:space=\"preserve\"><g id=\"Capa_1\"><g><path d=\"M0,3.601h9.201c14.201,0,27.602,3.7,27.602,20.701c0,5.5-3,11.9-8.101,14.301v0.2c8.901,1.6,15.101,10.301,15.101,19.101 c0,15.102-12.901,21.102-26.202,21.102H0V3.601z M9.4,37.002h2.4c8.9,0,16.201-1.8,16.201-12.601c0-10.601-7.201-12.4-16.001-12.4 H9.4V37.002z M9.4,70.604h7.201c8.701,0,17.801-2.601,17.801-13.301c0-10.601-10.801-12.801-19.201-12.801H9.4V70.604z\"></path><path d=\"M158.003,41.303c0,22.401-17.701,39.302-39.502,39.302c-21.801,0-39.502-16.9-39.502-39.302 C78.999,19.701,96.9,2,118.501,2C140.103,2,158.003,19.701,158.003,41.303z M148.603,41.303c0-16.602-12.401-30.502-30.102-30.502 c-17.701,0-30.102,13.9-30.102,30.502c0,17.201,13.801,30.502,30.102,30.502C134.802,71.805,148.603,58.504,148.603,41.303z M138.501,41.303c0-10.886-8.239-20-20-20c-11.761,0-20,9.114-20,20c0,11.279,9.169,20,20,20 C129.332,61.303,138.501,52.581,138.501,41.303z\"></path><path d=\"M205.198,23.603v24.5c0,12.301,3.7,23.702,18.201,23.702s18.201-11.401,18.201-23.702v-24.5h9.4v27.7 c0,16.602-10.3,29.302-27.602,29.302c-17.301,0-27.602-12.7-27.602-29.302v-27.7H205.198z\"></path><path d=\"M293.097,0L349.7,59.304V23.603h9.4v58.503l-56.603-59.304v36.201h-9.401V0z\"></path><path d=\"M650.895,3.601h9.2c14.201,0,27.602,3.7,27.602,20.701c0,5.5-3,11.9-8.101,14.301v0.2 c8.901,1.6,15.102,10.301,15.102,19.101c0,15.102-12.901,21.102-26.202,21.102h-17.601V3.601z M660.295,37.002h2.4 c8.9,0,16.201-1.8,16.201-12.601c0-10.601-7.201-12.4-16.001-12.4h-2.601V37.002z M660.295,70.604h7.2 c8.701,0,17.802-2.601,17.802-13.301c0-10.601-10.801-12.801-19.201-12.801h-5.801V70.604z\"></path><path d=\"M952.993,3.601h12.301l-33.902,33.901l34.503,41.503h-12.701l-28.401-35.103l-3.801,3.601v31.502h-9.4V3.601h9.4v32.702 L952.993,3.601z\"></path><path d=\"M438.947,71.951c-1,0.032-1.104,0.054-1.668,0.054c-16.801,0-29.593-14.102-29.593-30.603 c0-16.701,12.887-30.802,29.788-30.802c0.494,0,1.472,0.016,1.472,0.041V2.018c0-0.003-0.373-0.018-0.567-0.018 c-22.201,0-40.094,17.401-40.094,39.702c0,21.802,17.788,38.902,39.289,38.902c0.456,0,1.372-0.031,1.372-0.049V71.951z\"></path><path d=\"M870.947,71.979c0,0.014-0.509,0.026-0.877,0.026c-16.801,0-29.49-14.102-29.49-30.603 c0-16.701,12.733-30.802,29.634-30.802c0.299,0,0.732,0.011,0.732,0.021V2c-22,0-39.879,17.401-39.879,39.702 c0,21.802,17.689,38.902,39.191,38.902c0.263,0,0.688-0.022,0.688-0.028V71.979z\"></path><g><rect x=\"481.731\" y=\"3.341\" width=\"40.503\" height=\"8.66\"></rect><rect x=\"481.731\" y=\"36.713\" width=\"40.503\" height=\"8.66\"></rect><rect x=\"481.731\" y=\"70.085\" width=\"40.503\" height=\"8.66\"></rect></g><path d=\"M745.592,60.104l-8.601,18.901h-10.101l36.002-78.604l36.002,78.604h-10.101l-8.6-18.901H745.592z M762.893,21.001 l-13.4,30.502h26.802L762.893,21.001z\"></path><g><path d=\"M609.049,79.005h-11.4l-22.201-31.902h-3.9v31.902h-9.4V3.601h11.4c6.701,0,13.9,0.1,19.901,3.5 c6.3,3.7,9.9,10.801,9.9,18.001c0,10.801-7.2,19.801-18.101,21.102L609.049,79.005z M571.547,39.303h3 c9.601,0,20.002-1.801,20.002-13.801c0-11.801-11.201-13.501-20.502-13.501h-2.5V39.303z\"></path></g></g></g><g id=\"referencia\"></g><g id=\"Logo\"></g></svg>"
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(4);
+
+var _util = __webpack_require__(123);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var process = process || { env: {} };
+
+var InlineSVG = function (_React$Component) {
+    _inherits(InlineSVG, _React$Component);
+
+    function InlineSVG() {
+        _classCallCheck(this, InlineSVG);
+
+        return _possibleConstructorReturn(this, (InlineSVG.__proto__ || Object.getPrototypeOf(InlineSVG)).apply(this, arguments));
+    }
+
+    _createClass(InlineSVG, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(_ref) {
+            var children = _ref.children;
+
+            if ("production" !== process.env.NODE_ENV && children != null) {
+                console.info('<InlineSVG />: `children` prop will be ignored.');
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var Element = void 0,
+                __html = void 0,
+                svgProps = void 0;
+
+            var _props = this.props,
+                element = _props.element,
+                raw = _props.raw,
+                src = _props.src,
+                otherProps = _objectWithoutProperties(_props, ['element', 'raw', 'src']);
+
+            if (raw === true) {
+                Element = 'svg';
+                svgProps = (0, _util.extractSVGProps)(src);
+                __html = (0, _util.getSVGFromSource)(src).innerHTML;
+            }
+            __html = __html || src;
+            Element = Element || element;
+            svgProps = svgProps || {};
+
+            return _react2.default.createElement(Element, _extends({}, svgProps, otherProps, { src: null, children: null,
+                dangerouslySetInnerHTML: { __html: __html } }));
+        }
+    }]);
+
+    return InlineSVG;
+}(_react2.default.Component);
+
+exports.default = InlineSVG;
+
+
+InlineSVG.defaultProps = {
+    element: 'i',
+    raw: false,
+    src: ''
+};
+
+InlineSVG.propTypes = {
+    src: _propTypes.string.isRequired,
+    element: _propTypes.string,
+    raw: _propTypes.bool
+};
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.convertReactSVGDOMProperty = convertReactSVGDOMProperty;
+exports.startsWith = startsWith;
+exports.serializeAttrs = serializeAttrs;
+exports.getSVGFromSource = getSVGFromSource;
+exports.extractSVGProps = extractSVGProps;
+// Transform DOM prop/attr names applicable to `<svg>` element but react-limited
+
+function convertReactSVGDOMProperty(str) {
+    return str.replace(/[-|:]([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+    });
+}
+
+function startsWith(str, substring) {
+    return str.indexOf(substring) === 0;
+}
+
+var DataPropPrefix = 'data-';
+// Serialize `Attr` objects in `NamedNodeMap`
+function serializeAttrs(map) {
+    var ret = {};
+    for (var prop, i = 0; i < map.length; i++) {
+        var key = map[i].name;
+        if (key == "class") {
+            prop = "className";
+        } else if (!startsWith(key, DataPropPrefix)) {
+            prop = convertReactSVGDOMProperty(key);
+        } else {
+            prop = key;
+        }
+
+        ret[prop] = map[i].value;
+    }
+    return ret;
+}
+
+function getSVGFromSource(src) {
+    var svgContainer = document.createElement('div');
+    svgContainer.innerHTML = src;
+    var svg = svgContainer.firstElementChild;
+    svg.remove ? svg.remove() : svgContainer.removeChild(svg); // deref from parent element
+    return svg;
+}
+
+// get <svg /> element props
+function extractSVGProps(src) {
+    var map = getSVGFromSource(src).attributes;
+    return map.length > 0 ? serializeAttrs(map) : null;
+}
+
+/***/ }),
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(r,n){ true?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.TransformationMatrix=n():r.TransformationMatrix=n()}(window,function(){return function(r){var n={};function t(e){if(n[e])return n[e].exports;var o=n[e]={i:e,l:!1,exports:{}};return r[e].call(o.exports,o,o.exports,t),o.l=!0,o.exports}return t.m=r,t.c=n,t.d=function(r,n,e){t.o(r,n)||Object.defineProperty(r,n,{configurable:!1,enumerable:!0,get:e})},t.r=function(r){Object.defineProperty(r,"__esModule",{value:!0})},t.n=function(r){var n=r&&r.__esModule?function(){return r.default}:function(){return r};return t.d(n,"a",n),n},t.o=function(r,n){return Object.prototype.hasOwnProperty.call(r,n)},t.p="",t(t.s=0)}([function(r,n,t){"use strict";function e(r,n){return{x:r.a*n.x+r.c*n.y+r.e,y:r.b*n.x+r.d*n.y+r.f}}function o(r,n){return n.map(function(n){return e(r,n)})}function u(r){return{a:parseFloat(r.a),b:parseFloat(r.b),c:parseFloat(r.c),d:parseFloat(r.d),e:parseFloat(r.e),f:parseFloat(r.f)}}t.r(n);var a=/^matrix\(\s*([0-9_\+\-\.e]+)\s*,\s*([0-9_\+\-\.e]+)\s*,\s*([0-9_\+\-\.e]+)\s*,\s*([0-9_\+\-\.e]+)\s*,\s*([0-9_\+\-\.e]+)\s*,\s*([0-9_\+\-\.e]+)\s*\)$/i;function i(r){var n=r.match(a);if(null===n||n.length<7)throw new Error("'"+r+"' is not a matrix");return{a:parseFloat(n[1]),b:parseFloat(n[2]),c:parseFloat(n[3]),d:parseFloat(n[4]),e:parseFloat(n[5]),f:parseFloat(n[6])}}function f(){return{a:1,c:0,e:0,b:0,d:1,f:0}}function c(r){var n=r.a,t=r.b,e=r.c,o=r.d,u=r.e,a=r.f,i=n*o-t*e;return{a:o/i,b:t/-i,c:e/-i,d:n/i,e:(o*u-e*a)/-i,f:(t*u-n*a)/i}}var s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(r){return typeof r}:function(r){return r&&"function"==typeof Symbol&&r.constructor===Symbol&&r!==Symbol.prototype?"symbol":typeof r},d=function(r){return"number"==typeof r&&!isNaN(r)&&isFinite(r)},l=function(r){return null!=r&&"object"===(void 0===r?"undefined":s(r))};function p(r){return l(r)&&r.hasOwnProperty("a")&&d(r.a)&&r.hasOwnProperty("b")&&d(r.b)&&r.hasOwnProperty("c")&&d(r.c)&&r.hasOwnProperty("d")&&d(r.d)&&r.hasOwnProperty("e")&&d(r.e)&&r.hasOwnProperty("f")&&d(r.f)}function y(r){return void 0===r}function b(r){return{a:1,c:0,e:r,b:0,d:1,f:arguments.length>1&&void 0!==arguments[1]?arguments[1]:0}}function v(){for(var r=arguments.length,n=Array(r),t=0;t<r;t++)n[t]=arguments[t];var e,o=function(r,n){return{a:r.a*n.a+r.c*n.b,c:r.a*n.c+r.c*n.d,e:r.a*n.e+r.c*n.f+r.e,b:r.b*n.a+r.d*n.b,d:r.b*n.c+r.d*n.d,f:r.b*n.e+r.d*n.f+r.f}};switch((n=Array.isArray(n[0])?n[0]:n).length){case 0:throw new Error("no matrices provided");case 1:return n[0];case 2:return o(n[0],n[1]);default:var u=(e=n,Array.isArray(e)?e:Array.from(e)),a=u[0],i=u[1],f=u.slice(2),c=o(a,i);return v.apply(void 0,[c].concat(function(r){if(Array.isArray(r)){for(var n=0,t=Array(r.length);n<r.length;n++)t[n]=r[n];return t}return Array.from(r)}(f)))}}var m=Math.cos,h=Math.sin,x=Math.PI;function w(r,n,t){var e=m(r),o=h(r),u={a:e,c:-o,e:0,b:o,d:e,f:0};return y(n)||y(t)?u:v([b(n,t),u,b(-n,-t)])}function g(r){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:void 0,t=arguments.length>2&&void 0!==arguments[2]?arguments[2]:void 0;return w(r*x/180,n,t)}function F(r){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:void 0;return y(n)&&(n=r),{a:r,c:0,e:0,b:0,d:n,f:0}}function P(r,n){return{a:1,c:r,e:0,b:n,d:1,f:0}}function A(r){return S(r)}function O(r){return S(r)}function S(r){return"matrix("+r.a+","+r.b+","+r.c+","+r.d+","+r.e+","+r.f+")"}t.d(n,"applyToPoint",function(){return e}),t.d(n,"applyToPoints",function(){return o}),t.d(n,"fromObject",function(){return u}),t.d(n,"fromString",function(){return i}),t.d(n,"identity",function(){return f}),t.d(n,"inverse",function(){return c}),t.d(n,"isAffineMatrix",function(){return p}),t.d(n,"rotate",function(){return w}),t.d(n,"rotateDEG",function(){return g}),t.d(n,"scale",function(){return F}),t.d(n,"shear",function(){return P}),t.d(n,"toCSS",function(){return A}),t.d(n,"toSVG",function(){return O}),t.d(n,"toString",function(){return S}),t.d(n,"transform",function(){return v}),t.d(n,"translate",function(){return b})}])});
 //# sourceMappingURL=transformation-matrix.min.js.map
 
 /***/ }),
-/* 122 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9Ii0xNjMgMzQ3LjQgOTUxLjUgMTA3LjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgLTE2MyAzNDcuNCA5NTEuNSAxMDcuNjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7fQ0KCS5zdDF7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU+DQo8dGl0bGU+Z2FtZV9sb2dvPC90aXRsZT4NCjxnIGNsYXNzPSJzdDAiPg0KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0tMTUwLjIsMzY2LjloNTMuOGwxMC44LDEwLjh2MjEuNWgtMTAuOHYxMC44aDEwLjh2MjEuNWwtMTAuOCwxMC44aC01My44VjM2Ni45eiBNLTEyOC43LDM3Ny42djIxLjVoMjEuNQ0KCQl2LTIxLjVILTEyOC43eiBNLTEyOC43LDQwOS45djIxLjVoMjEuNXYtMjEuNUgtMTI4Ljd6Ii8+DQoJPHBhdGggY2xhc3M9InN0MSIgZD0iTS02NC4xLDM3Ny42bDEwLjgtMTAuOGg0My4xbDEwLjgsMTAuOHY1My44bC0xMC44LDEwLjhoLTQzLjFsLTEwLjgtMTAuOFYzNzcuNnogTS00Mi42LDM3Ny42djUzLjhILTIxdi01My44DQoJCUgtNDIuNnoiLz4NCgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjIsMzY2LjloMjEuNXY2NC42aDIxLjV2LTY0LjZoMjEuNXY2NC42bC0xMC44LDEwLjhIMzIuOEwyMiw0MzEuNVYzNjYuOXoiLz4NCgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA4LjIsMzY2LjloMjEuNXYxMC44bDIxLjUsMjEuNXYtMzIuM2gyMS41djc1LjRoLTIxLjV2LTIxLjVsLTIxLjUtMjEuNXY0My4xaC0yMS41VjM2Ni45eiIvPg0KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xOTQuMywzNzcuNmwxMC44LTEwLjhoNDMuMWwxMC44LDEwLjh2MTAuOGgtMjEuNXYtMTAuOGgtMjEuNXY1My44aDIxLjV2LTEwLjhoMjEuNXYxMC44bC0xMC44LDEwLjhoLTQzLjENCgkJbC0xMC44LTEwLjhWMzc3LjZ6Ii8+DQoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTI4MC40LDM2Ni45SDM0NXYxMC44SDMwMnYyMS41aDIxLjV2MTAuOEgzMDJ2MjEuNUgzNDV2MTAuOGgtNjQuNlYzNjYuOXoiLz4NCgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMzY2LjYsMzY2LjloNTMuOGwxMC44LDEwLjh2MjEuNWwtMTAuOCwxMC44aC0xMC44bDEwLjgsMTAuOGwxMC44LDEwLjh2MTAuOGgtMjEuNXYtMTAuOGwtMTAuOC0xMC44aC0xMC44DQoJCXYyMS41aC0yMS41VjM2Ni45eiBNMzg4LjEsMzc3LjZ2MjEuNWgyMS41di0yMS41SDM4OC4xeiIvPg0KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik00NTIuNywzNjYuOWg1My44bDEwLjgsMTAuOHYyMS41aC0xMC44djEwLjhoMTAuOHYyMS41bC0xMC44LDEwLjhoLTUzLjhWMzY2Ljl6IE00NzQuMiwzNzcuNnYyMS41aDIxLjV2LTIxLjUNCgkJSDQ3NC4yeiBNNDc0LjIsNDA5Ljl2MjEuNWgyMS41di0yMS41SDQ3NC4yeiIvPg0KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik01MzguOCwzODguNGwyMS41LTIxLjVoMjEuNWwyMS41LDIxLjV2NTMuOGgtMjEuNXYtMzIuM2gtMjEuNXYzMi4zaC0yMS41VjM4OC40eiBNNTYwLjQsMzg4LjR2MTAuOGgyMS41DQoJCXYtMTAuOEg1NjAuNHoiLz4NCgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNNjI1LDM3Ny42bDEwLjgtMTAuOGg0My4xbDEwLjgsMTAuOHYxMC44SDY2OHYtMTAuOGgtMjEuNXY1My44SDY2OHYtMTAuOGgyMS41djEwLjhsLTEwLjgsMTAuOGgtNDMuMQ0KCQlMNjI1LDQzMS41VjM3Ny42eiIvPg0KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik03MTEuMSwzNjYuOWgyMS41djIxLjVoMTAuOGwxMC44LTEwLjh2LTEwLjhoMjEuNXYxMC44bC0xMC44LDEwLjhsLTEwLjgsMTAuOHYxMC44bDEwLjgsMTAuOGwxMC44LDEwLjh2MTAuOA0KCQloLTIxLjV2LTEwLjhsLTEwLjgtMTAuOGgtMTAuOHYyMS41aC0yMS41VjM2Ni45eiIvPg0KPC9nPg0KPC9zdmc+DQo="
-
-/***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports) {
 
 module.exports = function(originalModule) {
@@ -34218,24 +34402,11 @@ module.exports = function(originalModule) {
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(17);
 
-
-/***/ }),
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "./res/sound/ambient_house_1.mp3";
 
 /***/ })
 /******/ ]);

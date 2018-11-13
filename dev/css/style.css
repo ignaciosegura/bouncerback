@@ -141,6 +141,11 @@ body {
   body.beaten {
     background-color: #33f; }
 
+svg.svg-background {
+  position: relative;
+  width: 150%;
+  animation: svg-background 20s ease-in-out 0s 999 alternate; }
+
 #main-title {
   position: absolute;
   font-size: 14px;
@@ -152,22 +157,27 @@ body {
     display: block;
     width: 500px;
     max-width: 75vw;
-    margin: 0 auto 4em;
+    margin: 0 auto 3em;
     animation: main-logo 2s cubic-bezier(0.19, 0.05, 0, 1) 0s 1 forwards; }
     @media (min-width: 800px) {
       #main-title svg.main-logo {
         width: 900px; } }
     @media (min-width: 1200px) {
       #main-title svg.main-logo {
+        margin-bottom: 4em;
         width: 1200px; } }
     #main-title svg.main-logo path, #main-title svg.main-logo rect, #main-title svg.main-logo circle {
       animation: logo-letters 2s linear 0s 1 forwards; }
-      #main-title svg.main-logo path:nth-child(4n+1), #main-title svg.main-logo rect:nth-child(4n+1), #main-title svg.main-logo circle:nth-child(4n+1) {
+      #main-title svg.main-logo path:nth-child(5n+1), #main-title svg.main-logo rect:nth-child(5n+1), #main-title svg.main-logo circle:nth-child(5n+1) {
         animation-duration: 1.85s; }
-      #main-title svg.main-logo path:nth-child(4n+2), #main-title svg.main-logo rect:nth-child(4n+2), #main-title svg.main-logo circle:nth-child(4n+2) {
+      #main-title svg.main-logo path:nth-child(5n+2), #main-title svg.main-logo rect:nth-child(5n+2), #main-title svg.main-logo circle:nth-child(5n+2) {
         animation-duration: 1.9s; }
-      #main-title svg.main-logo path:nth-child(4n+3), #main-title svg.main-logo rect:nth-child(4n+3), #main-title svg.main-logo circle:nth-child(4n+3) {
+      #main-title svg.main-logo path:nth-child(5n+3), #main-title svg.main-logo rect:nth-child(5n+3), #main-title svg.main-logo circle:nth-child(5n+3) {
         animation-duration: 1.95s; }
+      #main-title svg.main-logo path:nth-child(5n+4), #main-title svg.main-logo rect:nth-child(5n+4), #main-title svg.main-logo circle:nth-child(5n+4) {
+        animation-duration: 2.05s; }
+    #main-title svg.main-logo path:nth-child(2) {
+      animation: logo-circle 3s linear 0s 1 forwards; }
   #main-title .screen-menu a {
     color: black;
     border-color: black;
@@ -190,6 +200,32 @@ body {
     opacity: 0.9; }
   to {
     opacity: 1; } }
+
+@keyframes logo-circle {
+  from {
+    opacity: 0.5; }
+  50% {
+    opacity: 0.9; }
+  51% {
+    opacity: 0; }
+  52% {
+    opacity: 1; }
+  55% {
+    opacity: 0; }
+  56% {
+    opacity: 1; }
+  61% {
+    opacity: 0; }
+  62% {
+    opacity: 1; }
+  to {
+    opacity: 1; } }
+
+@keyframes svg-background {
+  from {
+    transform: translate(-30%, 25%) rotate(0); }
+  to {
+    transform: translate(25%, -50%) rotate(180deg); } }
 
 @keyframes main-title-text-entry {
   from {
@@ -335,7 +371,7 @@ body {
 footer {
   font-family: "didact-gothic", Helvetica, Arial, sans-serif;
   font-size: 10.5px;
-  color: white;
+  color: black;
   position: fixed;
   bottom: 5px;
   width: 100%;
@@ -345,7 +381,7 @@ footer {
     footer {
       font-size: 14px; } }
   footer a {
-    color: white;
+    color: black;
     text-decoration: none;
     cursor: pointer; }
     footer a:hover {

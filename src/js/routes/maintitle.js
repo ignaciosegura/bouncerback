@@ -13,9 +13,11 @@ class MainTitle extends React.Component {
   }
 
   render() {
+    let SVGBackground = require('../../img/title_screen_gamesurface.svg');
     let GameLogo = require('../../img/game_logo_v2.svg');
 
     return <div>
+      <InlineSVG className="svg-background" src={SVGBackground} raw={true} />
       <div id="main-title">
         <InlineSVG className="main-logo" src={GameLogo} raw={true} />
         <ScreenMenu />

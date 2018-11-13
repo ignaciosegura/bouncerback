@@ -89,7 +89,7 @@ html, body {
   background: black;
   color: white;
   font-family: "c64-angled", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   margin: 0;
   padding: 0;
@@ -109,14 +109,17 @@ html, body {
                                   supported by Chrome and Opera */ }
   @media (min-width: 800px) {
     html, body {
-      font-size: 24px; } }
+      font-size: 17.5px; } }
+  @media (min-width: 1200px) {
+    html, body {
+      font-size: 21px; } }
 
 h1 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal; }
   @media (min-width: 800px) {
     h1 {
-      font-size: 24px; } }
+      font-size: 21px; } }
 
 body {
   position: absolute;
@@ -127,6 +130,8 @@ body {
   overflow: hidden;
   background: black;
   transition: background-color linear 1s; }
+  body.intro {
+    background: white; }
   body.neutral {
     background: black; }
   body.danger {
@@ -138,19 +143,84 @@ body {
 
 #main-title {
   position: absolute;
-  font-size: 16px;
+  font-size: 14px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
-  #main-title img {
+  #main-title svg.main-logo {
     display: block;
-    width: 300px;
+    width: 500px;
     max-width: 75vw;
-    margin: 0 auto 2em; }
+    margin: 0 auto 3em;
+    animation: main-logo 2s cubic-bezier(0.19, 0.05, 0, 1) 0s 1 forwards; }
     @media (min-width: 800px) {
-      #main-title img {
-        width: 500px; } }
+      #main-title svg.main-logo {
+        width: 900px; } }
+    @media (min-width: 1200px) {
+      #main-title svg.main-logo {
+        margin-bottom: 4em;
+        width: 1200px; } }
+    #main-title svg.main-logo path, #main-title svg.main-logo rect, #main-title svg.main-logo circle {
+      animation: logo-letters 2s linear 0s 1 forwards; }
+      #main-title svg.main-logo path:nth-child(5n+1), #main-title svg.main-logo rect:nth-child(5n+1), #main-title svg.main-logo circle:nth-child(5n+1) {
+        animation-duration: 1.85s; }
+      #main-title svg.main-logo path:nth-child(5n+2), #main-title svg.main-logo rect:nth-child(5n+2), #main-title svg.main-logo circle:nth-child(5n+2) {
+        animation-duration: 1.9s; }
+      #main-title svg.main-logo path:nth-child(5n+3), #main-title svg.main-logo rect:nth-child(5n+3), #main-title svg.main-logo circle:nth-child(5n+3) {
+        animation-duration: 1.95s; }
+      #main-title svg.main-logo path:nth-child(5n+4), #main-title svg.main-logo rect:nth-child(5n+4), #main-title svg.main-logo circle:nth-child(5n+4) {
+        animation-duration: 2.05s; }
+    #main-title svg.main-logo path:nth-child(2) {
+      animation: logo-circle 3s linear 0s 1 forwards; }
+  #main-title .screen-menu a {
+    color: black;
+    border-color: black;
+    animation: main-title-text-entry 0.5s ease-in-out 0s 1 forwards; }
+
+@keyframes main-logo {
+  from {
+    transform: scale(0.85); }
+  to {
+    transform: scale(1); } }
+
+@keyframes logo-letters {
+  from {
+    opacity: 0.5; }
+  84% {
+    opacity: 0.95; }
+  85% {
+    opacity: 0.25; }
+  90% {
+    opacity: 0.9; }
+  to {
+    opacity: 1; } }
+
+@keyframes logo-circle {
+  from {
+    opacity: 0.5; }
+  50% {
+    opacity: 0.9; }
+  51% {
+    opacity: 0; }
+  52% {
+    opacity: 1; }
+  55% {
+    opacity: 0; }
+  56% {
+    opacity: 1; }
+  61% {
+    opacity: 0; }
+  62% {
+    opacity: 1; }
+  to {
+    opacity: 1; } }
+
+@keyframes main-title-text-entry {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 
 #gamesurface {
   width: 100%;
@@ -181,18 +251,20 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150px;
-    height: 150px;
+    width: 80vmin;
+    height: 80vmin;
+    max-width: 70vmin;
+    max-height: 70vmin;
     overflow: visible;
     transform: translate(-50%, -50%); }
-    @media (min-width: 360px) {
-      #gamesurface #zone-wrapper {
-        width: 300px;
-        height: 300px; } }
     @media (min-width: 800px) {
       #gamesurface #zone-wrapper {
-        width: 550px;
-        height: 550px; } }
+        max-width: 70vmin;
+        max-height: 70vmin; } }
+    @media (min-width: 1200px) {
+      #gamesurface #zone-wrapper {
+        max-width: 60vmin;
+        max-height: 60vmin; } }
     #gamesurface #zone-wrapper svg#the-zone {
       width: 100%;
       height: 100%;
@@ -211,23 +283,23 @@ body {
 
 #game-ended-screen {
   position: absolute;
-  font-size: 16px;
+  font-size: 14px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     #game-ended-screen {
-      font-size: 24px; } }
+      font-size: 21px; } }
   #game-ended-screen h1 {
     text-align: center;
     font-weight: normal;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     margin-bottom: 0 0 1em; }
   #game-ended-screen h2 {
     text-align: center;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 10.5px;
     margin-bottom: 3em; }
   #game-ended-screen .screen-menu {
     margin-bottom: 3em; }
@@ -287,8 +359,8 @@ body {
 
 footer {
   font-family: "didact-gothic", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  color: white;
+  font-size: 10.5px;
+  color: black;
   position: fixed;
   bottom: 5px;
   width: 100%;
@@ -296,9 +368,9 @@ footer {
   z-index: 10; }
   @media (min-width: 800px) {
     footer {
-      font-size: 16px; } }
+      font-size: 14px; } }
   footer a {
-    color: white;
+    color: black;
     text-decoration: none;
     cursor: pointer; }
     footer a:hover {
@@ -466,7 +538,7 @@ footer {
     animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
 
 .text {
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   position: absolute;
   top: 60%;
@@ -478,16 +550,18 @@ footer {
   animation: text-entry 0.5s ease-in-out 0s 1 forwards; }
   @media (min-width: 800px) {
     .text {
+      font-size: 16px; } }
+  @media (min-width: 1200px) {
+    .text {
       font-size: 24px; } }
   .text.fadeout {
     animation: text-removal 1.5s normal ease-in-out 0s 1 forwards; }
   .text.title {
     top: 30%;
-    font-size: 24px; }
+    font-size: 1.5em; }
     @media (min-width: 800px) {
       .text.title {
-        top: 35%;
-        font-size: 44px; } }
+        top: 35%; } }
   .text.ready {
     cursor: pointer;
     top: 50%;

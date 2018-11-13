@@ -3,7 +3,7 @@
 footer {
   font-family: $sans-font-family;
   font-size: $default-font-size * 0.75;
-  color: white;
+  color: black;
   position: fixed;
   bottom: 5px;
   width: 100%;
@@ -15,7 +15,7 @@ footer {
   }
 
   a {
-    color: white;
+    color: black;
     text-decoration: none;
     cursor: pointer;
 
