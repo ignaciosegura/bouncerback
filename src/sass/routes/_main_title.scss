@@ -10,6 +10,16 @@ svg.svg-background {
   position: relative;
   width: 150%;
   animation: $animation-svg-background;
+
+  circle {
+    animation: $animation-svg-background;
+    animation-name: svg-background-atom;
+    animation-timing-function: linear;
+
+    &:last-child {
+      animation-direction: alternate-reverse;
+    }
+  }
 }
 
 #main-title {
@@ -128,6 +138,21 @@ svg.svg-background {
   }
   to {
     transform: translate(25%, -50%) rotate(180deg);
+  }
+}
+
+@keyframes svg-background-atom {
+  from {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-25%, -39%);
+  }
+  75% {
+    transform: translate(25%, 39%);
+  }
+  to {
+    transform: translate(0, 0);
   }
 }
 
