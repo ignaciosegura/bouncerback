@@ -8,6 +8,7 @@
     "build-development": "NODE_ENV=development webpack",
     "watch-development": "NODE_ENV=development webpack -w",
     "deploy": "node deploy",
+    "build-then-deploy": "npm run build-production && npm run deploy",
     "phonegap-build-android-remote": "pgb login nacho@isegura.es && pgb update 3197157 && pgb build 3197157 android && pgb download 3197157 android ./builds",
     "phonegap-build-android-local": "npm run generate-icons && npm run copy-to-phonegap && cd ./bouncerapp && cordova build android",
     "copy-to-phonegap": "cp -a ./dev/. ./bouncerapp/www/",

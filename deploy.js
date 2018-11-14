@@ -7,6 +7,7 @@ var config = {
   user: "bouncerback@niknak.es", // optional, prompted if none given. Password is 101.
   host: "bouncerback.niknak.es",
   port: 21,
+  // password is an expendable room
   localRoot: __dirname + '/prod',
   remoteRoot: '/',
   include: ['*', '**/*'],      // this would upload everything except dot files
