@@ -11,6 +11,7 @@ import Chrono from '../chrono.js';
 import LivesCounter from '../livescounter.js';
 import SystemMenu from '../systemmenu.js';
 import GameEngine from '../gameengine.js';
+import SoundtrackService from '../services/soundtrackservice.js';
 
 import GameShop from '../stores/gameshop.js';
 import SystemShop from '../stores/systemshop.js';
@@ -26,6 +27,7 @@ class GameSurface extends React.Component {
   }
 
   componentDidMount() {
+    this.stopSoundtrack();
     if (this.engine !== null) return;
 
     if (this.props.gameType === 'game' && this.props.GameShop.level === 0) {
@@ -48,6 +50,10 @@ class GameSurface extends React.Component {
 
   preventDefault(e) {
     e.preventDefault();
+  }
+
+  stopSoundtrack() {
+    SoundtrackService.fadeOut();
   }
 
   render() {
