@@ -141,6 +141,17 @@ body {
   body.beaten {
     background-color: #33f; }
 
+svg.svg-background {
+  position: relative;
+  width: 150%;
+  animation: svg-background 20s ease-in-out 0s 999 alternate; }
+  svg.svg-background circle {
+    animation: svg-background 20s ease-in-out 0s 999 alternate;
+    animation-name: svg-background-atom;
+    animation-timing-function: linear; }
+    svg.svg-background circle:last-child {
+      animation-direction: alternate-reverse; }
+
 #main-title {
   position: absolute;
   font-size: 14px;
@@ -215,6 +226,22 @@ body {
     opacity: 1; }
   to {
     opacity: 1; } }
+
+@keyframes svg-background {
+  from {
+    transform: translate(-30%, 25%) rotate(0); }
+  to {
+    transform: translate(25%, -50%) rotate(180deg); } }
+
+@keyframes svg-background-atom {
+  from {
+    transform: translate(0, 0); }
+  25% {
+    transform: translate(-25%, -39%); }
+  75% {
+    transform: translate(25%, 39%); }
+  to {
+    transform: translate(0, 0); } }
 
 @keyframes main-title-text-entry {
   from {

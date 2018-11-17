@@ -10006,7 +10006,7 @@ var Footer = function (_React$Component) {
           { rel: "nofollow", href: "https://github.com/ignaciosegura/bouncerback", target: "_blank" },
           "Bouncerback on GitHub"
         ),
-        "\xA0/\xA0v.1.1.1"
+        "\xA0/\xA0v.1.2"
       );
     }
   }]);
@@ -10718,6 +10718,10 @@ var _gameengine = __webpack_require__(56);
 
 var _gameengine2 = _interopRequireDefault(_gameengine);
 
+var _soundtrackservice = __webpack_require__(37);
+
+var _soundtrackservice2 = _interopRequireDefault(_soundtrackservice);
+
 var _gameshop = __webpack_require__(6);
 
 var _gameshop2 = _interopRequireDefault(_gameshop);
@@ -10751,6 +10755,7 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
   _createClass(GameSurface, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.stopSoundtrack();
       if (this.engine !== null) return;
 
       if (this.props.gameType === 'game' && this.props.GameShop.level === 0) {
@@ -10776,6 +10781,11 @@ var GameSurface = (_dec = (0, _mobxReact.inject)('GameShop', 'SystemShop'), _dec
     key: 'preventDefault',
     value: function preventDefault(e) {
       e.preventDefault();
+    }
+  }, {
+    key: 'stopSoundtrack',
+    value: function stopSoundtrack() {
+      _soundtrackservice2.default.fadeOut();
     }
   }, {
     key: 'render',
@@ -10921,6 +10931,10 @@ var _screenmenu = __webpack_require__(25);
 
 var _screenmenu2 = _interopRequireDefault(_screenmenu);
 
+var _soundtrackservice = __webpack_require__(37);
+
+var _soundtrackservice2 = _interopRequireDefault(_soundtrackservice);
+
 var _footer = __webpack_require__(54);
 
 var _footer2 = _interopRequireDefault(_footer);
@@ -10948,16 +10962,23 @@ var MainTitle = function (_React$Component) {
   }
 
   _createClass(MainTitle, [{
-    key: 'generateCanvas',
-    value: function generateCanvas() {}
+    key: 'playSoundtrack',
+    value: function playSoundtrack() {
+      var mainScreenSong = __webpack_require__(135);
+      _soundtrackservice2.default.newTrack(mainScreenSong);
+      _soundtrackservice2.default.play();
+    }
   }, {
     key: 'render',
     value: function render() {
+      var SVGBackground = __webpack_require__(134);
       var GameLogo = __webpack_require__(121);
+      this.playSoundtrack();
 
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_svgInlineReact2.default, { className: 'svg-background', src: SVGBackground, raw: true }),
         _react2.default.createElement(
           'div',
           { id: 'main-title' },
@@ -34407,6 +34428,25 @@ module.exports = function(originalModule) {
 
 module.exports = __webpack_require__(17);
 
+
+/***/ }),
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 643 649\" enable-background=\"new 0 0 643 649\" xml:space=\"preserve\"><g id=\"Capa_1\"><ellipse transform=\"matrix(0.9378 -0.347 0.347 0.9378 -92.7694 132.0192)\" fill=\"none\" stroke=\"#E4E3E4\" stroke-width=\"5\" cx=\"322.2\" cy=\"325.013\" rx=\"315.31\" ry=\"315.31\"></ellipse><path fill=\"none\" stroke=\"#E4E3E4\" stroke-width=\"20\" d=\"M93.906,92.582c16.405-16.158,34.71-30.619,54.144-42.969 S187.2,27.365,210,18.928\"></path><path fill=\"none\" stroke=\"#E4E3E4\" stroke-width=\"20\" d=\"M556.785,553.419c-16.405,16.158-34.71,30.619-54.144,42.969 c-19.434,12.35-39.151,22.248-61.951,30.685\"></path><circle fill=\"#E4E3E4\" cx=\"322.2\" cy=\"325.013\" r=\"14.75\"></circle><circle fill=\"#E4E3E4\" cx=\"322.2\" cy=\"325.013\" r=\"14.75\"></circle></g><g id=\"referencia\"></g><g id=\"Logo\"></g></svg>"
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "./res/sound/main_title.mp3";
 
 /***/ })
 /******/ ]);
