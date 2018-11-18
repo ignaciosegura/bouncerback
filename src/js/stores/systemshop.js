@@ -30,7 +30,7 @@ class Default {
     }
     this.TimeForRemoval = this.fadeoutTime + this.readingTime;
 
-    this.backgroundState = 'neutral';
+    this.backgroundState = 'intro';
   }
 
   toggleAllSound() {
