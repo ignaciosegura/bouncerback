@@ -9,22 +9,30 @@ class Soundtrack {
   constructor() {
     this.track;
     this.autoWatch;
+    this.currentTrackFile = '';
+    this.trackType = '';
   }
 
   setupAutorun() {
-    this.autowatch = autorun(() =>
+    this.autoWatch = autorun(() =>
       this.track.sound.muted = SystemShop.sound.muted
     );
   }
 
-  newTrack(soundtrackFile) {
+  newTrack(soundtrackFile, type = 'game') {
+    if (this.currentTrackFile == soundtrackFile)
+      return;
+
+    this.trackType = type;
+    this.currentTrackFile = soundtrackFile;
     this.track = new SoundFX(soundtrackFile);
     this.setupAutorun();
   }
 
   play() {
-    if (this.track)
+    if (this.track) {
       this.track.play();
+    }
   }
   resume() {
     if (this.track && this.track.sound.currentTime > 0)
@@ -37,6 +45,12 @@ class Soundtrack {
   fadeOut() {
     if (this.track)
       this.track.fadeOut();
+  }
+  smartFadeOut() {
+    if (this.trackType == 'intro')
+      return;
+
+    this.fadeOut();
   }
   toggle() {
     if (this.track)

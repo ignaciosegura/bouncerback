@@ -45,7 +45,7 @@ class GameService {
   }
 
   static stopTheGame() {
-    SoundtrackService.fadeOut();
+    SoundtrackService.smartFadeOut();
     ClockService.stopTheClock();
     GameShop.setLives(0);
   }

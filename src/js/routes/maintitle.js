@@ -17,7 +17,7 @@ class MainTitle extends React.Component {
   }
   playSoundtrack() {
     let mainScreenSong = require('../../sound/tracks/main_title.mp3');
-    SoundtrackService.newTrack(mainScreenSong);
+    SoundtrackService.newTrack(mainScreenSong, 'intro');
     SoundtrackService.play();
   }
 

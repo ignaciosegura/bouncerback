@@ -39,7 +39,7 @@ class Index extends React.Component {
       BackgroundService.renderProperState();
     });
 
-    window.onpopstate = function () {
+    window.onpopstate = function (e) {
       GameService.stopTheGame();
     };
 
@@ -69,5 +69,5 @@ class Index extends React.Component {
 
 ReactDOM.render(
   <Provider GameShop={GameShop} SystemShop={SystemShop} TimeShop={TimeShop}><Index /></Provider>,
-  document.getElementsByTagName('body')[0]
+  document.getElementById('app')
 );

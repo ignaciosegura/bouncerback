@@ -16,9 +16,12 @@ class PhoneGapService {
       document.addEventListener('resume', () => {
         GameService.resumeTheGame();
       });
-      document.addEventListener('backbutton', () => {
+      document.addEventListener('backbutton', (e) => {
+        e.preventDefault();
         GameService.stopTheGame();
-        history.goBack();
+
+        if (history.location.pathname !== '/')
+          GameService.goTo('/');
       });
 
       //console.log(AppVersion.version);

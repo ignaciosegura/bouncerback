@@ -6663,7 +6663,7 @@ var GameService = function () {
   }, {
     key: 'stopTheGame',
     value: function stopTheGame() {
-      _soundtrackservice2.default.fadeOut();
+      _soundtrackservice2.default.smartFadeOut();
       _clockservice2.default.stopTheClock();
       _gameshop2.default.setLives(0);
     }
@@ -7068,7 +7068,7 @@ var Index = function (_React$Component) {
       _backgroundservice2.default.renderProperState();
     });
 
-    window.onpopstate = function () {
+    window.onpopstate = function (e) {
       _gameservice2.default.stopTheGame();
     };
 
@@ -7118,7 +7118,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _mobxReact.Provider,
   { GameShop: _gameshop2.default, SystemShop: _systemshop2.default, TimeShop: _timeshop2.default },
   _react2.default.createElement(Index, null)
-), document.getElementsByTagName('body')[0]);
+), document.getElementById('app'));
 
 /***/ }),
 /* 18 */
@@ -7153,6 +7153,8 @@ var Soundtrack = function () {
 
     this.track;
     this.autoWatch;
+    this.currentTrackFile = '';
+    this.trackType = '';
   }
 
   _createClass(Soundtrack, [{
@@ -7160,20 +7162,28 @@ var Soundtrack = function () {
     value: function setupAutorun() {
       var _this = this;
 
-      this.autowatch = (0, _mobx.autorun)(function () {
+      this.autoWatch = (0, _mobx.autorun)(function () {
         return _this.track.sound.muted = _systemshop2.default.sound.muted;
       });
     }
   }, {
     key: 'newTrack',
     value: function newTrack(soundtrackFile) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'game';
+
+      if (this.currentTrackFile == soundtrackFile) return;
+
+      this.trackType = type;
+      this.currentTrackFile = soundtrackFile;
       this.track = new _soundfx2.default(soundtrackFile);
       this.setupAutorun();
     }
   }, {
     key: 'play',
     value: function play() {
-      if (this.track) this.track.play();
+      if (this.track) {
+        this.track.play();
+      }
     }
   }, {
     key: 'resume',
@@ -7189,6 +7199,13 @@ var Soundtrack = function () {
     key: 'fadeOut',
     value: function fadeOut() {
       if (this.track) this.track.fadeOut();
+    }
+  }, {
+    key: 'smartFadeOut',
+    value: function smartFadeOut() {
+      if (this.trackType == 'intro') return;
+
+      this.fadeOut();
     }
   }, {
     key: 'toggle',
@@ -11062,7 +11079,7 @@ var MainTitle = function (_React$Component) {
     key: 'playSoundtrack',
     value: function playSoundtrack() {
       var mainScreenSong = __webpack_require__(87);
-      _soundtrackservice2.default.newTrack(mainScreenSong);
+      _soundtrackservice2.default.newTrack(mainScreenSong, 'intro');
       _soundtrackservice2.default.play();
     }
   }, {
@@ -11136,9 +11153,11 @@ var PhoneGapService = function () {
         document.addEventListener('resume', function () {
           _gameservice2.default.resumeTheGame();
         });
-        document.addEventListener('backbutton', function () {
+        document.addEventListener('backbutton', function (e) {
+          e.preventDefault();
           _gameservice2.default.stopTheGame();
-          _index.history.goBack();
+
+          if (_index.history.location.pathname !== '/') _gameservice2.default.goTo('/');
         });
 
         //console.log(AppVersion.version);
