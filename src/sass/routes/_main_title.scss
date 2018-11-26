@@ -1,8 +1,8 @@
 // Main title
 
 $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 0s 1 forwards;
-$animation-logo-letters: logo-letters 2s linear 0s 1 forwards;
-$animation-logo-circle: logo-circle 3s linear 0s 1 forwards;
+$animation-logo-letters: logo-letters 10s linear 0s 999 forwards;
+$animation-logo-circle: logo-circle 10s linear 0s 1 forwards;
 $animation-svg-background: svg-background 20s ease-in-out 0s 999 alternate;
 $animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 0s 1 forwards;
 
@@ -50,16 +50,16 @@ svg.svg-background {
       animation: $animation-logo-letters;
 
       &:nth-child(5n+1) {
-        animation-duration: 1.85s;
+        animation-duration: 9.25s;
       }
       &:nth-child(5n+2) {
-        animation-duration: 1.9s;
+        animation-duration: 9.5s;
       }
       &:nth-child(5n+3) {
-        animation-duration: 1.95s;
+        animation-duration: 9.75s;
       }
       &:nth-child(5n+4) {
-        animation-duration: 2.05s;
+        animation-duration: 10.25s;
       }
     }
     path:nth-child(2) {
@@ -88,14 +88,17 @@ svg.svg-background {
   from {
     opacity: 0.5;
   }
-  84% {
+  17% {
     opacity: 0.95;
   }
-  85% {
+  18% {
     opacity: 0.25;
   }
-  90% {
+  20% {
     opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
   }
   to {
     opacity: 1;
@@ -106,25 +109,25 @@ svg.svg-background {
   from {
     opacity: 0.5;
   }
-  50% {
+  10% {
     opacity: 0.9;
   }
-  51% {
+  11% {
     opacity: 0;
   }
-  52% {
+  12% {
     opacity: 1;
   }
-  55% {
+  13% {
     opacity: 0;
   }
-  56% {
+  14% {
     opacity: 1;
   }
-  61% {
+  15% {
     opacity: 0;
   }
-  62% {
+  17% {
     opacity: 1;
   }
   to {

@@ -1,4 +1,4 @@
-$retro-font-family: 'c64-angled', Helvetica, Arial, sans-serif;
+$retro-font-family: 'c64-angled', monospace;
 $sans-font-family: 'didact-gothic', Helvetica, Arial, sans-serif;
 
 @font-face {
@@ -9,4 +9,15 @@ $sans-font-family: 'didact-gothic', Helvetica, Arial, sans-serif;
 @font-face {
   font-family: 'didact-gothic';
   src: url('../fonts/didact_gothic_regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'spacemono';
+  src: url('../fonts/SpaceMono-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'spacemono';
+  src: url('../fonts/SpaceMono-Regular.ttf') format('truetype');
+  font-weight: normal;
 }
