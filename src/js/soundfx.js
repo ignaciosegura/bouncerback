@@ -19,6 +19,7 @@ class SoundFX {
     this.fadeInterval;
 
     this.sound.load();
+    this.prefetch();
   }
 
   play() {
@@ -27,6 +28,10 @@ class SoundFX {
   }
   pause() {
     this.sound.pause();
+  }
+  prefetch() {
+    this.play();
+    this.pause();
   }
 
   fadeOut() {
