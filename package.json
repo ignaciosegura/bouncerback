@@ -23,6 +23,7 @@
     "mobx-react": "^5.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-lottie": "^1.2.3",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.2.2",
     "three": "^0.98.0"

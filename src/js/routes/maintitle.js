@@ -4,6 +4,9 @@ import React from 'react';
 import ScreenMenu from '../screenmenu.js';
 import SoundtrackService from '../services/soundtrackservice.js';
 import BackgroundService from '../services/backgroundservice.js';
+import AfterFXAnimation from '../afterfxanimation.js';
+
+import * as animationData from '../../motion/test.json';
 
 import Footer from '../footer.js';
 
@@ -26,6 +29,7 @@ class MainTitle extends React.Component {
     let GameLogo = require('../../img/game_logo_v2.svg');
 
     return <div>
+      <AfterFXAnimation animationData={animationData} width={800} height={600} loop={false} autoplay={true} />
       <InlineSVG className="svg-background" src={SVGBackground} raw={true} />
       <div id="main-title">
         <InlineSVG className="main-logo" src={GameLogo} raw={true} />
