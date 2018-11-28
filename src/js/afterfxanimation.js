@@ -29,7 +29,8 @@ class AfterFXAnimation extends React.Component {
         height={this.defaultOptions.size.height}
         width={this.defaultOptions.size.width}
         isStopped={this.defaultOptions.isStopped}
-        isPaused={this.defaultOptions.isPaused}/>
+        isPaused={this.defaultOptions.isPaused} 
+        className="after-fx" />
     );
   }
 }
