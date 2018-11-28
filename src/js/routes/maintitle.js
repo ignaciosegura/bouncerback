@@ -29,7 +29,7 @@ class MainTitle extends React.Component {
     let GameLogo = require('../../img/game_logo_v2.svg');
 
     return <div>
-      <AfterFXAnimation animationData={animationData} width={'100%'} height={'auto'} loop={false} autoplay={true} />
+      <AfterFXAnimation animationData={animationData} width={'100%'} height={'auto'} loop={false} autoplay={true} title="maintitle-animation" />
       <InlineSVG className="svg-background" src={SVGBackground} raw={true} />
       <div id="main-title">
         <InlineSVG className="main-logo" src={GameLogo} raw={true} />
