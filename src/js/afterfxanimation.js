@@ -9,10 +9,12 @@ class AfterFXAnimation extends React.Component {
     super(props);
     this.defaultOptions = {
       loop: this.props.loop,
-      autoplay: this.props.autoplay, 
+      autoplay: this.props.autoplay,
       animationData: this.props.animationData,
+      name: this.props.title,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
+        preserveAspectRatio: 'xMidYMid slice',
+        className: this.props.title
       },
       size: {
         width: this.props.width,
@@ -23,14 +25,15 @@ class AfterFXAnimation extends React.Component {
     };
   }
 
-  render () {
+  render() {
     return (
       <Lottie options={this.defaultOptions}
         height={this.defaultOptions.size.height}
         width={this.defaultOptions.size.width}
         isStopped={this.defaultOptions.isStopped}
-        isPaused={this.defaultOptions.isPaused} 
-        title={this.props.title} />
+        isPaused={this.defaultOptions.isPaused}
+        title={this.props.title}
+        isClickToPauseDisabled={true} />
     );
   }
 }
