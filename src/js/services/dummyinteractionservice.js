@@ -4,11 +4,15 @@
 
 /* global require */
 
+
+import PlatformService from './platformservice.js';
+
 export default class DummyInteractionService {
   static makeDummyInteraction() {
     let body = document.getElementsByTagName('body')[0];
+    let silenceRes = require('../../sound/silence.mp3');
     let dummyID = 'dummy-interaction';
-    let silencePath = require('../../sound/silence.mp3');
+    let silencePath = PlatformService.adaptPathToDevices(silenceRes);
     let dummyElement = `<iframe id="${dummyID}" src="${silencePath}" allow="autoplay" id="audio" style="display:none"></iframe>`;
 
     body.insertAdjacentHTML('beforeend', dummyElement);
