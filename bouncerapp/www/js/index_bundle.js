@@ -11986,6 +11986,8 @@ var DummyInteractionService = function () {
   _createClass(DummyInteractionService, null, [{
     key: 'makeDummyInteraction',
     value: function makeDummyInteraction() {
+      if (_platformservice2.default.isPhonegap()) return;
+
       var body = document.getElementsByTagName('body')[0];
       var silenceRes = __webpack_require__(176);
       var dummyID = 'dummy-interaction';

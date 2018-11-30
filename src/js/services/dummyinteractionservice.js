@@ -4,11 +4,13 @@
 
 /* global require */
 
-
 import PlatformService from './platformservice.js';
 
 export default class DummyInteractionService {
   static makeDummyInteraction() {
+    if (PlatformService.isPhonegap())
+      return;
+
     let body = document.getElementsByTagName('body')[0];
     let silenceRes = require('../../sound/silence.mp3');
     let dummyID = 'dummy-interaction';
