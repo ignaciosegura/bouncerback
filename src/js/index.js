@@ -23,11 +23,15 @@ import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
 
+import DummyInteractionService from './services/dummyinteractionservice';
+
 import { Provider } from 'mobx-react';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
+    DummyInteractionService.makeDummyInteraction();
+
     document.addEventListener('gesturestart', function (e) {
       e.preventDefault();
     });

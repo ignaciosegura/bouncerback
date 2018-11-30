@@ -23,7 +23,7 @@ class SoundFX {
 
   play() {
     if (!SystemShop.sound.muted)
-      this.sound.play();
+      this.sound.play().catch();
   }
   pause() {
     this.sound.pause();
