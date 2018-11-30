@@ -6,7 +6,7 @@ import SoundtrackService from '../services/soundtrackservice.js';
 import BackgroundService from '../services/backgroundservice.js';
 import AfterFXAnimation from '../afterfxanimation.js';
 
-import * as animationData from '../../motion/test.json';
+import * as animationData from '../../motion/data.json';
 
 import Footer from '../footer.js';
 
