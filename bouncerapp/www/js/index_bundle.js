@@ -10567,8 +10567,10 @@ var AfterFXAnimation = function (_React$Component) {
       loop: _this.props.loop,
       autoplay: _this.props.autoplay,
       animationData: _this.props.animationData,
+      name: _this.props.title,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
+        preserveAspectRatio: 'xMidYMid slice',
+        className: _this.props.title
       },
       size: {
         width: _this.props.width,
@@ -10588,7 +10590,8 @@ var AfterFXAnimation = function (_React$Component) {
         width: this.defaultOptions.size.width,
         isStopped: this.defaultOptions.isStopped,
         isPaused: this.defaultOptions.isPaused,
-        title: this.props.title });
+        title: this.props.title,
+        isClickToPauseDisabled: true });
     }
   }]);
 
