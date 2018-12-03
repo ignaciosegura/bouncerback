@@ -179,14 +179,12 @@ div[title="maintitle-animation"] {
     display: block;
     width: 500px;
     max-width: 90vw;
-    margin: 0 auto 4em;
     animation: main-logo 2s cubic-bezier(0.19, 0.05, 0, 1) 8s 1 forwards; }
     @media (min-width: 800px) {
       #main-title svg.main-logo {
         width: 85vw; } }
     @media (min-width: 1200px) {
       #main-title svg.main-logo {
-        margin-bottom: 5em;
         width: 80vw; } }
     #main-title svg.main-logo path, #main-title svg.main-logo rect, #main-title svg.main-logo circle {
       opacity: 0;

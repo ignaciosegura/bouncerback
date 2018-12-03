@@ -27,7 +27,6 @@ div[title="maintitle-animation"] {
     display: block;
     width: 500px;
     max-width: 90vw;
-    margin: 0 auto 4em;
     
     animation: $animation-main-logo;
     
@@ -35,7 +34,6 @@ div[title="maintitle-animation"] {
       width: 85vw;
     }
     @include breakpoint($break-large) {
-      margin-bottom: 5em;
       width: 80vw;
     }
 
