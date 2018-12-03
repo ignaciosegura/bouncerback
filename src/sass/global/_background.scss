@@ -8,7 +8,8 @@ body {
   background: black;
   transition: background-color linear 1s;
 
-  &.intro {
+  &.intro,
+  &.game-select {
     background: white;
   }
   &.neutral {

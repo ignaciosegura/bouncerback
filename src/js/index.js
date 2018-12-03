@@ -15,6 +15,7 @@ import LevelMenu from './routes/levelmenu.js';
 import GameSurface from './routes/gamesurface.js';
 import GameOver from './routes/gameover.js';
 import GameBeaten from './routes/gamebeaten.js';
+import MainMenu from './routes/mainmenu.js';
 
 import PhoneGapService from './services/phonegapservice.js';
 import BackgroundService from './services/backgroundservice.js';
@@ -63,6 +64,7 @@ class Index extends React.Component {
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={MainTitle} />
+          <Route exact path="/main-menu" component={MainMenu} />
           <Route exact path="/tutorial" render={() => <GameSurface gameType='tutorial' level={0} />} />
           <Route exact path="/level-list" component={LevelMenu} />
           <Route exact path="/game" render={(props) => <GameSurface gameType='game' {...props} />} />

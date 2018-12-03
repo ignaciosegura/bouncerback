@@ -10,10 +10,11 @@
 @import 'global/_background.scss';
 
 @import 'routes/_main_title.scss';
+@import 'routes/_game_select.scss';
 @import 'routes/_gamesurface.scss';
 @import 'routes/_game_ended.scss';
 
-@import 'menus/_screenmenu.scss';
+@import 'menus/_mainmenu.scss';
 @import 'menus/_systemmenu.scss';
 
 @import 'components/_atom.scss';

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import ScreenMenu from '../screenmenu.js';
+import MainMenu from './mainmenu.js';
 import Scoreboard from '../scoreboard.js';
 
 class GameBeaten extends React.Component {
@@ -10,7 +10,7 @@ class GameBeaten extends React.Component {
     return <div id="game-ended-screen" className="game-beaten">
       <h1>Congratulations!</h1>
       <h2>You saved the vortex, yourself and the whole universe. Sort of.</h2>
-      <ScreenMenu />
+      <MainMenu />
       <Scoreboard type="bounces" />
       <Scoreboard type="level" />
     </div>

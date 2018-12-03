@@ -1,0 +1,15 @@
+body.game-select {
+    div.main-menu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  
+      a {
+        color: black;
+        border-color: black;
+        background: rgba(255, 255, 255, 0.8);
+        animation-name: black-text-entry;
+      }
+    }
+  }

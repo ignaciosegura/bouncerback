@@ -22,6 +22,19 @@ $animation-flicker: flicker 5s linear 5s 999 forwards;
     }
   }
 
+  @keyframes black-text-entry {
+    from {
+      opacity: 0;
+      color: $blind-blue;
+      border-color: $blind-blue;
+    }
+  
+    to {
+      color: black;
+      border-color: black;
+    }
+  }
+
   @keyframes object-entry {
     from {
       opacity: 0;

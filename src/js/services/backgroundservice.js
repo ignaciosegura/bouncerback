@@ -41,6 +41,9 @@ class Background {
       case '/game-beaten':
         newState = 'beaten';
         break;
+      case '/main-menu':
+        newState = 'game-select';
+        break;
       case '/':
         newState = 'intro';
         break;

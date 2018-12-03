@@ -4,7 +4,6 @@ $animation-main-logo: main-logo 2s cubic-bezier(.19,.05,0,1) 8s 1 forwards;
 $animation-logo-letters: logo-letters 10s linear 8s 999 forwards;
 $animation-logo-circle: logo-circle 10s linear 8s 1 forwards;
 $animation-logo-circle-beat: logo-circle-beat 0.5s ease-out 24s 999 forwards;
-$animation-main-title-text-entry: main-title-text-entry 0.5s ease-in-out 12s 1 forwards;
 
 div[title="maintitle-animation"] {
   position: absolute;
@@ -29,6 +28,7 @@ div[title="maintitle-animation"] {
     width: 500px;
     max-width: 90vw;
     margin: 0 auto 4em;
+    
     animation: $animation-main-logo;
     
     @include breakpoint($break-mid) {
@@ -59,14 +59,6 @@ div[title="maintitle-animation"] {
     path:nth-child(2) {
       animation: $animation-logo-circle, $animation-logo-circle-beat;
     }
-  }
-
-  .screen-menu a {
-    color: black;
-    border-color: black;
-    opacity: 0;
-
-    animation: $animation-main-title-text-entry;
   }
 }
 
@@ -140,16 +132,6 @@ div[title="maintitle-animation"] {
   14% {
     opacity: 1;
   }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes main-title-text-entry {
-  from {
-    opacity: 0;
-  }
-
   to {
     opacity: 1;
   }

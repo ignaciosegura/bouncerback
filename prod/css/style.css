@@ -25,6 +25,15 @@
     color: white;
     border-color: white; } }
 
+@keyframes black-text-entry {
+  from {
+    opacity: 0;
+    color: #88ffff;
+    border-color: #88ffff; }
+  to {
+    color: black;
+    border-color: black; } }
+
 @keyframes object-entry {
   from {
     opacity: 0;
@@ -140,7 +149,7 @@ body {
   overflow: hidden;
   background: black;
   transition: background-color linear 1s; }
-  body.intro {
+  body.intro, body.game-select {
     background: white; }
   body.neutral {
     background: black; }
@@ -192,11 +201,6 @@ div[title="maintitle-animation"] {
         animation-duration: 10.25s; }
     #main-title svg.main-logo path:nth-child(2) {
       animation: logo-circle 10s linear 8s 1 forwards, logo-circle-beat 0.5s ease-out 24s 999 forwards; }
-  #main-title .screen-menu a {
-    color: black;
-    border-color: black;
-    opacity: 0;
-    animation: main-title-text-entry 0.5s ease-in-out 12s 1 forwards; }
 
 @keyframes main-logo {
   from {
@@ -248,11 +252,16 @@ div[title="maintitle-animation"] {
   to {
     opacity: 1; } }
 
-@keyframes main-title-text-entry {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
+body.game-select div.main-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  body.game-select div.main-menu a {
+    color: black;
+    border-color: black;
+    background: rgba(255, 255, 255, 0.8);
+    animation-name: black-text-entry; }
 
 #gamesurface {
   width: 100%;
@@ -347,13 +356,13 @@ div[title="maintitle-animation"] {
   #game-ended-screen.game-beaten h1 {
     margin-bottom: 0.5em; }
 
-.screen-menu {
+div.main-menu {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-content: center; }
-  .screen-menu a {
+  div.main-menu a {
     position: static;
     transform: none;
     margin: 0 1em;
@@ -572,6 +581,7 @@ footer {
 .text {
   font-size: 14px;
   color: white;
+  background: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 60%;
   left: 50%;

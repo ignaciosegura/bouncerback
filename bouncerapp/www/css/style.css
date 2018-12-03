@@ -25,6 +25,15 @@
     color: white;
     border-color: white; } }
 
+@keyframes black-text-entry {
+  from {
+    opacity: 0;
+    color: #88ffff;
+    border-color: #88ffff; }
+  to {
+    color: black;
+    border-color: black; } }
+
 @keyframes object-entry {
   from {
     opacity: 0;
@@ -140,7 +149,7 @@ body {
   overflow: hidden;
   background: black;
   transition: background-color linear 1s; }
-  body.intro {
+  body.intro, body.game-select {
     background: white; }
   body.neutral {
     background: black; }
@@ -347,13 +356,24 @@ div[title="maintitle-animation"] {
   #game-ended-screen.game-beaten h1 {
     margin-bottom: 0.5em; }
 
-.screen-menu {
+body.game-select div.main-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  body.game-select div.main-menu a {
+    color: black;
+    border-color: black;
+    background: rgba(255, 255, 255, 0.8);
+    animation-name: black-text-entry; }
+
+div.main-menu {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-content: center; }
-  .screen-menu a {
+  div.main-menu a {
     position: static;
     transform: none;
     margin: 0 1em;
@@ -572,6 +592,7 @@ footer {
 .text {
   font-size: 14px;
   color: white;
+  background: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 60%;
   left: 50%;

@@ -1,7 +1,7 @@
 /* Global require */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import ScreenMenu from '../screenmenu.js';
 import SoundtrackService from '../services/soundtrackservice.js';
 import BackgroundService from '../services/backgroundservice.js';
 
@@ -26,8 +26,9 @@ class MainTitle extends React.Component {
 
     return <div>
       <div id="main-title">
-        <InlineSVG className="main-logo" src={GameLogo} raw={true} />
-        <ScreenMenu />
+        <Link to="/main-menu">
+          <InlineSVG className="main-logo" src={GameLogo} raw={true} />
+        </Link>
       </div>
       <Footer />
     </div>
