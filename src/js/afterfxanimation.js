@@ -12,6 +12,7 @@ class AfterFXAnimation extends React.Component {
       autoplay: this.props.autoplay,
       animationData: this.props.animationData,
       name: this.props.title,
+      renderer: 'canvas',
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice',
         className: this.props.title
@@ -33,7 +34,8 @@ class AfterFXAnimation extends React.Component {
         isStopped={this.defaultOptions.isStopped}
         isPaused={this.defaultOptions.isPaused}
         title={this.props.title}
-        isClickToPauseDisabled={true} />
+        isClickToPauseDisabled={true}
+      />
     );
   }
 }
