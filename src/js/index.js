@@ -23,6 +23,9 @@ import GameShop from './stores/gameshop.js';
 import SystemShop from './stores/systemshop.js';
 import TimeShop from './stores/timeshop.js';
 
+import AfterFXAnimation from './afterfxanimation.js';
+import * as animationData from '../motion/data.json';
+
 import DummyInteractionService from './services/dummyinteractionservice';
 
 import { Provider } from 'mobx-react';
@@ -56,6 +59,7 @@ class Index extends React.Component {
 
   render() {
     return <div id="container" onTouchMove={this.preventDefault}>
+      <AfterFXAnimation animationData={animationData} width={'100%'} height={'100%'} loop={true} autoplay={true} isPaused={false} isStopped={false} name="maintitle-animation" />
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={MainTitle} />

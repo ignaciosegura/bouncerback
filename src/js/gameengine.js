@@ -40,6 +40,7 @@ class GameEngine {
   }
 
   setupReadyState() {
+    GameShop.playing = true;
     CoordsService.createPointZero('#the-zone');
     SoundtrackService.newTrack(this.level.sound.track);
     this.level.scheduleAtom(0);

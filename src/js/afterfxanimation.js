@@ -1,9 +1,11 @@
 import React from 'react';
-import PlatformService from './services/platformservice.js';
 import Lottie from 'react-lottie';
+
+import { observer, inject } from 'mobx-react';
 
 // 2D animation service
 
+@inject('GameShop') @observer
 class AfterFXAnimation extends React.Component {
   constructor(props) {
     super(props);
@@ -11,29 +13,28 @@ class AfterFXAnimation extends React.Component {
       loop: this.props.loop,
       autoplay: this.props.autoplay,
       animationData: this.props.animationData,
-      name: this.props.title,
+      name: this.props.name,
       renderer: 'canvas',
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice',
-        className: this.props.title
+        className: this.props.name
       },
       size: {
         width: this.props.width,
         height: this.props.height
       },
-      isStopped: false,
-      isPaused: false
     };
   }
 
   render() {
+    let shouldWeStopTheAnimation = this.props.GameShop.playing;
     return (
       <Lottie options={this.defaultOptions}
         height={this.defaultOptions.size.height}
         width={this.defaultOptions.size.width}
-        isStopped={this.defaultOptions.isStopped}
-        isPaused={this.defaultOptions.isPaused}
-        title={this.props.title}
+        isStopped={shouldWeStopTheAnimation}
+        isPaused={this.props.isPaused}
+        title={this.props.name}
         isClickToPauseDisabled={true}
       />
     );

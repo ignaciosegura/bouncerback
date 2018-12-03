@@ -2,7 +2,7 @@
 
 import { observable, computed } from 'mobx';
 
-class Default {
+class System {
   @observable sound = {
     muted: false,
     factor: 0.5
@@ -44,6 +44,6 @@ class Default {
   }
 }
 
-const SystemShop = new Default();
+const SystemShop = new System();
 
 export default SystemShop;

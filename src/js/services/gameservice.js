@@ -48,6 +48,7 @@ class GameService {
     SoundtrackService.smartFadeOut();
     ClockService.stopTheClock();
     GameShop.setLives(0);
+    GameShop.playing = false;
   }
 
   static pauseTheGame() {

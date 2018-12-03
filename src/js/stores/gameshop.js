@@ -11,6 +11,7 @@ class Game {
   @observable lives = 0;
   totalLevels = levelList.length;
   type = '';
+  @observable playing = false;
 
   @computed get score() {
     return (this.bounces * 10 + this.captured * 100) * this.level;
