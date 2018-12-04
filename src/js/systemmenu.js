@@ -27,7 +27,7 @@ class SystemMenu extends React.Component {
   }
   closeClick(e) {
     this.stopDefaultActions(e);
-    GameService.goBackHome();
+    GameService.goToMainMenu();
   }
 
   stopDefaultActions(e) {
@@ -46,7 +46,7 @@ class SystemMenu extends React.Component {
     return <div id='system-menu'>
       <a href='#' className={soundStatusClass} onClick={this.soundClick}>S</a>
       <a href='#' className={pauseStatusClass} onClick={this.pauseClick}>G</a>
-      <Link to='/' className='close' onClick={this.closeClick}>X</Link>
+      <Link to='/main-menu' className='close' onClick={this.closeClick}>X</Link>
     </div>
   }
 }

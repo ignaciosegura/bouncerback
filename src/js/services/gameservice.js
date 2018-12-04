@@ -88,6 +88,10 @@ class GameService {
     this.goTo('/');
   }
 
+  static goToMainMenu() {
+    this.goTo('/main-menu');
+  }
+
   static goGameOver() {
     this.goTo('/game-over');
   }

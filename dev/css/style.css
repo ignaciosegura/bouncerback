@@ -258,7 +258,7 @@ body.game-select div.main-menu {
   body.game-select div.main-menu a {
     color: black;
     border-color: black;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.5);
     animation-name: black-text-entry; }
 
 #gamesurface {
@@ -340,8 +340,11 @@ body.game-select div.main-menu {
     font-weight: normal;
     font-size: 10.5px;
     margin-bottom: 3em; }
-  #game-ended-screen .screen-menu {
-    margin-bottom: 3em; }
+  #game-ended-screen a {
+    display: block;
+    position: static;
+    transform: none;
+    margin: 3em 0; }
   #game-ended-screen .scoreboard {
     position: static;
     width: auto;
@@ -579,7 +582,6 @@ footer {
 .text {
   font-size: 14px;
   color: white;
-  background: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 60%;
   left: 50%;
@@ -606,7 +608,9 @@ footer {
     cursor: pointer;
     top: 50%;
     padding: 0.5em 0.5em 0.6em;
-    border: solid white 2px; }
+    border: solid white 2px;
+    background: rgba(0, 0, 0, 0.5);
+    text-decoration: none; }
     @media (min-width: 800px) {
       .text.ready {
         border-width: 4px; } }

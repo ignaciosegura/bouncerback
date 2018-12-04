@@ -27,8 +27,11 @@
     margin-bottom: 3em;
   }
 
-  .screen-menu {
-    margin-bottom: 3em;
+  a {
+    display: block;
+    position: static;
+    transform: none;
+    margin: 3em 0;
   }
 
   .scoreboard {
