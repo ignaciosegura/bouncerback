@@ -1,0 +1,18 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "../keystore/bouncerback.keystore",
+            "storePassword": "expendable",
+            "alias": "bouncerback_key",
+            "password": "expendable",
+            "keystoreType": ""
+        },
+        "release": {
+            "keystore": "../keystore/bouncerback.keystore",
+            "storePassword": "expendable",
+            "alias": "bouncerback_key",
+            "password": "expendable",
+            "keystoreType": ""
+        }
+    }
+}

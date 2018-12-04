@@ -6909,6 +6909,11 @@ var GameService = function () {
       this.goTo('/');
     }
   }, {
+    key: 'goToMainMenu',
+    value: function goToMainMenu() {
+      this.goTo('/main-menu');
+    }
+  }, {
     key: 'goGameOver',
     value: function goGameOver() {
       this.goTo('/game-over');
@@ -11526,6 +11531,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(40);
+
 var _mainmenu = __webpack_require__(236);
 
 var _mainmenu2 = _interopRequireDefault(_mainmenu);
@@ -11562,9 +11569,13 @@ var GameOver = function (_React$Component) {
           null,
           'Game Over'
         ),
-        _react2.default.createElement(_mainmenu2.default, null),
         _react2.default.createElement(_scoreboard2.default, { type: 'score' }),
-        _react2.default.createElement(_scoreboard2.default, { type: 'level' })
+        _react2.default.createElement(_scoreboard2.default, { type: 'level' }),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/level-list', className: 'text ready' },
+          'New Game'
+        )
       );
     }
   }]);
@@ -12160,7 +12171,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
     key: 'closeClick',
     value: function closeClick(e) {
       this.stopDefaultActions(e);
-      _gameservice2.default.goBackHome();
+      _gameservice2.default.goToMainMenu();
     }
   }, {
     key: 'stopDefaultActions',
@@ -12189,7 +12200,7 @@ var SystemMenu = (_dec = (0, _mobxReact.inject)('TimeShop', 'SystemShop'), _dec(
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/', className: 'close', onClick: this.closeClick },
+          { to: '/main-menu', className: 'close', onClick: this.closeClick },
           'X'
         )
       );
