@@ -12,6 +12,8 @@ bouncerapp/platforms
 bouncerapp/platforms/*
 bouncerback.keystore
 
+keystore/**
+
 *.apk
 
 working
