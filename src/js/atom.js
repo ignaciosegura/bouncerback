@@ -1,52 +1,58 @@
 /*global require*/
 // Atom class
 
+import { observable, autorun } from 'mobx';
+
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';
 import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
+import ClockService from './services/clockservice.js';
 
 class Atom {
   constructor(index, level, direction = null) {
     this.index = index;
     this.vector = CoordsService.getRandomVector(direction);
-    this.radius = SystemShop.canonicalSizes.radius;
-    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.direction = 'out';
+    this.distance = 0;
+    this.radius = 0.05;
+    this.distanceToBorder = 1 - this.radius;
+    this.framesPerTrip = ClockService.convertTimesIntoFrames(level.atomSpeed);
     this.speed = {
-      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed, this.radius)
+      original: this.convertTimesPerTripIntoDistancePerFrame()
     }
-    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
+    this.speed.current = this.speed.original; // Part of a Diameter of 2 per frame. Level Speed is measured in times per full trip
     this.destructionTime = 2000; // in milliseconds
-    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
+    this.status = observable({
+      alive: true,
+      vortex: false,
+      collide: false,
+      dying: false,
+      captured: false
+    });
     this.creationTick = TimeShop.tick;
-    this.next = {
-      rebound: this.calculateNextEvent('rebound'),
-      center: 0,
-    };
     this.sounds = {
       launch: new SoundFX(require('../sound/launch.mp3')),
       bounce: new SoundFX(require('../sound/bounce_dry.mp3')),
       destroy: new SoundFX(require('../sound/destroy.mp3')),
       capture: new SoundFX(require('../sound/capture.mp3'))
     };
-    this.reboundPosition = {
-      cx: 0,
-      cy: 0
-    };
     this.domElement;
   }
 
-  createDOMElement() {
+  spawnAtomInDOM() {
     let atom = `<circle
       cx="0"
       cy="0"
-      r="${this.radius}"
+      r="${this.radius * SystemShop.gameSurfaceCoords.radius}"
       index="${this.index}"
-      class="atom ${this.status}"
+      class="atom"
       />`;
     let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
+    this.domElement = document.querySelector('.atom[index="' + this.index + '"]');
+    this.setStatusClasses();
     this.sounds.launch.play();
   }
 
@@ -57,87 +63,92 @@ class Atom {
     })
   }
 
+  get moment() {
+    let timeOfExistence = TimeShop.tick - this.creationTick;
+    return timeOfExistence % this.framesPerTrip;
+  }
+
   setAtomPosition(cx, cy) {
-    this.domElement.cx.baseVal.value = cx;
-    this.domElement.cy.baseVal.value = cy;
+    let radius = SystemShop.gameSurfaceCoords.radius;
+
+    this.domElement.cx.baseVal.value = cx * radius;
+    this.domElement.cy.baseVal.value = cy * radius;
   }
 
+  convertTimesPerTripIntoDistancePerFrame() {
+    let effectiveDiameter = this.distanceToBorder * 2;
 
-  convertTimesPerTripIntoPixelsPerFrame(speed, oversize = 0) {
-    let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-    let gameSurfaceCoords = SystemShop.gameSurfaceCoords;
-    let tripLength = (gameSurfaceCoords.radius * 2) - (oversize * 2);
-
-    return tripLength / framesPerTrip;
-  }
-
-  convertTimesPerTripIntoFramesPerRebound(speed) {
-    return speed * TimeShop.framesPerTime;
+    return effectiveDiameter / this.framesPerTrip;
   }
 
   AtomIsOnReboundArea() {
-    return (TimeShop.tick == this.next.rebound);
+    return (this.distance >= this.distanceToBorder
+      && this.distance <= 1
+      && this.direction == 'out');
   }
 
-  calculateNextEvent(eventType) {
-    let eventOffset = (eventType === 'rebound')
-      ? this.framesPerRebound / 2
-      : 0;
-
-    let ticksSinceCreation = TimeShop.tick - this.creationTick;
-    let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
-    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + eventOffset);
-
-    return nextTime;
+  AtomIsTravellingOut() {
+    return (this.distance >= 0)
+      ? true
+      : false;
   }
 
-  setStatus(newStatus) {
-    this.domElement.classList.remove(this.status);
-    this.status = newStatus;
-    this.domElement.classList.add(newStatus);
+  setStatusClasses() {
+    let auto = autorun(() => {
+      let statusClasses = [];
+
+      statusClasses.push(this.status.alive
+        ? 'alive'
+        : 'dead');
+      if (this.status.vortex) statusClasses.push('vortex');
+      if (this.status.dying) statusClasses.push('dying');
+
+      if (!this.domElement)
+        return;
+
+      this.domElement.classList = ['atom'];
+      this.domElement.classList.add(...statusClasses);
+    });
   }
 
   tagForRemoval() {
     let a = this;
     setTimeout(() => {
-      a.setStatus('dead');
+      a.status.alive = false;
     }, this.destructionTime);
   }
 
   executeBounce() {
     this.reverseAtomDirection();
-    this.setAtomPosition(this.reboundPosition.cx, this.reboundPosition.cy);
-    this.setStatus('alive');
+    this.status.collide = false;
     this.sounds.bounce.play();
   }
 
   startDying() {
-    this.setStatus('dying');
+    this.status.dying = true;
+    this.status.collide = false;
+    this.status.alive = false;
+    this.status.vortex = false;
     this.sounds.destroy.play();
     this.tagForRemoval();
   }
 
   checkAtom() {
-    let radius = SystemShop.gameSurfaceCoords.radius;
-    let pos = this.atomPosition;
-    let distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
+    if (this.isFirstHalfOfTrip())
+      this.direction = 'out';
 
-    if (this.AtomIsOnReboundArea()) {
-      this.reboundPosition = this.atomPosition;
-      this.next.rebound = this.calculateNextEvent('rebound');
-      this.next.center = this.calculateNextEvent('center');
-      if (this.status === 'alive')
-        this.setStatus('collide');
-    } else if (this.status === 'collide' && distance > radius) {
+    if (this.AtomIsOnReboundArea() && this.status.alive) {
+      this.status.collide = true;
+    } else if (this.status.collide && this.distance > 1) {
       this.startDying();
-    } else if (this.status === 'vortex') {
+    } else if (this.status.vortex && this.status.alive) {
       this.speed.current = this.setVortexSpeed();
     }
   }
 
   setVortexSpeed() {
     let currentTick = TimeShop.tick;
-    let isMovingAway = (this.next.rebound < this.next.center);
+    let isMovingAway = this.AtomIsTravellingOut();
     let speedFactor;
 
     if (isMovingAway) {
@@ -150,21 +161,36 @@ class Atom {
   }
 
   moveAtom() {
-    let atomPosition = this.atomPosition;
-    let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
-    let x = atomPosition.cx + displacement.x;
-    let y = atomPosition.cy + displacement.y;
+    this.distance = this.calculateAtomDistance();
+    let position = CoordsService.getXYFromVector(this.vector, this.distance);
+    let x = position.x;
+    let y = position.y;
 
     this.setAtomPosition(x, y);
   }
 
+  calculateAtomDistance() {
+    let moment = this.moment;
+    let distance = moment * this.speed.current;
+
+    if (!this.isFirstHalfOfTrip() && this.direction == 'in')
+      distance = distance - (this.distanceToBorder * 2);
+
+    return distance;
+  }
+
+  isFirstHalfOfTrip() {
+    let moment = this.moment;
+    return (moment * 2 < this.framesPerTrip);
+  }
+
   reverseAtomDirection() {
     this.vector = CoordsService.getReversedVector(this.vector);
+    this.direction = 'in';
   }
 
   setAtomToVortex() {
-    this.setStatus('vortex');
-    this.next.center = this.calculateNextEvent('center');
+    this.status.vortex = true;
   }
 
   checkVortex(vortexActiveRadius) {
@@ -172,11 +198,11 @@ class Atom {
     if (distanceToCenter > vortexActiveRadius)
       return;
 
-    this.setToCaptured();
+    this.setAtomToCaptured();
   }
 
-  setToCaptured() {
-    this.setStatus('captured');
+  setAtomToCaptured() {
+    this.status.captured = true;
     GameService.addCapturesToScore();
     this.sounds.capture.play();
   }

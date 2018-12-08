@@ -16,8 +16,7 @@ class AtomService {
 
   static createAtom(index, level, direction) {
     let newAtom = new Atom(index, level, direction);
-    newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
+    newAtom.spawnAtomInDOM();
     return newAtom;
   }
 
@@ -34,7 +33,7 @@ class AtomService {
   }
 
   static bounceAtoms(atoms, pucks) {
-    let colliders = atoms.filter(a => a.status == 'collide');
+    let colliders = atoms.filter(a => a.status.collide);
     let bouncesCount = 0;
 
     colliders.forEach(a => {
