@@ -21,10 +21,6 @@ class GameService {
     if (bounces > 0 && GameShop.type !== 'tutorial')
       GameShop.addBounce(bounces);
   }
-  static addCapturesToScore(captures) {
-    if (GameShop.type !== 'tutorial')
-      GameShop.addCapture(captures);
-  }
 
   static gameHasEnded(atoms) {
     return (AtomService.allAtomsAreInVortex(atoms) === true);

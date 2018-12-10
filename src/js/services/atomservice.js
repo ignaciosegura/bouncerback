@@ -20,16 +20,16 @@ class AtomService {
     return newAtom;
   }
 
-  static countDeadAtoms(atoms) {
+  static countAtoms(atoms, property, value) {
     if (atoms.length == 0)
       return 0;
 
-    let deadAtoms = atoms.reduce((ax, a) => {
-      return (!a.status.alive)
+    let countedAtoms = atoms.reduce((ax, a) => {
+      return (a.status[property] === value)
         ? ax + 1
         : ax
     }, 0);
-    return deadAtoms;
+    return countedAtoms;
   }
 
   static bounceAtoms(atoms, pucks) {

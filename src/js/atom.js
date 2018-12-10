@@ -16,6 +16,7 @@ const CSSClasses = {
   dead: 'dead',
   dying: 'dying',
   vortex: 'vortex',
+  captured: 'captured'
 }
 const directions = {
   out: 'out',
@@ -111,6 +112,7 @@ class Atom {
         ? CSSClasses.alive
         : CSSClasses.dead);
       if (this.status.vortex) statusClasses.push(CSSClasses.vortex);
+      if (this.status.captured) statusClasses.push(CSSClasses.captured);
       if (this.status.dying) statusClasses.push(CSSClasses.dying);
 
       if (!this.domElement)
@@ -214,7 +216,6 @@ class Atom {
 
   setAtomToCaptured() {
     this.status.captured = true;
-    GameService.addCapturesToScore();
     this.sounds.capture.play();
   }
 }

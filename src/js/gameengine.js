@@ -86,7 +86,8 @@ class GameEngine {
     AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
     GameService.addBouncesToScore(bounces);
-    GameShop.deadAtoms = AtomService.countDeadAtoms(this.atoms);
+    GameShop.deadAtoms = AtomService.countAtoms(this.atoms, 'alive', false);
+    GameShop.capturedAtoms = AtomService.countAtoms(this.atoms, 'captured', true);
 
     this.checkVortex();
     this.checkAtomList();

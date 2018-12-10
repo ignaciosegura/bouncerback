@@ -6,10 +6,10 @@ import levelList from '../../gameData/levellist.js';
 
 class Game {
   @observable bounces = 0;
-  @observable captured = 0;
   @observable level = 0;
   @observable initialLives = 0;
   @observable deadAtoms = 0;
+  @observable capturedAtoms = 0;
   totalLevels = levelList.length;
   type = '';
   @observable playing = false;
@@ -21,8 +21,14 @@ class Game {
       : 0;
   }
 
+  @computed get captures() {
+    return this.type === 'tutorial'
+      ? 0
+      : this.capturedAtoms;
+  }
+
   @computed get score() {
-    return (this.bounces * 10 + this.captured * 100) * this.level;
+    return (this.bounces * 10 + this.captures * 100) * this.level;
   }
 
   addBounce(b = 1) {
