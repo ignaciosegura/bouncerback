@@ -37,6 +37,7 @@ class Atom {
     }
     this.speed.current = this.speed.original; // Part of a Diameter of 2 per frame. Level Speed is measured in times per full trip
     this.destructionTime = 2000; // in milliseconds
+    this.vortexTime;
     this.status = observable({
       alive: true,
       vortex: false,
@@ -155,26 +156,16 @@ class Atom {
     } else if (this.status.collide && this.distance > 1) {
       this.startDying();
     } else if (this.status.vortex && this.status.alive) {
-      this.speed.current = this.setVortexSpeed();
+      //this.vector = this.setVortexVector();
     }
   }
 
-  setVortexSpeed() {
-    let currentTick = TimeShop.tick;
-    let isMovingAway = this.isTravellingOut();
-    let speedFactor;
-
-    if (isMovingAway) {
-      speedFactor = CoordsService.makeFinite(1 / (this.next.rebound - currentTick));
-      return this.speed.current - (this.speed.original * speedFactor);
-    } else {
-      speedFactor = CoordsService.makeFinite(1 / (this.next.center - currentTick));
-      return this.speed.current + speedFactor;
-    }
+  setVortexVector() {
+    return this.vector + 1.1;
   }
 
   moveAtom() {
-    this.distance = this.calculateAtomDistance();
+    this.distance = this.calculateDistance();
     let position = CoordsService.getXYFromVector(this.vector, this.distance);
     let x = position.x;
     let y = position.y;
@@ -182,7 +173,14 @@ class Atom {
     this.setAtomPosition(x, y);
   }
 
-  calculateAtomDistance() {
+  calculateDistance() {
+    if (this.status.vortex)
+      return this.calculateDistanceFromOvertime();
+
+    return this.calculateDistanceFromMoment();
+  }
+
+  calculateDistanceFromMoment() {
     let moment = this.moment;
     let distance = moment * this.speed.current;
 
@@ -191,6 +189,20 @@ class Atom {
 
     return distance;
   }
+
+  calculateDistanceFromOvertime() {
+    let initialDistance = this.calculateDistanceFromMoment();
+    let timeFromLevelEnd = TimeShop.tick - this.vortexTime;
+    let isMovingAway = this.isTravellingOut();
+    let distanceFactor = CoordsService.makeFinite(Math.log10(timeFromLevelEnd) / 10);
+
+    if (isMovingAway) {
+      return initialDistance + (this.speed.original * distanceFactor);
+    } else {
+      return initialDistance + distanceFactor;
+    }
+  }
+
 
   isFirstHalfOfTrip() {
     let moment = this.moment;
@@ -203,8 +215,8 @@ class Atom {
   }
 
   checkVortex(vortexActiveRadius) {
-    let distanceToCenter = CoordsService.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
-    if (distanceToCenter > vortexActiveRadius)
+    let distancePlusRadius = Math.abs(this.distance) + this.radius;
+    if (distancePlusRadius > vortexActiveRadius)
       return;
 
     this.setAtomToCaptured();
@@ -212,6 +224,7 @@ class Atom {
 
   setAtomToVortex() {
     this.status.vortex = true;
+    this.vortexTime = TimeShop.tick;
   }
 
   setAtomToCaptured() {

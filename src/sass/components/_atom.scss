@@ -1,8 +1,9 @@
 // Atom
 
 .atom {
-  fill: white;
+  fill: cyan;
   stroke: none;
+  z-index: 1;
 
   &.dying {
     fill: $dying-red;

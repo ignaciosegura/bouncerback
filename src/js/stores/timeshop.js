@@ -20,7 +20,7 @@ class Time {
     this.timeSignature = timeSignature;
     this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
     this.framesPerTime = this.timeSignature * this.framesPerBeat;
-    this.levelDuration = duration;
+    this.levelDuration = duration * this.framesPerTime;
   }
 
   reset() {
@@ -39,6 +39,10 @@ class Time {
     return Math.floor(this.tick / framesPerUnit);
   }
 
+  millisecondsToFrames(milliseconds) {
+    return parseInt(milliseconds / this.millisecondsPerFrame);
+  }
+
   nextTick() {
     this.tick++;
   }
@@ -48,7 +52,7 @@ class Time {
   }
 
   @computed get levelIsOver() {
-    return (this.time >= this.levelDuration);
+    return (this.tick >= this.levelDuration);
   }
 }
 

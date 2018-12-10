@@ -64,13 +64,10 @@ class AtomService {
     if (atoms.length === 0)
       return false;
 
-    let capturedAtoms = atoms.reduce((ax, current) => {
-      return (current.status.captured === true)
-        ? ax + 1
-        : ax;
-    }, 0);
+    let capturedAtoms = this.countAtoms(atoms, 'captured', true);
+    let deadAtoms = this.countAtoms(atoms, 'alive', false);
 
-    return (capturedAtoms === atoms.length);
+    return ((capturedAtoms + deadAtoms) === atoms.length);
   }
 }
 
