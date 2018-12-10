@@ -10,6 +10,18 @@ import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
 
+const CSSClasses = {
+  base: 'atom',
+  alive: 'alive',
+  dead: 'dead',
+  dying: 'dying',
+  vortex: 'vortex',
+}
+const directions = {
+  out: 'out',
+  in: 'in'
+}
+
 class Atom {
   constructor(index, level, direction = null) {
     this.index = index;
@@ -47,7 +59,7 @@ class Atom {
       cy="0"
       r="${this.radius * SystemShop.gameSurfaceCoords.radius}"
       index="${this.index}"
-      class="atom"
+      class="${CSSClasses.base}"
       />`;
     let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
@@ -81,16 +93,14 @@ class Atom {
     return effectiveDiameter / this.framesPerTrip;
   }
 
-  AtomIsOnReboundArea() {
-    return (this.distance >= this.distanceToBorder
+  isOnCollideArea() {
+    return (this.distance >= this.distanceToBorder)
       && this.distance <= 1
-      && this.direction == 'out');
+      && this.direction == directions.out;
   }
 
-  AtomIsTravellingOut() {
-    return (this.distance >= 0)
-      ? true
-      : false;
+  isTravellingOut() {
+    return (this.distance >= 0);
   }
 
   setStatusClasses() {
@@ -98,15 +108,15 @@ class Atom {
       let statusClasses = [];
 
       statusClasses.push(this.status.alive
-        ? 'alive'
-        : 'dead');
-      if (this.status.vortex) statusClasses.push('vortex');
-      if (this.status.dying) statusClasses.push('dying');
+        ? CSSClasses.alive
+        : CSSClasses.dead);
+      if (this.status.vortex) statusClasses.push(CSSClasses.vortex);
+      if (this.status.dying) statusClasses.push(CSSClasses.dying);
 
       if (!this.domElement)
         return;
 
-      this.domElement.classList = ['atom'];
+      this.domElement.classList = [CSSClasses.base];
       this.domElement.classList.add(...statusClasses);
     });
   }
@@ -136,9 +146,9 @@ class Atom {
 
   checkAtom() {
     if (this.isFirstHalfOfTrip())
-      this.direction = 'out';
+      this.direction = directions.out;
 
-    if (this.AtomIsOnReboundArea() && this.status.alive) {
+    if (this.isOnCollideArea() && this.status.alive) {
       this.status.collide = true;
     } else if (this.status.collide && this.distance > 1) {
       this.startDying();
@@ -149,7 +159,7 @@ class Atom {
 
   setVortexSpeed() {
     let currentTick = TimeShop.tick;
-    let isMovingAway = this.AtomIsTravellingOut();
+    let isMovingAway = this.isTravellingOut();
     let speedFactor;
 
     if (isMovingAway) {
@@ -174,7 +184,7 @@ class Atom {
     let moment = this.moment;
     let distance = moment * this.speed.current;
 
-    if (!this.isFirstHalfOfTrip() && this.direction == 'in')
+    if (!this.isFirstHalfOfTrip() && this.direction == directions.in)
       distance = distance - (this.distanceToBorder * 2);
 
     return distance;
