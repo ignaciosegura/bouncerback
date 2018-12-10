@@ -14,7 +14,7 @@ class GameService {
     let lives = gameType === 'tutorial'
       ? atomCount
       : Math.ceil(atomCount / 2);
-    GameShop.setLives(lives);
+    GameShop.initialLives = lives;
   }
 
   static addBouncesToScore(bounces) {
@@ -47,7 +47,6 @@ class GameService {
   static stopTheGame() {
     SoundtrackService.smartFadeOut();
     ClockService.stopTheClock();
-    GameShop.setLives(0);
     GameShop.playing = false;
   }
 

@@ -114,7 +114,9 @@ class Atom {
   tagForRemoval() {
     let a = this;
     setTimeout(() => {
+      a.status.dying = false;
       a.status.alive = false;
+      a.domElement.remove();
     }, this.destructionTime);
   }
 
@@ -127,7 +129,6 @@ class Atom {
   startDying() {
     this.status.dying = true;
     this.status.collide = false;
-    this.status.alive = false;
     this.status.vortex = false;
     this.sounds.destroy.play();
     this.tagForRemoval();
@@ -189,16 +190,16 @@ class Atom {
     this.direction = 'in';
   }
 
-  setAtomToVortex() {
-    this.status.vortex = true;
-  }
-
   checkVortex(vortexActiveRadius) {
     let distanceToCenter = CoordsService.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
     if (distanceToCenter > vortexActiveRadius)
       return;
 
     this.setAtomToCaptured();
+  }
+
+  setAtomToVortex() {
+    this.status.vortex = true;
   }
 
   setAtomToCaptured() {

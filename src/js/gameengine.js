@@ -65,9 +65,7 @@ class GameEngine {
     new GameController(this.pucks);
 
     SoundtrackService.play();
-
     ClockService.startGameLoop(this);
-
     this.setupAutoruns();
   }
 
@@ -84,11 +82,11 @@ class GameEngine {
   gameLoop() {
     let bounces;
 
-    AtomService.destroyAtoms(this.atoms);
     AtomService.checkAtomsStatus(this.atoms);
     AtomService.moveAtoms(this.atoms);
     bounces = AtomService.bounceAtoms(this.atoms, this.pucks);
     GameService.addBouncesToScore(bounces);
+    GameShop.deadAtoms = AtomService.countDeadAtoms(this.atoms);
 
     this.checkVortex();
     this.checkAtomList();

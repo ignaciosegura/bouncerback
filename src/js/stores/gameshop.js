@@ -8,10 +8,18 @@ class Game {
   @observable bounces = 0;
   @observable captured = 0;
   @observable level = 0;
-  @observable lives = 0;
+  @observable initialLives = 0;
+  @observable deadAtoms = 0;
   totalLevels = levelList.length;
   type = '';
   @observable playing = false;
+
+  @computed get lives() {
+    let computed = this.initialLives - this.deadAtoms;
+    return (computed > 0)
+      ? computed
+      : 0;
+  }
 
   @computed get score() {
     return (this.bounces * 10 + this.captured * 100) * this.level;
@@ -41,14 +49,6 @@ class Game {
     this.resetBounces();
   }
 
-  setLives(lives) {
-    this.lives = lives;
-  }
-  removeALife() {
-    this.lives = (this.lives > 0)
-      ? --this.lives
-      : 0;
-  }
   isLastLevel() {
     return ((this.level + 1) === this.totalLevels);
   }
