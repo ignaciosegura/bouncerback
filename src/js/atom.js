@@ -27,7 +27,7 @@ class Atom {
   constructor(index, level, direction = null) {
     this.index = index;
     this.vector = CoordsService.getRandomVector(direction);
-    this.direction = 'out';
+    this.direction = directions.out;
     this.distance = 0;
     this.radius = 0.05;
     this.distanceToBorder = 1 - this.radius;
@@ -78,8 +78,11 @@ class Atom {
   }
 
   get moment() {
-    let timeOfExistence = TimeShop.tick - this.creationTick;
-    return timeOfExistence % this.framesPerTrip;
+    return this.timeOfExistence % this.framesPerTrip;
+  }
+
+  get timeOfExistence() {
+    return TimeShop.tick - this.creationTick;
   }
 
   setAtomPosition(cx, cy) {
@@ -151,17 +154,17 @@ class Atom {
     if (this.isFirstHalfOfTrip())
       this.direction = directions.out;
 
-    if (this.isOnCollideArea() && this.status.alive) {
+    if (this.isOnCollideArea() && this.status.alive && !this.status.vortex) {
       this.status.collide = true;
     } else if (this.status.collide && this.distance > 1) {
       this.startDying();
     } else if (this.status.vortex && this.status.alive) {
-      //this.vector = this.setVortexVector();
+      this.vector = this.setVortexVector();
     }
   }
 
   setVortexVector() {
-    return this.vector + 1.1;
+    return this.vector + .005;
   }
 
   moveAtom() {
@@ -180,33 +183,39 @@ class Atom {
     return this.calculateDistanceFromMoment();
   }
 
-  calculateDistanceFromMoment() {
-    let moment = this.moment;
-    let distance = moment * this.speed.current;
+  calculateLinearDistance(moment, speed) {
+    return moment * speed;
+  }
 
-    if (!this.isFirstHalfOfTrip() && this.direction == directions.in)
+  calculateDistanceFromMoment() {
+    let distance = this.calculateLinearDistance(this.moment, this.speed.current);
+
+    if (!this.isFirstHalfOfTrip() && this.direction == directions.in && !this.status.vortex)
       distance = distance - (this.distanceToBorder * 2);
 
     return distance;
   }
 
   calculateDistanceFromOvertime() {
-    let initialDistance = this.calculateDistanceFromMoment();
-    let timeFromLevelEnd = TimeShop.tick - this.vortexTime;
-    let isMovingAway = this.isTravellingOut();
-    let distanceFactor = CoordsService.makeFinite(Math.log10(timeFromLevelEnd) / 10);
+    let tripsBeforeLevelEnded = parseInt(this.vortexTime / this.framesPerTrip);
+    let absoluteMoment = this.timeOfExistence - (tripsBeforeLevelEnded * this.framesPerTrip);
+    let timeFromVortexActivation = TimeShop.tick - this.vortexTime;
 
-    if (isMovingAway) {
-      return initialDistance + (this.speed.original * distanceFactor);
-    } else {
-      return initialDistance + distanceFactor;
-    }
+    absoluteMoment = this.distance > 0
+      ? absoluteMoment - Math.pow(timeFromVortexActivation, 1.2)
+      : absoluteMoment + Math.pow(timeFromVortexActivation, 1.2);
+
+    let distance = this.calculateLinearDistance(absoluteMoment, this.speed.current);
+
+    distance = (distance > 1)
+      ? distance - (this.distanceToBorder * 2)
+      : distance;
+
+    return distance;
   }
 
-
   isFirstHalfOfTrip() {
-    let moment = this.moment;
-    return (moment * 2 < this.framesPerTrip);
+    return ((this.moment * 2) < this.framesPerTrip);
   }
 
   reverseAtomDirection() {
