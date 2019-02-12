@@ -1,20 +1,39 @@
 // Background service
 
 import SystemShop from '../stores/systemshop.js';
+import TimeShop from '../stores/timeshop.js';
 import GameShop from '../stores/gameshop.js';
 import { autorun } from 'mobx';
 
 class Background {
   constructor() {
     this.domElement = document.getElementsByTagName('body')[0];
+    this.currentScene = 'neutral';
 
     autorun(() => {
       this.renderProperState();
     });
   }
 
+  scheduleSceneChanges(scenes) {
+    if (scenes.length == 0)
+      return;
+
+    scenes.forEach(element => {
+      this.scheduleSceneChange(element);
+    });
+  }
+
+  scheduleSceneChange(scene) {
+    let timeToScene = scene.time * TimeShop.framesPerBar * TimeShop.millisecondsPerFrame;
+    setTimeout(() => {
+      this.changeState(scene.name);
+    }, timeToScene);
+  }
+
   changeState(newState) {
     this.domElement.classList.remove(SystemShop.backgroundState);
+    this.currentScene = newState;
     return this.setState(newState);
   }
 
@@ -32,8 +51,9 @@ class Background {
 
     switch (currentScreen) {
       case '/game':
-        if (currentLives === 1)
-          newState = 'danger';
+        newState = (currentLives === 1)
+          ? 'danger'
+          : this.currentScene;
         break;
       case '/game-over':
         newState = 'game-over';

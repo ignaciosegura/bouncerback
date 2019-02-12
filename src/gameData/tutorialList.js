@@ -14,6 +14,7 @@ const levelList = [
     sound: {
       track: require('../sound/tracks/tutorial.mp3')
     },
+    scenes: [],
     atomSpeed: 4,
     atomList: [
       { t: 1, b: 0, dir: 'left' },

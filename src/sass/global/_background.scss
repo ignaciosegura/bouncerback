@@ -24,4 +24,94 @@ body {
   &.beaten {
     background-color: $electric-blue;
   }
+
+  &.synthwave {
+    background-color: #008;
+
+    transition: background-color linear 2s;
+
+    animation: synthwave-state-body 2.2s linear 0s forwards 1;
+
+    svg#the-zone {
+      animation: synthwave-state-zone 2.2s ease-in-out 0s forwards 1;
+      transition: filter 0.2s linear 0s;
+    }
+
+    .atom {
+      fill: cyan;
+    }
+  }
+  &.synthwave-mag {
+    background-color: #efe;
+    filter: invert(1);
+
+    transition: background-color linear 2s, filter linear 0.5s;
+
+    svg#the-zone {
+      filter: drop-shadow(0px 0px 5px rgba(70,255,70,1)) drop-shadow(0px 0px 1px rgba(0,255,0,1));
+      transition: filter 0.2s linear 0s;
+    }
+
+    .atom {
+      fill: #2f2;
+    }
+  }
+  &.synthwave-silver {
+    background-color: black;
+    filter: invert(1);
+
+    transition: background-color linear 1s, filter linear 0.25s 0.5s;
+
+    svg#the-zone {
+      filter: drop-shadow(0px 0px 4px rgba(0, 255, 255,1)) drop-shadow(0px 0px 1px rgba(0, 255, 255, 1));
+      transition: filter 0.2s linear 0s;
+    }
+
+    .atom {
+      fill: white;
+    }
+  }
 }
+
+@keyframes synthwave-state-body {
+  from {
+    filter: invert(0);
+  }
+  85% {
+    background-color: #008;
+    filter: invert(1)
+  }
+
+  to {
+    background-color: black;
+    filter: invert(0)
+  }
+}
+
+@keyframes synthwave-state-zone {
+  from {
+    filter: none;
+    transform: scale(1);
+  }
+  73% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 0;
+  }
+  76% {
+    opacity: 1;
+  }
+  79% {
+    opacity: 0;
+  }
+  85% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+    filter: drop-shadow(0px 0px 5px rgba(0,255,255,1)) drop-shadow(0px 0px 1px rgba(0,255,255,1));
+  }
+}
+

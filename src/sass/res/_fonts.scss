@@ -1,4 +1,5 @@
 $retro-font-family: 'c64-angled', monospace;
+$retro-font-family-2: 'pressstart', monospace;
 $sans-font-family: 'didact-gothic', Helvetica, Arial, sans-serif;
 
 @font-face {
@@ -12,12 +13,6 @@ $sans-font-family: 'didact-gothic', Helvetica, Arial, sans-serif;
 }
 
 @font-face {
-  font-family: 'spacemono';
-  src: url('../fonts/SpaceMono-Bold.ttf') format('truetype');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'spacemono';
-  src: url('../fonts/SpaceMono-Regular.ttf') format('truetype');
-  font-weight: normal;
+  font-family: 'pressstart';
+  src: url('../fonts/pressstart2p.ttf') format('truetype');
 }

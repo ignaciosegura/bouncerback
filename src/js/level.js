@@ -1,7 +1,6 @@
 // Class storing level data. Every instance of this class will be a level.
 // setup object to be delivered on instantiation:
 
-import SoundFX from './soundfx.js';
 import ClockService from './services/clockservice.js';
 
 class Level {

@@ -13,7 +13,7 @@ class GameService {
   static setInitialLives(atomCount, gameType) {
     let lives = gameType === 'tutorial'
       ? atomCount
-      : Math.ceil(atomCount / 2);
+      : Math.ceil(atomCount / 2) + 1;
     GameShop.initialLives = lives;
   }
 

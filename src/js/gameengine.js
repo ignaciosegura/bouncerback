@@ -15,6 +15,7 @@ import Level from './level.js';
 import Vortex from './vortex.js';
 
 import AtomService from './services/atomservice.js';
+import BackgroundService from './services/backgroundservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
 import GameService from './services/gameservice.js';
@@ -54,6 +55,7 @@ class GameEngine {
       this.startGame();
       TextService.scheduleTextRemoval(title, fadeoutTime);
       TextService.scheduleTextRemoval(readyText, fadeoutTime);
+      BackgroundService.scheduleSceneChanges(this.level.scenes);
     }
   }
 

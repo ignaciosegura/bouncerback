@@ -13,11 +13,11 @@
     signature: 4
   };
   sound = {
-    launch: '',
-    bounce: '',
-    destruction: '',
     track: ''
   },
+  scenes: [
+    { name: 'synthwave', time: 20 }
+  ],
   atomSpeed: 1, // Beats to make a round trip
   atomList: [] // Array of moments where a new atom should be created
 }
@@ -30,7 +30,7 @@ const levelList = [
   {
     name: 'Neutronika',
     levelType: 'game',
-    duration: 64,
+    duration: 58,
     levelPassAction: 'next',
     gameOverAction: 'gameover',
     time: {
@@ -38,20 +38,26 @@ const levelList = [
       signature: 4
     },
     sound: {
-      track: require('../sound/tracks/ambient_house_1.mp3')
+      track: require('../sound/tracks/1.mp3')
     },
+    scenes: [
+      { name: 'neutral', time: 0 },
+      { name: 'synthwave', time: 18 },
+      { name: 'synthwave-mag', time: 36 },
+      { name: 'synthwave-silver', time: 50 },
+      { name: 'neutral', time: 58 }
+    ],
     atomSpeed: 4,
     atomList: [
       { t: 0, b: 0, dir: 'left' },
-      { t: 6, b: 0, dir: 'left' },
-      { t: 15, b: 0.25 },
-      { t: 19, b: 3.5, dir: 'right' },
-      { t: 21, b: 2 },
-      { t: 23, b: 2.75 },
-      { t: 27, b: 3, dir: 'right' },
-      { t: 33, b: 1, dir: 'left' },
-      { t: 43, b: 0.75 },
-      { t: 54, b: 3.25 },
+      { t: 2, b: 0, dir: 'left' },
+      { t: 7, b: 0.25 },
+      { t: 11, b: 3.5, dir: 'right' },
+      { t: 15, b: 2.5 },
+      { t: 19, b: 3, dir: 'right' },
+      { t: 25, b: 1, dir: 'left' },
+      { t: 35, b: 0.75 },
+      { t: 48, b: 3.25 },
     ]
   },
   {
@@ -67,6 +73,9 @@ const levelList = [
     sound: {
       track: require('../sound/tracks/femtocosmos.mp3')
     },
+    scenes: [
+      { name: 'neutral', time: 0 }
+    ],
     atomSpeed: 4,
     atomList: [
       { t: 0, b: 0, dir: 'right' },
@@ -95,6 +104,7 @@ const levelList = [
     sound: {
       track: require('../sound/tracks/chronosaedron.mp3')
     },
+    scenes: [],
     atomSpeed: 2,
     atomList: [
       { t: 0, b: 0, dir: 'left' },
@@ -123,6 +133,7 @@ const levelList = [
     sound: {
       track: require('../sound/tracks/mekanomancer.mp3')
     },
+    scenes: [],
     atomSpeed: 3,
     atomList: [
       { t: 0, b: 0, dir: 'right' },

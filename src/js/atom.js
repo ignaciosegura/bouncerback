@@ -6,7 +6,6 @@ import { observable, autorun } from 'mobx';
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';
-import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
 import ClockService from './services/clockservice.js';
 
