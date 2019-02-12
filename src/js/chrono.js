@@ -11,7 +11,7 @@ class Chrono extends React.Component {
 
   render() {
     let time = this.props.TimeShop;
-    let duration = time.levelDuration * time.framesPerTime;
+    let duration = time.levelDuration;
     let timeLeft = duration - time.tick;
     let renderedTime = timeLeft > 0
       ? Math.ceil(timeLeft)

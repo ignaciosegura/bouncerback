@@ -14,16 +14,12 @@ class GameService {
     let lives = gameType === 'tutorial'
       ? atomCount
       : Math.ceil(atomCount / 2);
-    GameShop.setLives(lives);
+    GameShop.initialLives = lives;
   }
 
   static addBouncesToScore(bounces) {
     if (bounces > 0 && GameShop.type !== 'tutorial')
       GameShop.addBounce(bounces);
-  }
-  static addCapturesToScore(captures) {
-    if (GameShop.type !== 'tutorial')
-      GameShop.addCapture(captures);
   }
 
   static gameHasEnded(atoms) {
@@ -47,7 +43,6 @@ class GameService {
   static stopTheGame() {
     SoundtrackService.smartFadeOut();
     ClockService.stopTheClock();
-    GameShop.setLives(0);
     GameShop.playing = false;
   }
 

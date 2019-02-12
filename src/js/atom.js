@@ -1,52 +1,72 @@
 /*global require*/
 // Atom class
 
+import { observable, autorun } from 'mobx';
+
 import SoundFX from './soundfx.js';
 import TimeShop from './stores/timeshop.js';
 import SystemShop from './stores/systemshop.js';
 import GameService from './services/gameservice.js';
 import CoordsService from './services/coordsservice.js';
+import ClockService from './services/clockservice.js';
+
+const CSSClasses = {
+  base: 'atom',
+  alive: 'alive',
+  dead: 'dead',
+  dying: 'dying',
+  vortex: 'vortex',
+  captured: 'captured'
+}
+const directions = {
+  out: 'out',
+  in: 'in'
+}
 
 class Atom {
   constructor(index, level, direction = null) {
     this.index = index;
     this.vector = CoordsService.getRandomVector(direction);
-    this.radius = SystemShop.canonicalSizes.radius;
-    this.framesPerRebound = this.convertTimesPerTripIntoFramesPerRebound(level.atomSpeed);
+    this.direction = directions.out;
+    this.distance = 0;
+    this.radius = 0.05;
+    this.distanceToBorder = 1 - this.radius;
+    this.framesPerTrip = ClockService.convertTimesIntoFrames(level.atomSpeed);
     this.speed = {
-      original: this.convertTimesPerTripIntoPixelsPerFrame(level.atomSpeed, this.radius)
+      original: this.convertTimesPerTripIntoDistancePerFrame()
     }
-    this.speed.current = this.speed.original; // Pixels per seconds. Level Speed is measured in times per full trip
+    this.speed.current = this.speed.original; // Part of a Diameter of 2 per frame. Level Speed is measured in times per full trip
     this.destructionTime = 2000; // in milliseconds
-    this.status = 'alive'; // Possible values are "alive", "collide", "dying", "dead", "vortex"
+    this.vortexTime;
+    this.status = observable({
+      alive: true,
+      vortex: false,
+      collide: false,
+      dying: false,
+      captured: false
+    });
     this.creationTick = TimeShop.tick;
-    this.next = {
-      rebound: this.calculateNextEvent('rebound'),
-      center: 0,
-    };
     this.sounds = {
       launch: new SoundFX(require('../sound/launch.mp3')),
       bounce: new SoundFX(require('../sound/bounce_dry.mp3')),
       destroy: new SoundFX(require('../sound/destroy.mp3')),
       capture: new SoundFX(require('../sound/capture.mp3'))
     };
-    this.reboundPosition = {
-      cx: 0,
-      cy: 0
-    };
     this.domElement;
   }
 
-  createDOMElement() {
+  spawnAtomInDOM() {
     let atom = `<circle
       cx="0"
       cy="0"
-      r="${this.radius}"
+      r="${this.radius * SystemShop.gameSurfaceCoords.radius}"
       index="${this.index}"
-      class="atom ${this.status}"
+      class="${CSSClasses.base}"
       />`;
     let theZone = document.getElementById('point-zero');
     theZone.insertAdjacentHTML('beforeend', atom);
+    this.domElement = document.querySelector('.atom[index="' + this.index + '"]');
+    this.setStatusClasses();
     this.sounds.launch.play();
   }
 
@@ -57,127 +77,169 @@ class Atom {
     })
   }
 
+  get moment() {
+    return this.timeOfExistence % this.framesPerTrip;
+  }
+
+  get timeOfExistence() {
+    return TimeShop.tick - this.creationTick;
+  }
+
   setAtomPosition(cx, cy) {
-    this.domElement.cx.baseVal.value = cx;
-    this.domElement.cy.baseVal.value = cy;
+    let radius = SystemShop.gameSurfaceCoords.radius;
+
+    this.domElement.cx.baseVal.value = cx * radius;
+    this.domElement.cy.baseVal.value = cy * radius;
   }
 
+  convertTimesPerTripIntoDistancePerFrame() {
+    let effectiveDiameter = this.distanceToBorder * 2;
 
-  convertTimesPerTripIntoPixelsPerFrame(speed, oversize = 0) {
-    let framesPerTrip = this.convertTimesPerTripIntoFramesPerRebound(speed);
-    let gameSurfaceCoords = SystemShop.gameSurfaceCoords;
-    let tripLength = (gameSurfaceCoords.radius * 2) - (oversize * 2);
-
-    return tripLength / framesPerTrip;
+    return effectiveDiameter / this.framesPerTrip;
   }
 
-  convertTimesPerTripIntoFramesPerRebound(speed) {
-    return speed * TimeShop.framesPerTime;
+  isOnCollideArea() {
+    return (this.distance >= this.distanceToBorder)
+      && this.distance <= 1
+      && this.direction == directions.out;
   }
 
-  AtomIsOnReboundArea() {
-    return (TimeShop.tick == this.next.rebound);
+  isTravellingOut() {
+    return (this.distance >= 0);
   }
 
-  calculateNextEvent(eventType) {
-    let eventOffset = (eventType === 'rebound')
-      ? this.framesPerRebound / 2
-      : 0;
+  setStatusClasses() {
+    let auto = autorun(() => {
+      let statusClasses = [];
 
-    let ticksSinceCreation = TimeShop.tick - this.creationTick;
-    let timeFactor = Math.ceil(ticksSinceCreation / this.framesPerRebound);
-    let nextTime = this.creationTick + Math.floor(timeFactor * this.framesPerRebound + eventOffset);
+      statusClasses.push(this.status.alive
+        ? CSSClasses.alive
+        : CSSClasses.dead);
+      if (this.status.vortex) statusClasses.push(CSSClasses.vortex);
+      if (this.status.captured) statusClasses.push(CSSClasses.captured);
+      if (this.status.dying) statusClasses.push(CSSClasses.dying);
 
-    return nextTime;
-  }
+      if (!this.domElement)
+        return;
 
-  setStatus(newStatus) {
-    this.domElement.classList.remove(this.status);
-    this.status = newStatus;
-    this.domElement.classList.add(newStatus);
+      this.domElement.classList = [CSSClasses.base];
+      this.domElement.classList.add(...statusClasses);
+    });
   }
 
   tagForRemoval() {
     let a = this;
     setTimeout(() => {
-      a.setStatus('dead');
+      a.status.dying = false;
+      a.status.alive = false;
+      a.domElement.remove();
     }, this.destructionTime);
   }
 
   executeBounce() {
     this.reverseAtomDirection();
-    this.setAtomPosition(this.reboundPosition.cx, this.reboundPosition.cy);
-    this.setStatus('alive');
+    this.status.collide = false;
     this.sounds.bounce.play();
   }
 
   startDying() {
-    this.setStatus('dying');
+    this.status.dying = true;
+    this.status.collide = false;
+    this.status.vortex = false;
     this.sounds.destroy.play();
     this.tagForRemoval();
   }
 
   checkAtom() {
-    let radius = SystemShop.gameSurfaceCoords.radius;
-    let pos = this.atomPosition;
-    let distance = CoordsService.getDistanceFromXY(pos.cx, pos.cy);
+    if (this.isFirstHalfOfTrip())
+      this.direction = directions.out;
 
-    if (this.AtomIsOnReboundArea()) {
-      this.reboundPosition = this.atomPosition;
-      this.next.rebound = this.calculateNextEvent('rebound');
-      this.next.center = this.calculateNextEvent('center');
-      if (this.status === 'alive')
-        this.setStatus('collide');
-    } else if (this.status === 'collide' && distance > radius) {
+    let s = this.status;
+
+    if (this.isOnCollideArea() && s.alive && !s.vortex) {
+      s.collide = true;
+    } else if (s.alive && s.collide && !s.vortex && this.distance > 1) {
       this.startDying();
-    } else if (this.status === 'vortex') {
-      this.speed.current = this.setVortexSpeed();
+    } else if (this.status.vortex && this.status.alive) {
+      this.vector = this.setVortexVector();
     }
   }
 
-  setVortexSpeed() {
-    let currentTick = TimeShop.tick;
-    let isMovingAway = (this.next.rebound < this.next.center);
-    let speedFactor;
-
-    if (isMovingAway) {
-      speedFactor = CoordsService.makeFinite(1 / (this.next.rebound - currentTick));
-      return this.speed.current - (this.speed.original * speedFactor);
-    } else {
-      speedFactor = CoordsService.makeFinite(1 / (this.next.center - currentTick));
-      return this.speed.current + speedFactor;
-    }
+  setVortexVector() {
+    return this.vector + .005;
   }
 
   moveAtom() {
-    let atomPosition = this.atomPosition;
-    let displacement = CoordsService.getXYFromVector(this.vector, this.speed.current);
-    let x = atomPosition.cx + displacement.x;
-    let y = atomPosition.cy + displacement.y;
+    this.distance = this.calculateDistance();
+    let position = CoordsService.getXYFromVector(this.vector, this.distance);
+    let x = position.x;
+    let y = position.y;
 
     this.setAtomPosition(x, y);
   }
 
-  reverseAtomDirection() {
-    this.vector = CoordsService.getReversedVector(this.vector);
+  calculateDistance() {
+    if (this.status.vortex)
+      return this.calculateDistanceFromOvertime();
+
+    return this.calculateDistanceFromMoment();
   }
 
-  setAtomToVortex() {
-    this.setStatus('vortex');
-    this.next.center = this.calculateNextEvent('center');
+  calculateLinearDistance(moment, speed) {
+    return moment * speed;
+  }
+
+  calculateDistanceFromMoment() {
+    let distance = this.calculateLinearDistance(this.moment, this.speed.current);
+
+    if (!this.isFirstHalfOfTrip() && this.direction == directions.in && !this.status.vortex)
+      distance = distance - (this.distanceToBorder * 2);
+
+    return distance;
+  }
+
+  calculateDistanceFromOvertime() {
+    let tripsBeforeLevelEnded = parseInt(this.vortexTime / this.framesPerTrip);
+    let absoluteMoment = this.timeOfExistence - (tripsBeforeLevelEnded * this.framesPerTrip);
+    let timeFromVortexActivation = TimeShop.tick - this.vortexTime;
+
+    absoluteMoment = this.distance > 0
+      ? absoluteMoment - Math.pow(timeFromVortexActivation, 1.2)
+      : absoluteMoment + Math.pow(timeFromVortexActivation, 1.2);
+
+    let distance = this.calculateLinearDistance(absoluteMoment, this.speed.current);
+
+    distance = (distance > 1)
+      ? distance - (this.distanceToBorder * 2)
+      : distance;
+
+    return distance;
+  }
+
+  isFirstHalfOfTrip() {
+    return ((this.moment * 2) < this.framesPerTrip);
+  }
+
+  reverseAtomDirection() {
+    this.vector = CoordsService.getReversedVector(this.vector);
+    this.direction = 'in';
   }
 
   checkVortex(vortexActiveRadius) {
-    let distanceToCenter = CoordsService.getDistanceFromXY(this.atomPosition.cx, this.atomPosition.cy);
-    if (distanceToCenter > vortexActiveRadius)
+    let distancePlusRadius = Math.abs(this.distance) + this.radius;
+    if (distancePlusRadius > vortexActiveRadius)
       return;
 
-    this.setToCaptured();
+    this.setAtomToCaptured();
   }
 
-  setToCaptured() {
-    this.setStatus('captured');
-    GameService.addCapturesToScore();
+  setAtomToVortex() {
+    this.status.vortex = true;
+    this.vortexTime = TimeShop.tick;
+  }
+
+  setAtomToCaptured() {
+    this.status.captured = true;
     this.sounds.capture.play();
   }
 }

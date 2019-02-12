@@ -54,6 +54,10 @@ class ClockService {
   static calculateTickFromMusicalNotation(time = 0, beat = 0) {
     return (time * TimeShop.framesPerTime) + (beat * TimeShop.framesPerBeat);
   }
+
+  static convertTimesIntoFrames(times) {
+    return times * TimeShop.framesPerTime;
+  }
 }
 
 export default ClockService;

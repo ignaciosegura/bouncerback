@@ -9,7 +9,7 @@ class Vortex {
     this.timeToEffect = 3000;
     this.initialRadius = radius;
     this.active = false;
-    this.activeRadius = 0;
+    this.activeRadius = 0.1;
     this.sounds = {
       creation: new SoundFX(require('../sound/vortex_creation.mp3')),
     }
@@ -28,23 +28,7 @@ class Vortex {
 
   activateVortex() {
     setTimeout(() => {
-      let vortexDOM = this.domElement;
-      let boundingRectangleWidth = Math.round(vortexDOM.getBoundingClientRect().width);
-      let finalWidth;
-
-      if (boundingRectangleWidth == this.initialRadius * 2) {
-        let vortexComputedCSS = window.getComputedStyle(vortexDOM);
-        let transformationMatrix = fromString(vortexComputedCSS.transform);
-        let scale = transformationMatrix.a;
-
-        finalWidth = vortexDOM.attributes.r.value * scale;
-      } else {
-        finalWidth = boundingRectangleWidth;
-      }
-
-
       this.active = true;
-      this.activeRadius = finalWidth / 2;
     }, this.timeToEffect);
   }
 }

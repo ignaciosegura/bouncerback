@@ -16,25 +16,24 @@ class AtomService {
 
   static createAtom(index, level, direction) {
     let newAtom = new Atom(index, level, direction);
-    newAtom.createDOMElement();
-    newAtom.domElement = document.querySelector('.atom[index="' + index + '"]');
+    newAtom.spawnAtomInDOM();
     return newAtom;
   }
 
-  static destroyAtoms(atoms) {
-    let i;
+  static countAtoms(atoms, property, value) {
+    if (atoms.length == 0)
+      return 0;
 
-    for (i in atoms) {
-      if (atoms[i].status !== 'dead') continue;
-
-      atoms[i].domElement.remove();
-      atoms.splice(i, 1);
-      GameShop.removeALife();
-    }
+    let countedAtoms = atoms.reduce((ax, a) => {
+      return (a.status[property] === value)
+        ? ax + 1
+        : ax
+    }, 0);
+    return countedAtoms;
   }
 
   static bounceAtoms(atoms, pucks) {
-    let colliders = atoms.filter(a => a.status == 'collide');
+    let colliders = atoms.filter(a => a.status.collide);
     let bouncesCount = 0;
 
     colliders.forEach(a => {
@@ -65,13 +64,10 @@ class AtomService {
     if (atoms.length === 0)
       return false;
 
-    let capturedAtoms = atoms.reduce((ax, current) => {
-      return (current.status == 'captured')
-        ? ax + 1
-        : ax;
-    }, 0);
+    let capturedAtoms = this.countAtoms(atoms, 'captured', true);
+    let deadAtoms = this.countAtoms(atoms, 'alive', false);
 
-    return (capturedAtoms === atoms.length);
+    return ((capturedAtoms + deadAtoms) === atoms.length);
   }
 }
 

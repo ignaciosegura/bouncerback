@@ -388,8 +388,9 @@ div.main-menu {
     text-decoration: none; }
 
 .atom {
-  fill: white;
-  stroke: none; }
+  fill: cyan;
+  stroke: none;
+  z-index: 1; }
   .atom.dying {
     fill: #900;
     opacity: 0; }

@@ -17,8 +17,7 @@ class System {
   @computed get canonicalSizes() {
     return {
       width: this.gameSurfaceCoords.width / 11 * 2,
-      height: this.gameSurfaceCoords.width / 55,
-      radius: this.gameSurfaceCoords.width / 40,
+      height: this.gameSurfaceCoords.width / 55
     }
   }
   physicalScreen = null;
