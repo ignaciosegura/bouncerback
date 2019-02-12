@@ -34,9 +34,6 @@ class Game {
   addBounce(b = 1) {
     this.bounces += b;
   }
-  addCapture(c = 1) {
-    this.captured += c;
-  }
 
   nextLevel() {
     this.level++;

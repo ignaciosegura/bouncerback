@@ -154,9 +154,11 @@ class Atom {
     if (this.isFirstHalfOfTrip())
       this.direction = directions.out;
 
-    if (this.isOnCollideArea() && this.status.alive && !this.status.vortex) {
-      this.status.collide = true;
-    } else if (this.status.collide && this.distance > 1) {
+    let s = this.status;
+
+    if (this.isOnCollideArea() && s.alive && !s.vortex) {
+      s.collide = true;
+    } else if (s.alive && s.collide && !s.vortex && this.distance > 1) {
       this.startDying();
     } else if (this.status.vortex && this.status.alive) {
       this.vector = this.setVortexVector();
