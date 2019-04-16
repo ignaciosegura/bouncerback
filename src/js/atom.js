@@ -31,7 +31,7 @@ class Atom {
     this.distance = 0;
     this.radius = 0.05;
     this.distanceToBorder = 1 - this.radius;
-    this.framesPerTrip = ClockService.convertTimesIntoFrames(level.atomSpeed);
+    this.framesPerTrip = ClockService.convertBarsIntoFrames(level.atomSpeed);
     this.speed = {
       original: this.convertTimesPerTripIntoDistancePerFrame()
     }

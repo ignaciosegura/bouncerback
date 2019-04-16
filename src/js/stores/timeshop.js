@@ -9,7 +9,7 @@ class Time {
   @observable clock = 'on'; // possible values are 'on', 'off' and 'slowing-down'
   @observable tick = 0;
   framesPerBeat = 1;
-  framesPerTime = 1;
+  framesPerBar = 1;
   timeSignature = 1;
   levelDuration;
   nextTimeout;
@@ -19,8 +19,8 @@ class Time {
     this.bpm = bpm;
     this.timeSignature = timeSignature;
     this.framesPerBeat = Math.pow(this.frameRate, 2) / bpm;
-    this.framesPerTime = this.timeSignature * this.framesPerBeat;
-    this.levelDuration = duration * this.framesPerTime;
+    this.framesPerBar = this.timeSignature * this.framesPerBeat;
+    this.levelDuration = duration * this.framesPerBar;
   }
 
   reset() {
@@ -32,7 +32,7 @@ class Time {
   }
 
   @computed get time() {
-    return this.getRoundedTimeUnit(this.framesPerTime);
+    return this.getRoundedTimeUnit(this.framesPerBar);
   }
 
   getRoundedTimeUnit(framesPerUnit) {

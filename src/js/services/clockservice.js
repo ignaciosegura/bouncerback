@@ -41,9 +41,9 @@ class ClockService {
 
   static setNextIteration(time) {
     TimeShop.nextTimeout = setTimeout(() => {
+      this.scheduleTick();
       this.gameLoop();
       this.nextTick();
-      this.scheduleTick();
     }, time);
   }
 
@@ -52,11 +52,11 @@ class ClockService {
   }
 
   static calculateTickFromMusicalNotation(time = 0, beat = 0) {
-    return (time * TimeShop.framesPerTime) + (beat * TimeShop.framesPerBeat);
+    return (time * TimeShop.framesPerBar) + (beat * TimeShop.framesPerBeat);
   }
 
-  static convertTimesIntoFrames(times) {
-    return times * TimeShop.framesPerTime;
+  static convertBarsIntoFrames(bars) {
+    return bars * TimeShop.framesPerBar;
   }
 }
 
