@@ -31,7 +31,7 @@ class Time {
     return this.getRoundedTimeUnit(this.framesPerBeat) % this.timeSignature;
   }
 
-  @computed get time() {
+  @computed get bar() {
     return this.getRoundedTimeUnit(this.framesPerBar);
   }
 

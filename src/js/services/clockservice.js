@@ -55,7 +55,7 @@ class ClockService {
     return (bar * TimeShop.framesPerBar) + (beat * TimeShop.framesPerBeat);
   }
 
-  static convertTimesIntoFrames(bars) {
+  static convertBarsIntoFrames(bars) {
     return bars * TimeShop.framesPerBar;
   }
 }
